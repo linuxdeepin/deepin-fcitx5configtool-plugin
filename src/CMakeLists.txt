@@ -28,10 +28,13 @@ find_package(DdeControlCenter REQUIRED)
 find_package(PkgConfig REQUIRED)
 find_package(DtkWidget REQUIRED)
 find_package(KF5NetworkManagerQt REQUIRED)
+find_package(Fcitx REQUIRED)
+find_package(FcitxQt5DBusAddons REQUIRED)
+find_package(FcitxQt5WidgetsAddons REQUIRED)
 
 #pkg_check_modules(DDE-Network-Core REQUIRED dde-network-core)
 pkg_check_modules(DFrameworkDBus REQUIRED dframeworkdbus)
-#pkg_check_modules(QGSettings REQUIRED gsettings-qt)
+pkg_check_modules(QGSettings REQUIRED gsettings-qt)
 
 get_target_property(KF5_QT_INCLUDE_DIRS KF5::NetworkManagerQt INTERFACE_INCLUDE_DIRECTORIES)
 
@@ -66,7 +69,10 @@ target_include_directories(${PLUGIN_NAME} PUBLIC
     ${DtkWidget_INCLUDE_DIRS}
     ${DdeControlCenter_INCLUDE_DIR}
     ${DFrameworkDBus_INCLUDE_DIRS}
-#    ${QGSettings_INCLUDE_DIRS}
+    ${QGSettings_INCLUDE_DIRS}
+    ${FCITX4_FCITX_INCLUDE_DIRS}
+    ${FCITX4_FCITX_UTILS_INCLUDE_DIRS}
+    ${FCITX4_FCITX_CONFIG_INCLUDE_DIRS}
     ${Qt5DBus_INCLUDE_DIRS}
     ${KF5_QT_INCLUDE_DIRS}
     ${Qt5Network_INCLUDE_DIRS}
@@ -81,11 +87,16 @@ target_link_libraries(${PLUGIN_NAME} PRIVATE
     ${DtkWidget_LIBRARIES}
     ${DdeControlCenter_LIBRARIES}
 #    ${DFrameworkDBus_LIBRARIES}
-#    ${QGSettings_LIBRARIES}
+    ${QGSettings_LIBRARIES}
     ${Qt5DBus_LIBRARIES}
     ${KF5_QT_LIBRARIES}
     ${Qt5Network_LIBRARIES}
     ${DCC_WIDGETS_LIBRARIES}
+    ${FCITX4_FCITX_UTILS_LIBRARIES}
+    ${FCITX4_FCITX_CONFIG_LIBRARIES}
+    ${FCITX4_FCITX_LIBRARIES}
+    FcitxQt5::WidgetsAddons
+    FcitxQt5::DBusAddons
 #    ${DDE-Network-Core_LIBRARIES}
 )
 

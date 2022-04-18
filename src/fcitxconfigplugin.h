@@ -12,7 +12,7 @@ DCC_USE_NAMESPACE
 class FcitxConfigPlugin : public PluginInterface
 {
     Q_OBJECT
-    Q_PLUGIN_METADATA(IID PluginInterface_iid FILE "plugin-test.json")
+    Q_PLUGIN_METADATA(IID PluginInterface_iid FILE "plugin-fcitx.json")
     Q_INTERFACES(DCC_NAMESPACE::PluginInterface)
 public:
     FcitxConfigPlugin(){}
@@ -30,10 +30,5 @@ public:
     LabelModule(const QString &name, const QString &displayName = {}, QObject *parent = nullptr) : ModuleObject(name, displayName, parent) {}
     virtual QWidget *page() override;
 
-    void setText(const QString &text);
-    inline QString text() const { return m_text; }
-
-private:
-    QString m_text;
 };
 

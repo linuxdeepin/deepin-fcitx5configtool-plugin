@@ -1,6 +1,6 @@
 #cmake版本设置 
 cmake_minimum_required(VERSION 3.7)
-project(deepin-fcitxconfigtool-plugin)
+project(deepin-fcitx5configtool-plugin)
 
 #加载子目录
 add_subdirectory(src)

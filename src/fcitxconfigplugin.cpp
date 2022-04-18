@@ -7,6 +7,8 @@
 #include <qpushbutton.h>
 #include <qwidget.h>
 
+#include "window/imwindow.h"
+
 QString FcitxConfigPlugin::name() const
 {
     return tr("Input Methods");
@@ -27,11 +29,8 @@ ModuleObject* FcitxConfigPlugin::module()
     ModuleObject *module111 = new ModuleObject(QString("menu1"), tr("输入法配置"), this);
     module111->setChildType(ModuleObject::ChildType::Page);
 
-    for (int j = 0; j < 4; j++) {
-        LabelModule *labelModule = new LabelModule(QString("main%1menu%2").arg(1).arg(j), QString("具体页面%1的第%2个page的标题").arg(1).arg(j), module111);
-        labelModule->setText(QString("我是具体页面%1的第%2个page").arg(1).arg(j));
+        LabelModule *labelModule = new LabelModule();
         module111->appendChild(labelModule);
-    }
 
     return module111;
 }
@@ -40,12 +39,7 @@ ModuleObject* FcitxConfigPlugin::module()
 
 QWidget *LabelModule::page()
 {
-    return new QLabel(text());
+    IMWindow *m_imWindow = new IMWindow();
+    return m_imWindow;
 }
-
-void LabelModule::setText(const QString &text)
-{
-    m_text = text;
-}
-
 
