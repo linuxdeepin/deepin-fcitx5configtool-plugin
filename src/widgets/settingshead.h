@@ -54,23 +54,17 @@ public:
     ~FcitxSettingsHead();
 
     void setTitle(const QString &title);
-    void setEditEnable(bool state = true);
+    void setDeleteEnable(bool state = true);
     FcitxTitleLabel* getTitleLabel();
-public Q_SLOTS:
-    void toEdit();
-    void toCancel();
-    void setEdit(bool flag);
 
 Q_SIGNALS:
     void editChanged(bool edit);
-
-private Q_SLOTS:
-    void refershButton();
-    void onClicked();
-    void onStatusModeChanged(const QString &key);
+    void deleteBtnClicked();
+    void addBtnClicked();
 private:
     FcitxTitleLabel *m_title;
-    DTK_WIDGET_NAMESPACE::DCommandLinkButton *m_edit;
+    DTK_WIDGET_NAMESPACE::DCommandLinkButton *m_deleteBtn;
+    DTK_WIDGET_NAMESPACE::DCommandLinkButton *m_addBtn;
     bool m_editVisible;
     QGSettings *m_gsetting;
     State m_state;

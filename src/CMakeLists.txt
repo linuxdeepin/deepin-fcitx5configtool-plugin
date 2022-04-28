@@ -1,110 +1,167 @@
-cmake_minimum_required(VERSION 3.7)
+#版本设置
+set(VERSION 34.1)
+#二进制名称
+set(BIN_NAME deepin-fcitxconfigtool-plugin)
+#项目名称设置
+project(${BIN_NAME})
 
-set(PLUGIN_NAME "deepin-fcitxconfigtool-plugin")
-
-project(${PLUGIN_NAME})
-
-set(CMAKE_CXX_STANDARD 17)
-set(CMAKE_INCLUDE_CURRENT_DIR ON)
-set(CMAKE_AUTOMOC ON)
-set(CMAKE_AUTORCC ON)
-set(CMAKE_CXX_FLAGS "-g -Wall")
-
-# 增加安全编译参数
-ADD_DEFINITIONS("-fstack-protector-strong -D_FORTITY_SOURCE=1 -z noexecstack -pie -fPIC -z lazy")
-
-# 指定所有源码文件
-file(GLOB_RECURSE SRCS "*.h"
-    "*.cpp"
-    "../src/*.h"
-    "../src/*.cpp"
-    "*.qrc"
-    "*.svg"
-)
-
-# 指定要用到的库
-find_package(Qt5 COMPONENTS Core Widgets DBus Network LinguistTools REQUIRED)
-find_package(DdeControlCenter REQUIRED)
-find_package(PkgConfig REQUIRED)
-find_package(DtkWidget REQUIRED)
-find_package(KF5NetworkManagerQt REQUIRED)
-find_package(Fcitx REQUIRED)
-find_package(FcitxQt5DBusAddons REQUIRED)
-find_package(FcitxQt5WidgetsAddons REQUIRED)
-
-#pkg_check_modules(DDE-Network-Core REQUIRED dde-network-core)
-pkg_check_modules(DFrameworkDBus REQUIRED dframeworkdbus)
-pkg_check_modules(QGSettings REQUIRED gsettings-qt)
-
-get_target_property(KF5_QT_INCLUDE_DIRS KF5::NetworkManagerQt INTERFACE_INCLUDE_DIRECTORIES)
-
-set(TRY_KF5_LIBRARIES
-IMPORTED_LOCATION_DEBIAN
-IMPORTED_LOCATION_NOCONFIG
-)
-
-if (NOT KF5_QT_LIBRARIES)
-    find_library(KF5_QT_LIBRARIES libKF5NetworkManagerQt.so)
+#龙芯机器缺少符号表
+if (CMAKE_HOST_SYSTEM_PROCESSOR MATCHES "mips64")
+    option(USE_MIPS64 "USE MIPS64" ON)
+    SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -O3 -Wl,-O1 -Wl,--as-needed -Wl,-E -fPIE -ffunction-sections -fdata-sections -Wl,--gc-sections -ftree-vectorize -march=loongson3a -mhard-float -mno-micromips -mno-mips16 -flax-vector-conversions -mloongson-ext2 -mloongson-mmi -z noexecstack")
+    SET(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -O3 -Wl,-O1 -Wl,--as-needed -Wl,-E -fPIE -ffunction-sections -fdata-sections -Wl,--gc-sections -ftree-vectorize -march=loongson3a -mhard-float -mno-micromips -mno-mips16 -flax-vector-conversions -mloongson-ext2 -mloongson-mmi -z noexecstack")
+    SET(CMAKE_EXE_LINKER_FLAGS  "-pie")
 endif()
 
-file(GLOB TS_FILES "translations/*.ts")
+find_package(ECM 1.0.0 REQUIRED NO_MODULE)
+set(CMAKE_MODULE_PATH ${ECM_MODULE_PATH} ${ECM_KDE_MODULE_DIR} ${CMAKE_CURRENT_SOURCE_DIR}/cmake)
 
-qt5_add_translation(QM_FILES ${TS_FILES})
+include(KDEInstallDirs)
+include(KDECMakeSettings)
+include(KDECompilerSettings)
 
-add_custom_target(translations ALL DEPENDS ${QM_FILES})
+if (CMAKE_BUILD_TYPE MATCHES Debug)
+  set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -g -Wall -Wextra")
+  set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -g -Wall -Wextra -pthread")
+  # Enable Qt builtin debug mode
+  add_definitions("-DQT_MESSAGELOGCONTEXT -std=c++11")
+else()
+  # -Wl, -O2 Enable linker optimizations
+  # -Wl, --gc-sections Remove unused code resulting from -fdsta-sections and
+  # -ffunction-sections
+  set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -O2 -Wl,--gc-sections")
+  set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -O2 -Wl,--gc-sections -pthread")
+endif()
 
-# 新增一个编译目标
-# 这里使用命令 add_library 来表示本项目要生成一个库文件目标，
-add_library(${PLUGIN_NAME} SHARED ${SRCS})
+# 环境设置
+set(CMAKE_INCLUDE_CURRENT_DIR ON)
+set(CMAKE_AUTOMOC ON)#moc 预编译包含QObject文件，生成xx_moc.h cpp
+set(CMAKE_AUTORCC ON)#开启rcc 编译资源文件qrc
+set(CMAKE_AUTOUIC ON)#开启uic 编译转换*.ui文件生存设计界面对应的.h .cpp文件
+set(CMAKE_CXX_STANDARD 14)
 
-# 设置目标要使用的 include 目录，即头文件目录
-# 变量 ${DtkWidget_INCLUDE_DIRS} 是在前面执行 find_package 命令时引入的
-# 当出现编译失败提示找不到某些库的头文件时应该检查此处是否将所有需要的头文件都包含了
-target_include_directories(${PLUGIN_NAME} PUBLIC
-    ../src
-    ../src/realize
-    window
-    operation
-    ${Qt5Widgets_INCLUDE_DIRS}
-    ${DtkWidget_INCLUDE_DIRS}
-    ${DdeControlCenter_INCLUDE_DIR}
-    ${DFrameworkDBus_INCLUDE_DIRS}
-    ${QGSettings_INCLUDE_DIRS}
-    ${FCITX4_FCITX_INCLUDE_DIRS}
-    ${FCITX4_FCITX_UTILS_INCLUDE_DIRS}
-    ${FCITX4_FCITX_CONFIG_INCLUDE_DIRS}
-    ${Qt5DBus_INCLUDE_DIRS}
-    ${KF5_QT_INCLUDE_DIRS}
-    ${Qt5Network_INCLUDE_DIRS}
-#    ${DDE-Network-Core_INCLUDE_DIRS}
+# 查找库
+find_package(PkgConfig REQUIRED)
+find_package(DtkWidget REQUIRED)
+find_package(DtkCore REQUIRED)
+find_package(DdeControlCenter REQUIRED)
+find_package(Qt5 COMPONENTS Core REQUIRED)
+find_package(Qt5 COMPONENTS Widgets REQUIRED)
+find_package(Qt5 COMPONENTS DBus REQUIRED)
+find_package(Fcitx5Core 5.0.4 REQUIRED)
+find_package(Fcitx5Config REQUIRED)
+find_package(Fcitx5Utils REQUIRED)
+find_package(Fcitx5Qt5DBusAddons REQUIRED)
+find_package(Fcitx5Qt5WidgetsAddons 5.0.2 REQUIRED)
+pkg_check_modules(DFrameworkDBus REQUIRED dframeworkdbus)
+#设置资源目录 加载资源文件 翻译文件 源码
+set(APP_RES_DIR "${CMAKE_CURRENT_SOURCE_DIR}/../res")
+set(APP_QRC "${APP_RES_DIR}/fcitxconfig.qrc")
+#创建翻译文件
+#set(APP_QRC "${TS_DIR}/translations.qrc")
+set(TS_DIR "${CMAKE_CURRENT_SOURCE_DIR}/../translations")
+set(TS_FILES "${TS_DIR}/${PROJECT_NAME}_en_US.ts")
+#更新翻译
+find_program(LUPDATE_EXECUTABLE lupdate)
+foreach(_ts_file ${TS_FILES})
+    execute_process(
+        COMMAND ${LUPDATE_EXECUTABLE} -recursive ${CMAKE_SOURCE_DIR} -ts ${_ts_file})  #递归扫描源码 输出ts文件
+endforeach()
+
+#创建qm文件
+file (GLOB DTNG_TS_FILES ${TS_DIR}/*.ts)
+#qt5_add_translation(DTNG_QM_FILES ${CMAKE_SOURCE_DIR} ${DTNG_TS_FILES})
+add_custom_target(translations ALL DEPENDS ${DTNG_QM_FILES})
+
+#set(UI_HEADER
+#    ${CMAKE_CURRENT_SOURCE_DIR}/fcitxconfigplugin.h
+#    )
+#QT5_WRAP_CPP(UI_HEADER_MOCK ${UI_HEADER})
+
+FILE(GLOB_RECURSE HEAD_FILES
+    ${CMAKE_CURRENT_SOURCE_DIR}/fcitx5Interface/*.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/widgets/*.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/window/*.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/fcitxconfigplugin.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/publisher/*.h
 )
 
-# 设置目标要使用的链接库
-# 变量 ${DtkWidget_LIBRARIES} 和 ${Qt5Widgets_LIBRARIES} 是在前面执行 find_package 命令时引入的
-# 当出现运行时错误提示某些符号没有定义时应该检查此处是否将所有用的库都写在了这里
-target_link_libraries(${PLUGIN_NAME} PRIVATE
-    ${Qt5Widgets_LIBRARIES}
-    ${DtkWidget_LIBRARIES}
-    ${DdeControlCenter_LIBRARIES}
-#    ${DFrameworkDBus_LIBRARIES}
-    ${QGSettings_LIBRARIES}
-    ${Qt5DBus_LIBRARIES}
-    ${KF5_QT_LIBRARIES}
-    ${Qt5Network_LIBRARIES}
-    ${DCC_WIDGETS_LIBRARIES}
-    ${FCITX4_FCITX_UTILS_LIBRARIES}
-    ${FCITX4_FCITX_CONFIG_LIBRARIES}
-    ${FCITX4_FCITX_LIBRARIES}
-    FcitxQt5::WidgetsAddons
-    FcitxQt5::DBusAddons
-#    ${DDE-Network-Core_LIBRARIES}
+FILE(GLOB_RECURSE SOURCE_FILES
+    ${CMAKE_CURRENT_SOURCE_DIR}/fcitx5Interface/*.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/widgets/*.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/window/*.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/fcitxconfigplugin.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/publisher/*.cpp
 )
 
-# 设置安装路径的前缀(默认为"/usr/local")
-set(CMAKE_INSTALL_PREFIX "/usr")
+
+FILE(GLOB_RECURSE TEST_HEAD_FILES
+    ${CMAKE_CURRENT_SOURCE_DIR}/../tests/*.h)
+
+FILE(GLOB_RECURSE TEST_SOURCE_FILES
+    ${CMAKE_CURRENT_SOURCE_DIR}/../tests/*.cpp)
+
+set(ALL_SRCS
+    ${HEAD_FILES}
+    ${SOURCE_FILES}
+    ${APP_QRC}
+    ${DTNG_QM_FILES}
+    )
+
+set(TEST_SRCS
+    ${TEST_HEAD_FILES}
+    ${TEST_SOURCE_FILES}
+    )
+
+add_executable(${PROJECT_NAME}
+    ${ALL_SRCS}
+    ${DTNG_QM_FILES}
+    ${CMAKE_CURRENT_SOURCE_DIR}/main.cpp
+    )
+
+#add_library(${PROJECT_NAME} SHARED
+#        ${ALL_SRCS}
+#        ${DTNG_QM_FILES}
+#       # ${TS_DIR}/translations.qrc
+#        #${UI_HEADER_MOCK}
+#        )
+get_target_property(FCITX5_QT5_GUI_WRAPPER Fcitx5Qt5::gui-wrapper IMPORTED_LOCATION)
+#include("${FCITX_INSTALL_CMAKECONFIG_DIR}/Fcitx5Utils/Fcitx5CompilerSettings.cmake")
+target_include_directories(${PROJECT_NAME} PUBLIC
+        "/usr/include/dde-control-center"
+        ${DdeControlCenter_INCLUDE_DIRS}
+        ${DtkCore_INCLUDE_DIRS}
+        ${DtkWidget_INCLUDE_DIRS}
+        ${DFrameworkDBus_INCLUDE_DIRS}
+        ${Qt5Gui_PRIVATE_INCLUDE_DIRS}
+        ${GSETTINGS_INCLUDE_DIRS}
+        )
+
+target_link_libraries(${PROJECT_NAME} PRIVATE
+        "/usr/lib/dde-control-center"
+        dcc-interface
+        ${DdeControlCenter_LIBRARIES}
+        ${DFrameworkDBus_LIBRARIES}
+        ${DtkWidget_LIBRARIES}
+        ${DtkCore_ILIBRARIES}
+        ${Qt5Widgets_LIBRARIES}
+        ${Qt5DBus_LIBRARIES}
+        ${OBJECT_BINARY_DIR}
+        Fcitx5::Core
+        Fcitx5::Utils
+        Fcitx5Qt5::DBusAddons
+        Fcitx5Qt5::WidgetsAddons
+        ${GSETTINGS_LIBRARIES}
+        )
+
+# Install settings
+if (CMAKE_INSTALL_PREFIX_INITIALIZED_TO_DEFAULT)
+    set(CMAKE_INSTALL_PREFIX /usr)
+endif ()
 
 # 设置执行 make install 时哪个目标应该被 install 到哪个位置
-install(TARGETS ${PLUGIN_NAME} LIBRARY DESTINATION lib/dde-control-center/modules)
+#install(TARGETS ${PROJECT_NAME} LIBRARY DESTINATION /lib/dde-control-center/modules)
 
 # 安装 .qm 文件
-install(FILES ${QM_FILES} DESTINATION share/${PLUGIN_NAME}/translations)
+install(FILES ${DTNG_QM_FILES} DESTINATION share/${PROJECT_NAME}/translations)
+

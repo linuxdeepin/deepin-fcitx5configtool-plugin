@@ -107,10 +107,10 @@ void FcitxSettingsGroup::insertItem(const int index, FcitxSettingsItem *item)
 
     FcitxIMSettingsItem *mItem = dynamic_cast<FcitxIMSettingsItem *>(item);
     if (mItem) {
-        connect(mItem, &FcitxIMSettingsItem::itemClicked, [=](FcitxIMSettingsItem *myItem) {
+        connect(mItem, &FcitxIMSettingsItem::itemClicked, [=](FcitxIMSettingsItem *item) {
             int i = itemCount();
             for (int j = 0; j < i; ++j) {
-                if (this->getItem(j) != myItem) {
+                if (this->getItem(j) != item) {
                     FcitxIMSettingsItem *Titem = dynamic_cast<FcitxIMSettingsItem *>(this->getItem(j));
                     if (Titem) {
                         Titem->setItemSelected(false);
@@ -124,6 +124,10 @@ void FcitxSettingsGroup::insertItem(const int index, FcitxSettingsItem *item)
 void FcitxSettingsGroup::appendItem(FcitxSettingsItem *item)
 {
     insertItem(m_layout->count(), item);
+    FcitxIMActivityItem *mItem = dynamic_cast<FcitxIMActivityItem *>(item);
+    if (mItem) {
+        connect(mItem, &FcitxIMActivityItem::selectItem, this, &FcitxSettingsGroup::onSelectItem);
+    }
 }
 
 void FcitxSettingsGroup::appendItem(FcitxSettingsItem *item, BackgroundStyle bgStyle)
@@ -252,6 +256,20 @@ void FcitxSettingsGroup::switchItem(int start, int end)
     emit switchPosition(mCurrentItem->m_item, end);
 }
 
+void FcitxSettingsGroup::onSelectItem(FcitxSettingsItem *item)
+{
+    if (!item)
+        return;
+
+    for (int index = 0; index < itemCount(); index++) {
+        FcitxSettingsItem* sitem = qobject_cast<FcitxSettingsItem *>(m_layout->itemAt(index)->widget());
+        FcitxIMActivityItem *pItem = dynamic_cast<FcitxIMActivityItem*>(sitem);
+        if(pItem != item) {
+            pItem->setSelectStatus(false);
+        }
+    }
+}
+
 void FcitxSettingsGroup::setVerticalPolicy()
 {
     QSizePolicy policy;
@@ -336,7 +354,9 @@ void FcitxSettingsGroup::mouseReleaseEvent(QMouseEvent *event)
         count ++;
     }
     m_lastItem = nullptr;
-    switchItem(m_selectIndex,count);
+    if(m_selectIndex != count) {
+        switchItem(m_selectIndex,count);
+    }
     return QWidget::mouseReleaseEvent(event);
 }
 

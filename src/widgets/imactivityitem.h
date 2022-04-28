@@ -24,7 +24,7 @@
 #include "settingsitem.h"
 #include "labels/shortenlabel.h"
 #include "labels/clicklabel.h"
-#include <fcitxqtinputmethoditem.h>
+#include "publisher/publisherdef.h"
 #include <DToolButton>
 
 using namespace dcc_fcitx_configtool::widgets;
@@ -52,29 +52,32 @@ public:
         onlyoneItem = -2,
         otherItem = 1
     };
-    FcitxIMActivityItem(FcitxQtInputMethodItem item, itemPosition index, QWidget *parent = nullptr);
+    FcitxIMActivityItem(FcitxQtInputMethodItem *item, itemPosition index, QWidget *parent = nullptr);
     ~FcitxIMActivityItem() override;
     void editSwitch(const bool &flag);
     void setSelectStatus(const bool &flag);
     void setIndex(itemPosition i) {m_index = i;}
 signals:
-    void upBtnClicked(FcitxQtInputMethodItem);
-    void downBtnClicked(FcitxQtInputMethodItem);
-    void configBtnClicked(FcitxQtInputMethodItem);
-    void deleteBtnClicked(FcitxQtInputMethodItem);
+    void upBtnClicked(FcitxQtInputMethodItem*);
+    void downBtnClicked(FcitxQtInputMethodItem*);
+    void configBtnClicked(FcitxQtInputMethodItem*);
+    void deleteBtnClicked(FcitxQtInputMethodItem*);
+    void selectItem(FcitxSettingsItem * item);
 
 protected:
     void enterEvent(QEvent *event) override;
     void leaveEvent(QEvent *event) override;
     void paintEvent(QPaintEvent *event) override;
     void mouseMoveEvent(QMouseEvent *e) override;
+    void mousePressEvent(QMouseEvent *event) override;
+
 private slots:
     void onUpItem();
     void onDownItem();
     void onConfigItem();
     void onDeleteItem();
 public:
-    FcitxQtInputMethodItem m_item;
+    FcitxQtInputMethodItem *m_item;
     FcitxShortenLabel *m_labelText {nullptr};
     QHBoxLayout *m_layout {nullptr};
     DToolButton *m_upBtn {nullptr};

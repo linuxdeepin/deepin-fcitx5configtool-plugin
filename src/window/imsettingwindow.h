@@ -21,10 +21,11 @@
 #ifndef IMSETTINGWINDOW_H
 #define IMSETTINGWINDOW_H
 
-#include "fcitxInterface/global.h"
 #include <QWidget>
 #include <QVBoxLayout>
 #include <QPushButton>
+
+#include "publisher/publisherdef.h"
 
 namespace dcc_fcitx_configtool {
 namespace widgets {
@@ -46,11 +47,14 @@ class DFloatingButton;
 } // namespace Widget
 } // namespace Dtk
 
+class DBusProvider;
+class IMConfig;
+
 class IMSettingWindow : public QWidget
 {
     Q_OBJECT
 public:
-    explicit IMSettingWindow(QWidget *parent = nullptr);
+    explicit IMSettingWindow(DBusProvider* dbus, QWidget *parent = nullptr);
     virtual ~IMSettingWindow();
     void updateUI(); //刷新界面
 signals:
@@ -63,14 +67,14 @@ private:
     void initUI(); //初始化界面
     void initConnect(); //初始化信号槽
     void readConfig(); //读取配置文件
-    void itemSwap(const FcitxQtInputMethodItem &item, const bool &isUp = true);
+    void itemSwap(FcitxQtInputMethodItem* item, const bool &isUp = true);
 private slots:
     void onEditBtnClicked(const bool &flag); //启用编辑
-    void onCurIMChanged(const FcitxQtInputMethodItemList &list);
+    void onCurIMChanged(FcitxQtInputMethodItemList* list);
     void onAddBtnCilcked();
-    void onItemUp(const FcitxQtInputMethodItem &item);
-    void onItemDown(const FcitxQtInputMethodItem &item);
-    void onItemDelete(const FcitxQtInputMethodItem &item);
+    void onItemUp(FcitxQtInputMethodItem* item);
+    void onItemDown(FcitxQtInputMethodItem* item);
+    void onItemDelete(FcitxQtInputMethodItem* item);
     void doReloadConfigUI();
     void onReloadConnect();
 private:
@@ -83,6 +87,8 @@ private:
     Dtk::Widget::DCommandLinkButton* m_resetBtn {nullptr}; //重置输入法（快捷键）
     Dtk::Widget::DFloatingButton *m_addIMBtn {nullptr}; //添加输入法
     QVBoxLayout *m_mainLayout;
+    DBusProvider* m_dbus;
+    IMConfig *m_config;
 };
 
 #endif // IMSETTINGWINDOW_H

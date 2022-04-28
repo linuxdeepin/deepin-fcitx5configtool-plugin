@@ -62,12 +62,12 @@ void FcitxIMSettingsItem::setFcitxItem(const FcitxQtInputMethodItem &item)
 
 void FcitxIMSettingsItem::setFilterStr(QString str)
 {
-    if (!(m_item.name().indexOf(str, Qt::CaseInsensitive) != -1
+    /*if (!(m_item.name().indexOf(str, Qt::CaseInsensitive) != -1
           || m_item.uniqueName().indexOf(str, Qt::CaseInsensitive) != -1
           || m_item.langCode().indexOf(str, Qt::CaseInsensitive) != -1)) {
         this->hide();
         this->setVisible(false);
-    } else {
+    } else */{
         this->show();
         this->setVisible(true);
     }

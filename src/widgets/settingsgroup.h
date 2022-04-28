@@ -27,10 +27,10 @@
 #define SETTINGSGROUP_H
 
 #include <DBackgroundGroup>
-#include <fcitxqtinputmethoditem.h>
 #include <QFrame>
 #include <QTimer>
 #include <QDateTime>
+#include "publisher/publisherdef.h"
 
 #include "translucentframe.h"
 
@@ -80,13 +80,16 @@ public:
     QVBoxLayout *getLayout() const { return m_layout; }
     void switchItem(int start, int end);
     void setVerticalPolicy();
+    int selectIndex() {return m_selectIndex;}
 protected:
     virtual void mouseMoveEvent(QMouseEvent *event) override;
     virtual void mousePressEvent(QMouseEvent *event) override;
     virtual void mouseReleaseEvent(QMouseEvent *event) override;
+private slots:
+    void onSelectItem(FcitxSettingsItem *item);
 
 signals:
-    void switchPosition(FcitxQtInputMethodItem item, int end);
+    void switchPosition(FcitxQtInputMethodItem* item, int end);
 
 private:
     BackgroundStyle m_bgStyle {ItemBackground};

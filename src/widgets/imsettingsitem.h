@@ -24,7 +24,7 @@
 
 #include "settingsitem.h"
 #include "labels/shortenlabel.h"
-#include <fcitxqtinputmethoditem.h>
+#include "publisher/publisherdef.h"
 
 namespace dcc_fcitx_configtool {
 namespace widgets {

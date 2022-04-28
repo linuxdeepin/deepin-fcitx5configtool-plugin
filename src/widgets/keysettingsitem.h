@@ -27,8 +27,6 @@
 #include <QComboBox>
 #include <QPushButton>
 
-#include <fcitx/addon.h>
-
 using namespace Dtk::Widget;
 using namespace dcc_fcitx_configtool::widgets;
 namespace dcc_fcitx_configtool {
@@ -169,24 +167,24 @@ private:
 
 class FcitxCheckBoxSettingsItem : public FcitxSettingsItem
 {
-    typedef struct ConfigDescSet {
-        char *filename;
-        FcitxConfigFileDesc *cfdesc;
-        UT_hash_handle hh;
-    } ConfigDescSet;
+//    typedef struct ConfigDescSet {
+//        char *filename;
+//        FcitxConfigFileDesc *cfdesc;
+//        UT_hash_handle hh;
+//    } ConfigDescSet;
 
     Q_OBJECT
 public:
-    FcitxCheckBoxSettingsItem(FcitxAddon* addon, QWidget *parent = nullptr);
+    FcitxCheckBoxSettingsItem(/*FcitxAddon* addon, */QWidget *parent = nullptr);
     virtual ~FcitxCheckBoxSettingsItem() override;
 signals:
     void onChecked();
 
 private:
-    FcitxConfigFileDesc *getConfigDesc(char *filename);
+    //FcitxConfigFileDesc *getConfigDesc(char *filename);
 
 private:
-    ConfigDescSet* m_configDescSet;
+    //ConfigDescSet* m_configDescSet;
 };
 
 class FcitxGlobalSettingsItem : public FcitxSettingsItem

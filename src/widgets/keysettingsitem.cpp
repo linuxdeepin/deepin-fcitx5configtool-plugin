@@ -29,11 +29,10 @@
 #include <QLabel>
 #include <QBrush>
 #include <QProcess>
+#include <QKeyEvent>
 #include <QPainterPath>
 
-#include "fcitxInterface/global.h"
 #include "settingsgroup.h"
-#include "window/immodel/imconfig.h"
 #include "publisher/publisherdef.h"
 
 namespace dcc_fcitx_configtool {
@@ -147,7 +146,8 @@ bool FcitxKeyLabelWidget::eventFilter(QObject *watched, QEvent *event)
             return true;
         }
         if (event->type() == QEvent::KeyPress) {
-            Dynamic_Cast(QKeyEvent, e, event);
+           // Dynamic_Cast(QKeyEvent, e, event);
+            QKeyEvent* e = dynamic_cast<QKeyEvent*>(event);
 
             auto func = [=](QStringList &list, const QString &key) {
                 clearShortcutKey();
@@ -269,7 +269,7 @@ bool FcitxKeyLabelWidget::checkNewKey(bool isRelease)
                     }
 
                     QString configName;
-                    if (m_curlist != tmpList && !IMConfig::checkShortKey(m_newlist, configName)) {
+                    if (m_curlist != tmpList/* && !IMConfig::checkShortKey(m_newlist, configName)*/) {
                         emit shortCutError(m_newlist, configName);
                         return false;
                     }
@@ -292,7 +292,7 @@ bool FcitxKeyLabelWidget::checkNewKey(bool isRelease)
             tmpList.append(tmpKey);
         }
         QString configName;
-        if (m_curlist != tmpList && !IMConfig::checkShortKey(m_newlist, configName)) {
+        if (m_curlist != tmpList /*&& !IMConfig::checkShortKey(m_newlist, configName)*/) {
             emit shortCutError(m_newlist, configName);
             return false;
         }
@@ -550,37 +550,37 @@ FcitxComBoboxSettingsItem::~FcitxComBoboxSettingsItem()
 {
 }
 
-FcitxCheckBoxSettingsItem::FcitxCheckBoxSettingsItem(FcitxAddon *addon, QWidget *parent)
+FcitxCheckBoxSettingsItem::FcitxCheckBoxSettingsItem(QWidget *parent)
     : FcitxSettingsItem(parent)
 {
     QHBoxLayout* horizontalLayout = new QHBoxLayout(this);
     horizontalLayout->setContentsMargins(0, 0, 0, 0);
     QCheckBox *checkbox = new QCheckBox();
-    checkbox->setAccessibleName(addon->name);
+   // checkbox->setAccessibleName(addon->name);
     checkbox->setMaximumWidth(20);
     horizontalLayout->addSpacing(10);
     horizontalLayout->addWidget(checkbox, Qt::AlignLeft);
     horizontalLayout->addSpacing(10);
-    checkbox->setCheckState(addon->bEnabled ? Qt::Checked : Qt::Unchecked);
+    //checkbox->setCheckState(addon->bEnabled ? Qt::Checked : Qt::Unchecked);
     connect(checkbox, &QCheckBox::clicked, this, [=](bool value){
-        addon->bEnabled = value;
-        QString buf = QString("%1.conf").arg(addon->name);
-        FILE* fp = FcitxXDGGetFileUserWithPrefix("addon", buf.toLocal8Bit().constData(), "w", nullptr);
-        if (fp) {
-            fprintf(fp, "[Addon]\nEnabled=%s\n", addon->bEnabled ? "True" : "False");
-            fclose(fp);
-//            if(Fcitx::Global::instance()->inputMethodProxy() != nullptr) {
-//                Fcitx::Global::instance()->inputMethodProxy()->ReloadConfig();
-//            }
-            emit onChecked();
-        }
+//        addon->bEnabled = value;
+//        QString buf = QString("%1.conf").arg(addon->name);
+//        FILE* fp = FcitxXDGGetFileUserWithPrefix("addon", buf.toLocal8Bit().constData(), "w", nullptr);
+//        if (fp) {
+//            fprintf(fp, "[Addon]\nEnabled=%s\n", addon->bEnabled ? "True" : "False");
+//            fclose(fp);
+////            if(Fcitx::Global::instance()->inputMethodProxy() != nullptr) {
+////                Fcitx::Global::instance()->inputMethodProxy()->ReloadConfig();
+////            }
+//            emit onChecked();
+//        }
     });
 
     QHBoxLayout* hLayout2 = new QHBoxLayout();
     hLayout2->setContentsMargins(0, 0, 0, 0);
     hLayout2->setSpacing(0);
     QLabel* label2 = new QLabel();
-    label2->setText(addon->generalname);
+    //label2->setText(addon->generalname);
     QFont f;
     f.setPixelSize(13);
     f.setFamily("SourceHanSansSC");
@@ -588,29 +588,29 @@ FcitxCheckBoxSettingsItem::FcitxCheckBoxSettingsItem(FcitxAddon *addon, QWidget 
     label2->setFont(f);
     hLayout2->addWidget(label2, Qt::AlignLeft);
 
-    QString configDescName = QString(addon->name) + ".desc";
-    QByteArray configDescNamestr = configDescName.toLocal8Bit();
-    FcitxConfigFileDesc* cfdesc = getConfigDesc(configDescNamestr.data());
-    bool configurable = (cfdesc != nullptr || strlen(addon->subconfig) != 0);
-    if(!QString(addon->subconfig).isEmpty() || configurable) {
-        DCommandLinkButton* label = new DCommandLinkButton(tr("Configure"));
-        DFontSizeManager::instance()->bind(label, DFontSizeManager::T8);
-        hLayout2->addStretch();
-        hLayout2->addWidget(label);
-        hLayout2->addSpacing(8);
-        connect(label, &DCommandLinkButton::clicked, this, [=](){
-            if (QString(addon->name).contains("iflyime")) {
-                QProcess::startDetached("sh -c " + IMConfig::IMPluginKey("iflyime"));
-                return;
-            }
-            QProcess::startDetached("sh -c \"fcitx-config-gtk3 " + QString(addon->name) + "\"");
-        });
-    }
+//    QString configDescName = QString(addon->name) + ".desc";
+//    QByteArray configDescNamestr = configDescName.toLocal8Bit();
+//    FcitxConfigFileDesc* cfdesc = getConfigDesc(configDescNamestr.data());
+//    bool configurable = (cfdesc != nullptr || strlen(addon->subconfig) != 0);
+//    if(!QString(addon->subconfig).isEmpty() || configurable) {
+//        DCommandLinkButton* label = new DCommandLinkButton(tr("Configure"));
+//        DFontSizeManager::instance()->bind(label, DFontSizeManager::T8);
+//        hLayout2->addStretch();
+//        hLayout2->addWidget(label);
+//        hLayout2->addSpacing(8);
+//        connect(label, &DCommandLinkButton::clicked, this, [=](){
+//            if (QString(addon->name).contains("iflyime")) {
+//                QProcess::startDetached("sh -c " + IMConfig::IMPluginKey("iflyime"));
+//                return;
+//            }
+//            QProcess::startDetached("sh -c \"fcitx-config-gtk3 " + QString(addon->name) + "\"");
+//        });
+//    }
     QVBoxLayout *vlayout = new QVBoxLayout;
     vlayout->addSpacing(8);
     vlayout->addLayout(hLayout2);
     PushLable* label3 = new PushLable();
-    label3->setOriginText(addon->comment);
+    //label3->setOriginText(addon->comment);
     QFont f2;
     f2.setPixelSize(12);
     label3->setFont(f2);
@@ -624,27 +624,27 @@ FcitxCheckBoxSettingsItem::FcitxCheckBoxSettingsItem(FcitxAddon *addon, QWidget 
     this->setLayout(horizontalLayout);
 }
 
-FcitxConfigFileDesc *FcitxCheckBoxSettingsItem::getConfigDesc(char *filename)
-{
-    ConfigDescSet *desc = nullptr;
-    //HASH_FIND_STR(m_configDescSet, filename, desc);
-    if (!desc) {
-        FILE * tmpfp = FcitxXDGGetFileWithPrefix("configdesc", filename, "r", nullptr);
-        if (tmpfp) {
-            desc = static_cast<ConfigDescSet *>(malloc(sizeof(ConfigDescSet))) ;
-            memset(desc, 0 , sizeof(ConfigDescSet));
-            desc->filename = strdup(filename);
-            desc->cfdesc = FcitxConfigParseConfigFileDescFp(tmpfp);
-            fclose(tmpfp);
+//FcitxConfigFileDesc *FcitxCheckBoxSettingsItem::getConfigDesc(char *filename)
+//{
+//    ConfigDescSet *desc = nullptr;
+//    //HASH_FIND_STR(m_configDescSet, filename, desc);
+//    if (!desc) {
+//        FILE * tmpfp = FcitxXDGGetFileWithPrefix("configdesc", filename, "r", nullptr);
+//        if (tmpfp) {
+//            desc = static_cast<ConfigDescSet *>(malloc(sizeof(ConfigDescSet))) ;
+//            memset(desc, 0 , sizeof(ConfigDescSet));
+//            desc->filename = strdup(filename);
+//            desc->cfdesc = FcitxConfigParseConfigFileDescFp(tmpfp);
+//            fclose(tmpfp);
 
-           // HASH_ADD_KEYPTR(hh, m_configDescSet, desc->filename, strlen(desc->filename), desc);
-        } else {
-            return nullptr;
-        }
-    }
+//           // HASH_ADD_KEYPTR(hh, m_configDescSet, desc->filename, strlen(desc->filename), desc);
+//        } else {
+//            return nullptr;
+//        }
+//    }
 
-    return desc->cfdesc;
-}
+//    return desc->cfdesc;
+//}
 
 FcitxCheckBoxSettingsItem::~FcitxCheckBoxSettingsItem()
 {
