@@ -44,6 +44,8 @@ set(CMAKE_CXX_STANDARD 14)
 find_package(PkgConfig REQUIRED)
 find_package(DtkWidget REQUIRED)
 find_package(DtkCore REQUIRED)
+find_package(DtkCore REQUIRED)
+find_package(DtkCMake REQUIRED)
 find_package(DdeControlCenter REQUIRED)
 find_package(Qt5 COMPONENTS Core REQUIRED)
 find_package(Qt5 COMPONENTS Widgets REQUIRED)
@@ -84,6 +86,8 @@ FILE(GLOB_RECURSE HEAD_FILES
     ${CMAKE_CURRENT_SOURCE_DIR}/window/*.h
     ${CMAKE_CURRENT_SOURCE_DIR}/fcitxconfigplugin.h
     ${CMAKE_CURRENT_SOURCE_DIR}/publisher/*.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/addim/configlib/*.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/addim/widgetslib/*.h
 )
 
 FILE(GLOB_RECURSE SOURCE_FILES
@@ -92,8 +96,13 @@ FILE(GLOB_RECURSE SOURCE_FILES
     ${CMAKE_CURRENT_SOURCE_DIR}/window/*.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/fcitxconfigplugin.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/publisher/*.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/publisher/*.c
+    ${CMAKE_CURRENT_SOURCE_DIR}/addim/configlib/*.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/addim/configlib/*.c
+    ${CMAKE_CURRENT_SOURCE_DIR}/addim/widgetslib/*.cpp
 )
 
+include_directories(${CMAKE_CURRENT_SOURCE_DIR}/addim/configlib)
 
 FILE(GLOB_RECURSE TEST_HEAD_FILES
     ${CMAKE_CURRENT_SOURCE_DIR}/../tests/*.h)
@@ -113,6 +122,10 @@ set(TEST_SRCS
     ${TEST_SOURCE_FILES}
     )
 
+include_directories(${CMAKE_CURRENT_SOURCE_DIR}/addim/configlib)
+include_directories(${CMAKE_CURRENT_SOURCE_DIR}/publisher)
+include_directories(${CMAKE_CURRENT_SOURCE_DIR}/fcitx5Interface)
+
 add_executable(${PROJECT_NAME}
     ${ALL_SRCS}
     ${DTNG_QM_FILES}
@@ -125,6 +138,7 @@ add_executable(${PROJECT_NAME}
 #       # ${TS_DIR}/translations.qrc
 #        #${UI_HEADER_MOCK}
 #        )
+
 get_target_property(FCITX5_QT5_GUI_WRAPPER Fcitx5Qt5::gui-wrapper IMPORTED_LOCATION)
 #include("${FCITX_INSTALL_CMAKECONFIG_DIR}/Fcitx5Utils/Fcitx5CompilerSettings.cmake")
 target_include_directories(${PROJECT_NAME} PUBLIC

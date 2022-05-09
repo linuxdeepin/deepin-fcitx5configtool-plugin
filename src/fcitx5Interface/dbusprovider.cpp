@@ -6,8 +6,6 @@
  */
 #include "dbusprovider.h"
 
-
-
 DBusProvider::DBusProvider(QObject *parent)
     : QObject(parent)
     , watcher_(new FcitxQtWatcher(QDBusConnection::sessionBus(), this))
@@ -33,4 +31,3 @@ void DBusProvider::fcitxAvailabilityChanged(bool avail) {
 
     emit availabilityChanged(controller_);
 }
-

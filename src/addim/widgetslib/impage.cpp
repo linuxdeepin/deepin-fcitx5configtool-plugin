@@ -1,0 +1,359 @@
+/*
+ * SPDX-FileCopyrightText: 2012~2017 CSSlayer <wengxt@gmail.com>
+ *
+ * SPDX-License-Identifier: GPL-2.0-or-later
+ *
+ */
+
+#include "impage.h"
+#include "categoryhelper.h"
+#include "addim_model.h"
+#include "ui_impage.h"
+#include <QInputDialog>
+#include <QMessageBox>
+#include <QPainter>
+#include <QPaintEvent>
+#include <QPainterPath>
+#include <QStyledItemDelegate>
+#include <fcitxqtcontrollerproxy.h>
+#include <DDialog>
+DWIDGET_USE_NAMESPACE
+
+namespace fcitx {
+namespace addim {
+
+class IMDelegate : public QStyledItemDelegate {
+    Q_OBJECT
+public:
+    explicit IMDelegate(QObject *parent = 0);
+    virtual ~IMDelegate();
+
+    void paint(QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index) const override;
+    QSize sizeHint(const QStyleOptionViewItem &option, const QModelIndex &index) const override;
+};
+
+IMDelegate::IMDelegate(QObject *parent) : QStyledItemDelegate(parent) {}
+
+IMDelegate::~IMDelegate() {}
+
+void IMDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index) const {
+    if (index.data(FcitxRowTypeRole).toInt() == IMType) {
+        QStyledItemDelegate::paint(painter, option, index);
+        return;
+    }
+
+    paintCategoryHeader(painter, option, index);
+}
+
+QSize IMDelegate::sizeHint(const QStyleOptionViewItem &option, const QModelIndex &index) const {
+    if (index.data(FcitxRowTypeRole).toInt() == IMType) {
+        return QSize(0, 0);
+    }
+    else {
+        return categoryHeaderSizeHint();
+    }
+}
+
+class IMListDelegate : public QStyledItemDelegate
+{
+    Q_OBJECT
+public:
+    explicit IMListDelegate(QObject* parent = 0);
+    virtual ~IMListDelegate();
+
+    void paint(QPainter* painter, const QStyleOptionViewItem& option, const QModelIndex& index) const override;
+};
+
+IMListDelegate::IMListDelegate(QObject* parent) : QStyledItemDelegate(parent) {}
+
+IMListDelegate::~IMListDelegate() {}
+
+void IMListDelegate::paint(QPainter* painter, const QStyleOptionViewItem& option, const QModelIndex& index) const
+{
+    painter->save();
+    painter->setRenderHint(QPainter::Antialiasing);
+
+    bool useIM = index.data(FcitxUseIMRole).toBool();
+
+    QFont font(QApplication::font());
+    font.setBold(true);
+    font.setPixelSize(14);
+
+    QRectF rect;
+    rect.setX(option.rect.x());
+    rect.setY(option.rect.y());
+    rect.setWidth(option.rect.width() - 1);
+    rect.setHeight(option.rect.height() - 1);
+
+    const qreal radius = 7;
+    QPainterPath path;
+    path.moveTo(rect.topRight() - QPointF(radius, 0));
+    path.lineTo(rect.topLeft() + QPointF(radius, 0));
+    path.quadTo(rect.topLeft(), rect.topLeft() + QPointF(0, radius));
+    path.lineTo(rect.bottomLeft() + QPointF(0, -radius));
+    path.quadTo(rect.bottomLeft(), rect.bottomLeft() + QPointF(radius, 0));
+    path.lineTo(rect.bottomRight() - QPointF(radius, 0));
+    path.quadTo(rect.bottomRight(), rect.bottomRight() + QPointF(0, -radius));
+    path.lineTo(rect.topRight() + QPointF(0, radius));
+    path.quadTo(rect.topRight(), rect.topRight() + QPointF(-radius, -0));
+
+    if (useIM) {
+        painter->setPen(QPen(Qt::gray));
+        painter->fillPath(path, QBrush(Qt::white));
+    }
+    else {
+        if (option.state.testFlag(QStyle::State_Selected))
+        {
+            painter->setPen(QPen(Qt::white));
+            painter->fillPath(path, QBrush(QColor(25, 141, 255)));
+        }
+        else if (option.state.testFlag(QStyle::State_MouseOver))
+        {
+            painter->setPen(QPen(Qt::black));
+            painter->fillPath(path, QBrush(QColor(229, 229, 229)));
+        }
+        else {
+            painter->setPen(QPen(Qt::black));
+            painter->fillPath(path, QBrush(Qt::white));
+        }
+    }
+
+    painter->setFont(font);
+
+    auto value = index.data(Qt::DisplayRole);
+    if (value.isValid()) {
+        QRect textRect(option.rect);
+        textRect.setTop(textRect.top() + 8);
+        textRect.setLeft(textRect.left() + 8);
+        textRect.setHeight(20);
+        textRect.setRight(textRect.right() - 8);
+
+        QString text = value.toString();
+        painter->drawText(textRect, Qt::AlignLeft | Qt::AlignVCenter, text);
+    }
+
+    painter->restore();
+}
+
+IMPage::IMPage(DBusProvider *dbus, QWidget *parent)
+    : QWidget(parent)
+    , ui_(std::make_unique<Ui::IMPage>())
+    , m_dbus(dbus),
+      m_config(new IMConfig(dbus, IMConfig::Tree, this))
+{
+    ui_->setupUi(this);
+
+    connect(m_config, &IMConfig::changed, this, &IMPage::changed);
+    ui_->availIMView->setItemDelegate(new IMDelegate);
+    ui_->availIMView->setModel(m_config->availIMModel());
+
+    QFont font(QApplication::font());
+    font.setBold(true);
+    font.setPixelSize(14);
+    ui_->availIMView->setFont(font);
+    ui_->currentIMView->setItemDelegate(new IMListDelegate);
+    ui_->currentIMView->setModel(m_config->currentFilteredIMModel());
+
+    m_SearchEdit = new Dtk::Widget::DSearchEdit();
+    m_SearchEdit->setFixedHeight(270);
+    m_SearchEdit->setFixedHeight(36);
+    m_SearchEdit->lineEdit()->setMaxLength(256);
+
+    ui_->layout_search_edit->addWidget(m_SearchEdit);
+
+    ui_->layout_leftveiw_in->setParent(NULL);
+    BaseWidget* w_leftview = new BaseWidget("");
+    w_leftview->setFixedSize(290, 457);
+    w_leftview->setMinimumHeight(457);
+    w_leftview->setMaximumHeight(457);
+    w_leftview->setMinimumWidth(290);
+    w_leftview->setMaximumWidth(290);
+    w_leftview->setContentsMargins(0, 0, 0, 0);
+    w_leftview->setLayout(ui_->layout_leftveiw_in);
+    ui_->layout_leftview->addWidget(w_leftview);
+
+    ui_->layout_middleview_in->setParent(NULL);
+    ui_->layout_middleview->addLayout(ui_->layout_middleview_in);
+
+    ui_->layout_r_up_view->setParent(NULL);
+    BaseWidget* w_r_up_view = new BaseWidget("");
+    w_r_up_view->setFixedSize(350, 318);
+    w_r_up_view->setMinimumHeight(318);
+    w_r_up_view->setMaximumHeight(318);
+    w_r_up_view->setMinimumWidth(350);
+    w_r_up_view->setMaximumWidth(350);
+    w_r_up_view->setContentsMargins(0, 0, 0, 0);
+    w_r_up_view->setLayout(ui_->layout_r_up_view);
+    ui_->layout_rightview->addWidget(w_r_up_view);
+
+    ui_->layout_r_down_view->setParent(NULL);
+    BaseWidget* w_r_down_view = new BaseWidget("");
+    w_r_down_view->setFixedSize(350, 129);
+    w_r_down_view->setMinimumHeight(129);
+    w_r_down_view->setMaximumHeight(129);
+    w_r_down_view->setMinimumWidth(350);
+    w_r_down_view->setMaximumWidth(350);
+    w_r_down_view->setContentsMargins(0, 0, 0, 0);
+    w_r_down_view->setLayout(ui_->layout_r_down_view);
+    ui_->layout_rightview->addWidget(w_r_down_view);
+
+    QFont label_font(QApplication::font());
+    label_font.setPixelSize(12);
+    ui_->label_store_download->setFont(label_font);
+    ui_->label_store_download->setStyleSheet("color:rgb(36,80,255)");
+
+    QPalette palette = ui_->line->palette();
+    QColor outlineColor = QColor(0, 0, 0);
+    outlineColor.setAlphaF(0.15);
+    palette.setColor(QPalette::Dark, outlineColor);
+    ui_->line->setPalette(palette);
+
+    ui_->pb_add->setStyleSheet("color:rgb(0,129,255)");
+
+    connect(m_SearchEdit, &Dtk::Widget::DSearchEdit::textChanged, this,
+        [this](const QString& text) {
+            m_config->availIMModel()->setFilterText(text);
+        });
+
+    connect(ui_->availIMView->selectionModel(),
+            &QItemSelectionModel::currentChanged, this,
+            &IMPage::availIMSelectionChanged);
+    connect(ui_->currentIMView->selectionModel(),
+            &QItemSelectionModel::currentChanged, this,
+            &IMPage::currentIMCurrentChanged);
+    connect(m_config, &IMConfig::imListChanged, this,
+            &IMPage::currentIMCurrentChanged);
+    connect(m_config, &IMConfig::imListChanged, this,
+            &IMPage::availIMSelectionChanged);
+    connect(ui_->defaultLayoutButton, &QPushButton::clicked, this,
+            &IMPage::selectDefaultLayout);
+    connect(ui_->availIMView, &QListView::clicked, this, &IMPage::clickAvailIM);
+    connect(ui_->currentIMView, &QListView::clicked, this, &IMPage::clickCurrentIM);
+
+    connect(ui_->pb_close, &QPushButton::clicked, this, &IMPage::clickedCloseButton);
+    connect(ui_->pb_add, &QPushButton::clicked, this, &IMPage::clickedAddButton);
+
+    currentIMCurrentChanged();
+    availIMSelectionChanged();
+}
+
+IMPage::~IMPage() {}
+
+void IMPage::save() {
+    checkDefaultLayout();
+    m_config->saveSelectedIM(m_currentIMIndex);
+}
+
+void IMPage::load() {
+    m_config->load();
+}
+
+void IMPage::defaults() {}
+
+void IMPage::availIMSelectionChanged() {
+}
+
+void IMPage::currentIMCurrentChanged() {
+}
+
+void IMPage::selectCurrentIM(const QModelIndex &index) {
+    ui_->currentIMView->selectionModel()->setCurrentIndex(index, QItemSelectionModel::ClearAndSelect);
+}
+
+void IMPage::clickCurrentIM(const QModelIndex& index)
+{
+	m_currentIMIndex = index.row();
+	printf("m_currentIMIndex [%d]\n", m_currentIMIndex);
+}
+
+void IMPage::clickAvailIM(const QModelIndex &index)
+{
+    addIM(index);
+}
+
+void IMPage::selectDefaultLayout() {
+}
+
+void IMPage::selectAvailIM(const QModelIndex &index) {
+    ui_->availIMView->selectionModel()->setCurrentIndex(
+        m_config->availIMModel()->mapFromSource(index),
+        QItemSelectionModel::ClearAndSelect);
+}
+
+void IMPage::clickAddIM() { addIM(ui_->availIMView->currentIndex()); }
+
+void IMPage::checkDefaultLayout() {
+    const auto &imEntries = m_config->currentIMEntries();
+    if (imEntries.size() > 0 &&
+        imEntries[0].key() !=
+            QString("keyboard-%0").arg(m_config->defaultLayout()) &&
+        imEntries[0].key().startsWith("keyboard-")) {
+        auto layoutString = imEntries[0].key().mid(9);
+    }
+}
+
+void IMPage::clickedCloseButton() {
+    emit closeAddIMWindow();
+}
+
+void IMPage::clickedAddButton() {
+    save();
+    emit closeAddIMWindow();
+}
+
+void IMPage::addIM(const QModelIndex &index) { m_config->addSelectedIM(index); }
+
+void IMPage::moveUpIM() {
+    QModelIndex curIndex = ui_->currentIMView->currentIndex();
+    if (!curIndex.isValid() || curIndex.row() == 0) {
+        return;
+    }
+    QModelIndex nextIndex =
+        m_config->currentFilteredIMModel()->index(curIndex.row() - 1, 0);
+    if (!nextIndex.isValid()) {
+        return;
+    }
+    m_config->move(curIndex.row(), curIndex.row() - 1);
+    currentIMCurrentChanged();
+}
+
+void IMPage::moveDownIM() {
+    QModelIndex curIndex = ui_->currentIMView->currentIndex();
+    if (!curIndex.isValid()) {
+        return;
+    }
+    QModelIndex nextIndex = m_config->currentFilteredIMModel()->index(curIndex.row() + 1, 0);
+    if (!nextIndex.isValid()) {
+        return;
+    }
+    m_config->move(curIndex.row(), curIndex.row() + 1);
+    currentIMCurrentChanged();
+}
+
+BaseWidget::BaseWidget(const QString& text, QWidget* parent, Qt::WindowFlags f)
+	: QWidget(parent, f)
+{
+}
+
+void BaseWidget::paintEvent(QPaintEvent* e)
+{
+    QPainter painter(this);
+    const int radius = 8;
+    QRect paintRect = e->rect();
+    QPainterPath path;
+    path.moveTo(paintRect.bottomRight() - QPoint(0, radius));
+    path.lineTo(paintRect.topRight() + QPoint(0, radius));
+    path.arcTo(QRect(QPoint(paintRect.topRight() - QPoint(radius * 2, 0)), QSize(radius * 2, radius * 2)), 0, 90);
+    path.lineTo(paintRect.topLeft() + QPoint(radius, 0));
+    path.arcTo(QRect(QPoint(paintRect.topLeft()), QSize(radius * 2, radius * 2)), 90, 90);
+    path.lineTo(paintRect.bottomLeft() - QPoint(0, radius));
+    path.arcTo(QRect(QPoint(paintRect.bottomLeft() - QPoint(0, radius * 2)), QSize(radius * 2, radius * 2)), 180, 90);
+    path.lineTo(paintRect.bottomLeft() + QPoint(radius, 0));
+    path.arcTo(QRect(QPoint(paintRect.bottomRight() - QPoint(radius * 2, radius * 2)), QSize(radius * 2, radius * 2)), 270, 90);
+    painter.fillPath(path, QBrush(Qt::white));
+}
+
+}
+}
+
+#include "impage.moc"

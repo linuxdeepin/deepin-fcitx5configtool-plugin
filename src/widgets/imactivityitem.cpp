@@ -26,7 +26,6 @@
 #include <DGuiApplicationHelper>
 #include <QTimer>
 #include <QPainterPath>
-#include <QGSettings>
 #include "window/settingsdef.h"
 using namespace Dtk::Widget;
 namespace dcc_fcitx_configtool {
@@ -152,7 +151,7 @@ void FcitxIMActivityItem::paintEvent(QPaintEvent *event)
         DPalette p;
         QColor color = Qt::red;
         if(1) {
-            color = QColor("#323232");
+            color = QColor("#f2f2f2");
             color.setAlpha(230);
         } else {
             color = QColor("#323232");
@@ -177,11 +176,11 @@ void FcitxIMActivityItem::mousePressEvent(QMouseEvent *event)
 {
     Q_UNUSED(event);
     emit selectItem(this);
-    setSelectStatus(true);
+   // setSelectStatus(true);
     return FcitxSettingsItem::mousePressEvent(event);
 }
 
-void FcitxIMActivityItem::setSelectStatus(const bool &isEnter)
+void FcitxIMActivityItem::setSelectStatus(const bool &isEnter, int index, int count)
 {
 //    if (!m_bgGroup)
 //        return;
@@ -191,10 +190,6 @@ void FcitxIMActivityItem::setSelectStatus(const bool &isEnter)
         m_isEnter = false;
     }
     if (!m_isEdit && isEnter) {
-        int index/* = IMModel::instance()->getIMIndex(m_item)*/;
-        int count/* = IMModel::instance()->getCurIMList().count()*/;
-
-
         if (count <= 1) {
             m_upBtn->setEnabled(false);
             m_downBtn->setEnabled(false);
@@ -208,13 +203,13 @@ void FcitxIMActivityItem::setSelectStatus(const bool &isEnter)
         m_configBtn->show();
         m_upBtn->show();
         m_downBtn->show();
-        update();
+        //update();
     } else {
         m_configBtn->hide();
         m_upBtn->hide();
         m_downBtn->hide();
     }
-    this->update(rect());
+    //this->update(rect());
 }
 
 void FcitxIMActivityItem::onUpItem()
