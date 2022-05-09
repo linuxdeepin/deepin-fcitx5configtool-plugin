@@ -265,7 +265,9 @@ void FcitxSettingsGroup::onSelectItem(FcitxSettingsItem *item)
         FcitxSettingsItem* sitem = qobject_cast<FcitxSettingsItem *>(m_layout->itemAt(index)->widget());
         FcitxIMActivityItem *pItem = dynamic_cast<FcitxIMActivityItem*>(sitem);
         if(pItem != item) {
-            pItem->setSelectStatus(false);
+            pItem->setSelectStatus(false, index, itemCount());
+        } else {
+            pItem->setSelectStatus(true, index, itemCount());
         }
     }
 }

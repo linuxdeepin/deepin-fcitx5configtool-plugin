@@ -1,14 +1,15 @@
-/*
+﻿/*
  * SPDX-FileCopyrightText: 2020~2020 CSSlayer <wengxt@gmail.com>
  *
  * SPDX-License-Identifier: GPL-2.0-or-later
  *
  */
-#ifndef CONFIGLIB_ABSTRACTIMPAGE_H
-#define CONFIGLIB_ABSTRACTIMPAGE_H
+#ifndef IMCONFIG_H
+#define IMCONFIG_H
 
 #include <QDBusPendingCallWatcher>
 #include <QObject>
+#include "dbusprovider.h"
 #include <fcitxqtdbustypes.h>
 
 #include "publisher/publisherdef.h"
@@ -28,6 +29,9 @@ public:
     IMConfig(DBusProvider *dbus, ModelMode mode, QObject *parent);
     ~IMConfig();
 
+    void testAddIMDeal(int imIndex);
+
+    FilteredIMModel *currentFilteredIMModel() const { return m_currentIMModel; }
     FcitxQtInputMethodItemList *currentIMModel() const { return m_currentInputMethodList; }
     IMProxyModel *availIMModel() const { return availIMModel_; }
     const QStringList &groups() const { return groups_; }
@@ -38,6 +42,9 @@ public:
     //void addIM(FcitxQtInputMethodItem* item);
     //void removeIM(int index);
 
+    void addSelectedIM(const QModelIndex& index);
+
+    const auto& currentIMEntries() const { return m_currentIMEntries; }
     const auto &imEntries() const { return imEntries_; }
     void setIMEntries(const FcitxQtStringKeyValueList &imEntires) {
         imEntries_ = imEntires;
@@ -66,16 +73,20 @@ public:
 
     void emitChanged();
 
+    void load_test_data();
+
     FcitxQtInputMethodItemList* getFcitxQtInputMethodItemList() {return m_currentInputMethodList;}
 
 public slots:
     void addGroup(const QString &name);
     void deleteGroup(const QString &name);
     void save();
+    void saveSelectedIM(int imIndex);
     void load();
     void defaults();
     //void addIM(int index);
     void addIM(FcitxQtInputMethodItem* item);
+    void addSelectedIM(int index);
     void removeIM(int index);
     void move(int from, int to);
 
@@ -85,6 +96,7 @@ signals:
     void groupsChanged(const QStringList &groups);
     void imListChanged();
     void defaultLayoutChanged();
+    void addIMSignal(int imIndex);
 
 private slots:
     void availabilityChanged();
@@ -105,11 +117,17 @@ private:
     IMConfigModelInterface *internalAvailIMModel_ = nullptr;
     FcitxQtInputMethodItemList *m_currentInputMethodList;
     QString defaultLayout_;
+
+    FilteredIMModel *m_currentIMModel;
+    FcitxQtStringKeyValueList m_currentIMEntries;
+
     FcitxQtStringKeyValueList imEntries_;
     FcitxQtInputMethodEntryList allIMs_;
     QStringList groups_;
     QString lastGroup_;
     bool needSave_ = false;
+
+    int m_mode;
 };
 
-#endif // CONFIGLIB_ABSTRACTIMPAGE_H
+#endif

@@ -29,8 +29,12 @@
 #include "publisher/publisherdef.h"
 #include "fcitx5Interface/imconfig.h"
 #include "widgets/contentwidget.h"
+#include "addim/widgetslib/addim_window.h"
 #include "settingsdef.h"
+#include "addim/widgetslib/addim_window.h"
 
+#include <DWidgetUtil>
+#include <DWidgetUtil>
 #include <DFloatingButton>
 #include <DFontSizeManager>
 #include <DCommandLinkButton>
@@ -39,6 +43,8 @@
 #include <QPushButton>
 #include <QEvent>
 #include <libintl.h>
+
+DWIDGET_USE_NAMESPACE
 
 using namespace dcc_fcitx_configtool::widgets;
 IMSettingWindow::IMSettingWindow(DBusProvider* dbus, QWidget *parent)
@@ -59,10 +65,10 @@ void IMSettingWindow::initUI()
 {
     //创建标题
     auto newTitleHead = [this](QString str, bool isEdit = false) {
-        FcitxSettingsHead *head = new FcitxSettingsHead();
+        FcitxSettingsHead *head = new FcitxSettingsHead(isEdit);
         head->setParent(this);
         head->setTitle(str);
-        head->setDeleteEnable(isEdit);
+        //head->setDeleteEnable(isEdit);
         head->layout()->setContentsMargins(10, 4, 10, 0);
         if (isEdit) {
             m_editHead = head;
@@ -73,30 +79,24 @@ void IMSettingWindow::initUI()
             this->onItemDelete(m_config->getFcitxQtInputMethodItemList()->at(index));
         });
 
+        connect(head, &FcitxSettingsHead::addBtnClicked, this, [=]() {
+           printf("addBtnClicked.\n");
+           fcitx::addim::AddIMWindow mainWindow(m_dbus, nullptr);
+           Dtk::Widget::moveToCenter(&mainWindow);
+           mainWindow.exec();
+        });
+
         return head;
     };
 
     m_mainLayout = new QVBoxLayout();
-    QWidget *mainWidget = new QWidget(this);
-    m_mainLayout->addWidget(mainWidget);
-    m_mainLayout->setMargin(0);
-    m_mainLayout->setSpacing(0);
-    setLayout(m_mainLayout);
 
-    //界面布局
-    QVBoxLayout *subLayout = new QVBoxLayout(mainWidget);
-    subLayout->setContentsMargins(0, 4, 0, 20);
-    subLayout->setSpacing(0);
 
     //滑动窗口
-    FcitxContentWidget* scrollArea = new FcitxContentWidget(this);
 
-    QWidget* scrollAreaWidgetContents = new QWidget(scrollArea);
-    QVBoxLayout *scrollAreaLayout = new QVBoxLayout(scrollAreaWidgetContents);
+    QVBoxLayout *scrollAreaLayout = new QVBoxLayout(this);
     scrollAreaLayout->setContentsMargins(10, 0, 10, 0);
     scrollAreaLayout->setSpacing(0);
-    scrollArea->setContent(scrollAreaWidgetContents);
-    scrollAreaWidgetContents->setLayout(scrollAreaLayout);
 
     //输入法管理 编辑按钮
     m_IMListGroup = new FcitxSettingsGroup();
@@ -120,6 +120,7 @@ void IMSettingWindow::initUI()
     //~ child_page Manage Input Methods
     m_advSetKey = new QPushButton(tr("Advanced Settings"));
     m_advSetKey->setAccessibleName("Advanced Settings");
+    m_advSetKey->setMaximumWidth(214);
     m_shortcutGroup->appendItem(m_imSwitchCbox);
     m_shortcutGroup->appendItem(m_defaultIMKey);
 
@@ -130,46 +131,23 @@ void IMSettingWindow::initUI()
     scrollAreaLayout->addWidget(newTitleHead(tr("Manage Input Methods"), true));
     scrollAreaLayout->addSpacing(10);
     scrollAreaLayout->addWidget(m_IMListGroup);
-    scrollAreaLayout->addSpacing(20);
 
     //QHBoxLayout 存放m_resetBtn和Shortcuts标题两个控件
-    QHBoxLayout *m_shortcutLayout = new QHBoxLayout();
+    QHBoxLayout *shortcutLayout = new QHBoxLayout();
     //下面两行注释,和第三行文案有关联是控制中心搜索规范快捷键规范.不可以修改,不可以移动位置,下面三行要在一起
     //~ contents_path /keyboard/Manage Input Methods
     //~ child_page Manage Input Methods
     QWidget *pWidget = newTitleHead(tr("Shortcuts"));
-    m_shortcutLayout->addWidget(pWidget);
-    m_shortcutLayout->addWidget(m_resetBtn,0,Qt::AlignRight | Qt::AlignBottom);
-    scrollAreaLayout->addLayout(m_shortcutLayout);
+    shortcutLayout->addWidget(pWidget);
+    shortcutLayout->addWidget(m_resetBtn, 0, Qt::AlignRight | Qt::AlignBottom);
+    scrollAreaLayout->addLayout(shortcutLayout);
     scrollAreaLayout->addSpacing(10);
     scrollAreaLayout->addWidget(m_shortcutGroup);
-    scrollAreaLayout->addSpacing(40);
-    scrollAreaLayout->addStretch(1);
-    scrollAreaLayout->addWidget(m_advSetKey);
-    scrollAreaLayout->addSpacing(100);
-    scrollAreaLayout->addStretch(1);
-
-    //添加界面按钮
-    m_addIMBtn = new DFloatingButton(DStyle::SP_IncreaseElement, this);
-    //下面两行注释,和第三行文案有关联是控制中心搜索规范快捷键规范.不可以修改,不可以移动位置,下面三行要在一起
-    //~ contents_path /keyboard/Manage Input Methods
-    //~ child_page Manage Input Methods
-    m_addIMBtn->setToolTip(tr("Add Input Method"));
-    m_addIMBtn->setAccessibleName("AddInputMethod");
-    m_addIMBtn->setMaximumHeight(50);
-    QHBoxLayout *headLayout = new QHBoxLayout(this);
-    headLayout->setMargin(0);
-    headLayout->setSpacing(0);
-    headLayout->addItem(new QSpacerItem(40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum));
-    headLayout->addWidget(m_addIMBtn);
-    headLayout->addItem(new QSpacerItem(40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum));
+    scrollAreaLayout->addSpacing(20);
+    scrollAreaLayout->addWidget(m_advSetKey, 0, Qt::AlignHCenter);
 
     //添加至主界面内
-    subLayout->addWidget(scrollArea, 50);
-    //subLayout->addSpacing(17);
-    //subLayout->addStretch();
-    subLayout->addLayout(headLayout);
-
+    setLayout(scrollAreaLayout);
     readConfig();
 }
 
@@ -258,7 +236,7 @@ void IMSettingWindow::itemSwap(FcitxQtInputMethodItem* item, const bool &isUp)
         m_config->move(row, row + 1);
     }
 
-    t->setSelectStatus(false);
+    t->setSelectStatus(false, row, m_config->getFcitxQtInputMethodItemList()->count());
     int count = m_IMListGroup->indexOf(t);
     if(count == 0) {
         t->setIndex(FcitxIMActivityItem::firstItem);
@@ -268,7 +246,7 @@ void IMSettingWindow::itemSwap(FcitxQtInputMethodItem* item, const bool &isUp)
         t->setIndex(FcitxIMActivityItem::otherItem);
     }
     Dynamic_Cast_CheckNull(FcitxIMActivityItem, t2, m_IMListGroup->getItem(row));
-    t2->setSelectStatus(true);
+    t2->setSelectStatus(true, row, m_config->getFcitxQtInputMethodItemList()->count());
 
     int count2 = m_IMListGroup->indexOf(t2);
     if(count2 == 0) {
@@ -316,6 +294,9 @@ void IMSettingWindow::onCurIMChanged(FcitxQtInputMethodItemList* list)
         connect(tmp, &FcitxIMActivityItem::upBtnClicked, this, &IMSettingWindow::onItemUp);
         connect(tmp, &FcitxIMActivityItem::downBtnClicked, this, &IMSettingWindow::onItemDown);
         connect(tmp, &FcitxIMActivityItem::deleteBtnClicked, this, &IMSettingWindow::onItemDelete);
+        connect(tmp, &FcitxIMActivityItem::selectItem, this, [=](){
+            m_editHead->setDeleteEnable(true);
+        });
         //tmp->editSwitch(IMModel::instance()->isEdit());
         m_IMListGroup->appendItem(tmp);
         tmp->repaint();

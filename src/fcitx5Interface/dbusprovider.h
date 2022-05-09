@@ -12,6 +12,7 @@
 #include <fcitxqtwatcher.h>
 
 using namespace fcitx;
+
 class DBusProvider : public QObject {
     Q_OBJECT
 
@@ -33,5 +34,4 @@ private:
     FcitxQtControllerProxy *controller_ = nullptr;
 };
 
-
-#endif // DBUSPROVIDER_H
+#endif

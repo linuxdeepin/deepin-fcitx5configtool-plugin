@@ -37,7 +37,7 @@
 using namespace dcc_fcitx_configtool::widgets;
 DWIDGET_USE_NAMESPACE
 
-FcitxSettingsHead::FcitxSettingsHead(QFrame *parent)
+FcitxSettingsHead::FcitxSettingsHead(bool isEdit, QFrame *parent)
     : FcitxSettingsItem(parent)
     , m_title(new FcitxTitleLabel)
     , m_deleteBtn(new DCommandLinkButton(""))
@@ -45,9 +45,7 @@ FcitxSettingsHead::FcitxSettingsHead(QFrame *parent)
     , m_state(Cancel)
 {
     m_title->setObjectName("SettingsHeadTitle");
-    m_deleteBtn->setText(qApp->translate("FcitxSettingsHead", "del"));
-    m_deleteBtn->setEnabled(false);
-    m_addBtn->setText(qApp->translate("FcitxSettingsHead", "add"));
+
     DFontSizeManager::instance()->bind(m_title, DFontSizeManager::T5, QFont::DemiBold);
     QHBoxLayout *mainLayout = new QHBoxLayout;
     mainLayout->setMargin(0);
@@ -55,18 +53,25 @@ FcitxSettingsHead::FcitxSettingsHead(QFrame *parent)
     mainLayout->setContentsMargins(0, 0, 10, 0);
     mainLayout->addWidget(m_title);
     mainLayout->addStretch();
-    mainLayout->addWidget(m_deleteBtn);
-    mainLayout->addWidget(m_addBtn);
+    if(isEdit) {
+        m_deleteBtn->setText(qApp->translate("FcitxSettingsHead", "del"));
+        m_deleteBtn->setEnabled(false);
+        m_addBtn->setText(qApp->translate("FcitxSettingsHead", "add"));
+        mainLayout->addWidget(m_deleteBtn);
+        mainLayout->addWidget(m_addBtn);
+    }
 
     setLayout(mainLayout);
 
-    connect(m_deleteBtn, &DCommandLinkButton::clicked, this, &FcitxSettingsHead::deleteBtnClicked);
+    connect(m_deleteBtn, &DCommandLinkButton::clicked, this, [=](){
+        emit deleteBtnClicked();
+        m_deleteBtn->setEnabled(false);
+    });
     connect(m_addBtn, &DCommandLinkButton::clicked, this, &FcitxSettingsHead::addBtnClicked);
 }
 
 FcitxSettingsHead::~FcitxSettingsHead()
 {
-    delete m_gsetting;
 }
 
 void FcitxSettingsHead::setTitle(const QString &title)

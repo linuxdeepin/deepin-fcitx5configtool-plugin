@@ -33,7 +33,6 @@
 DWIDGET_BEGIN_NAMESPACE
 class DCommandLinkButton;
 DWIDGET_END_NAMESPACE
-class QGSettings;
 namespace dcc_fcitx_configtool {
 namespace widgets {
 
@@ -50,7 +49,7 @@ public:
     };
 
 public:
-    explicit FcitxSettingsHead(QFrame *parent = nullptr);
+    explicit FcitxSettingsHead(bool isEdit = false, QFrame *parent = nullptr);
     ~FcitxSettingsHead();
 
     void setTitle(const QString &title);
@@ -66,7 +65,6 @@ private:
     DTK_WIDGET_NAMESPACE::DCommandLinkButton *m_deleteBtn;
     DTK_WIDGET_NAMESPACE::DCommandLinkButton *m_addBtn;
     bool m_editVisible;
-    QGSettings *m_gsetting;
     State m_state;
 };
 

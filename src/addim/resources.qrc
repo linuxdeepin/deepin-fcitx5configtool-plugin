@@ -1,0 +1,7 @@
+<RCC>
+    <qresource prefix="/">
+        <file>img/check_ok.png</file>
+        <file>img/title_img.png</file>
+        <file>icons/deepin/builtin/icons/dcc_chineseime_32px.svg</file>
+    </qresource>
+</RCC>
