@@ -1,7 +1,7 @@
-﻿#include <stdio.h>
+﻿#include "imelog.h"
+#include "osastroper.h"
+#include <stdio.h>
 #include <string.h>
-#include "ime_log.h"
-#include "osa_str_oper.h"
 
 #define EC_SUCCESS    0
 #define OSA_MAX_BUF_SIZE    1024
@@ -10,7 +10,7 @@
 不是返回-1，是返回开始存在的那个位
 start是包括0的，这是数组的下标
 */
-int osa_is_sub(int start, const char *str, const char *sub)
+int osaIsSub(int start, const char *str, const char *sub)
 {
 	int i;
 	int k;
@@ -41,14 +41,14 @@ int osa_is_sub(int start, const char *str, const char *sub)
 	return -1;
 }
 
-char * osa_str_to_token(char *str, const char *delim, char **saveptr)
+char * osaStrToToken(char *str, const char *delim, char **saveptr)
 {
 	int pos;
 
 	if (str == NULL){
 		str = *saveptr;
 	}
-	pos = osa_is_sub(0, str, delim);
+	pos = osaIsSub(0, str, delim);
 	if (pos != -1) {/* 说明找到分隔符位置了 */
 		str[pos] = '\0';
 		*saveptr = &str[pos + strlen(delim)];
@@ -64,18 +64,18 @@ char * osa_str_to_token(char *str, const char *delim, char **saveptr)
 过程：以delim为分隔符，切分src_str字符串到pp_token中，切分token_count-1次
 返回值：返回切分的元素个数
 */
-int osa_split_str_to_token(char *src_str, const char *delim, char **pp_token, int token_count)
+int osaSplitStrToToken(char *src_str, const char *delim, char **pp_token, int token_count)
 {
 	char *saveptr;
 	int   i;
 
 	i = 0;
-	pp_token[i] = osa_str_to_token(src_str, delim, &saveptr);
+	pp_token[i] = osaStrToToken(src_str, delim, &saveptr);
 	while (pp_token[i] != NULL)
 	{
 		if (++i >= token_count)
 			break;
-		pp_token[i] = osa_str_to_token(NULL, delim, &saveptr);
+		pp_token[i] = osaStrToToken(NULL, delim, &saveptr);
 	}
 
 	return i;
@@ -85,7 +85,7 @@ int osa_split_str_to_token(char *src_str, const char *delim, char **pp_token, in
 返回子串个数，不存在子串返回0
 start是包括0的，这是数组的下标
 */
-int osa_get_sub_count(int start, const char *str, const char *sub)
+int osaGetSubCount(int start, const char *str, const char *sub)
 {
 	int i;
 	int k;
@@ -118,13 +118,13 @@ int osa_get_sub_count(int start, const char *str, const char *sub)
 	return count;
 }
 
-int osa_calculate_replace_length(const char *src_str, const char *old_str, const char *new_str, int max)
+int osaCalculateReplaceLength(const char *src_str, const char *old_str, const char *new_str, int max)
 	/* max为最大替换次数（max为-1，计算全部可替换字符串） */
 {
 	int count = 0;
 	int time = 0;/* 次数 */
 
-	count = osa_get_sub_count(0, src_str, old_str);
+	count = osaGetSubCount(0, src_str, old_str);
 	if (max != -1 && count >= max){
 		time = max;
 	}
@@ -140,7 +140,7 @@ int osa_calculate_replace_length(const char *src_str, const char *old_str, const
  max为最大替换次数（max为-1，替换全部可替换字符串）
  dst_str字符串尾端不会增加'\0'
 */
-int osa_replace_str(const char *src_str, char *dst_str, const char *old_str, const char *new_str, int max)
+int osaReplaceStr(const char *src_str, char *dst_str, const char *old_str, const char *new_str, int max)
 {
 	int src_i = 0;
 	int src_j = 0;
@@ -151,7 +151,7 @@ int osa_replace_str(const char *src_str, char *dst_str, const char *old_str, con
 	int src_str_len = strlen(src_str);
 
 	while (src_i < src_str_len) {
-		pos = osa_is_sub(src_i, src_str, old_str);
+		pos = osaIsSub(src_i, src_str, old_str);
 		if (pos == -1) {/* 如果没有子字符串了，拷贝剩余数据 */
 			for (src_j = src_i; src_j < src_str_len; src_j++) {/*strcpy(dst_str + dst_i, src_str + src_j);*/
 				dst_str[dst_i++] = src_str[src_j];
@@ -179,7 +179,7 @@ int osa_replace_str(const char *src_str, char *dst_str, const char *old_str, con
 	return count;
 }
 
-int osa_trim_str(char* str)
+int osaTrimStr(char* str)
 {
 	long i, j, str_len;
 	char temp[128];
@@ -220,7 +220,7 @@ int maxNum = -1
 maxNum表示max num，指定要取得的内容数量的上限
 此函数返回获得的数据个数
 */
-int osa_take_tag_text_from_file(const char *file_path, const char *before_tag, const char *after_tag, char *text_list, int text_size, int max_num)
+int osaTakeTagTextFromFile(const char *file_path, const char *before_tag, const char *after_tag, char *text_list, int text_size, int max_num)
 {
 	int balance = 0;/*表示标签的数目*/
 
@@ -238,7 +238,7 @@ int osa_take_tag_text_from_file(const char *file_path, const char *before_tag, c
 	FILE *fp = NULL;
 	fp = fopen(file_path, "rb");
 	if (!fp) {
-		osa_log_error(LOG_EXPANDED_NAME, LOG_EXPANDED_NUM, "ERROR: the file [%s] was not opened.\n", file_path);
+		osaLogError(LOG_EXPANDED_NAME, LOG_EXPANDED_NUM, "ERROR: the file [%s] was not opened.\n", file_path);
 		return balance;
 	}
 
@@ -310,7 +310,6 @@ int osa_take_tag_text_from_file(const char *file_path, const char *before_tag, c
 						context[ci] = after_tag[0];
 						ci++;
 						context[ci] = '\0';/*用于安全检测*/
-						//【【处理】】这种处理不是较好的（这样会抛弃一部分数据）
 						/*if (Echeck.error_strlength(context, conLen - 10, _T("S_Sentence::TakeTagInToLinkFromFile()"), "0") == 1) { ai = 0; break; }*/
 
 						ai = 0;
@@ -327,7 +326,6 @@ int osa_take_tag_text_from_file(const char *file_path, const char *before_tag, c
 				context[ci] = element[0];
 				ci++;
 				context[ci] = '\0';/*用于安全检测*/
-				//【【处理】】这种处理不是较好的（这样会抛弃一部分数据）
 				/*if (Echeck.error_strlength(Context, ConL - 10, _T("S_Sentence::TakeTagInToLinkFromFile()"), "0") == 1) { Ci = 0; break; }*/
 			}
 		}
@@ -365,7 +363,7 @@ int maxNum = -1
 maxNum表示max num，指定要取得的内容数量的上限
 此函数返回获得的数据个数
 */
-int osa_take_tag_text_from_str(const char *text, const char *before_tag, const char *after_tag, char *text_list, int text_size, int max_num)
+int osaTakeTagTextFromStr(const char *text, const char *before_tag, const char *after_tag, char *text_list, int text_size, int max_num)
 
 {
 	int balance = 0;/*表示标签的数目*/

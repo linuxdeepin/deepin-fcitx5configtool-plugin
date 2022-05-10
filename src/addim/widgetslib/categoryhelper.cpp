@@ -5,7 +5,7 @@
  *
  */
 #include "glo.h"
-#include "ime_log.h"
+#include "imelog.h"
 #include "categoryhelper.h"
 #include <QApplication>
 #include <QPainterPath>
@@ -16,7 +16,12 @@ namespace addim {
 static constexpr int SPACING = 0;
 static constexpr int HEIGHT_EXTEND = 20;
 
-int g_select_row = -1;
+int g_selectRow = -1;
+
+void setSelectCategoryRow(int selectRow)
+{
+	g_selectRow = selectRow;
+}
 
 void paintCategoryHeader(QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index) {
 
@@ -68,7 +73,7 @@ void paintCategoryHeader(QPainter *painter, const QStyleOptionViewItem &option, 
             painter->fillPath(path, QBrush(QColor(229, 229, 229)));
         }
         else {
-            if (g_select_row != -1 && g_select_row == row) {
+            if (g_selectRow != -1 && g_selectRow == row) {
                 painter->fillPath(path, QBrush(QColor(229, 229, 229)));
             }
             else {
@@ -96,10 +101,10 @@ void paintCategoryHeader(QPainter *painter, const QStyleOptionViewItem &option, 
             QRect radioRec(optRect.right() - 30, optRect.top() + (optRect.height() - 32) / 2, 32, 32);
             QPixmap pix(":/img/check_ok.png");
             painter->drawPixmap(radioRec, pix);
-            g_select_row = row;
+            g_selectRow = row;
         }
         else {
-            if (g_select_row != -1 && g_select_row == row) {
+            if (g_selectRow != -1 && g_selectRow == row) {
                 QRect radioRec(optRect.right() - 30, optRect.top() + (optRect.height() - 32) / 2, 32, 32);
                 QPixmap pix(":/img/check_ok.png");
                 painter->drawPixmap(radioRec, pix);

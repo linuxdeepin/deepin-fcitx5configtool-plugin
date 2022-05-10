@@ -29,11 +29,9 @@
 #include "publisher/publisherdef.h"
 #include "fcitx5Interface/imconfig.h"
 #include "widgets/contentwidget.h"
-#include "addim/widgetslib/addim_window.h"
 #include "settingsdef.h"
 #include "addim/widgetslib/addim_window.h"
 
-#include <DWidgetUtil>
 #include <DWidgetUtil>
 #include <DFloatingButton>
 #include <DFontSizeManager>
@@ -80,10 +78,10 @@ void IMSettingWindow::initUI()
         });
 
         connect(head, &FcitxSettingsHead::addBtnClicked, this, [=]() {
-           printf("addBtnClicked.\n");
-           fcitx::addim::AddIMWindow mainWindow(m_dbus, nullptr);
-           Dtk::Widget::moveToCenter(&mainWindow);
-           mainWindow.exec();
+            printf("addBtnClicked.\n");
+            fcitx::addim::AddIMWindow mainWindow(m_dbus, nullptr);
+            Dtk::Widget::moveToCenter(&mainWindow);
+            mainWindow.exec();
         });
 
         return head;

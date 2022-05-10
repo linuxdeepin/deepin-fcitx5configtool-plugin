@@ -1,4 +1,4 @@
-﻿#include "ime_log.h"
+﻿#include "imelog.h"
 
 #include <stdio.h>
 #include <stdarg.h>
@@ -35,7 +35,6 @@ static const int ERRNO_EFAILED       = -28;
 static const int ERRNO_EFORCEJUMP    = -29;
 
 #ifdef WIN32
-
 typedef void *HANDLE;
 typedef HANDLE sem_t;
 typedef struct __osa_sem_t
@@ -49,7 +48,7 @@ typedef int clockid_t;
 #define MAX_SEM_VALUE     99999999
 #define CLOCK_REALTIME    1
 
-static int osa_clock_gettime(clockid_t clk_id, struct timespec *tp)
+static int osaClockGettime(clockid_t clk_id, struct timespec *tp)
 {
 	SYSTEMTIME st;
 	struct tm stm;
@@ -70,7 +69,7 @@ static int osa_clock_gettime(clockid_t clk_id, struct timespec *tp)
 	return 0;
 }
 
-static int osa_sem_init(osa_sem_t *sem, int pshared, unsigned int value)
+static int osaSemInit(osa_sem_t *sem, int pshared, unsigned int value)
 {
 	sem->sem = CreateSemaphore(NULL, value, MAX_SEM_VALUE, NULL);
 	if (sem->sem == NULL)
@@ -78,13 +77,13 @@ static int osa_sem_init(osa_sem_t *sem, int pshared, unsigned int value)
 	return 0;
 }
 
-static int osa_sem_destroy(osa_sem_t *sem)
+static int osaSemDestroy(osa_sem_t *sem)
 {
 	CloseHandle(sem->sem);
 	return 0;
 }
 
-static int osa_sem_wait(osa_sem_t *sem)
+static int osaSemWait(osa_sem_t *sem)
 {
 	DWORD dwWaitResult;
 
@@ -96,7 +95,7 @@ static int osa_sem_wait(osa_sem_t *sem)
 	return -1;
 }
 
-static int osa_sem_post(osa_sem_t *sem)
+static int osaSemPost(osa_sem_t *sem)
 {
 	ReleaseSemaphore(sem->sem, 1, NULL);
 	return 0;
@@ -111,7 +110,7 @@ typedef struct __osa_sem_t
 	char obj_name[32];
 }osa_sem_t;
 
-static int osa_sem_init(osa_sem_t *sem_st, int pshared, unsigned int value)
+static int osaSemInit(osa_sem_t *sem_st, int pshared, unsigned int value)
 {
 #ifdef __MAC__
 	char sem_name[36] = { 0 };
@@ -135,7 +134,7 @@ static int osa_sem_init(osa_sem_t *sem_st, int pshared, unsigned int value)
 	return 0;
 }
 
-static int osa_sem_wait(osa_sem_t *sem_st)
+static int osaSemWait(osa_sem_t *sem_st)
 {
 	int result;
 
@@ -148,11 +147,11 @@ static int osa_sem_wait(osa_sem_t *sem_st)
 	if (result == 0)
 		return 0;
 
-	/*printf("osa_sem_wait error [%d]\n", errno);*/
+	/*printf("osaSemWait error [%d]\n", errno);*/
 	return -1;
 }
 
-static int osa_sem_destroy(osa_sem_t *sem_st)
+static int osaSemDestroy(osa_sem_t *sem_st)
 {
 	int result;
 #ifdef __MAC__
@@ -167,7 +166,7 @@ static int osa_sem_destroy(osa_sem_t *sem_st)
 	return -1;
 }
 
-static int osa_sem_post(osa_sem_t *sem_st)
+static int osaSemPost(osa_sem_t *sem_st)
 {
 	int result;
 
@@ -180,7 +179,7 @@ static int osa_sem_post(osa_sem_t *sem_st)
 	if (result == 0)
 		return 0;
 
-	/*printf("osa_sem_post error [%d]\n", errno);*/
+	/*printf("osaSemPost error [%d]\n", errno);*/
 	return -1;
 }
 
@@ -191,7 +190,7 @@ static int osa_sem_post(osa_sem_t *sem_st)
  * <	函数参数：path_name，路径名。路径名要处理特殊字符，以保证目录正确性
  * <	返回值：0成功，<  0  失败
  */
-int osa_log_create_dir(char* path_name)
+int osaLogCreateDir(char* path_name)
 {
 	int i = 0;
 	int len = 0;
@@ -256,10 +255,10 @@ static char      g_osa_log_module[32] = { 0 };
 #define MAX_DATA_LEN         1024
 #define MAX_FILE_SIZE        64 * 1024 * 1024
 
-static int osa_open_log_file(const char *expanded_name, int expanded_num)
+static int osaOpenLogFile(const char *expanded_name, int expanded_num)
 {
-	int          file_len;
-	char   log_file_name[128];
+	int  file_len;
+	char log_file_name[128];
 
 	g_osa_log_file_no[expanded_num] = g_osa_log_file_no[expanded_num] % 3 + 1;
 	sprintf(log_file_name, "%s_%s_%03d.log", g_osa_log_file_prefix, expanded_name, g_osa_log_file_no[expanded_num]);
@@ -289,19 +288,19 @@ static int osa_open_log_file(const char *expanded_name, int expanded_num)
 	return ERRNO_ESUCCESS;
 }
 
-static int osa_write_error_file(const char *data_name, char *data, const char *expanded_name, int expanded_num)
+static int osaWriteErrorFile(const char *data_name, char *data, const char *expanded_name, int expanded_num)
 {
 #if 1
 	int file_len;
 
-	osa_sem_wait(&g_osa_log_lock);
+	osaSemWait(&g_osa_log_lock);
 
 	if (!g_osa_log_open_flag[expanded_num])
-		osa_open_log_file(expanded_name, expanded_num);
+		osaOpenLogFile(expanded_name, expanded_num);
 
 	if (!g_osa_log_open_flag[expanded_num])
 	{
-		osa_sem_post(&g_osa_log_lock);
+		osaSemPost(&g_osa_log_lock);
 		return ERRNO_ESUCCESS;
 	}
 
@@ -316,26 +315,26 @@ static int osa_write_error_file(const char *data_name, char *data, const char *e
 		g_osa_log_open_flag[expanded_num] = FALSE;
 	}
 
-	osa_sem_post(&g_osa_log_lock);
+	osaSemPost(&g_osa_log_lock);
 #endif
 
 	return ERRNO_ESUCCESS;
 }
 
-static int osa_write_error_file_ex(char *data_name, const char *data, int data_size, const char *expanded_name, int expanded_num)
+static int osaWriteErrorFileEx(char *data_name, const char *data, int data_size, const char *expanded_name, int expanded_num)
 {
 #if 1
 	static char buf[128];
 	int file_len;
 
-	osa_sem_wait(&g_osa_log_lock);
+	osaSemWait(&g_osa_log_lock);
 
 	if (!g_osa_log_open_flag[expanded_num])
-		osa_open_log_file(expanded_name, expanded_num);
+		osaOpenLogFile(expanded_name, expanded_num);
 
 	if (!g_osa_log_open_flag[expanded_num])
 	{
-		osa_sem_post(&g_osa_log_lock);
+		osaSemPost(&g_osa_log_lock);
 		return ERRNO_ESUCCESS;
 	}
 
@@ -355,18 +354,18 @@ static int osa_write_error_file_ex(char *data_name, const char *data, int data_s
 		g_osa_log_open_flag[expanded_num] = FALSE;
 	}
 
-	osa_sem_post(&g_osa_log_lock);
+	osaSemPost(&g_osa_log_lock);
 #endif
 
 	return ERRNO_ESUCCESS;
 }
 
-BOOL is_leap_year(int year)
+BOOL isLeapYear(int year)
 {
 	return (year % 400 == 0) || (year % 4 == 0 && year % 100 != 0);
 }
 
-void nolocks_localtime(struct tm *tmp, time_t t, time_t tz, int dst) {
+void nolocksLocaltime(struct tm *tmp, time_t t, time_t tz, int dst) {
 	const time_t secs_min  = 60;
 	const time_t secs_hour = 3600;
 	const time_t secs_day  = 3600 * 24;
@@ -388,7 +387,7 @@ void nolocks_localtime(struct tm *tmp, time_t t, time_t tz, int dst) {
 	tmp->tm_year = 1970;
 	while (1) {
 		/* Leap years have one day more. */
-		time_t days_this_year = 365 + is_leap_year(tmp->tm_year);
+		time_t days_this_year = 365 + isLeapYear(tmp->tm_year);
 		if (days_this_year > days) break;
 		days -= days_this_year;
 		tmp->tm_year++;
@@ -399,7 +398,7 @@ void nolocks_localtime(struct tm *tmp, time_t t, time_t tz, int dst) {
 	To do * so we need to skip days according to how many days there are in each * month,
 	and adjust for the leap year that has one more day in February. */
 	int mdays[12] = { 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 };
-	mdays[1] += is_leap_year(tmp->tm_year);
+	mdays[1] += isLeapYear(tmp->tm_year);
 
 	tmp->tm_mon = 0;
 	while (days >= mdays[tmp->tm_mon]) {
@@ -430,7 +429,7 @@ void nolocks_localtime(struct tm *tmp, time_t t, time_t tz, int dst) {
 #ifndef USE_SYSTEM_TIME
 int g_osa_time_millis_code = 0;
 DateTime g_osa_dt = { 0 };
-void osa_get_time_str(char *time_str)
+void osaGetTimeStr(char *time_str)
 {
 	int64 timestamp;
 	DateTime dt;
@@ -452,17 +451,17 @@ void osa_get_time_str(char *time_str)
 }
 
 #else
-void osa_get_time_str(char *time_str)
+void osaGetTimeStr(char *time_str)
 {
 	struct timespec ts_now;
 	struct tm       s_tm;
 #ifdef WIN32
-	osa_clock_gettime(CLOCK_REALTIME, &ts_now);
+	osaClockGettime(CLOCK_REALTIME, &ts_now);
 #else
 	clock_gettime(CLOCK_REALTIME, &ts_now);
 #endif
 	/*ptm = localtime(&ts_now.tv_sec);*/
-	nolocks_localtime(&s_tm, ts_now.tv_sec, 0, 8);
+	nolocksLocaltime(&s_tm, ts_now.tv_sec, 0, 8);
 	sprintf(time_str, "<%4d%02d%02d%02d%02d%02d.%03ld>[t %lu][p %d]:", s_tm.tm_year + 1900, s_tm.tm_mon + 1, s_tm.tm_mday,
 		s_tm.tm_hour, s_tm.tm_min, s_tm.tm_sec, ts_now.tv_nsec / 1000000,
 		GET_PTHREAD, GET_PID);
@@ -470,7 +469,7 @@ void osa_get_time_str(char *time_str)
 #endif
 
 /*only internal use*/
-int osa_log_output(int log_level, const char *expanded_name, int expanded_num, char *log_content)
+int osaLogOutput(int log_level, const char *expanded_name, int expanded_num, char *log_content)
 {
 	static char data[1024]   = { 0 };
 	char        time_str[128] = { 0 };
@@ -484,20 +483,20 @@ int osa_log_output(int log_level, const char *expanded_name, int expanded_num, c
 	if (g_osa_log_module_name[0])
 		strcat(data_name, g_osa_log_module_name);
 
-	osa_get_time_str(time_str);
+	osaGetTimeStr(time_str);
 
 	strncpy(data, time_str, sizeof(time_str));
 	strcat(data, log_content);
 
 	printf(data);
 
-	osa_write_error_file(data_name, data, expanded_name, expanded_num);
-	/*osa_write_error_file_ex(data_name, data);*/
+	osaWriteErrorFile(data_name, data, expanded_name, expanded_num);
+	/*osaWriteErrorFileEx(data_name, data);*/
 
 	return ERRNO_ESUCCESS;
 }
 
-int osa_log_output_ex(int log_level, const char *expanded_name, int expanded_num, char *log_content, int log_size)
+int osaLogOutputEx(int log_level, const char *expanded_name, int expanded_num, char *log_content, int log_size)
 {
 	static char data[1024];
 	char        time_str[32];
@@ -513,19 +512,19 @@ int osa_log_output_ex(int log_level, const char *expanded_name, int expanded_num
 		strcat(data_name, g_osa_log_module_name);
 	}
 
-	osa_get_time_str(time_str);
+	osaGetTimeStr(time_str);
 	memset(data, 0, sizeof(data));
 	strncpy(data, time_str, sizeof(time_str));
 	data_len = strlen(data);
 	memcpy(data + data_len, log_content, log_size);
 	data_len += log_size;
 
-	osa_write_error_file_ex(data_name, data, data_len, expanded_name, expanded_num);
+	osaWriteErrorFileEx(data_name, data, data_len, expanded_name, expanded_num);
 
 	return ERRNO_ESUCCESS;
 }
 
-int osa_log_printf(int log_level, const char *file, const char *function,
+int osaLogPrintf(int log_level, const char *file, const char *function,
 	long line, const char *expanded_name, int expanded_num, const char * fmt, ...)
 {
 	/*
@@ -539,8 +538,8 @@ int osa_log_printf(int log_level, const char *file, const char *function,
 	va_list args;
 
 	if (!g_osa_log_init_flag) {
-		osa_log_init(OSA_LOG_DEBUG, (char *)OSA_LOG_DIR);
-		osa_log_info(LOG_EXPANDED_NAME, LOG_EXPANDED_NUM,
+		osaLogInit(OSA_LOG_DEBUG, (char *)OSA_LOG_DIR);
+		osaLogInfo(LOG_EXPANDED_NAME, LOG_EXPANDED_NUM,
 			"\nOSSP LOG VERSION [%s]\n", DEBUG_LOG_VERSIN);
 	}
 
@@ -574,7 +573,7 @@ int osa_log_printf(int log_level, const char *file, const char *function,
 	str_len = strlen(sz_info);
 	if (str_len >= MAX_DATA_LEN - 32)
 	{
-		osa_write_error_file((char *)"big_data_info", sz_info, expanded_name, expanded_num);
+		osaWriteErrorFile((char *)"big_data_info", sz_info, expanded_name, expanded_num);
 		return ERRNO_EINVALIDPARAM;
 	}
 
@@ -584,10 +583,10 @@ int osa_log_printf(int log_level, const char *file, const char *function,
 		sz_info[str_len + 1] = 0;
 	}
 
-	return osa_log_output(log_level, expanded_name, expanded_num, sz_info);
+	return osaLogOutput(log_level, expanded_name, expanded_num, sz_info);
 }
 
-int osa_log_printf_ex(int log_level, const char *file, const char *function,
+int osaLogPrintfEx(int log_level, const char *file, const char *function,
 	long line, const char *expanded_name, int expanded_num, const char * log_text, int log_size)
 {
 	static char info[64 * 1024];
@@ -603,7 +602,7 @@ int osa_log_printf_ex(int log_level, const char *file, const char *function,
 	sprintf(info, "%s:%ld %s ", file, line, function);
 	info_len = strlen(info);
 	if ((int)(sizeof(info) - info_len - 1) < log_size) {
-		osa_write_error_file_ex("big_data_info", log_text, log_size, expanded_name, expanded_num);
+		osaWriteErrorFileEx("big_data_info", log_text, log_size, expanded_name, expanded_num);
 		return ERRNO_EINVALIDPARAM;
 	}
 
@@ -612,7 +611,7 @@ int osa_log_printf_ex(int log_level, const char *file, const char *function,
 
 	if (info_len >= MAX_DATA_LEN - 32)
 	{
-		osa_write_error_file_ex("big_data_info", info, info_len, expanded_name, expanded_num);
+		osaWriteErrorFileEx("big_data_info", info, info_len, expanded_name, expanded_num);
 		return ERRNO_EINVALIDPARAM;
 	}
 
@@ -622,10 +621,10 @@ int osa_log_printf_ex(int log_level, const char *file, const char *function,
 		info[info_len + 1] = 0;
 	}
 
-	return osa_log_output_ex(log_level, expanded_name, expanded_num, info, info_len);
+	return osaLogOutputEx(log_level, expanded_name, expanded_num, info, info_len);
 }
 
-int osa_log_close()
+int osaLogClose()
 {
 	int i;
 	int count;
@@ -634,7 +633,7 @@ int osa_log_close()
 		return ERRNO_ESUCCESS;
 	}
 
-	osa_sem_wait(&g_osa_log_lock);
+	osaSemWait(&g_osa_log_lock);
 	count = sizeof(g_osa_log_open_flag) / sizeof(BOOL);
 	for (i = 0; i < count; i++) {
 		if (g_osa_log_open_flag[i]) {
@@ -643,13 +642,13 @@ int osa_log_close()
 			g_osa_log_file_no[i] = 0;
 		}
 	}
-	osa_sem_post(&g_osa_log_lock);
-	osa_sem_destroy(&g_osa_log_lock);
+	osaSemPost(&g_osa_log_lock);
+	osaSemDestroy(&g_osa_log_lock);
 	g_osa_log_init_flag = 0;
 	return ERRNO_ESUCCESS;
 }
 
-int osa_log_force_close()
+int osaLogForceClose()
 {
 	int i;
 	int count;
@@ -658,7 +657,7 @@ int osa_log_force_close()
 		return ERRNO_ESUCCESS;
 	}
 
-	/*osa_sem_wait(&g_osa_log_lock);*/
+	/*osaSemWait(&g_osa_log_lock);*/
 	count = sizeof(g_osa_log_open_flag) / sizeof(BOOL);
 	for (i = 0; i < count; i++) {
 		if (g_osa_log_open_flag[i]) {
@@ -667,18 +666,18 @@ int osa_log_force_close()
 			g_osa_log_file_no[i] = 0;
 		}
 	}
-	/*osa_sem_post(&g_osa_log_lock);*/
-	osa_sem_destroy(&g_osa_log_lock);
+	/*osaSemPost(&g_osa_log_lock);*/
+	osaSemDestroy(&g_osa_log_lock);
 	g_osa_log_init_flag = 0;
 	return ERRNO_ESUCCESS;
 }
 
-int osa_log_is_init()
+int osaLogIsInit()
 {
 	return g_osa_log_init_flag;
 }
 
-int osa_log_init(int log_level, const char *error_file_prefix)
+int osaLogInit(int log_level, const char *error_file_prefix)
 {
 	char    *module_name;
 	int      module_name_offset = 1;
@@ -714,7 +713,7 @@ int osa_log_init(int log_level, const char *error_file_prefix)
 
 	g_osa_log_level = log_level;
 
-	osa_sem_init(&g_osa_log_lock, 0, 1);
+	osaSemInit(&g_osa_log_lock, 0, 1);
 
 	g_osa_log_init_flag = 1;
 
@@ -729,7 +728,7 @@ int osa_log_init(int log_level, const char *error_file_prefix)
 		memcpy(g_osa_log_path, g_osa_log_file_prefix, strlen(g_osa_log_file_prefix));
 	}
 
-	osa_log_create_dir(g_osa_log_path);
+	osaLogCreateDir(g_osa_log_path);
 #if 0
 	cqWCHAR wFullPath[CQ_MAX_ABS_PATH] = { 0 };
 	cq_decodeUtf8(g_sys_navigation_debug_log_path, strlen(g_sys_navigation_debug_log_path), wFullPath, sizeof(wFullPath) - sizeof(cqWCHAR));

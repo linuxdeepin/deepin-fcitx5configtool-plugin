@@ -102,8 +102,6 @@ FILE(GLOB_RECURSE SOURCE_FILES
     ${CMAKE_CURRENT_SOURCE_DIR}/addim/widgetslib/*.cpp
 )
 
-include_directories(${CMAKE_CURRENT_SOURCE_DIR}/addim/configlib)
-
 FILE(GLOB_RECURSE TEST_HEAD_FILES
     ${CMAKE_CURRENT_SOURCE_DIR}/../tests/*.h)
 

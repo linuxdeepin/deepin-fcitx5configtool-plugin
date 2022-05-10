@@ -21,6 +21,7 @@ enum {
     FcitxIMConfigurableRole,
     FcitxIMLayoutRole,
 
+    FcitxLanguageCode,
     FcitxUseIMLanguageRole,
     FcitxRowIndexRole,
     FcitxUseIMRole,
@@ -67,6 +68,7 @@ public:
 
     void getInputMethodEntryList(int row, FcitxQtStringKeyValueList& imNameList);
     void getInputMethodEntryList(int row, FcitxQtStringKeyValueList& imNameList, FcitxQtStringKeyValueList& useIMList);
+    void getInputMethodEntryList(int row, FcitxQtStringKeyValueList& imNameList, FcitxQtStringKeyValueList& useIMList, QString matchStr);
     bool existUseIMEntryList(int row, FcitxQtStringKeyValueList& useIMList) const;
 
 protected:

@@ -4,12 +4,15 @@
  * SPDX-License-Identifier: GPL-2.0-or-later
  */
 #include "glo.h"
-#include "ime_log.h"
+#include "imelog.h"
 #include "addim_model.h"
 #include <QCollator>
 #include <QLocale>
 #include <QSize>
 #include <fcitx-utils/i18n.h>
+
+#include <DPinyin>
+DCORE_USE_NAMESPACE
 
 CategorizedItemModel::CategorizedItemModel(QObject *parent)
     : QAbstractItemModel(parent) {
@@ -151,6 +154,9 @@ QVariant AvailIMModel::dataForCategory(const QModelIndex &index, int role) const
     case FcitxLanguageRole:
         return m_filteredIMEntryList[index.row()].first;
 
+    case FcitxLanguageCode:
+        return m_filteredIMEntryList[index.row()].second.at(0).languageCode();
+
     case FcitxIMUniqueNameRole:
         return QString();
 
@@ -191,7 +197,7 @@ QVariant AvailIMModel::dataForItem(const QModelIndex &index, int role) const {
         return imEntry.languageCode();
 
     default:
-        osa_log_info(LOG_EXPANDED_NAME, LOG_EXPANDED_NUM, "NOTICE: role is not exist.\n");
+        osaLogInfo(LOG_EXPANDED_NAME, LOG_EXPANDED_NUM, "NOTICE: role is not exist.\n");
     }
     return QVariant();
 }
@@ -273,12 +279,12 @@ void AvailIMModel::filterIMEntryList(
 void AvailIMModel::getInputMethodEntryList(int row, FcitxQtStringKeyValueList& imNameList)
 {
     FcitxQtInputMethodEntryList imEntryList = m_filteredIMEntryList[row].second;
-    osa_log_info(LOG_EXPANDED_NAME, LOG_EXPANDED_NUM, "imEntryList size() [%d]\n", imEntryList.size());
+    osaLogInfo(LOG_EXPANDED_NAME, LOG_EXPANDED_NUM, "imEntryList size() [%d]\n", imEntryList.size());
     for (FcitxQtInputMethodEntry& im : imEntryList) {
         FcitxQtStringKeyValue imEntry;
         QString uniqueName = im.uniqueName();
 
-        osa_log_info(LOG_EXPANDED_NAME, LOG_EXPANDED_NUM, "uniqueName [%s]\n", uniqueName.toStdString().c_str());
+        osaLogInfo(LOG_EXPANDED_NAME, LOG_EXPANDED_NUM, "uniqueName [%s]\n", uniqueName.toStdString().c_str());
 
         imEntry.setKey(im.uniqueName());
         imNameList.push_back(imEntry);
@@ -294,16 +300,16 @@ void AvailIMModel::getInputMethodEntryList(int row, FcitxQtStringKeyValueList& i
         FcitxQtStringKeyValue imEntry;
         QString uniqueName = im.uniqueName();
 
-        osa_log_info(LOG_EXPANDED_NAME, LOG_EXPANDED_NUM, "uniqueName [%s]\n", uniqueName.toStdString().c_str());
+        osaLogInfo(LOG_EXPANDED_NAME, LOG_EXPANDED_NUM, "uniqueName [%s]\n", uniqueName.toStdString().c_str());
 
         auto iter = std::find_if(useIMList.begin(), useIMList.end(),
             [&im](const FcitxQtStringKeyValue& item) {
-                osa_log_info(LOG_CFGTOOL_NAME, LOG_CFGTOOL_NUM, "----> item.key() [%s], im.uniqueName() [%s], = [%d]\n",
+                osaLogInfo(LOG_CFGTOOL_NAME, LOG_CFGTOOL_NUM, "----> item.key() [%s], im.uniqueName() [%s], = [%d]\n",
                     item.key().toStdString().c_str(), im.uniqueName().toStdString().c_str(), item.key() == im.uniqueName());
                 return item.key() == im.uniqueName();
             });
         if (iter != useIMList.end()) {
-            osa_log_info(LOG_CFGTOOL_NAME, LOG_CFGTOOL_NUM, "----> im.uniqueName() [%s], is true. iter [%p], useIMList_.end() [%p]\n",
+            osaLogInfo(LOG_CFGTOOL_NAME, LOG_CFGTOOL_NUM, "----> im.uniqueName() [%s], is true. iter [%p], useIMList_.end() [%p]\n",
                 im.uniqueName().toStdString().c_str(), iter, useIMList.end());
 
             imEntry.setKey(im.uniqueName());
@@ -316,6 +322,40 @@ void AvailIMModel::getInputMethodEntryList(int row, FcitxQtStringKeyValueList& i
     }
 
     imNameList.append(nouseIMNameList);
+}
+
+void AvailIMModel::getInputMethodEntryList(int row, FcitxQtStringKeyValueList& imNameList, FcitxQtStringKeyValueList& useIMList, QString matchStr)
+{
+    int loc = 0;
+    QString entry_name;
+    FcitxQtInputMethodEntryList imEntryList = m_filteredIMEntryList[row].second;
+    for (FcitxQtInputMethodEntry& im : imEntryList) {
+        FcitxQtStringKeyValue imEntry;
+        QString uniqueName = im.uniqueName();
+
+        osaLogInfo(LOG_EXPANDED_NAME, LOG_EXPANDED_NUM, "uniqueName [%s]\n", uniqueName.toStdString().c_str());
+
+        auto iter = std::find_if(useIMList.begin(), useIMList.end(),
+            [&im](const FcitxQtStringKeyValue& item) {
+                osaLogInfo(LOG_CFGTOOL_NAME, LOG_CFGTOOL_NUM, "----> item.key() [%s], im.uniqueName() [%s], = [%d]\n",
+                    item.key().toStdString().c_str(), im.uniqueName().toStdString().c_str(), item.key() == im.uniqueName());
+                return item.key() == im.uniqueName();
+            });
+        if (iter != useIMList.end()) {
+        }
+        else {
+            entry_name = im.name();
+            loc = entry_name.indexOf("键盘 - ");
+            if (loc != -1) {
+                entry_name = entry_name.mid(loc + 5, -1);
+            }
+
+            if (entry_name.contains(matchStr, Qt::CaseInsensitive)) {
+                imEntry.setKey(im.uniqueName());
+                imNameList.push_back(imEntry);
+            }
+        }
+    }
 }
 
 bool AvailIMModel::existUseIMEntryList(int row, FcitxQtStringKeyValueList& useIMList) const
@@ -343,7 +383,7 @@ void IMProxyModel::setShowOnlyCurrentLanguage(bool show) {
 }
 
 void IMProxyModel::filterIMEntryList(const FcitxQtInputMethodEntryList &imEntryList, const FcitxQtStringKeyValueList &enabledIMList) {
-    osa_log_info(LOG_CFGTOOL_NAME, LOG_CFGTOOL_NUM, "====>\n");
+    osaLogInfo(LOG_CFGTOOL_NAME, LOG_CFGTOOL_NUM, "====>\n");
 
     m_languageSet.clear();
 
@@ -360,7 +400,7 @@ void IMProxyModel::filterIMEntryList(const FcitxQtInputMethodEntryList &imEntryL
         }
     }
     invalidate();
-    osa_log_info(LOG_CFGTOOL_NAME, LOG_CFGTOOL_NUM, "<====\n");
+    osaLogInfo(LOG_CFGTOOL_NAME, LOG_CFGTOOL_NUM, "<====\n");
 }
 
 bool IMProxyModel::filterAcceptsRow(int source_row, const QModelIndex &source_parent) const {
@@ -424,13 +464,13 @@ bool IMProxyModel::lessThan(const QModelIndex &left, const QModelIndex &right) c
 }
 
 int IMProxyModel::compareCategories(const QModelIndex &left, const QModelIndex &right) const {
-    QString l, r;
+    QString en_l, en_r;
     QString c_l = left.data(FcitxLanguageRole).toString();
     QString c_r = right.data(FcitxLanguageRole).toString();
-    l = getEnglishLanguageName(c_l);
-    r = getEnglishLanguageName(c_r);
+    en_l = getEnglishLanguageName(c_l);
+    en_r = getEnglishLanguageName(c_r);
 
-    if (l == r) {
+    if (c_l == c_r) {
         return 0;
     }
 
@@ -444,8 +484,29 @@ int IMProxyModel::compareCategories(const QModelIndex &left, const QModelIndex &
         return 1;
     }
 
-    int ret = l.compare(r);
+    QString loc_name = QLocale().name();
+    QString code_l = left.data(FcitxLanguageCode).toString();
+    QString code_r = right.data(FcitxLanguageCode).toString();
+    osaLogInfo(LOG_EXPANDED_NAME, LOG_EXPANDED_NUM, "loc_name [%s]\n", loc_name.toStdString().c_str());
 
+    if (loc_name == code_l) {
+        return -1;
+    }
+    if (loc_name == code_r) {
+        return 1;
+    }
+
+    int ret = 0;
+    if (loc_name == "zh" || loc_name == "zh_CN") {
+        QString c_py_l = Dtk::Core::Chinese2Pinyin(c_l).toLower();
+        QString c_py_r = Dtk::Core::Chinese2Pinyin(c_r).toLower();
+
+		ret = c_py_l.left(1).compare(c_py_r.left(1));
+
+    }
+    else {
+        ret = en_l.compare(en_r);
+    }
     return ret;
 }
 
@@ -504,16 +565,16 @@ QVariant FilteredIMModel::data(const QModelIndex &index, int role) const {
         FcitxQtStringKeyValueList useIMList_ = getUseIMList();
         auto iter = std::find_if(useIMList_.begin(), useIMList_.end(),
             [&imEntry](const FcitxQtStringKeyValue& item) {
-                osa_log_info(LOG_CFGTOOL_NAME, LOG_CFGTOOL_NUM, "----> item.key() [%s], imEntry.uniqueName() [%s], = [%d]\n",
+                osaLogInfo(LOG_CFGTOOL_NAME, LOG_CFGTOOL_NUM, "----> item.key() [%s], imEntry.uniqueName() [%s], = [%d]\n",
                     item.key().toStdString().c_str(), imEntry.uniqueName().toStdString().c_str(), item.key() == imEntry.uniqueName());
                 return item.key() == imEntry.uniqueName();
             });
         if (iter != useIMList_.end()) {
-            osa_log_info(LOG_CFGTOOL_NAME, LOG_CFGTOOL_NUM, "----> imEntry.uniqueName() [%s], is true. iter [%p], useIMList_.end() [%p]\n",
+            osaLogInfo(LOG_CFGTOOL_NAME, LOG_CFGTOOL_NUM, "----> imEntry.uniqueName() [%s], is true. iter [%p], useIMList_.end() [%p]\n",
                 imEntry.uniqueName().toStdString().c_str(), iter, useIMList_.end());
             return true;
         }
-        osa_log_info(LOG_CFGTOOL_NAME, LOG_CFGTOOL_NUM, "----> imEntry.uniqueName() [%s], is false\n", imEntry.uniqueName().toStdString().c_str());
+        osaLogInfo(LOG_CFGTOOL_NAME, LOG_CFGTOOL_NUM, "----> imEntry.uniqueName() [%s], is false\n", imEntry.uniqueName().toStdString().c_str());
         return false;
     }
 

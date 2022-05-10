@@ -49,7 +49,6 @@ private slots:
     void clickAvailIM(const QModelIndex &index);
     void selectDefaultLayout();
 
-    void selectAvailIM(const QModelIndex &index);
     void clickAddIM();
     void moveDownIM();
     void moveUpIM();
@@ -58,7 +57,7 @@ private slots:
     void clickedAddButton();
 
 private:
-    void addIM(const QModelIndex &index);
+    int addIM(const QModelIndex &index, QString matchStr = "");
     void checkDefaultLayout();
 
 private:

@@ -209,10 +209,29 @@ IMPage::IMPage(DBusProvider *dbus, QWidget *parent)
     ui_->line->setPalette(palette);
 
     ui_->pb_add->setStyleSheet("color:rgb(0,129,255)");
+    ui_->pb_add->setEnabled(false);
 
     connect(m_SearchEdit, &Dtk::Widget::DSearchEdit::textChanged, this,
         [this](const QString& text) {
+            if (!text.isEmpty()) {
+                m_config->clearCurrentIMEntries();
+            }
             m_config->availIMModel()->setFilterText(text);
+
+            int count = 0;
+            QModelIndex availIndex = this->ui_->availIMView->model()->index(0, 0);
+            count = addIM(availIndex, text);
+            setSelectCategoryRow(0);
+
+            if (count > 0) {
+                QModelIndex currentIndex = this->ui_->currentIMView->model()->index(0, 0);
+                this->ui_->currentIMView->setCurrentIndex(currentIndex);
+            }
+            else {
+                availIndex = this->ui_->availIMView->model()->index(0, 0);
+                count = addIM(availIndex);
+            }
+
         });
 
     connect(ui_->availIMView->selectionModel(),
@@ -221,6 +240,7 @@ IMPage::IMPage(DBusProvider *dbus, QWidget *parent)
     connect(ui_->currentIMView->selectionModel(),
             &QItemSelectionModel::currentChanged, this,
             &IMPage::currentIMCurrentChanged);
+
     connect(m_config, &IMConfig::imListChanged, this,
             &IMPage::currentIMCurrentChanged);
     connect(m_config, &IMConfig::imListChanged, this,
@@ -262,8 +282,17 @@ void IMPage::selectCurrentIM(const QModelIndex &index) {
 
 void IMPage::clickCurrentIM(const QModelIndex& index)
 {
-	m_currentIMIndex = index.row();
-	printf("m_currentIMIndex [%d]\n", m_currentIMIndex);
+    m_currentIMIndex = index.row();
+    printf("m_currentIMIndex [%d]\n", m_currentIMIndex);
+
+    bool usedIM = index.data(FcitxUseIMRole).toBool();
+
+    if (usedIM == false) {
+        ui_->pb_add->setEnabled(true);
+    }
+    else {
+        ui_->pb_add->setEnabled(false);
+    }
 }
 
 void IMPage::clickAvailIM(const QModelIndex &index)
@@ -272,12 +301,6 @@ void IMPage::clickAvailIM(const QModelIndex &index)
 }
 
 void IMPage::selectDefaultLayout() {
-}
-
-void IMPage::selectAvailIM(const QModelIndex &index) {
-    ui_->availIMView->selectionModel()->setCurrentIndex(
-        m_config->availIMModel()->mapFromSource(index),
-        QItemSelectionModel::ClearAndSelect);
 }
 
 void IMPage::clickAddIM() { addIM(ui_->availIMView->currentIndex()); }
@@ -301,7 +324,7 @@ void IMPage::clickedAddButton() {
     emit closeAddIMWindow();
 }
 
-void IMPage::addIM(const QModelIndex &index) { m_config->addSelectedIM(index); }
+int IMPage::addIM(const QModelIndex &index, QString matchStr) { return m_config->addSelectedIM(index, matchStr); }
 
 void IMPage::moveUpIM() {
     QModelIndex curIndex = ui_->currentIMView->currentIndex();

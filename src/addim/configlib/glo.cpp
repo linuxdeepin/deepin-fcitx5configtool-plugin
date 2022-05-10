@@ -5,7 +5,10 @@
  *
  */
 #include "glo.h"
-#include "ime_log.h"
+#include "imelog.h"
+
+#include <DPinyin>
+DCORE_USE_NAMESPACE
 
 QMap<QString, QString> g_chineseToEnglishMap;
 QMap<QString, QString> g_englishToChineseMap;
@@ -128,7 +131,7 @@ QString buildCategroyLanguageName(QString chineseLanguage)
 	QString englishName = "";
 
 	chineseLanguage = chineseLanguage.trimmed();
-	osa_log_info(LOG_EXPANDED_NAME, LOG_EXPANDED_NUM, "====>\n");
+	osaLogInfo(LOG_EXPANDED_NAME, LOG_EXPANDED_NUM, "====>\n");
 	if (g_chineseToEnglishMap.contains(chineseLanguage)) {
 		englishName = g_chineseToEnglishMap[chineseLanguage];
 
@@ -144,8 +147,11 @@ QString buildCategroyLanguageName(QString chineseLanguage)
 		languageName = chineseLanguage;
 	}
 
-	osa_log_info(LOG_EXPANDED_NAME, LOG_EXPANDED_NUM, "<==== languageName [%s] <- chineseLanguage [%s]\n",
-		languageName.toStdString().c_str(), chineseLanguage.toStdString().c_str());
+	QString c_py = Dtk::Core::Chinese2Pinyin(chineseLanguage);
+	osaLogInfo(LOG_EXPANDED_NAME, LOG_EXPANDED_NUM,
+		"<==== languageName [%s], c_py.left(1) [%s], c_py [%s] <- chineseLanguage [%s]\n",
+		languageName.toStdString().c_str(), c_py.left(1).toStdString().c_str(),
+		c_py.toStdString().c_str(), chineseLanguage.toStdString().c_str());
 	return languageName;
 }
 

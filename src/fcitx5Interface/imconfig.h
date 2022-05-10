@@ -42,12 +42,19 @@ public:
     //void addIM(FcitxQtInputMethodItem* item);
     //void removeIM(int index);
 
-    void addSelectedIM(const QModelIndex& index);
+    int addSelectedIM(int index, QString matchStr = "");
+    int addSelectedIM(const QModelIndex& index, QString matchStr = "");
 
     const auto& currentIMEntries() const { return m_currentIMEntries; }
     const auto &imEntries() const { return imEntries_; }
     void setIMEntries(const FcitxQtStringKeyValueList &imEntires) {
         imEntries_ = imEntires;
+        updateIMList();
+    }
+
+    void clearCurrentIMEntries()
+    {
+        m_currentIMEntries.clear();
         updateIMList();
     }
 
@@ -86,7 +93,6 @@ public slots:
     void defaults();
     //void addIM(int index);
     void addIM(FcitxQtInputMethodItem* item);
-    void addSelectedIM(int index);
     void removeIM(int index);
     void move(int from, int to);
 
