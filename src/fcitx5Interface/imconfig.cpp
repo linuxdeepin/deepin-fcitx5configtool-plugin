@@ -75,8 +75,9 @@ void IMConfig::saveSelectedIM(int imIndex) {
         }
         dbus_->controller()->SetInputMethodGroupInfo(lastGroup_, defaultLayout_, useIMList);
         needSave_ = false;
-
-        emit addIMSignal(imIndex);
+       // emit addIMSignal(imIndex);
+       // updateIMList();
+        addIM(m_currentIMEntries.at(imIndex).key());
     }
     osaLogInfo(LOG_EXPANDED_NAME, LOG_EXPANDED_NUM, "<====\n");
 }
@@ -93,9 +94,28 @@ int IMConfig::addSelectedIM(int index, QString matchStr) {
     return count;
 }
 
-void IMConfig::addIM(FcitxQtInputMethodItem* item)
+void IMConfig::addIM(const QString &name)
 {
-    m_currentInputMethodList->append(item);
+    int row = 0;
+    QMap<QString, const FcitxQtInputMethodEntry *> nameMap;
+    for (auto &imEntry : allIMs_) {
+        nameMap.insert(imEntry.uniqueName(), &imEntry);
+    }
+
+    if (auto value = nameMap.value(name, nullptr)) {
+        FcitxQtInputMethodItem *item = new  FcitxQtInputMethodItem;
+        item->setName(value->name());
+        item->setUniqueName(value->uniqueName());
+        item->setConfigurable(value->configurable());
+        item->setLanguageCode(value->languageCode());
+        if(m_currentInputMethodList->isEmpty()) {
+            m_currentInputMethodList->append(item);
+        } else {
+            m_currentInputMethodList->insert(1, item);
+        }
+        row++;
+    }
+    emit imListChanged();
 }
 
 int IMConfig::addSelectedIM(const QModelIndex &index, QString matchStr) {
@@ -271,7 +291,8 @@ void IMConfig::updateIMList(bool excludeCurrent) {
 
 void IMConfig::filterIMEntryList(
     const FcitxQtInputMethodEntryList &imEntryList,
-    const FcitxQtStringKeyValueList &enabledIMList) {
+    const FcitxQtStringKeyValueList &enabledIMList)
+{
 
     m_currentInputMethodList->clear();
     //enabledIMList_ = enabledIMList;

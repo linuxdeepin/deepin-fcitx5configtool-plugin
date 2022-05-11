@@ -25,7 +25,7 @@ class AddIMWindow : public DDialog, public Ui::MainWindow {
     Q_OBJECT
 
 public:
-    explicit AddIMWindow(DBusProvider* dbus, DDialog* parent = nullptr);
+    explicit AddIMWindow(DBusProvider* dbus, IMConfig *config, DDialog* parent = nullptr);
 
     void load();
 

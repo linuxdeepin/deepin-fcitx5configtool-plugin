@@ -18,10 +18,10 @@
 namespace fcitx {
 namespace addim {
 
-AddIMWindow::AddIMWindow(DBusProvider* dbus, DDialog* parent)
+AddIMWindow::AddIMWindow(DBusProvider* dbus, IMConfig *config, DDialog* parent)
     : DDialog(parent)
     , m_dbus(dbus)
-    , m_impage(new IMPage(m_dbus, this))
+    , m_impage(new IMPage(m_dbus, config, this))
 {
     osaLogInfo(LOG_CFGTOOL_NAME, LOG_CFGTOOL_NUM, "====>\n");
     setAttribute(Qt::WA_TranslucentBackground, false);

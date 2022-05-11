@@ -135,11 +135,11 @@ void IMListDelegate::paint(QPainter* painter, const QStyleOptionViewItem& option
     painter->restore();
 }
 
-IMPage::IMPage(DBusProvider *dbus, QWidget *parent)
+IMPage::IMPage(DBusProvider *dbus, IMConfig *config, QWidget *parent)
     : QWidget(parent)
     , ui_(std::make_unique<Ui::IMPage>())
     , m_dbus(dbus),
-      m_config(new IMConfig(dbus, IMConfig::Tree, this))
+      m_config(config)
 {
     ui_->setupUi(this);
 

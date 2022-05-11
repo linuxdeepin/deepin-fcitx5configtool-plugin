@@ -29,7 +29,7 @@ class ADDIMDBusProvider;
 class IMPage : public QWidget {
     Q_OBJECT
 public:
-    IMPage(DBusProvider *dbus, QWidget *parent);
+    IMPage(DBusProvider *dbus, IMConfig* config, QWidget *parent);
     ~IMPage();
 signals:
     void changed();

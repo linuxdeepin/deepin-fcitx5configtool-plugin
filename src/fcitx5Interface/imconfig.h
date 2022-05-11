@@ -92,7 +92,7 @@ public slots:
     void load();
     void defaults();
     //void addIM(int index);
-    void addIM(FcitxQtInputMethodItem* item);
+    void addIM(const QString& name);
     void removeIM(int index);
     void move(int from, int to);
 
