@@ -187,7 +187,7 @@ void IMSettingWindow::initConnect()
             } else if(shortCuts.contains("Super")) {
                 m_imSwitchCbox->comboBox()->setCurrentText(("ALT_SUPER"));
             }
-        } if(shortCuts.contains("Ctrl")) {
+        } if(shortCuts.contains("Control")) {
             if(shortCuts.contains("Shift")) {
                 m_imSwitchCbox->comboBox()->setCurrentText(("CTRL_SHIFT"));
             } else if(shortCuts.contains("Super")) {
