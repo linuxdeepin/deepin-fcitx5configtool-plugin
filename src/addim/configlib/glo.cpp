@@ -147,11 +147,11 @@ QString buildCategroyLanguageName(QString chineseLanguage)
 		languageName = chineseLanguage;
 	}
 
-	QString c_py = Dtk::Core::Chinese2Pinyin(chineseLanguage);
-	osaLogInfo(LOG_EXPANDED_NAME, LOG_EXPANDED_NUM,
-		"<==== languageName [%s], c_py.left(1) [%s], c_py [%s] <- chineseLanguage [%s]\n",
-		languageName.toStdString().c_str(), c_py.left(1).toStdString().c_str(),
-		c_py.toStdString().c_str(), chineseLanguage.toStdString().c_str());
+	//QString c_py = Dtk::Core::Chinese2Pinyin(chineseLanguage);
+	//osaLogInfo(LOG_EXPANDED_NAME, LOG_EXPANDED_NUM,
+	//	"<==== languageName [%s], c_py.left(1) [%s], c_py [%s] <- chineseLanguage [%s]\n",
+	//	languageName.toStdString().c_str(), c_py.left(1).toStdString().c_str(),
+	//	c_py.toStdString().c_str(), chineseLanguage.toStdString().c_str());
 	return languageName;
 }
 
@@ -167,9 +167,27 @@ QString getEnglishLanguageName(QString chineseLanguage)
 		englishName = chineseLanguage;
 	}
 	else {
-		englishName = "";
+		englishName = "unknown";
 	}
 	return englishName;
+}
+
+QString getChineseLanguageName(QString englishLanguage)
+{
+    QString chineseName = "";
+
+    englishLanguage = englishLanguage.trimmed();
+    if (g_chineseToEnglishMap.contains(englishLanguage)) {
+        chineseName = englishLanguage;
+    }
+    else if (g_englishToChineseMap.contains(englishLanguage)) {
+        chineseName = g_englishToChineseMap[englishLanguage];
+    }
+    else {
+        chineseName = englishLanguage;
+
+    }
+    return chineseName;
 }
 
 void setUseIMList(const FcitxQtStringKeyValueList& useIMs)

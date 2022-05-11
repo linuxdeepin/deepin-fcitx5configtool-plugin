@@ -18,7 +18,7 @@
 namespace fcitx {
 namespace addim {
 
-AddIMWindow::AddIMWindow(DBusProvider* dbus, IMConfig *config, DDialog* parent)
+AddIMWindow::AddIMWindow(DBusProvider* dbus, IMConfig* config, DDialog* parent)
     : DDialog(parent)
     , m_dbus(dbus)
     , m_impage(new IMPage(m_dbus, config, this))
@@ -27,7 +27,7 @@ AddIMWindow::AddIMWindow(DBusProvider* dbus, IMConfig *config, DDialog* parent)
     setAttribute(Qt::WA_TranslucentBackground, false);
     /** add titleBar */
 
-    setIcon(QIcon::fromTheme("dcc_chineseime"));
+    setIcon(QIcon(":/img/title_img.png"));
     setWindowTitle(tr("浏览使用语言并添加输入法"));
 
     setupUi(this);

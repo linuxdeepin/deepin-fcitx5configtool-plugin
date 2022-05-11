@@ -152,7 +152,7 @@ QVariant AvailIMModel::dataForCategory(const QModelIndex &index, int role) const
         return categoryLanguageName;
 
     case FcitxLanguageRole:
-        return m_filteredIMEntryList[index.row()].first;
+        return languageName(m_filteredIMEntryList[index.row()].first);
 
     case FcitxLanguageCode:
         return m_filteredIMEntryList[index.row()].second.at(0).languageCode();
@@ -464,11 +464,13 @@ bool IMProxyModel::lessThan(const QModelIndex &left, const QModelIndex &right) c
 }
 
 int IMProxyModel::compareCategories(const QModelIndex &left, const QModelIndex &right) const {
-    QString en_l, en_r;
-    QString c_l = left.data(FcitxLanguageRole).toString();
-    QString c_r = right.data(FcitxLanguageRole).toString();
-    en_l = getEnglishLanguageName(c_l);
-    en_r = getEnglishLanguageName(c_r);
+    QString en_l, en_r, c_l, c_r;
+    QString l_name = left.data(FcitxLanguageRole).toString();
+    QString r_name = right.data(FcitxLanguageRole).toString();
+    en_l = getEnglishLanguageName(l_name);
+    en_r = getEnglishLanguageName(r_name);
+    c_l = getChineseLanguageName(l_name);
+    c_r = getChineseLanguageName(r_name);
 
     if (c_l == c_r) {
         return 0;
@@ -501,8 +503,13 @@ int IMProxyModel::compareCategories(const QModelIndex &left, const QModelIndex &
         QString c_py_l = Dtk::Core::Chinese2Pinyin(c_l).toLower();
         QString c_py_r = Dtk::Core::Chinese2Pinyin(c_r).toLower();
 
-		ret = c_py_l.left(1).compare(c_py_r.left(1));
 
+        if (c_py_l.at(0) > c_py_r.at(0)) {
+            ret = 1;
+        }
+        else {
+            ret = -1;
+        }
     }
     else {
         ret = en_l.compare(en_r);

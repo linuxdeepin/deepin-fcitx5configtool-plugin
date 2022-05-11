@@ -10,6 +10,7 @@
 #include "fcitxqtdbustypes.h"
 
 #define DTK_VERSION_MAJOR    5
+
 using namespace fcitx;
 
 int initCategroyLanguageMap();
@@ -17,6 +18,7 @@ int initCategroyLanguageMap();
 QString buildCategroyLanguageName(QString chineseLanguage);
 
 QString getEnglishLanguageName(QString chineseLanguage);
+QString getChineseLanguageName(QString englishLanguage);
 
 void setUseIMList(const FcitxQtStringKeyValueList& useIMs);
 

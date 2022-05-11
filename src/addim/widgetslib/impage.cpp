@@ -5,6 +5,7 @@
  *
  */
 
+#include "imelog.h"
 #include "impage.h"
 #include "categoryhelper.h"
 #include "addim_model.h"

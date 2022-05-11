@@ -10,7 +10,7 @@ extern "C" {
 #ifdef _WIN32
 #define OSA_LOG_DIR          "X:\\kcm_log\\cfgtool"
 #else
-#define OSA_LOG_DIR          "/home/wangtz/kcm_log/cfgtool"
+#define OSA_LOG_DIR          "/home/uos/kcm_log/cfgtool"
 #endif
 
 #define DEBUG_LOG_VERSIN     "0.1.0_220413_14_10"
