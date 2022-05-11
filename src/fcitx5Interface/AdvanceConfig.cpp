@@ -5,7 +5,7 @@
  *
  */
 #include "AdvanceConfig.h"
-#include "dbusprovider.h"
+
 #include <QCheckBox>
 #include <QComboBox>
 #include <QFormLayout>
@@ -18,9 +18,14 @@
 #include <fcitx-utils/i18n.h>
 #include <fcitxqtcontrollerproxy.h>
 
+#include "varianthelper.h"
+#include "dbusprovider.h"
+#include "configwidgetslib/keylistwidget.h"
+#include "configwidgetslib/optionwidget.h"
 
 namespace {
-QString joinPath(const QString &path, const QString &option) {
+QString joinPath(const QString &path, const QString &option)
+{
     if (path.isEmpty()) {
         return option;
     }
@@ -33,20 +38,11 @@ AdvanceConfig::AdvanceConfig(const QString &uri, DBusProvider *dbus, QObject *pa
     , m_uri(uri)
     , m_dbus(dbus)
 {
+    requestConfig();
 }
 
-AdvanceConfig::AdvanceConfig(const QMap<QString, FcitxQtConfigOptionList> &desc,
-                           QString mainType, DBusProvider *dbus,
-                           QObject *parent)
-    : QObject(parent)
-    , m_desc(desc)
-    , m_mainType(mainType)
-    , m_dbus(dbus)
+void AdvanceConfig::requestConfig(bool sync)
 {
-    m_initialized = true;
-}
-
-void AdvanceConfig::requestConfig(bool sync) {
     if (!m_dbus->controller()) {
         return;
     }
@@ -59,7 +55,8 @@ void AdvanceConfig::requestConfig(bool sync) {
     }
 }
 
-void AdvanceConfig::requestConfigFinished(QDBusPendingCallWatcher *watcher) {
+void AdvanceConfig::requestConfigFinished(QDBusPendingCallWatcher *watcher)
+{
     watcher->deleteLater();
     QDBusPendingReply<QDBusVariant, FcitxQtConfigTypeList> reply = *watcher;
     if (reply.isError()) {
@@ -78,7 +75,7 @@ void AdvanceConfig::requestConfigFinished(QDBusPendingCallWatcher *watcher) {
             m_desc[type.name()] = type.options();
         }
         m_mainType = desc[0].name();
-        setupWidget(nullptr, m_mainType, QString());
+        setupData(m_mainType, QString());
         m_initialized = true;
     }
 
@@ -87,14 +84,16 @@ void AdvanceConfig::requestConfigFinished(QDBusPendingCallWatcher *watcher) {
     }
 }
 
-void AdvanceConfig::load() {
+void AdvanceConfig::load()
+{
     if (m_uri.isEmpty()) {
         return;
     }
     requestConfig();
 }
 
-void AdvanceConfig::save() {
+void AdvanceConfig::save()
+{
     if (!m_dbus->controller() || m_uri.isEmpty()) {
         return;
     }
@@ -102,27 +101,32 @@ void AdvanceConfig::save() {
     m_dbus->controller()->SetConfig(m_uri, var);
 }
 
-void AdvanceConfig::setValue(const QVariant &value) {
+void AdvanceConfig::setValue(const QVariant &value)
+{
     if (!m_initialized) {
         return;
     }
 
     m_dontEmitChanged = true;
-   // auto optionWidgets = findChildren<OptionWidget *>();
+//    auto optionWidgets = findChildren<OptionWidget *>();
     QVariantMap map;
-//    if (value.canConvert<QDBusArgument>()) {
-//        auto argument = qvariant_cast<QDBusArgument>(value);
-//        argument >> map;
-//    } else {
-//        map = value.toMap();
-//    }
-//    for (auto optionWidget : optionWidgets) {
-//        optionWidget->readValueFrom(map);
-//    }
+    if (value.canConvert<QDBusArgument>()) {
+        auto argument = qvariant_cast<QDBusArgument>(value);
+        argument >> map;
+    } else {
+        map = value.toMap();
+    }
+    QList<fcitx::Key> keyList1 = readValue(map, "Hotkey/TriggerKeys");
+    QList<fcitx::Key> keyList2 = readValue(map, "Hotkey/AltTriggerKeys");
+    QString s1 = QString::fromUtf8(Key::keyListToString(keyList1, KeyStringFormat::Portable).c_str());
+    QString s2 = QString::fromUtf8(Key::keyListToString(keyList2, KeyStringFormat::Portable).c_str());
+    emit switchIMShortCutsChanged(s1);
+    emit switchFirstIMShortCutsChanged(s2);
     m_dontEmitChanged = false;
 }
 
-QVariant AdvanceConfig::value() const {
+QVariant AdvanceConfig::value() const
+{
     QVariantMap map;
 //    auto optionWidgets = findChildren<OptionWidget *>();
 //    for (auto optionWidget : optionWidgets) {
@@ -131,55 +135,72 @@ QVariant AdvanceConfig::value() const {
     return map;
 }
 
-void AdvanceConfig::buttonClicked(QDialogButtonBox::StandardButton button) {
-//    if (button == QDialogButtonBox::RestoreDefaults) {
+void AdvanceConfig::buttonClicked(QDialogButtonBox::StandardButton button)
+{
+    if (button == QDialogButtonBox::RestoreDefaults) {
 //        auto optionWidgets = findChildren<OptionWidget *>();
 //        for (auto optionWidget : optionWidgets) {
 //            optionWidget->restoreToDefault();
 //        }
-//    } else if (button == QDialogButtonBox::Ok) {
-//        save();
-//    }
+    } else if (button == QDialogButtonBox::Ok) {
+        save();
+    }
 }
 
-void AdvanceConfig::setupWidget(QWidget *widget, const QString &type,
-                               const QString &path) {
+void AdvanceConfig::setupData(const QString &type, const QString &path)
+{
     if (!m_desc.contains(type)) {
         qDebug() << type << " type does not exists.";
     }
 
-    auto layout = new QFormLayout(widget);
     const auto &options = m_desc[type];
     for (auto &option : options) {
-        addOptionWidget(layout, option, joinPath(path, option.name()));
+        addChildData(option, joinPath(path, option.name()));
     }
-
-    widget->setLayout(layout);
 }
 
-void AdvanceConfig::addOptionWidget(QFormLayout *layout,
-                                   const FcitxQtConfigOption &option,
-                                   const QString &path) {
-//    if (auto optionWidget =
-//            OptionWidget::addWidget(layout, option, path, this)) {
-//        connect(optionWidget, &OptionWidget::valueChanged, this,
-//                &AdvanceConfig::doChanged);
-//    } else if (m_desc.contains(option.type())) {
-//        QGroupBox *box = new QGroupBox;
-//        box->setTitle(option.description());
-//        QVBoxLayout *innerLayout = new QVBoxLayout;
-//        QWidget *widget = new QWidget;
-//        setupWidget(widget, option.type(), path);
-//        innerLayout->addWidget(widget);
-//        box->setLayout(innerLayout);
-//        layout->addRow(box);
-//    } else {
-//        qDebug() << "Unknown type: " << option.type();
-//    }
+void AdvanceConfig::addChildData(const FcitxQtConfigOption &option, const QString &path)
+{
+    QFormLayout *layout = new QFormLayout;
+    if (auto optionWidget =
+            OptionWidget::addWidget(layout, option, path, nullptr)) {
+        connect(optionWidget, &OptionWidget::valueChanged, this,
+                &AdvanceConfig::doChanged);
+    } else if (m_desc.contains(option.type())) {
+        QGroupBox *box = new QGroupBox;
+        box->setTitle(option.description());
+        QVBoxLayout *innerLayout = new QVBoxLayout;
+        QWidget *widget = new QWidget;
+        setupData(option.type(), path);
+        innerLayout->addWidget(widget);
+        box->setLayout(innerLayout);
+        layout->addRow(box);
+    } else {
+        qDebug() << "Unknown type: " << option.type();
+    }
+}
+
+QList<fcitx::Key> AdvanceConfig::readValue(const QVariantMap &map, const QString &path)
+{
+    int i = 0;
+    QList<Key> keys;
+    while (true) {
+        auto value = readString(map, QString("%1%2%3")
+                                         .arg(path)
+                                         .arg(path.isEmpty() ? "" : "/")
+                                         .arg(i));
+        if (value.isNull()) {
+            break;
+        }
+        keys << Key(value.toUtf8().constData());
+        i++;
+    }
+    return keys;
 }
 
 QDialog *AdvanceConfig::configDialog(QWidget *parent, DBusProvider *dbus,
-                                    const QString &uri, const QString &title) {
+                                    const QString &uri, const QString &title)
+{
     auto configPage = new AdvanceConfig(uri, dbus);
     configPage->requestConfig(true);
     QVBoxLayout *dialogLayout = new QVBoxLayout;
@@ -212,14 +233,48 @@ QDialog *AdvanceConfig::configDialog(QWidget *parent, DBusProvider *dbus,
     return dialog;
 }
 
-void AdvanceConfig::doChanged() {
+void AdvanceConfig::switchIMShortCuts(const QString &shortCuts)
+{
+    if(shortCuts == "CTR_SHIFT") {
+        m_switchIMShortCuts = "Control+Shift+Shift_L Control+Shift+Shift_R";
+    } else if(shortCuts == "ALT_SHIFT") {
+        m_switchIMShortCuts = "Alt+Shift+Shift_L Alt+Shift+Shift_R";
+    } else if(shortCuts == "CTRL_SUPER") {
+        m_switchIMShortCuts = "Alt+Super+Alt_L Alt+Super+Alt_R";
+    } else if(shortCuts == "ALT_SUPER") {
+        m_switchIMShortCuts = "Control+Super+Control_L Control+Super+Control_R";
+    }
+    KeyList list = Key::keyListFromString(m_switchIMShortCuts.toStdString());
+    QList<fcitx::Key> klist;
+    for(std::vector<fcitx::Key>::iterator it = list.begin(); it != list.end(); it++)
+    {
+        klist << *it;
+    }
+    qDebug() << "finished";
+}
+
+void AdvanceConfig::switchFirstIMShortCuts(const QString &shortCuts)
+{
+    m_switchFirstIMShortCuts = shortCuts;
+    KeyList list = Key::keyListFromString(m_switchFirstIMShortCuts.toStdString());
+    QList<fcitx::Key> klist;
+    for(std::vector<fcitx::Key>::iterator it = list.begin(); it != list.end(); it++)
+    {
+        klist << *it;
+    }
+    qDebug() << "finished";
+}
+
+void AdvanceConfig::doChanged()
+{
     if (m_dontEmitChanged) {
         return;
     }
     emit changed();
 }
 
-AdvanceConfig *getConfigWidget(QWidget *widget) {
+AdvanceConfig *getConfigWidget(QWidget *widget)
+{
     widget = widget->parentWidget();
     AdvanceConfig *configWidget;
     while (widget) {

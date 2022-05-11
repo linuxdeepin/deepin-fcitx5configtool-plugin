@@ -38,7 +38,7 @@ set(CMAKE_INCLUDE_CURRENT_DIR ON)
 set(CMAKE_AUTOMOC ON)#moc 预编译包含QObject文件，生成xx_moc.h cpp
 set(CMAKE_AUTORCC ON)#开启rcc 编译资源文件qrc
 set(CMAKE_AUTOUIC ON)#开启uic 编译转换*.ui文件生存设计界面对应的.h .cpp文件
-set(CMAKE_CXX_STANDARD 14)
+set(CMAKE_CXX_STANDARD 17)
 
 # 查找库
 find_package(PkgConfig REQUIRED)
@@ -83,6 +83,7 @@ add_custom_target(translations ALL DEPENDS ${DTNG_QM_FILES})
 
 FILE(GLOB_RECURSE HEAD_FILES
     ${CMAKE_CURRENT_SOURCE_DIR}/fcitx5Interface/*.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/fcitx5Interface/configwidgetslib/*.h
     ${CMAKE_CURRENT_SOURCE_DIR}/widgets/*.h
     ${CMAKE_CURRENT_SOURCE_DIR}/window/*.h
     ${CMAKE_CURRENT_SOURCE_DIR}/fcitxconfigplugin.h
@@ -93,6 +94,7 @@ FILE(GLOB_RECURSE HEAD_FILES
 
 FILE(GLOB_RECURSE SOURCE_FILES
     ${CMAKE_CURRENT_SOURCE_DIR}/fcitx5Interface/*.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/fcitx5Interface/configwidgetslib/*.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/widgets/*.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/window/*.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/fcitxconfigplugin.cpp
@@ -126,18 +128,25 @@ include_directories(${CMAKE_CURRENT_SOURCE_DIR}/addim/configlib)
 include_directories(${CMAKE_CURRENT_SOURCE_DIR}/publisher)
 include_directories(${CMAKE_CURRENT_SOURCE_DIR}/fcitx5Interface)
 
-add_executable(${PROJECT_NAME}
-    ${ALL_SRCS}
-    ${DTNG_QM_FILES}
-    ${CMAKE_CURRENT_SOURCE_DIR}/main.cpp
-    )
+#add_executable(${PROJECT_NAME}
+#    ${ALL_SRCS}
+#    ${DTNG_QM_FILES}
+#    ${CMAKE_CURRENT_SOURCE_DIR}/main.cpp
+#    )
 
-#add_library(${PROJECT_NAME} SHARED
-#        ${ALL_SRCS}
-#        ${DTNG_QM_FILES}
-#       # ${TS_DIR}/translations.qrc
-#        #${UI_HEADER_MOCK}
-#        )
+add_library(${PROJECT_NAME} SHARED
+        ${ALL_SRCS}
+        ${DTNG_QM_FILES}
+       # ${TS_DIR}/translations.qrc
+        #${UI_HEADER_MOCK}
+        )
+
+set_target_properties(${PROJECT_NAME} PROPERTIES
+    POSITION_INDEPENDENT_CODE TRUE
+    AUTOMOC TRUE
+    AUTOUIC TRUE
+    AUTOUIC_OPTIONS "-tr=fcitx::tr2fcitx;--include=fcitxqti18nhelper.h"
+)
 
 get_target_property(FCITX5_QT5_GUI_WRAPPER Fcitx5Qt5::gui-wrapper IMPORTED_LOCATION)
 #include("${FCITX_INSTALL_CMAKECONFIG_DIR}/Fcitx5Utils/Fcitx5CompilerSettings.cmake")
@@ -174,7 +183,7 @@ if (CMAKE_INSTALL_PREFIX_INITIALIZED_TO_DEFAULT)
 endif ()
 
 # 设置执行 make install 时哪个目标应该被 install 到哪个位置
-#install(TARGETS ${PROJECT_NAME} LIBRARY DESTINATION /lib/dde-control-center/modules)
+install(TARGETS ${PROJECT_NAME} LIBRARY DESTINATION /lib/dde-control-center/modules)
 
 # 安装 .qm 文件
 install(FILES ${DTNG_QM_FILES} DESTINATION share/${PROJECT_NAME}/translations)

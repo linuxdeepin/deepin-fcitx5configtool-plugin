@@ -78,6 +78,7 @@ void FcitxKeyLabelWidget::setList(const QStringList &list)
 
 void FcitxKeyLabelWidget::initLableList(const QStringList &list)
 {
+   // qDebug() << "initLableList " << list;
     clearShortcutKey();
     for (const QString &key : list) {
         QString tmpKey = key.toLower();
@@ -93,6 +94,8 @@ void FcitxKeyLabelWidget::initLableList(const QStringList &list)
         m_list << label;
         m_mainLayout->addWidget(label);
     }
+   // qDebug() << "m_curlist " << m_curlist;
+   // qDebug() << "m_newlist " << m_newlist;
 }
 
 QString FcitxKeyLabelWidget::getKeyToStr()
@@ -193,6 +196,7 @@ void FcitxKeyLabelWidget::keyPressEvent(QKeyEvent *event)
     initLableList(m_newlist);
     if (m_newlist.count() >= 2 && !checkNewKey()) {
         initLableList(m_curlist);
+        qDebug() << "m_newlist.count() >= 2 && !checkNewKey()";
     }
     setShortcutShow(true);
     QWidget::keyPressEvent(event);
@@ -269,7 +273,7 @@ bool FcitxKeyLabelWidget::checkNewKey(bool isRelease)
                     }
 
                     QString configName;
-                    if (m_curlist != tmpList/* && !IMConfig::checkShortKey(m_newlist, configName)*/) {
+                    if (m_curlist == tmpList) {
                         emit shortCutError(m_newlist, configName);
                         return false;
                     }

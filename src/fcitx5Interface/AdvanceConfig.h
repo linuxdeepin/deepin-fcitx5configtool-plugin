@@ -11,6 +11,7 @@
 #include <QDialogButtonBox>
 #include <QWidget>
 #include <fcitxqtdbustypes.h>
+#include <fcitx-utils/key.h>
 
 class QDBusPendingCallWatcher;
 class QFormLayout;
@@ -24,19 +25,18 @@ public:
     explicit AdvanceConfig(const QString &uri, DBusProvider *module,
                           QObject *parent = nullptr);
 
-    explicit AdvanceConfig(const QMap<QString, fcitx::FcitxQtConfigOptionList> &desc,
-                          QString mainType, DBusProvider *module,
-                          QObject *parent = nullptr);
-
     static QDialog *configDialog(QWidget *parent, DBusProvider *module,
                                  const QString &uri,
                                  const QString &title = QString());
 
     auto dbus() { return m_dbus; }
     auto &description() const { return m_desc; }
-
+    void switchIMShortCuts(const QString& shortCuts);
+    void switchFirstIMShortCuts(const QString& shortCuts);
 signals:
     void changed();
+    void switchIMShortCutsChanged(const QString& shortCuts);
+    void switchFirstIMShortCutsChanged(const QString& shortCuts);
 
 public slots:
     void load();
@@ -52,9 +52,9 @@ private slots:
     void doChanged();
 
 private:
-    void setupWidget(QWidget *widget, const QString &type, const QString &path);
-    void addOptionWidget(QFormLayout *layout, const fcitx::FcitxQtConfigOption &option,
-                         const QString &path);
+    void setupData(const QString &type, const QString &path);
+    void addChildData(const fcitx::FcitxQtConfigOption &option, const QString &path);
+    QList<fcitx::Key> readValue(const QVariantMap &map, const QString &path);
 
     bool m_initialized = false;
     QString m_uri;
@@ -62,6 +62,8 @@ private:
     QString m_mainType;
     DBusProvider *m_dbus;
     bool m_dontEmitChanged {false};
+    QString m_switchIMShortCuts;
+    QString m_switchFirstIMShortCuts;
 };
 
 AdvanceConfig *getConfigWidget(QWidget *widget);

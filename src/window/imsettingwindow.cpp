@@ -31,6 +31,7 @@
 #include "widgets/contentwidget.h"
 #include "settingsdef.h"
 #include "addim/widgetslib/addim_window.h"
+#include "fcitx5Interface/AdvanceConfig.h"
 
 #include <DWidgetUtil>
 #include <DFloatingButton>
@@ -49,6 +50,7 @@ IMSettingWindow::IMSettingWindow(DBusProvider* dbus, QWidget *parent)
     : QWidget(parent)
     , m_dbus(dbus)
     , m_config(new IMConfig(dbus, IMConfig::Tree, this))
+    , m_advanceConfig(new AdvanceConfig("fcitx://config/global", m_dbus, this))
 {
     initUI();
     initConnect();
@@ -166,17 +168,38 @@ void IMSettingWindow::initConnect()
     };
 //    connect(Global::instance(), &Global::connectStatusChanged, this, &IMSettingWindow::onReloadConnect);
 
-//    connect(m_defaultIMKey, &FcitxKeySettingsItem::editedFinish, [ = ]() {
-//        reloadFcitx(IMConfig::setDefaultIMKey(m_defaultIMKey->getKeyToStr()));
-//        m_defaultIMKey->setList(m_defaultIMKey->getKeyToStr().split("_"));
-//    });
+    connect(m_defaultIMKey, &FcitxKeySettingsItem::editedFinish, [ = ]() {
+        m_advanceConfig->switchFirstIMShortCuts(m_defaultIMKey->getKeyToStr());
+        m_defaultIMKey->setList(m_defaultIMKey->getKeyToStr().split("_"));
+    });
 
 //    onReloadConnect();
 
-//    connect(m_imSwitchCbox->comboBox(), &QComboBox::currentTextChanged, [ = ]() {
-//        m_imSwitchCbox->comboBox()->setAccessibleName(m_imSwitchCbox->comboBox()->currentText());
-//        reloadFcitx(IMConfig::setIMSwitchKey(m_imSwitchCbox->comboBox()->currentText()));
-//    });
+    connect(m_imSwitchCbox->comboBox(), &QComboBox::currentTextChanged, [ = ]() {
+        m_imSwitchCbox->comboBox()->setAccessibleName(m_imSwitchCbox->comboBox()->currentText());
+        m_advanceConfig->switchIMShortCuts(m_imSwitchCbox->comboBox()->currentText());
+    });
+
+    connect(m_advanceConfig, &AdvanceConfig::switchIMShortCutsChanged, this, [=](const QString& shortCuts) {
+        if(shortCuts.contains("Alt")) {
+            if(shortCuts.contains("Shift")) {
+                m_imSwitchCbox->comboBox()->setCurrentText(("ALT_SHIFT"));
+            } else if(shortCuts.contains("Super")) {
+                m_imSwitchCbox->comboBox()->setCurrentText(("ALT_SUPER"));
+            }
+        } if(shortCuts.contains("Ctrl")) {
+            if(shortCuts.contains("Shift")) {
+                m_imSwitchCbox->comboBox()->setCurrentText(("CTRL_SHIFT"));
+            } else if(shortCuts.contains("Super")) {
+                m_imSwitchCbox->comboBox()->setCurrentText(("CTRL_SUPER"));
+            }
+        }
+    });
+
+    connect(m_advanceConfig, &AdvanceConfig::switchFirstIMShortCutsChanged, this, [=](const QString& shortCuts) {
+        m_defaultIMKey->setList(shortCuts.split("+"));
+    });
+
 //    connect(m_resetBtn, &QPushButton::clicked, [ = ]() {
 //        reloadFcitx(IMConfig::setDefaultIMKey("CTRL_SPACE"));
 //        m_defaultIMKey->setList(QString("CTRL_SPACE").split("_"));

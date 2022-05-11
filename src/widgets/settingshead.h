@@ -29,6 +29,7 @@
 #include "settingsitem.h"
 #include "titlelabel.h"
 #include <QPushButton>
+#include <DIconButton>
 
 DWIDGET_BEGIN_NAMESPACE
 class DCommandLinkButton;
@@ -62,8 +63,8 @@ Q_SIGNALS:
     void addBtnClicked();
 private:
     FcitxTitleLabel *m_title;
-    DTK_WIDGET_NAMESPACE::DCommandLinkButton *m_deleteBtn;
-    DTK_WIDGET_NAMESPACE::DCommandLinkButton *m_addBtn;
+    DTK_WIDGET_NAMESPACE::DIconButton *m_deleteBtn;
+    DTK_WIDGET_NAMESPACE::DIconButton *m_addBtn;
     bool m_editVisible;
     State m_state;
 };

@@ -49,6 +49,7 @@ class DFloatingButton;
 
 class DBusProvider;
 class IMConfig;
+class AdvanceConfig;
 
 class IMSettingWindow : public QWidget
 {
@@ -89,6 +90,7 @@ private:
     QVBoxLayout *m_mainLayout;
     DBusProvider* m_dbus;
     IMConfig *m_config;
+    AdvanceConfig *m_advanceConfig;
 };
 
 #endif // IMSETTINGWINDOW_H

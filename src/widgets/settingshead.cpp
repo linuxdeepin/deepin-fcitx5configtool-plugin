@@ -40,8 +40,8 @@ DWIDGET_USE_NAMESPACE
 FcitxSettingsHead::FcitxSettingsHead(bool isEdit, QFrame *parent)
     : FcitxSettingsItem(parent)
     , m_title(new FcitxTitleLabel)
-    , m_deleteBtn(new DCommandLinkButton(""))
-    , m_addBtn(new DCommandLinkButton(""))
+    , m_deleteBtn(new DIconButton(DStyle::SP_DecreaseElement))
+    , m_addBtn(new DIconButton(DStyle::SP_IncreaseElement))
     , m_state(Cancel)
 {
     m_title->setObjectName("SettingsHeadTitle");
@@ -54,10 +54,11 @@ FcitxSettingsHead::FcitxSettingsHead(bool isEdit, QFrame *parent)
     mainLayout->addWidget(m_title);
     mainLayout->addStretch();
     if(isEdit) {
-        m_deleteBtn->setText(qApp->translate("FcitxSettingsHead", "del"));
         m_deleteBtn->setEnabled(false);
-        m_addBtn->setText(qApp->translate("FcitxSettingsHead", "add"));
+        //m_deleteBtn->setFixedSize(36,36);
+        //m_addBtn->setFixedSize(36,36);
         mainLayout->addWidget(m_deleteBtn);
+        mainLayout->addSpacing(10);
         mainLayout->addWidget(m_addBtn);
     }
 
