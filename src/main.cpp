@@ -44,7 +44,7 @@ int main(int argc, char *argv[])
     a.setApplicationVersion("1.0");
     a.setProductIcon(QIcon());
     a.setProductName("deepin-fcitx5configtool-plugin");
-    a.setApplicationDescription("This is a dtk deepin-fcitxconfigtool-plugin");
+    a.setApplicationDescription("This is a dtk deepin-fcitx5configtool-plugin");
     a.loadTranslator();
     a.setApplicationDisplayName("deepin-fcitx5configtool-plugin");
     DMainWindow m;

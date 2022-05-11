@@ -1,21 +1,21 @@
-# deepin-fcitxconfigtool-plugin 
+# deepin-fcitx5configtool-plugin 
 
 #### 介绍
 
-deepin-fcitxconfigtool-plugin 
+deepin-fcitx5configtool-plugin 
 
 dde控制中心输入法管理插件，目前做了基于fcitx4输入法框架的适配。
 
 #### 安装教程
 
 ```
-sudo apt install deepin-fcitxconfigtool-plugin 
+sudo apt install deepin-fcitx5configtool-plugin 
 ```
 
 #### 编译依赖
 
 ```
-sudo apt build-dep deepin-fcitxconfigtool-plugin 
+sudo apt build-dep deepin-fcitx5configtool-plugin 
 ```
 
 ```
@@ -44,11 +44,11 @@ tx push -s
 
 #### 使用说明
 
-git clone https://github.com/linuxdeepin/deepin-fcitxconfigtool-plugin.git
+git clone https://github.com/linuxdeepin/deepin-fcitx5configtool-plugin.git
 
-sudo apt build-dep deepin-fcitxconfigtool-plugin 
+sudo apt build-dep deepin-fcitx5configtool-plugin 
 
-cd ./deepin-fcitxconfigtool-plugin 
+cd ./deepin-fcitx5configtool-plugin 
 
 sudo dpkg-buildpackage -b
 

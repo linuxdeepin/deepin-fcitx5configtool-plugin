@@ -1,3 +1,0 @@
-misc:Depends=dconf-gsettings-backend | gsettings-backend
-shlibs:Depends=libc6 (>= 2.14), libdframeworkdbus2, libdtkcore5 (>= 5.4), libdtkgui5 (>= 5.4), libdtkwidget5 (>= 5.4), libfcitx-config4 (>= 4.2.9.29), libfcitx-core0 (>= 4.2.9.29), libfcitx-qt5-1 (>= 1.0.6), libfcitx-utils0 (>= 4.2.9.29), libgcc1 (>= 1:3.0), libgsettings-qt1 (>= 0.1+14.04.20140408), libkf5i18n5 (>= 4.97.0), libqt5concurrent5 (>= 5.0.2), libqt5core5a (>= 5.7.0), libqt5dbus5 (>= 5.0.2), libqt5gui5 (>= 5.8.0), libqt5widgets5 (>= 5.5.0), libstdc++6 (>= 5.2)
-misc:Pre-Depends=
