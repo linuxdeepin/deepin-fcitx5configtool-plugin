@@ -39,7 +39,7 @@ FcitxIMActivityItem::FcitxIMActivityItem(FcitxQtInputMethodItem *item, itemPosit
     m_layout = new QHBoxLayout(this);
     m_layout->setContentsMargins(0, 0, 10, 0);
     m_labelText = new FcitxShortenLabel("", this);
-    //DFontSizeManager::instance()->bind(m_labelText, DFontSizeManager::T6);
+    DFontSizeManager::instance()->bind(m_labelText, DFontSizeManager::T6);
     m_labelText->setShortenText("    " + item->name());
     m_labelText->setAccessibleName(item->name());
     m_labelText->setSizePolicy(QSizePolicy::MinimumExpanding, QSizePolicy::Fixed);
@@ -98,7 +98,7 @@ void FcitxIMActivityItem::editSwitch(const bool &flag)
 void FcitxIMActivityItem::paintEvent(QPaintEvent *event)
 {
     QPainter painter( this);
-    //painter.fillRect(this->rect(), DGuiApplicationHelper::instance()->applicationPalette().background());
+    painter.fillRect(this->rect(), DGuiApplicationHelper::instance()->applicationPalette().background());
     const int radius = 8;
     QRect paintRect = this->rect();
     QPainterPath path;
@@ -141,8 +141,15 @@ void FcitxIMActivityItem::paintEvent(QPaintEvent *event)
         path.arcTo(QRect(QPoint(paintRect.bottomRight() - QPoint(radius * 2, radius * 2)),
                          QSize(radius * 2, radius * 2)), 270, 90);
     }
-    if(m_isEnter) {
-        QColor color = Qt::green;
+    if(m_isSelected) {
+        QColor color = DGuiApplicationHelper::instance()->applicationPalette().highlight().color();
+        if(isDraged()) {
+            color.setAlpha(80);
+        }
+        painter.fillPath(path, color);
+        qDebug() << "m_isSelected";
+    } else if(m_isEntered) {
+        QColor color = DGuiApplicationHelper::instance()->applicationPalette().light().color();
         if(isDraged()) {
             color.setAlpha(80);
         }
@@ -150,14 +157,14 @@ void FcitxIMActivityItem::paintEvent(QPaintEvent *event)
     } else {
         DPalette p;
         QColor color = Qt::red;
-        if(1) {
-            color = QColor("#f2f2f2");
+        if(DGuiApplicationHelper::instance()->themeType() == DGuiApplicationHelper::DarkType) {
+            color = QColor("#323232");
             color.setAlpha(230);
         } else {
-            color = QColor("#323232");
+            color = DGuiApplicationHelper::instance()->applicationPalette().frameBorder().color();
         }
         if(isDraged()) {
-            color = Qt::red;
+            color = DGuiApplicationHelper::instance()->applicationPalette().light().color();
             color.setAlpha(80);
         }
         painter.fillPath(path, color);
@@ -168,7 +175,7 @@ void FcitxIMActivityItem::paintEvent(QPaintEvent *event)
 
 void FcitxIMActivityItem::mouseMoveEvent(QMouseEvent *e)
 {
-    this->update(rect());
+    update();
     return FcitxSettingsItem::mouseMoveEvent(e);
 }
 
@@ -180,20 +187,26 @@ void FcitxIMActivityItem::mousePressEvent(QMouseEvent *event)
     return FcitxSettingsItem::mousePressEvent(event);
 }
 
+void FcitxIMActivityItem::mouseReleaseEvent(QMouseEvent *event)
+{
+    update();
+    return FcitxSettingsItem::mouseReleaseEvent(event);
+}
+
 void FcitxIMActivityItem::setSelectStatus(const bool &isEnter, int index, int count)
 {
 //    if (!m_bgGroup)
 //        return;
     if (isEnter)
-        m_isEnter = true;
+        m_isSelected = true;
     else {
-        m_isEnter = false;
+        m_isSelected = false;
     }
     if (!m_isEdit && isEnter) {
         if (count <= 1) {
             m_upBtn->setEnabled(false);
             m_downBtn->setEnabled(false);
-        }else if (index == 0) {
+        } else if (index == 0) {
             m_upBtn->setEnabled(false);
             m_downBtn->setEnabled(true);
         } else if (index == count - 1) {

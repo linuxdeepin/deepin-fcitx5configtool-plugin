@@ -362,6 +362,15 @@ void FcitxSettingsGroup::mouseReleaseEvent(QMouseEvent *event)
     return QWidget::mouseReleaseEvent(event);
 }
 
+void FcitxSettingsGroup::focusOutEvent(QFocusEvent *e)
+{
+    Q_UNUSED(e);
+    for (int index = 0; index < itemCount(); index++) {
+        FcitxSettingsItem* sitem = qobject_cast<FcitxSettingsItem *>(m_layout->itemAt(index)->widget());
+        FcitxIMActivityItem *pItem = dynamic_cast<FcitxIMActivityItem*>(sitem);
+            pItem->setSelectStatus(false, index, itemCount());
+    }
+}
 
 FcitxSettingsItem *FcitxSettingsGroup::getItem(int index)
 {

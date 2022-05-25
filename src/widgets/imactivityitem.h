@@ -70,6 +70,7 @@ protected:
     void paintEvent(QPaintEvent *event) override;
     void mouseMoveEvent(QMouseEvent *e) override;
     void mousePressEvent(QMouseEvent *event) override;
+    void mouseReleaseEvent(QMouseEvent *event) override;
 
 private slots:
     void onUpItem();
@@ -86,7 +87,8 @@ public:
     ClickLabel *m_deleteLabel {nullptr};
     bool m_isEdit {false};
 private:
-    bool m_isEnter {false};
+    bool m_isSelected {false};
+    bool m_isEntered {false};
     itemPosition m_index; //0:第一个， -1：最后一个， -2：只有一个
     bool m_isPressed {false};
 };

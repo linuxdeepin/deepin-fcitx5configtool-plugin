@@ -115,9 +115,6 @@ void IMSettingWindow::initUI()
     m_resetBtn = new DCommandLinkButton(tr("Restore Defaults"), this);
     DFontSizeManager::instance()->bind(m_resetBtn, DFontSizeManager::T8, QFont::Normal);
     m_resetBtn->setAccessibleName(tr("Restore Defaults"));
-    //下面两行注释,和第三行文案有关联是控制中心搜索规范快捷键规范.不可以修改,不可以移动位置,下面三行要在一起
-    //~ contents_path /keyboard/Manage Input Methods
-    //~ child_page Manage Input Methods
     m_advSetKey = new QPushButton(tr("Advanced Settings"));
     m_advSetKey->setAccessibleName("Advanced Settings");
     m_advSetKey->setMaximumWidth(214);
@@ -125,18 +122,12 @@ void IMSettingWindow::initUI()
     m_shortcutGroup->appendItem(m_defaultIMKey);
 
     //控件添加至滑动窗口内
-    //下面两行注释,和第三行文案有关联是控制中心搜索规范快捷键规范.不可以修改,不可以移动位置,下面三行要在一起
-    //~ contents_path /keyboard/Manage Input Methods
-    //~ child_page Manage Input Methods
     scrollAreaLayout->addWidget(newTitleHead(tr("Manage Input Methods"), true));
     scrollAreaLayout->addSpacing(10);
     scrollAreaLayout->addWidget(m_IMListGroup);
 
     //QHBoxLayout 存放m_resetBtn和Shortcuts标题两个控件
     QHBoxLayout *shortcutLayout = new QHBoxLayout();
-    //下面两行注释,和第三行文案有关联是控制中心搜索规范快捷键规范.不可以修改,不可以移动位置,下面三行要在一起
-    //~ contents_path /keyboard/Manage Input Methods
-    //~ child_page Manage Input Methods
     QWidget *pWidget = newTitleHead(tr("Shortcuts"));
     shortcutLayout->addWidget(pWidget);
     shortcutLayout->addWidget(m_resetBtn, 0, Qt::AlignRight | Qt::AlignBottom);
@@ -145,6 +136,7 @@ void IMSettingWindow::initUI()
     scrollAreaLayout->addWidget(m_shortcutGroup);
     scrollAreaLayout->addSpacing(20);
     scrollAreaLayout->addWidget(m_advSetKey, 0, Qt::AlignHCenter);
+    scrollAreaLayout->addStretch();
 
     //添加至主界面内
     setLayout(scrollAreaLayout);
