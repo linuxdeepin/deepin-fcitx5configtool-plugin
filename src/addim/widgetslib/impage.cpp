@@ -222,17 +222,16 @@ IMPage::IMPage(DBusProvider *dbus, IMConfig *config, QWidget *parent)
             m_config->availIMModel()->setFilterText(text);
 
             int count = 0;
+            int useCount = 0;
             QModelIndex availIndex = this->ui_->availIMView->model()->index(0, 0);
             count = addIM(availIndex, text);
             setSelectCategoryRow(0);
 
-            if (count > 0) {
-                QModelIndex currentIndex = this->ui_->currentIMView->model()->index(0, 0);
+            useCount = m_config->currentUseIMEntries().count();
+            if (count > useCount) {
+                QModelIndex currentIndex = this->ui_->currentIMView->model()->index(useCount, 0);
                 this->ui_->currentIMView->setCurrentIndex(currentIndex);
-            }
-            else {
-                availIndex = this->ui_->availIMView->model()->index(0, 0);
-                count = addIM(availIndex);
+                setCurrentIMViewIndex(useCount);
             }
 
         });
@@ -326,8 +325,9 @@ void IMPage::clickCurrentIM(const QModelIndex& index)
 
 void IMPage::clickAvailIM(const QModelIndex &index)
 {
+    QString matchStr = m_SearchEdit->text();
     setCurrentIMViewIndex(-1);
-    addIM(index);
+    addIM(index, matchStr);
 }
 
 void IMPage::selectDefaultLayout() {

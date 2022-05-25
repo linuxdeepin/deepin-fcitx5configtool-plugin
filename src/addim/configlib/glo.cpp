@@ -748,9 +748,7 @@ FcitxQtStringKeyValueList& getUseIMList()
 
 void setMaxUseIMLanguageIndex(int index)
 {
-    if (index > g_maxLanguageIndex) {
-        g_maxLanguageIndex = index;
-    }
+    g_maxLanguageIndex = index;
 }
 
 int getMaxUseIMLanguageIndex()

@@ -81,7 +81,7 @@ void IMSettingWindow::initUI()
 
         connect(head, &FcitxSettingsHead::addBtnClicked, this, [=]() {
             printf("addBtnClicked.\n");
-            fcitx::addim::AddIMWindow mainWindow(m_dbus, m_config, nullptr);
+            fcitx::addim::AddIMWindow mainWindow(m_dbus, m_config, (DDialog*)this);
             Dtk::Widget::moveToCenter(&mainWindow);
             mainWindow.exec();
         });

@@ -69,7 +69,7 @@ public:
 
     void getInputMethodEntryList(int row, FcitxQtStringKeyValueList& currentNameList);
     void getInputMethodEntryList(int row, FcitxQtStringKeyValueList& currentNameList, FcitxQtStringKeyValueList& currentUseNameList, FcitxQtStringKeyValueList& useIMList);
-    void getInputMethodEntryList(int row, FcitxQtStringKeyValueList& currentNameList, FcitxQtStringKeyValueList& useIMList, QString matchStr);
+    void getInputMethodEntryList(int row, FcitxQtStringKeyValueList& currentNameList, FcitxQtStringKeyValueList& currentUseNameList, FcitxQtStringKeyValueList& useIMList, QString matchStr);
     bool existUseIMEntryList(int row, FcitxQtStringKeyValueList& useIMList) const;
 
 protected:

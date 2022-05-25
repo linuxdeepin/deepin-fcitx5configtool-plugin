@@ -327,10 +327,11 @@ void AvailIMModel::getInputMethodEntryList(int row, FcitxQtStringKeyValueList& c
 }
 
 void AvailIMModel::getInputMethodEntryList(int row, FcitxQtStringKeyValueList& currentNameList,
-    FcitxQtStringKeyValueList& useIMList, QString matchStr)
+    FcitxQtStringKeyValueList& currentUseNameList, FcitxQtStringKeyValueList& useIMList, QString matchStr)
 {
     int loc = 0;
     QString entry_name;
+    FcitxQtStringKeyValueList nouseIMNameList;
     FcitxQtInputMethodEntryList imEntryList = m_filteredIMEntryList[row].second;
     for (FcitxQtInputMethodEntry& im : imEntryList) {
         FcitxQtStringKeyValue imEntry;
@@ -344,21 +345,28 @@ void AvailIMModel::getInputMethodEntryList(int row, FcitxQtStringKeyValueList& c
                     item.key().toStdString().c_str(), im.uniqueName().toStdString().c_str(), item.key() == im.uniqueName());
                 return item.key() == im.uniqueName();
             });
-        if (iter != useIMList.end()) {
-        }
-        else {
-            entry_name = im.name();
-            loc = entry_name.indexOf("键盘 - ");
-            if (loc != -1) {
-                entry_name = entry_name.mid(loc + 5, -1);
-            }
 
+        entry_name = im.name();
+        loc = entry_name.indexOf("键盘 - ");
+        if (loc != -1) {
+            entry_name = entry_name.mid(loc + 5, -1);
+        }
+        if (iter != useIMList.end()) {
             if (entry_name.contains(matchStr, Qt::CaseInsensitive)) {
                 imEntry.setKey(im.uniqueName());
                 currentNameList.push_back(imEntry);
+                currentUseNameList.push_back(imEntry);
+            }
+        }
+        else {
+            if (entry_name.contains(matchStr, Qt::CaseInsensitive)) {
+                imEntry.setKey(im.uniqueName());
+                nouseIMNameList.push_back(imEntry);
             }
         }
     }
+
+    currentNameList.append(nouseIMNameList);
 }
 
 bool AvailIMModel::existUseIMEntryList(int row, FcitxQtStringKeyValueList& useIMList) const
@@ -437,7 +445,6 @@ bool IMProxyModel::filterLanguage(const QModelIndex &index) const {
 bool IMProxyModel::filterIM(const QModelIndex &index) const {
     QString uniqueName = index.data(FcitxIMUniqueNameRole).toString();
     QString name       = index.data(Qt::DisplayRole).toString();
-    QString langCode   = index.data(FcitxLanguageRole).toString();
 
     if (uniqueName == "keyboard-us" && m_filterText.isEmpty()) {
         return true;
@@ -445,9 +452,8 @@ bool IMProxyModel::filterIM(const QModelIndex &index) const {
 
     bool flag = true;
     if (!m_filterText.isEmpty()) {
-        flag = flag && (name.contains(m_filterText, Qt::CaseInsensitive) ||
-                        languageName(langCode).contains(m_filterText,
-                                                        Qt::CaseInsensitive));
+        flag = flag && (name.contains(m_filterText, Qt::CaseInsensitive)
+            );
     }
     return flag;
 }

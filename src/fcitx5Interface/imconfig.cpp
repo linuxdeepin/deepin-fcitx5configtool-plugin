@@ -137,7 +137,7 @@ int IMConfig::addSelectedIM(const QModelIndex &index, QString matchStr) {
                 ((AvailIMModel*)internalAvailIMModel_)->getInputMethodEntryList(row_index, m_currentIMEntries, m_currentUseIMEntries, useIMList);
             }
             else {
-                ((AvailIMModel*)internalAvailIMModel_)->getInputMethodEntryList(row_index, m_currentIMEntries, useIMList, matchStr);
+                ((AvailIMModel*)internalAvailIMModel_)->getInputMethodEntryList(row_index, m_currentIMEntries, m_currentUseIMEntries, useIMList, matchStr);
             }
             count = m_currentIMEntries.count();
         }
