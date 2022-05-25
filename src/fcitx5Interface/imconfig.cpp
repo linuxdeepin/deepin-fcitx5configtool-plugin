@@ -120,6 +120,7 @@ void IMConfig::addIM(const QString &name)
 
 int IMConfig::addSelectedIM(const QModelIndex &index, QString matchStr) {
     int count = 0;
+    osaLogInfo(LOG_EXPANDED_NAME, LOG_EXPANDED_NUM, "====> m_mode [%d]\n", m_mode);
     if (!index.isValid()) {
         return count;
     }
@@ -130,9 +131,10 @@ int IMConfig::addSelectedIM(const QModelIndex &index, QString matchStr) {
             osaLogInfo(LOG_EXPANDED_NAME, LOG_EXPANDED_NUM, "row_index [%d]\n", row_index);
 
             m_currentIMEntries.clear();
+            m_currentUseIMEntries.clear();
             FcitxQtStringKeyValueList useIMList = getUseIMList();
             if (matchStr == "") {
-                ((AvailIMModel*)internalAvailIMModel_)->getInputMethodEntryList(row_index, m_currentIMEntries, useIMList);
+                ((AvailIMModel*)internalAvailIMModel_)->getInputMethodEntryList(row_index, m_currentIMEntries, m_currentUseIMEntries, useIMList);
             }
             else {
                 ((AvailIMModel*)internalAvailIMModel_)->getInputMethodEntryList(row_index, m_currentIMEntries, useIMList, matchStr);
@@ -146,6 +148,8 @@ int IMConfig::addSelectedIM(const QModelIndex &index, QString matchStr) {
         updateIMList();
         emitChanged();
     }
+
+    osaLogInfo(LOG_EXPANDED_NAME, LOG_EXPANDED_NUM, "<==== count [%d]\n", count);
     return count;
 }
 
@@ -249,23 +253,24 @@ void IMConfig::fetchGroupInfoFinished(QDBusPendingCallWatcher *watcher) {
     watcher->deleteLater();
     needSave_ = false;
     QDBusPendingReply<QString, FcitxQtStringKeyValueList> reply = *watcher;
+    FcitxQtStringKeyValueList useIMEntries;
     if (!reply.isError()) {
         defaultLayout_ = reply.argumentAt<0>();
         imEntries_ = reply.argumentAt<1>();
-        m_currentIMEntries = reply.argumentAt<1>();
+        useIMEntries = reply.argumentAt<1>();
     } else {
         defaultLayout_.clear();
         imEntries_.clear();
-        m_currentIMEntries.clear();
+        useIMEntries.clear();
     }
     emit defaultLayoutChanged();
     osaLogInfo(LOG_CFGTOOL_NAME, LOG_CFGTOOL_NUM, "----> defaultLayout_ [%s]\n", defaultLayout_.toStdString().c_str());
-    for (const auto& item : m_currentIMEntries) {
+    for (const auto& item : useIMEntries) {
         osaLogInfo(LOG_CFGTOOL_NAME, LOG_CFGTOOL_NUM, "----> key [%s], item [%s]\n",
             item.key().toStdString().c_str(), item.value().toStdString().c_str());
     }
 
-    setUseIMList(m_currentIMEntries);
+    setUseIMList(useIMEntries);
 
     updateIMList();
     osaLogInfo(LOG_CFGTOOL_NAME, LOG_CFGTOOL_NUM, "<====\n");
@@ -291,8 +296,7 @@ void IMConfig::updateIMList(bool excludeCurrent) {
 
 void IMConfig::filterIMEntryList(
     const FcitxQtInputMethodEntryList &imEntryList,
-    const FcitxQtStringKeyValueList &enabledIMList)
-{
+    const FcitxQtStringKeyValueList &enabledIMList) {
 
     m_currentInputMethodList->clear();
     //enabledIMList_ = enabledIMList;

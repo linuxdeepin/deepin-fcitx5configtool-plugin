@@ -46,6 +46,7 @@ public:
     int addSelectedIM(const QModelIndex& index, QString matchStr = "");
 
     const auto& currentIMEntries() const { return m_currentIMEntries; }
+    const auto& currentUseIMEntries() const { return m_currentUseIMEntries; }
     const auto &imEntries() const { return imEntries_; }
     void setIMEntries(const FcitxQtStringKeyValueList &imEntires) {
         imEntries_ = imEntires;
@@ -126,6 +127,7 @@ private:
 
     FilteredIMModel *m_currentIMModel;
     FcitxQtStringKeyValueList m_currentIMEntries;
+    FcitxQtStringKeyValueList m_currentUseIMEntries;
 
     FcitxQtStringKeyValueList imEntries_;
     FcitxQtInputMethodEntryList allIMs_;

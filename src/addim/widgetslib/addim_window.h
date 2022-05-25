@@ -35,9 +35,14 @@ signals:
 protected:
     void keyPressEvent(QKeyEvent *event) override;
 
+    void closeEvent(QCloseEvent* event) override;
+
+protected:
+    IMConfig* m_config;
+
 private:
     void handleChanged(bool state);
-	void closeWindow();
+    void closeWindow();
 
 private:
     DBusProvider *m_dbus;

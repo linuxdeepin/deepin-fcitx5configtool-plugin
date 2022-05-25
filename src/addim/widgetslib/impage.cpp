@@ -5,6 +5,7 @@
  *
  */
 
+#include "glo.h"
 #include "imelog.h"
 #include "impage.h"
 #include "categoryhelper.h"
@@ -103,7 +104,8 @@ void IMListDelegate::paint(QPainter* painter, const QStyleOptionViewItem& option
         painter->fillPath(path, QBrush(Qt::white));
     }
     else {
-        if (option.state.testFlag(QStyle::State_Selected))
+        int currentIMIndex = getCurrentIMViewIndex();
+        if (option.state.testFlag(QStyle::State_Selected) || (index.row() == currentIMIndex && currentIMIndex != -1))
         {
             painter->setPen(QPen(Qt::white));
             painter->fillPath(path, QBrush(QColor(25, 141, 255)));
@@ -256,13 +258,33 @@ IMPage::IMPage(DBusProvider *dbus, IMConfig *config, QWidget *parent)
 
     currentIMCurrentChanged();
     availIMSelectionChanged();
+
+    setSelectCategoryRow(0);
+    QModelIndex availIndex = this->ui_->availIMView->model()->index(0, 0);
+    addIM(availIndex);
+
+	int count;
+	int useCount;
+	int viewItemCount;
+	count    = m_config->currentIMEntries().count();
+	useCount = m_config->currentUseIMEntries().count();
+	if (count > useCount) {
+		QModelIndex currentIndex = this->ui_->currentIMView->model()->index(useCount, 0);
+		this->ui_->currentIMView->setCurrentIndex(currentIndex);
+		clickCurrentIM(currentIndex);
+	}
+	osaLogInfo(LOG_EXPANDED_NAME, LOG_EXPANDED_NUM, "<==== count [%d], useCount [%d]\n", count, useCount);
 }
 
-IMPage::~IMPage() {}
+IMPage::~IMPage() {
+    m_config->availIMModel()->setFilterText("");
+}
 
 void IMPage::save() {
+	int currentIMIndex;
     checkDefaultLayout();
-    m_config->saveSelectedIM(m_currentIMIndex);
+	currentIMIndex = getCurrentIMViewIndex();
+    m_config->saveSelectedIM(currentIMIndex);
 }
 
 void IMPage::load() {
@@ -283,8 +305,11 @@ void IMPage::selectCurrentIM(const QModelIndex &index) {
 
 void IMPage::clickCurrentIM(const QModelIndex& index)
 {
-    m_currentIMIndex = index.row();
-    printf("m_currentIMIndex [%d]\n", m_currentIMIndex);
+    int currentIMIndex = index.row();
+    int preCurrentIMIndex;
+    preCurrentIMIndex = getCurrentIMViewIndex();
+    setCurrentIMViewIndex(currentIMIndex);
+    printf("m_currentIMIndex [%d]\n", currentIMIndex);
 
     bool usedIM = index.data(FcitxUseIMRole).toBool();
 
@@ -294,17 +319,19 @@ void IMPage::clickCurrentIM(const QModelIndex& index)
     else {
         ui_->pb_add->setEnabled(false);
     }
+
+    QModelIndex preIndex = this->ui_->currentIMView->model()->index(preCurrentIMIndex, 0);
+    ui_->currentIMView->update(preIndex);
 }
 
 void IMPage::clickAvailIM(const QModelIndex &index)
 {
+    setCurrentIMViewIndex(-1);
     addIM(index);
 }
 
 void IMPage::selectDefaultLayout() {
 }
-
-void IMPage::clickAddIM() { addIM(ui_->availIMView->currentIndex()); }
 
 void IMPage::checkDefaultLayout() {
     const auto &imEntries = m_config->currentIMEntries();

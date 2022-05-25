@@ -24,6 +24,8 @@ AddIMWindow::AddIMWindow(DBusProvider* dbus, IMConfig* config, DDialog* parent)
     , m_impage(new IMPage(m_dbus, config, this))
 {
     osaLogInfo(LOG_CFGTOOL_NAME, LOG_CFGTOOL_NUM, "====>\n");
+    m_config = config;
+
     setAttribute(Qt::WA_TranslucentBackground, false);
     /** add titleBar */
 
@@ -68,6 +70,13 @@ void AddIMWindow::keyPressEvent(QKeyEvent *event) {
     if (!event->isAccepted() && event->matches(QKeySequence::Cancel)) {
         qApp->quit();
     }
+}
+
+void AddIMWindow::closeEvent(QCloseEvent* event)
+{
+	DDialog::closeEvent(event);
+	setMaxUseIMLanguageIndex(-1);
+	setCurrentIMViewIndex(-1);
 }
 
 }

@@ -25,6 +25,7 @@ enum {
     FcitxUseIMLanguageRole,
     FcitxRowIndexRole,
     FcitxUseIMRole,
+    FcitxEnglishNameRole,
 };
 
 enum { LanguageType, IMType };
@@ -66,9 +67,9 @@ public:
     filterIMEntryList(const FcitxQtInputMethodEntryList &imEntryList,
                       const FcitxQtStringKeyValueList &enabledIMs) override;
 
-    void getInputMethodEntryList(int row, FcitxQtStringKeyValueList& imNameList);
-    void getInputMethodEntryList(int row, FcitxQtStringKeyValueList& imNameList, FcitxQtStringKeyValueList& useIMList);
-    void getInputMethodEntryList(int row, FcitxQtStringKeyValueList& imNameList, FcitxQtStringKeyValueList& useIMList, QString matchStr);
+    void getInputMethodEntryList(int row, FcitxQtStringKeyValueList& currentNameList);
+    void getInputMethodEntryList(int row, FcitxQtStringKeyValueList& currentNameList, FcitxQtStringKeyValueList& currentUseNameList, FcitxQtStringKeyValueList& useIMList);
+    void getInputMethodEntryList(int row, FcitxQtStringKeyValueList& currentNameList, FcitxQtStringKeyValueList& useIMList, QString matchStr);
     bool existUseIMEntryList(int row, FcitxQtStringKeyValueList& useIMList) const;
 
 protected:

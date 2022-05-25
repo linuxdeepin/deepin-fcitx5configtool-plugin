@@ -29,7 +29,7 @@ class ADDIMDBusProvider;
 class IMPage : public QWidget {
     Q_OBJECT
 public:
-    IMPage(DBusProvider *dbus, IMConfig* config, QWidget *parent);
+    IMPage(DBusProvider *dbus, IMConfig *config, QWidget *parent);
     ~IMPage();
 signals:
     void changed();
@@ -49,7 +49,6 @@ private slots:
     void clickAvailIM(const QModelIndex &index);
     void selectDefaultLayout();
 
-    void clickAddIM();
     void moveDownIM();
     void moveUpIM();
 
@@ -66,7 +65,6 @@ private:
     IMConfig *m_config;
     Dtk::Widget::DSearchEdit* m_SearchEdit;
 
-	int m_currentIMIndex;
 };
 
 class BaseWidget : public QWidget
