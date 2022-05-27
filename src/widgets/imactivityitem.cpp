@@ -98,7 +98,7 @@ void FcitxIMActivityItem::editSwitch(const bool &flag)
 void FcitxIMActivityItem::paintEvent(QPaintEvent *event)
 {
     QPainter painter( this);
-    painter.fillRect(this->rect(), DGuiApplicationHelper::instance()->applicationPalette().background());
+    painter.fillRect(this->rect(), DGuiApplicationHelper::instance()->applicationPalette().window());
     const int radius = 8;
     QRect paintRect = this->rect();
     QPainterPath path;
@@ -147,7 +147,6 @@ void FcitxIMActivityItem::paintEvent(QPaintEvent *event)
             color.setAlpha(80);
         }
         painter.fillPath(path, color);
-        qDebug() << "m_isSelected";
     } else if(m_isEntered) {
         QColor color = DGuiApplicationHelper::instance()->applicationPalette().light().color();
         if(isDraged()) {
@@ -182,8 +181,9 @@ void FcitxIMActivityItem::mouseMoveEvent(QMouseEvent *e)
 void FcitxIMActivityItem::mousePressEvent(QMouseEvent *event)
 {
     Q_UNUSED(event);
-    emit selectItem(this);
+    emit selectItem(this, true);
    // setSelectStatus(true);
+    this->setFocus();
     return FcitxSettingsItem::mousePressEvent(event);
 }
 
@@ -191,6 +191,13 @@ void FcitxIMActivityItem::mouseReleaseEvent(QMouseEvent *event)
 {
     update();
     return FcitxSettingsItem::mouseReleaseEvent(event);
+}
+
+void FcitxIMActivityItem::focusOutEvent(QFocusEvent *e)
+{
+    emit selectItem(this, false);
+    m_isSelected = false;
+    update();
 }
 
 void FcitxIMActivityItem::setSelectStatus(const bool &isEnter, int index, int count)

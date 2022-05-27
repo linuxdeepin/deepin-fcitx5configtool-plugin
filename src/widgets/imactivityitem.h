@@ -62,7 +62,7 @@ signals:
     void downBtnClicked(FcitxQtInputMethodItem*);
     void configBtnClicked(FcitxQtInputMethodItem*);
     void deleteBtnClicked(FcitxQtInputMethodItem*);
-    void selectItem(FcitxSettingsItem * item);
+    void selectItem(FcitxSettingsItem * item, bool selected);
 
 protected:
     void enterEvent(QEvent *event) override;
@@ -71,6 +71,7 @@ protected:
     void mouseMoveEvent(QMouseEvent *e) override;
     void mousePressEvent(QMouseEvent *event) override;
     void mouseReleaseEvent(QMouseEvent *event) override;
+    void focusOutEvent(QFocusEvent *e) override;
 
 private slots:
     void onUpItem();

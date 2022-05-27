@@ -256,7 +256,7 @@ void FcitxSettingsGroup::switchItem(int start, int end)
     emit switchPosition(mCurrentItem->m_item, end);
 }
 
-void FcitxSettingsGroup::onSelectItem(FcitxSettingsItem *item)
+void FcitxSettingsGroup::onSelectItem(FcitxSettingsItem *item, bool selected)
 {
     if (!item)
         return;
@@ -267,7 +267,7 @@ void FcitxSettingsGroup::onSelectItem(FcitxSettingsItem *item)
         if(pItem != item) {
             pItem->setSelectStatus(false, index, itemCount());
         } else {
-            pItem->setSelectStatus(true, index, itemCount());
+            pItem->setSelectStatus(selected, index, itemCount());
         }
     }
 }
@@ -305,7 +305,8 @@ void FcitxSettingsGroup::mouseMoveEvent(QMouseEvent *event)
                     m_lastItem->setDraged(false);
                     m_lastItem->update(m_lastItem->rect());
                 }
-                item->move(item->mapTo(this, QPoint(item->x(), item->rect().topRight().y() - (event->pos().y() - m_lastYPosition))));
+                QPoint p(item->mapTo(this, QPoint(item->x(), item->rect().topRight().y() - (event->pos().y() - m_lastYPosition))));
+                item->move(p);
                 item->setDraged(true);
                 m_lastItem = item;
             }
@@ -354,10 +355,16 @@ void FcitxSettingsGroup::mouseReleaseEvent(QMouseEvent *event)
     }
     if(selecTopLeft.y() % selectItem->height() > (selectItem->height() / 2)) {
         count ++;
+        if(count >= m_layout->count()) {
+            count --;
+        }
     }
     m_lastItem = nullptr;
     if(m_selectIndex != count) {
         switchItem(m_selectIndex,count);
+    } else {
+        m_layout->removeWidget(selectItem);
+        m_layout->insertWidget(count, selectItem);
     }
     return QWidget::mouseReleaseEvent(event);
 }

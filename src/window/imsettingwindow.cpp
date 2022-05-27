@@ -307,8 +307,9 @@ void IMSettingWindow::onCurIMChanged(FcitxQtInputMethodItemList* list)
         connect(tmp, &FcitxIMActivityItem::upBtnClicked, this, &IMSettingWindow::onItemUp);
         connect(tmp, &FcitxIMActivityItem::downBtnClicked, this, &IMSettingWindow::onItemDown);
         connect(tmp, &FcitxIMActivityItem::deleteBtnClicked, this, &IMSettingWindow::onItemDelete);
-        connect(tmp, &FcitxIMActivityItem::selectItem, this, [=](){
-            m_editHead->setDeleteEnable(true);
+        connect(tmp, &FcitxIMActivityItem::selectItem, this, [=](FcitxSettingsItem * item, bool selected){
+            Q_UNUSED(item);
+            m_editHead->setDeleteEnable(selected);
         });
         //tmp->editSwitch(IMModel::instance()->isEdit());
         m_IMListGroup->appendItem(tmp);
