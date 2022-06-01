@@ -9,7 +9,7 @@
 
 #include "dbusprovider.h"
 #include "impage.h"
-#include "ui_addim_window.h"
+#include "ui_addimwindow.h"
 #include <QAbstractButton>
 
 #if DTK_VERSION_MAJOR == 5

@@ -9,7 +9,7 @@
 //#include "osastroper.h"
 #include "imconfig.h"
 #include "dbusprovider.h"
-#include "addim_model.h"
+#include "addimmodel.h"
 
 IMConfig::IMConfig(DBusProvider *dbus, ModelMode mode, QObject *parent)
     : QObject(parent), dbus_(dbus), availIMModel_(new IMProxyModel(this)),
@@ -53,7 +53,7 @@ void IMConfig::save() {
 }
 
 void IMConfig::saveSelectedIM(int imIndex) {
-    osaLogInfo(LOG_EXPANDED_NAME, LOG_EXPANDED_NUM, "====> imIndex [%d], m_needSave [%d]\n", imIndex, needSave_);
+    osaLogInfo(LOG_CFGTOOL_NAME, LOG_CFGTOOL_NUM, "====> imIndex [%d], m_needSave [%d]\n", imIndex, needSave_);
 
     if (!dbus_->controller()) {
         osaLogInfo(LOG_EXPANDED_NAME, LOG_EXPANDED_NUM, "<====\n");
@@ -65,21 +65,18 @@ void IMConfig::saveSelectedIM(int imIndex) {
         return;
     }
 
-    if (needSave_) {
-        FcitxQtStringKeyValueList useIMList = getUseIMList();
+        FcitxQtStringKeyValueList &useIMList = getUseIMList();
         if (useIMList.count() >= 1) {
             useIMList.insert(1, m_currentIMEntries.at(imIndex));
-        }
-        else {
+        } else {
             useIMList.insert(0, m_currentIMEntries.at(imIndex));
         }
         dbus_->controller()->SetInputMethodGroupInfo(lastGroup_, defaultLayout_, useIMList);
-        needSave_ = false;
-       // emit addIMSignal(imIndex);
-       // updateIMList();
+        //needSave_ = false;
+        // emit addIMSignal(imIndex);
+        // updateIMList();
         addIM(m_currentIMEntries.at(imIndex).key());
-    }
-    osaLogInfo(LOG_EXPANDED_NAME, LOG_EXPANDED_NUM, "<====\n");
+    osaLogInfo(LOG_CFGTOOL_NAME, LOG_CFGTOOL_NUM, "<====\n");
 }
 
 void IMConfig::load() {
@@ -108,7 +105,7 @@ void IMConfig::addIM(const QString &name)
         item->setUniqueName(value->uniqueName());
         item->setConfigurable(value->configurable());
         item->setLanguageCode(value->languageCode());
-        if(m_currentInputMethodList->isEmpty()) {
+        if (m_currentInputMethodList->isEmpty()) {
             m_currentInputMethodList->append(item);
         } else {
             m_currentInputMethodList->insert(1, item);
@@ -135,13 +132,11 @@ int IMConfig::addSelectedIM(const QModelIndex &index, QString matchStr) {
             FcitxQtStringKeyValueList useIMList = getUseIMList();
             if (matchStr == "") {
                 ((AvailIMModel*)internalAvailIMModel_)->getInputMethodEntryList(row_index, m_currentIMEntries, m_currentUseIMEntries, useIMList);
-            }
-            else {
+            } else {
                 ((AvailIMModel*)internalAvailIMModel_)->getInputMethodEntryList(row_index, m_currentIMEntries, m_currentUseIMEntries, useIMList, matchStr);
             }
             count = m_currentIMEntries.count();
-        }
-        else {
+        } else {
             osaLogError(LOG_EXPANDED_NAME, LOG_EXPANDED_NUM, "ERROR: m_mode != Tree. m_mode [%d]\n", m_mode);
         }
 

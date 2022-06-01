@@ -3,8 +3,8 @@
  *
  * SPDX-License-Identifier: GPL-2.0-or-later
  */
-#ifndef ADDIM_MODEL_H
-#define ADDIM_MODEL_H
+#ifndef ADDIMMODEL_H
+#define ADDIMMODEL_H
 
 #include <QAbstractListModel>
 #include <QSet>

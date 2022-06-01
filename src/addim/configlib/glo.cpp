@@ -14,9 +14,11 @@ QMap<QString, QString> g_uniqueNameToEnglishMap;
 QMap<QString, QString> g_uniqueNameToChineseMap;
 
 FcitxQtStringKeyValueList g_useIMList;
-int g_maxLanguageIndex = 0;
+int g_useLanguageCount = 0;
 
 int g_currentIMViewIndex = 0;
+
+int g_initCategroyLanguageFlag = false;
 
 typedef struct s_languageList {
     char uniqueName[64];
@@ -698,6 +700,11 @@ int initCategroyLanguageMap()
     int count = sizeof(languageList) / sizeof(s_languageList);
     int index = 0;
 
+    if (g_initCategroyLanguageFlag) {
+        return 0;
+    }
+    g_initCategroyLanguageFlag = true;
+
     g_uniqueNameToEnglishMap.clear();
     g_uniqueNameToChineseMap.clear();
     for (index = 0; index < count; index++) {
@@ -714,8 +721,7 @@ QString getEnglishLanguageName(QString uniqueName)
 
     if (g_uniqueNameToEnglishMap.contains(uniqueName)) {
         englishName = g_uniqueNameToEnglishMap[uniqueName];
-    }
-    else {
+    } else {
         englishName = "unknown";
     }
 
@@ -728,8 +734,7 @@ QString getChineseLanguageName(QString uniqueName)
 
     if (g_uniqueNameToChineseMap.contains(uniqueName)) {
         chineseName = g_uniqueNameToChineseMap[uniqueName];
-    }
-    else {
+    } else {
         chineseName = "unknown";
 
     }
@@ -746,14 +751,14 @@ FcitxQtStringKeyValueList& getUseIMList()
     return g_useIMList;
 }
 
-void setMaxUseIMLanguageIndex(int index)
+void setUseIMLanguageCount(int count)
 {
-    g_maxLanguageIndex = index;
+    g_useLanguageCount = count;
 }
 
-int getMaxUseIMLanguageIndex()
+int getUseIMLanguageCount()
 {
-    return g_maxLanguageIndex;
+    return g_useLanguageCount;
 }
 
 void setCurrentIMViewIndex(int index)

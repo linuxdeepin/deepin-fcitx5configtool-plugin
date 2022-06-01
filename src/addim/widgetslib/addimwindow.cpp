@@ -6,7 +6,7 @@
  */
 #include "glo.h"
 #include "imelog.h"
-#include "addim_window.h"
+#include "addimwindow.h"
 
 #include <QKeyEvent>
 #include <QPushButton>
@@ -75,7 +75,7 @@ void AddIMWindow::keyPressEvent(QKeyEvent *event) {
 void AddIMWindow::closeEvent(QCloseEvent* event)
 {
 	DDialog::closeEvent(event);
-	setMaxUseIMLanguageIndex(-1);
+	setUseIMLanguageCount(0);
 	setCurrentIMViewIndex(-1);
 }
 

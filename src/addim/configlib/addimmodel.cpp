@@ -5,7 +5,7 @@
  */
 #include "glo.h"
 #include "imelog.h"
-#include "addim_model.h"
+#include "addimmodel.h"
 #include <QCollator>
 #include <QLocale>
 #include <QSize>
@@ -93,11 +93,9 @@ QVariant CategorizedItemModel::data(const QModelIndex &index, int role) const {
 static QString languageName(const QString &langCode) {
     if (langCode.isEmpty()) {
         return _("Unknown");
-    }
-    else if (langCode == "*") {
+    } else if (langCode == "*") {
         return _("Multilingual");
-    }
-    else {
+    } else {
         QLocale locale(langCode);
         if (locale.language() == QLocale::C) {
             // return lang code seems to be a better solution other than
@@ -145,12 +143,16 @@ QVariant AvailIMModel::dataForCategory(const QModelIndex &index, int role) const
     QString language             = "";
     QString englishName          = "";
     QString categoryLanguageName = "";
+    QString c_py;
     switch (role) {
     case Qt::DisplayRole:
         language    = languageName(m_filteredIMEntryList[index.row()].first);
         englishName = getEnglishLanguageName(m_filteredIMEntryList[index.row()].second.at(0).uniqueName());
 
         categoryLanguageName = language + " - " + englishName;
+        c_py = Dtk::Core::Chinese2Pinyin(language);
+        categoryLanguageName += " [" + c_py.left(1) + "]";
+
         return categoryLanguageName;
 
     case FcitxEnglishNameRole:
@@ -216,6 +218,7 @@ void AvailIMModel::filterIMEntryList(
     FcitxQtStringKeyValueList useIMList = getUseIMList();
     QMap<QString, int> languageMap;
     m_filteredIMEntryList.clear();
+    m_filteredUseIMLanguageList.clear();
 
     QSet<QString> enabledIMs;
     for (const auto &item : enabledIMList) {
@@ -225,7 +228,6 @@ void AvailIMModel::filterIMEntryList(
     int idx;
     QString key;
     QString uniqueName;
-    int useLanguageIndex = 0;
     int start_loc;
     for (const FcitxQtInputMethodEntry &im : imEntryList) {
         start_loc = im.name().indexOf(" - ");
@@ -234,12 +236,10 @@ void AvailIMModel::filterIMEntryList(
             int end_loc = im.name().indexOf(" - ", start_loc);
             if (end_loc != -1) {
                 key = im.name().mid(start_loc, end_loc - start_loc);
-            }
-            else {
+            } else {
                 key = im.name().mid(start_loc, -1);
             }
-        }
-        else {
+        } else {
             key = im.languageCode();
         }
 
@@ -252,6 +252,7 @@ void AvailIMModel::filterIMEntryList(
         if (start_loc != -1) {
             key = key.mid(0, start_loc);
         }
+        key = key.trimmed();
 
         if (!languageMap.contains(key)) {
             idx = m_filteredIMEntryList.count();
@@ -265,21 +266,30 @@ void AvailIMModel::filterIMEntryList(
         m_filteredIMEntryList[idx].second.append(im);
 
         uniqueName = im.uniqueName();
+        osaLogInfo(LOG_EXPANDED_NAME, LOG_EXPANDED_NUM, "uniqueName [%s]\n", uniqueName.toStdString().c_str());
+        if (uniqueName == "rime") {
+            printf("rime. key [%s]\n", key.toStdString().c_str());
+        }
 
         auto iter = std::find_if(useIMList.begin(), useIMList.end(),
             [&im](const FcitxQtStringKeyValue& item) {
                 return item.key() == im.uniqueName();
             });
         if (iter != useIMList.end()) {
-
-            if (m_filteredUseIMLanguageList[idx].second == false) {
-                m_filteredUseIMLanguageList[idx].second = true;
-                setMaxUseIMLanguageIndex(useLanguageIndex);
-                useLanguageIndex += 1;
-            }
+            m_filteredUseIMLanguageList[idx].second = true;
         }
     }
+
+    int useLanguageCount = 0;
+    for (const auto& item : m_filteredUseIMLanguageList) {
+        if (item.second) {
+            useLanguageCount++;
+        }
+    }
+    setUseIMLanguageCount(useLanguageCount);
+
     endResetModel();
+    osaLogInfo(LOG_CFGTOOL_NAME, LOG_CFGTOOL_NUM, "<==== useLanguageCount [%d]\n", useLanguageCount);
 }
 
 void AvailIMModel::getInputMethodEntryList(int row, FcitxQtStringKeyValueList& currentNameList)
@@ -316,8 +326,7 @@ void AvailIMModel::getInputMethodEntryList(int row, FcitxQtStringKeyValueList& c
             imEntry.setKey(im.uniqueName());
             currentNameList.push_back(imEntry);
             currentUseNameList.push_back(imEntry);
-        }
-        else {
+        } else {
             imEntry.setKey(im.uniqueName());
             nouseIMNameList.push_back(imEntry);
         }
@@ -350,6 +359,11 @@ void AvailIMModel::getInputMethodEntryList(int row, FcitxQtStringKeyValueList& c
         loc = entry_name.indexOf("键盘 - ");
         if (loc != -1) {
             entry_name = entry_name.mid(loc + 5, -1);
+        } else {
+            loc = entry_name.indexOf("Keyboard - ");
+            if (loc != -1) {
+                entry_name = entry_name.mid(loc + 11, -1);
+            }
         }
         if (iter != useIMList.end()) {
             if (entry_name.contains(matchStr, Qt::CaseInsensitive)) {
@@ -357,8 +371,7 @@ void AvailIMModel::getInputMethodEntryList(int row, FcitxQtStringKeyValueList& c
                 currentNameList.push_back(imEntry);
                 currentUseNameList.push_back(imEntry);
             }
-        }
-        else {
+        } else {
             if (entry_name.contains(matchStr, Qt::CaseInsensitive)) {
                 imEntry.setKey(im.uniqueName());
                 nouseIMNameList.push_back(imEntry);
@@ -371,7 +384,7 @@ void AvailIMModel::getInputMethodEntryList(int row, FcitxQtStringKeyValueList& c
 
 bool AvailIMModel::existUseIMEntryList(int row, FcitxQtStringKeyValueList& useIMList) const
 {
-	return m_filteredUseIMLanguageList[row].second;
+    return m_filteredUseIMLanguageList[row].second;
 }
 
 IMProxyModel::IMProxyModel(QObject *parent) : QSortFilterProxyModel(parent) {
@@ -462,8 +475,7 @@ bool IMProxyModel::lessThan(const QModelIndex &left, const QModelIndex &right) c
     int result = compareCategories(left, right);
     if (result < 0) {
         return true;
-    }
-    else if (result > 0) {
+    } else if (result > 0) {
         return false;
     }
 
@@ -494,8 +506,7 @@ int IMProxyModel::compareCategories(const QModelIndex &left, const QModelIndex &
     if (exist_l == true && exist_r == false) {
         osaLogInfo(LOG_EXPANDED_NAME, LOG_EXPANDED_NUM, "<==== exist_l == true && exist_r == false\n");
         return -1;
-    }
-    else if (exist_l == false && exist_r == true) {
+    } else if (exist_l == false && exist_r == true) {
         osaLogInfo(LOG_EXPANDED_NAME, LOG_EXPANDED_NUM, "<==== exist_l == false && exist_r == true\n");
         return 1;
     }
@@ -523,12 +534,10 @@ int IMProxyModel::compareCategories(const QModelIndex &left, const QModelIndex &
 
         if (c_py_l.at(0) > c_py_r.at(0)) {
             ret = 1;
-        }
-        else {
+        } else {
             ret = -1;
         }
-    }
-    else {
+    } else {
         ret = en_l.compare(en_r);
     }
     osaLogInfo(LOG_EXPANDED_NAME, LOG_EXPANDED_NUM, "<==== ret [%d]\n", ret);
@@ -554,6 +563,11 @@ QVariant FilteredIMModel::data(const QModelIndex &index, int role) const {
         loc = entry_name.indexOf("键盘 - ");
         if (loc != -1) {
             entry_name = entry_name.mid(loc + 5, -1);
+        } else {
+            loc = entry_name.indexOf("Keyboard - ");
+            if (loc != -1) {
+                entry_name = entry_name.mid(loc + 11, -1);
+            }
         }
         return entry_name;
 
@@ -590,8 +604,6 @@ QVariant FilteredIMModel::data(const QModelIndex &index, int role) const {
         FcitxQtStringKeyValueList useIMList_ = getUseIMList();
         auto iter = std::find_if(useIMList_.begin(), useIMList_.end(),
             [&imEntry](const FcitxQtStringKeyValue& item) {
-                osaLogInfo(LOG_CFGTOOL_NAME, LOG_CFGTOOL_NUM, "----> item.key() [%s], imEntry.uniqueName() [%s], = [%d]\n",
-                    item.key().toStdString().c_str(), imEntry.uniqueName().toStdString().c_str(), item.key() == imEntry.uniqueName());
                 return item.key() == imEntry.uniqueName();
             });
         if (iter != useIMList_.end()) {

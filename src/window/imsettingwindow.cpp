@@ -30,7 +30,7 @@
 #include "fcitx5Interface/imconfig.h"
 #include "widgets/contentwidget.h"
 #include "settingsdef.h"
-#include "addim/widgetslib/addim_window.h"
+#include "addim/widgetslib/addimwindow.h"
 #include "fcitx5Interface/AdvanceConfig.h"
 
 #include <DWidgetUtil>

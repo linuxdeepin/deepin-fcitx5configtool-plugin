@@ -9,7 +9,7 @@
 #include "imelog.h"
 #include "impage.h"
 #include "categoryhelper.h"
-#include "addim_model.h"
+#include "addimmodel.h"
 #include "ui_impage.h"
 #include <QInputDialog>
 #include <QMessageBox>
@@ -50,8 +50,7 @@ void IMDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option, co
 QSize IMDelegate::sizeHint(const QStyleOptionViewItem &option, const QModelIndex &index) const {
     if (index.data(FcitxRowTypeRole).toInt() == IMType) {
         return QSize(0, 0);
-    }
-    else {
+    } else {
         return categoryHeaderSizeHint();
     }
 }
@@ -102,20 +101,15 @@ void IMListDelegate::paint(QPainter* painter, const QStyleOptionViewItem& option
     if (useIM) {
         painter->setPen(QPen(Qt::gray));
         painter->fillPath(path, QBrush(Qt::white));
-    }
-    else {
+    } else {
         int currentIMIndex = getCurrentIMViewIndex();
-        if (option.state.testFlag(QStyle::State_Selected) || (index.row() == currentIMIndex && currentIMIndex != -1))
-        {
+        if (option.state.testFlag(QStyle::State_Selected) || (index.row() == currentIMIndex && currentIMIndex != -1)) {
             painter->setPen(QPen(Qt::white));
             painter->fillPath(path, QBrush(QColor(25, 141, 255)));
-        }
-        else if (option.state.testFlag(QStyle::State_MouseOver))
-        {
+        } else if (option.state.testFlag(QStyle::State_MouseOver)) {
             painter->setPen(QPen(Qt::black));
             painter->fillPath(path, QBrush(QColor(229, 229, 229)));
-        }
-        else {
+        } else {
             painter->setPen(QPen(Qt::black));
             painter->fillPath(path, QBrush(Qt::white));
         }
@@ -156,6 +150,7 @@ IMPage::IMPage(DBusProvider *dbus, IMConfig *config, QWidget *parent)
     ui_->availIMView->setFont(font);
     ui_->currentIMView->setItemDelegate(new IMListDelegate);
     ui_->currentIMView->setModel(m_config->currentFilteredIMModel());
+    ui_->currentIMView->setSelectionMode(QAbstractItemView::ExtendedSelection);
 
     m_SearchEdit = new Dtk::Widget::DSearchEdit();
     m_SearchEdit->setFixedHeight(270);
@@ -280,10 +275,14 @@ IMPage::~IMPage() {
 }
 
 void IMPage::save() {
-	int currentIMIndex;
     checkDefaultLayout();
-	currentIMIndex = getCurrentIMViewIndex();
-    m_config->saveSelectedIM(currentIMIndex);
+
+    QItemSelectionModel* selections = ui_->currentIMView->selectionModel();
+    QModelIndexList selected        = selections->selectedIndexes();
+
+    foreach (QModelIndex index, selected) {
+        m_config->saveSelectedIM(index.row());
+    }
 }
 
 void IMPage::load() {
@@ -304,18 +303,27 @@ void IMPage::selectCurrentIM(const QModelIndex &index) {
 
 void IMPage::clickCurrentIM(const QModelIndex& index)
 {
+    QItemSelectionModel* selections = ui_->currentIMView->selectionModel();
+    QModelIndexList selected        = selections->selectedIndexes();
+
+    bool existUsedIM = true;
+    bool usedIM      = false;
+    foreach (QModelIndex index, selected) {
+        usedIM = index.data(FcitxUseIMRole).toBool();
+        if (usedIM == false) {
+            existUsedIM = usedIM;
+        }
+    }
+
     int currentIMIndex = index.row();
     int preCurrentIMIndex;
     preCurrentIMIndex = getCurrentIMViewIndex();
     setCurrentIMViewIndex(currentIMIndex);
     printf("m_currentIMIndex [%d]\n", currentIMIndex);
 
-    bool usedIM = index.data(FcitxUseIMRole).toBool();
-
-    if (usedIM == false) {
+    if (existUsedIM == false) {
         ui_->pb_add->setEnabled(true);
-    }
-    else {
+    } else {
         ui_->pb_add->setEnabled(false);
     }
 

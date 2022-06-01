@@ -64,19 +64,14 @@ void paintCategoryHeader(QPainter *painter, const QStyleOptionViewItem &option, 
         path.lineTo(rect.topRight() + QPointF(0, radius));
         path.quadTo(rect.topRight(), rect.topRight() + QPointF(-radius, -0));
 
-        if (option.state.testFlag(QStyle::State_Selected))
-        {
+        if (option.state.testFlag(QStyle::State_Selected)) {
             painter->fillPath(path, QBrush(QColor(229, 229, 229)));
-        }
-        else if (option.state.testFlag(QStyle::State_MouseOver))
-        {
+        } else if (option.state.testFlag(QStyle::State_MouseOver)) {
             painter->fillPath(path, QBrush(QColor(229, 229, 229)));
-        }
-        else {
+        } else {
             if (g_selectRow != -1 && g_selectRow == row) {
                 painter->fillPath(path, QBrush(QColor(229, 229, 229)));
-            }
-            else {
+            } else {
                 painter->fillPath(path, QBrush(Qt::white));
             }
         }
@@ -112,8 +107,8 @@ void paintCategoryHeader(QPainter *painter, const QStyleOptionViewItem &option, 
         }
     }
 
-    int max_index = getMaxUseIMLanguageIndex();
-    if (max_index == row)
+    int useCount = getUseIMLanguageCount();
+    if (useCount > 0 && (useCount - 1 == row))
     {
         QPoint start(optRect.bottomLeft());
         painter->fillRect(QRect(start, QSize(optRect.width(), 1)), outlineColor);

@@ -53,8 +53,7 @@ char * osaStrToToken(char *str, const char *delim, char **saveptr)
 		str[pos] = '\0';
 		*saveptr = &str[pos + strlen(delim)];
 		return str;
-	}
-	else {/* 说明无法找到分隔符位置了 */
+	} else {/* 说明无法找到分隔符位置了 */
 		*saveptr = NULL;
 		return str;
 	}
@@ -109,8 +108,7 @@ int osaGetSubCount(int start, const char *str, const char *sub)
 		if (!sub[j]) {/* 说明找到了 */
 			count++;
 			i += strlen(sub);
-		}
-		else {/* 说明未找到 */
+		} else {/* 说明未找到 */
 			i++;
 		}
 	}
@@ -127,8 +125,7 @@ int osaCalculateReplaceLength(const char *src_str, const char *old_str, const ch
 	count = osaGetSubCount(0, src_str, old_str);
 	if (max != -1 && count >= max){
 		time = max;
-	}
-	else {/* count < max */
+	} else {/* count < max */
 		time = count;
 	}
 
@@ -248,8 +245,7 @@ int osaTakeTagTextFromFile(const char *file_path, const char *before_tag, const 
 	while (1) {
 		if (j == k) {
 			break;
-		}
-		else {
+		} else {
 			k = j;
 		}
 
@@ -264,8 +260,7 @@ int osaTakeTagTextFromFile(const char *file_path, const char *before_tag, const 
 					bi = 0;
 					break;
 				}
-			}
-			else {
+			} else {
 				bi = 0;
 			}
 		}
@@ -298,8 +293,7 @@ int osaTakeTagTextFromFile(const char *file_path, const char *before_tag, const 
 							ai = -1;
 							break;
 						}
-					}
-					else {
+					} else {
 						j -= ai; /* j--;*/
 
 						/*
@@ -319,8 +313,7 @@ int osaTakeTagTextFromFile(const char *file_path, const char *before_tag, const 
 				if (ai == -1) {
 					break;
 				}
-			}
-			else {
+			} else {
 				/*cout<<"OK"<<endl;*/
 				/*cout<<DealStr[0];*/
 				context[ci] = element[0];
@@ -386,8 +379,7 @@ int osaTakeTagTextFromStr(const char *text, const char *before_tag, const char *
 	while (1) {
 		if (j == k) {
 			break;
-		}
-		else {
+		} else {
 			k = j;
 		}
 		/*
@@ -410,8 +402,7 @@ int osaTakeTagTextFromStr(const char *text, const char *before_tag, const char *
 					bi = 0;
 					break;
 				}
-			}
-			else {
+			} else {
 				bi = 0;
 			}
 		}
@@ -436,8 +427,7 @@ int osaTakeTagTextFromStr(const char *text, const char *before_tag, const char *
 							ai = -1;
 							break;
 						}
-					}
-					else {
+					} else {
 						j -= ai; /* j--;*/
 						/*
 						int i=-Ai;
@@ -456,8 +446,7 @@ int osaTakeTagTextFromStr(const char *text, const char *before_tag, const char *
 				if (ai == -1) {
 					break;
 				}
-			}
-			else {
+			} else {
 				/*cout<<"OK"<<endl;*/
 				/*cout<<DealStr[0];*/
 				if (ci < sizeof(context)) {

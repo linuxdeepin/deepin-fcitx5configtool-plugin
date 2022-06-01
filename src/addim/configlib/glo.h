@@ -22,8 +22,8 @@ void setUseIMList(const FcitxQtStringKeyValueList& useIMs);
 
 FcitxQtStringKeyValueList& getUseIMList();
 
-void setMaxUseIMLanguageIndex(int index);
-int getMaxUseIMLanguageIndex();
+void setUseIMLanguageCount(int count);
+int getUseIMLanguageCount();
 
 void setCurrentIMViewIndex(int index);
 int getCurrentIMViewIndex();
