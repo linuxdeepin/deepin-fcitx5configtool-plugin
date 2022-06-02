@@ -143,16 +143,12 @@ QVariant AvailIMModel::dataForCategory(const QModelIndex &index, int role) const
     QString language             = "";
     QString englishName          = "";
     QString categoryLanguageName = "";
-    QString c_py;
     switch (role) {
     case Qt::DisplayRole:
         language    = languageName(m_filteredIMEntryList[index.row()].first);
         englishName = getEnglishLanguageName(m_filteredIMEntryList[index.row()].second.at(0).uniqueName());
 
         categoryLanguageName = language + " - " + englishName;
-        c_py = Dtk::Core::Chinese2Pinyin(language);
-        categoryLanguageName += " [" + c_py.left(1) + "]";
-
         return categoryLanguageName;
 
     case FcitxEnglishNameRole:
