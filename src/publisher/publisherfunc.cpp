@@ -279,4 +279,29 @@ QString getKeyValue(const int &key)
     return keyValue_QT_KEY;
 }
 
+QString transFirstUpper(const QString &str)
+{
+    QString upStr = "";
+    QString ss = str.toLower();
+    QStringList strlist = ss.split("_");
+    for(int i=0; i < strlist.count(); i++) {
+        QString s = strlist.at(i);
+        if(!s.isEmpty()) {
+            if(s == "ctrl") {
+                s = "control";
+            }
+            if(i == 0 || s.count() == 1) {
+                QString uper = s.at(0).toUpper();
+                s.replace(0, 1, uper);
+                strlist.replace(i, s);
+            }
+        }
+        upStr.append(strlist.at(i));
+        if(i < strlist.count() - 1) {
+            upStr.append("+");
+        }
+    }
+    return upStr;
+}
+
 } // namespace publisherFunc

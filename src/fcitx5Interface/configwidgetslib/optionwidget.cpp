@@ -6,7 +6,7 @@
  */
 
 #include "optionwidget.h"
-#include "AdvanceConfig.h"
+#include "advanceconfig.h"
 #include "font.h"
 #include "fontbutton.h"
 #include "keylistwidget.h"

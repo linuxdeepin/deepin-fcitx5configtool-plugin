@@ -5,13 +5,13 @@
 
 DCC_USE_NAMESPACE
 
-class FcitxConfigPlugin : public PluginInterface
+class Fcitx5ConfigPlugin : public PluginInterface
 {
     Q_OBJECT
-    Q_PLUGIN_METADATA(IID PluginInterface_iid FILE "plugin-fcitx.json")
+    Q_PLUGIN_METADATA(IID "com.deepin.dde.ControlCenter.Plugin_fcitx5" FILE "plugin-fcitx.json")
     Q_INTERFACES(DCC_NAMESPACE::PluginInterface)
 public:
-    FcitxConfigPlugin(){}
+    Fcitx5ConfigPlugin(){}
     virtual QString name() const override;
     virtual ModuleObject *module() override;
     virtual QString follow() const override;

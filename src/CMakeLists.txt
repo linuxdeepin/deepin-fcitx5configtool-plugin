@@ -58,7 +58,7 @@ find_package(Fcitx5Qt5WidgetsAddons 5.0.2 REQUIRED)
 pkg_check_modules(DFrameworkDBus REQUIRED dframeworkdbus)
 #设置资源目录 加载资源文件 翻译文件 源码
 set(APP_RES_DIR "${CMAKE_CURRENT_SOURCE_DIR}/../res")
-set(APP_QRC "${APP_RES_DIR}/fcitxconfig.qrc")
+set(APP_QRC "${APP_RES_DIR}/fcitx5config.qrc")
 set(ADDIM_QRC "${CMAKE_CURRENT_SOURCE_DIR}/addim/resources.qrc")
 #创建翻译文件 
 #set(APP_QRC "${TS_DIR}/translations.qrc")

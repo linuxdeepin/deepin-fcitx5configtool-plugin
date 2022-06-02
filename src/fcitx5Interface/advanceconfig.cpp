@@ -4,7 +4,7 @@
  * SPDX-License-Identifier: GPL-2.0-or-later
  *
  */
-#include "AdvanceConfig.h"
+#include "advanceconfig.h"
 
 #include <QCheckBox>
 #include <QComboBox>
@@ -22,6 +22,7 @@
 #include "dbusprovider.h"
 #include "configwidgetslib/keylistwidget.h"
 #include "configwidgetslib/optionwidget.h"
+#include "publisher/publisherfunc.h"
 
 namespace {
 QString joinPath(const QString &path, const QString &option)
@@ -37,6 +38,7 @@ AdvanceConfig::AdvanceConfig(const QString &uri, DBusProvider *dbus, QObject *pa
     : QObject(parent)
     , m_uri(uri)
     , m_dbus(dbus)
+    , m_configWidget(new QWidget)
 {
     requestConfig();
 }
@@ -108,7 +110,7 @@ void AdvanceConfig::setValue(const QVariant &value)
     }
 
     m_dontEmitChanged = true;
-//    auto optionWidgets = findChildren<OptionWidget *>();
+    auto optionWidgets = m_configWidget->findChildren<OptionWidget *>();
     QVariantMap map;
     if (value.canConvert<QDBusArgument>()) {
         auto argument = qvariant_cast<QDBusArgument>(value);
@@ -117,21 +119,28 @@ void AdvanceConfig::setValue(const QVariant &value)
         map = value.toMap();
     }
     QList<fcitx::Key> keyList1 = readValue(map, "Hotkey/TriggerKeys");
-    QList<fcitx::Key> keyList2 = readValue(map, "Hotkey/AltTriggerKeys");
+    QList<fcitx::Key> keyList2 = readValue(map, "Hotkey/EnumerateForwardKeys");
     QString s1 = QString::fromUtf8(Key::keyListToString(keyList1, KeyStringFormat::Portable).c_str());
     QString s2 = QString::fromUtf8(Key::keyListToString(keyList2, KeyStringFormat::Portable).c_str());
-    emit switchIMShortCutsChanged(s1);
-    emit switchFirstIMShortCutsChanged(s2);
+    emit switchIMShortCutsChanged(s2);
+    emit switchFirstIMShortCutsChanged(s1);
+
+    for (auto optionWidget : optionWidgets) {
+        optionWidget->readValueFrom(map);
+    }
     m_dontEmitChanged = false;
 }
 
 QVariant AdvanceConfig::value() const
 {
     QVariantMap map;
-//    auto optionWidgets = findChildren<OptionWidget *>();
-//    for (auto optionWidget : optionWidgets) {
-//        optionWidget->writeValueTo(map);
-//    }
+    auto optionWidgets = m_configWidget->findChildren<OptionWidget *>();
+    for (auto optionWidget : optionWidgets) {
+        optionWidget->writeValueTo(map);
+    }
+    writeVariant(map, QString("Hotkey/EnumerateForwardKeys/0"), m_switchIMShortCuts.split(" ").first());
+    writeVariant(map, QString("Hotkey/EnumerateForwardKeys/1"), m_switchIMShortCuts.split(" ").last());
+    writeVariant(map, "Hotkey/TriggerKeys/0", m_switchFirstIMShortCuts);
     return map;
 }
 
@@ -163,7 +172,7 @@ void AdvanceConfig::addChildData(const FcitxQtConfigOption &option, const QStrin
 {
     QFormLayout *layout = new QFormLayout;
     if (auto optionWidget =
-            OptionWidget::addWidget(layout, option, path, nullptr)) {
+            OptionWidget::addWidget(layout, option, path, m_configWidget)) {
         connect(optionWidget, &OptionWidget::valueChanged, this,
                 &AdvanceConfig::doChanged);
     } else if (m_desc.contains(option.type())) {
@@ -235,14 +244,14 @@ QDialog *AdvanceConfig::configDialog(QWidget *parent, DBusProvider *dbus,
 
 void AdvanceConfig::switchIMShortCuts(const QString &shortCuts)
 {
-    if(shortCuts == "CTR_SHIFT") {
+    if(shortCuts == "CTRL_SHIFT") {
         m_switchIMShortCuts = "Control+Shift+Shift_L Control+Shift+Shift_R";
     } else if(shortCuts == "ALT_SHIFT") {
-        m_switchIMShortCuts = "Alt+Shift+Shift_L Alt+Shift+Shift_R";
+        m_switchIMShortCuts = "Alt+Shift+Shift_R Alt+Shift+Shift_L";
     } else if(shortCuts == "CTRL_SUPER") {
-        m_switchIMShortCuts = "Alt+Super+Alt_L Alt+Super+Alt_R";
-    } else if(shortCuts == "ALT_SUPER") {
         m_switchIMShortCuts = "Control+Super+Control_L Control+Super+Control_R";
+    } else if(shortCuts == "ALT_SUPER") {
+        m_switchIMShortCuts = "Alt+Super+Alt_L Alt+Super+Alt_R";
     }
     KeyList list = Key::keyListFromString(m_switchIMShortCuts.toStdString());
     QList<fcitx::Key> klist;
@@ -250,18 +259,20 @@ void AdvanceConfig::switchIMShortCuts(const QString &shortCuts)
     {
         klist << *it;
     }
+    save();
     qDebug() << "finished";
 }
 
 void AdvanceConfig::switchFirstIMShortCuts(const QString &shortCuts)
 {
-    m_switchFirstIMShortCuts = shortCuts;
+    m_switchFirstIMShortCuts = publisherFunc::transFirstUpper(shortCuts);
     KeyList list = Key::keyListFromString(m_switchFirstIMShortCuts.toStdString());
     QList<fcitx::Key> klist;
     for(std::vector<fcitx::Key>::iterator it = list.begin(); it != list.end(); it++)
     {
         klist << *it;
     }
+    save();
     qDebug() << "finished";
 }
 

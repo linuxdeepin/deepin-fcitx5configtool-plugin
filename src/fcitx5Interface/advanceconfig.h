@@ -64,6 +64,7 @@ private:
     bool m_dontEmitChanged {false};
     QString m_switchIMShortCuts;
     QString m_switchFirstIMShortCuts;
+    QWidget *m_configWidget;
 };
 
 AdvanceConfig *getConfigWidget(QWidget *widget);

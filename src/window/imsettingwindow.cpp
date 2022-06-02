@@ -31,7 +31,7 @@
 #include "widgets/contentwidget.h"
 #include "settingsdef.h"
 #include "addim/widgetslib/addimwindow.h"
-#include "fcitx5Interface/AdvanceConfig.h"
+#include "fcitx5Interface/advanceconfig.h"
 
 #include <DWidgetUtil>
 #include <DFloatingButton>

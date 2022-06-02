@@ -42,6 +42,8 @@ QPair<int, QString> startPopen(const QString &cmd, const QString &model = QStrin
 int fontSize(const QString &str, const QFont &font = qApp->font());
 QString getKeyValue(const QKeyEvent *event);
 QString getKeyValue(const int &key);
+QString transFirstUpper(const QString &str); //字符串转换成首字母大写
+
 
 }; // namespace publisherFunc
 
