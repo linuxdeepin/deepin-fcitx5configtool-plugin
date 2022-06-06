@@ -77,7 +77,7 @@ file (GLOB DTNG_TS_FILES ${TS_DIR}/*.ts)
 add_custom_target(translations ALL DEPENDS ${DTNG_QM_FILES})
 
 #set(UI_HEADER
-#    ${CMAKE_CURRENT_SOURCE_DIR}/fcitxconfigplugin.h
+#    ${CMAKE_CURRENT_SOURCE_DIR}/fcitx5configplugin.h
 #    )
 #QT5_WRAP_CPP(UI_HEADER_MOCK ${UI_HEADER})
 
@@ -86,7 +86,7 @@ FILE(GLOB_RECURSE HEAD_FILES
     ${CMAKE_CURRENT_SOURCE_DIR}/fcitx5Interface/configwidgetslib/*.h
     ${CMAKE_CURRENT_SOURCE_DIR}/widgets/*.h
     ${CMAKE_CURRENT_SOURCE_DIR}/window/*.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/fcitxconfigplugin.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/fcitx5configplugin.h
     ${CMAKE_CURRENT_SOURCE_DIR}/publisher/*.h
     ${CMAKE_CURRENT_SOURCE_DIR}/addim/configlib/*.h
     ${CMAKE_CURRENT_SOURCE_DIR}/addim/widgetslib/*.h
@@ -97,7 +97,7 @@ FILE(GLOB_RECURSE SOURCE_FILES
     ${CMAKE_CURRENT_SOURCE_DIR}/fcitx5Interface/configwidgetslib/*.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/widgets/*.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/window/*.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/fcitxconfigplugin.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/fcitx5configplugin.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/publisher/*.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/publisher/*.c
     ${CMAKE_CURRENT_SOURCE_DIR}/addim/configlib/*.cpp
