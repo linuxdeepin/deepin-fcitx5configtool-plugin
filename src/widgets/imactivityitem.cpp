@@ -147,7 +147,7 @@ void FcitxIMActivityItem::paintEvent(QPaintEvent *event)
             color.setAlpha(80);
         }
         painter.fillPath(path, color);
-    } else if(m_isEntered) {
+    } else if(m_isEntered && (!m_isSelected)) {
         QColor color = DGuiApplicationHelper::instance()->applicationPalette().light().color();
         if(isDraged()) {
             color.setAlpha(80);
@@ -255,12 +255,18 @@ void FcitxIMActivityItem::onDeleteItem()
 void FcitxIMActivityItem::enterEvent(QEvent *event)
 {
     //setSelectStatus(true);
+    m_isEntered = true;
+    qDebug() << "enterEvent";
+    update();
     FcitxSettingsItem::enterEvent(event);
 }
 
 void FcitxIMActivityItem::leaveEvent(QEvent *event)
 {
     //setSelectStatus(false);
+    m_isEntered = false;
+    qDebug() << "leaveEvent";
+    update();
     FcitxSettingsItem::leaveEvent(event);
 }
 
