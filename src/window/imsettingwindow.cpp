@@ -193,19 +193,19 @@ void IMSettingWindow::initConnect()
         m_defaultIMKey->setList(shortCuts.split("+"));
     });
 
-//    connect(m_resetBtn, &QPushButton::clicked, [ = ]() {
-//        reloadFcitx(IMConfig::setDefaultIMKey("CTRL_SPACE"));
-//        m_defaultIMKey->setList(QString("CTRL_SPACE").split("_"));
-//        //保持间隔内不要重新加载
-//#if defined(USE_MIPS64)
-//        QTimer::singleShot(200, this, [=](){
-//#else
-//        QTimer::singleShot(50, this, [=](){
-//#endif
-//            reloadFcitx(IMConfig::setIMSwitchKey("CTRL_SHIFT"));
-//            m_imSwitchCbox->comboBox()->setCurrentText(("CTRL_SHIFT"));
-//        });
-//    });
+    connect(m_resetBtn, &QPushButton::clicked, [ = ]() {
+        m_advanceConfig->switchFirstIMShortCuts("CTRL_SPACE");
+        m_defaultIMKey->setList(QString("CTRL_SPACE").split("_"));
+        //保持间隔内不要重新加载
+#if defined(USE_MIPS64)
+        QTimer::singleShot(200, this, [=](){
+#else
+        QTimer::singleShot(50, this, [=](){
+#endif
+            m_advanceConfig->switchIMShortCuts("CTRL_SHIFT");
+            m_imSwitchCbox->comboBox()->setCurrentText(("CTRL_SHIFT"));
+        });
+    });
 
 //    connect(m_advSetKey, &QAbstractButton::clicked, [ = ]() {
 //    });
