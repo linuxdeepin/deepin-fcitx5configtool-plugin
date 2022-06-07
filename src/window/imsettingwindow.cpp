@@ -313,7 +313,9 @@ void IMSettingWindow::onCurIMChanged(FcitxQtInputMethodItemList* list)
             m_editHead->setDeleteEnable(selected);
         });
         connect(tmp, &FcitxIMActivityItem::itemSelect, this, [=](bool selected){
-            m_editHead->setDeleteEnable(selected);
+            QTimer::singleShot(100, this, [=](){
+                m_editHead->setDeleteEnable(selected);
+            });
         });
         //tmp->editSwitch(IMModel::instance()->isEdit());
         m_IMListGroup->appendItem(tmp);
