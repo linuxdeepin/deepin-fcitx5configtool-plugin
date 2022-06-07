@@ -256,7 +256,6 @@ void FcitxIMActivityItem::enterEvent(QEvent *event)
 {
     //setSelectStatus(true);
     m_isEntered = true;
-    qDebug() << "enterEvent";
     update();
     FcitxSettingsItem::enterEvent(event);
 }
@@ -265,7 +264,6 @@ void FcitxIMActivityItem::leaveEvent(QEvent *event)
 {
     //setSelectStatus(false);
     m_isEntered = false;
-    qDebug() << "leaveEvent";
     update();
     FcitxSettingsItem::leaveEvent(event);
 }

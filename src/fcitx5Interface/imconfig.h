@@ -33,11 +33,11 @@ public:
 
     FilteredIMModel *currentFilteredIMModel() const { return m_currentIMModel; }
     FcitxQtInputMethodItemList *currentIMModel() const { return m_currentInputMethodList; }
-    IMProxyModel *availIMModel() const { return availIMModel_; }
-    const QStringList &groups() const { return groups_; }
-    const QString &currentGroup() const { return lastGroup_; }
+    IMProxyModel *availIMModel() const { return m_availIMModel; }
+    const QStringList &groups() const { return m_groups; }
+    const QString &currentGroup() const { return m_lastGroup; }
     void setCurrentGroup(const QString &name);
-    bool needSave() const { return needSave_; }
+    bool needSave() const { return m_needSave; }
 
     //void addIM(FcitxQtInputMethodItem* item);
     //void removeIM(int index);
@@ -47,9 +47,9 @@ public:
 
     const auto& currentIMEntries() const { return m_currentIMEntries; }
     const auto& currentUseIMEntries() const { return m_currentUseIMEntries; }
-    const auto &imEntries() const { return imEntries_; }
+    const auto &imEntries() const { return m_imEntries; }
     void setIMEntries(const FcitxQtStringKeyValueList &imEntires) {
-        imEntries_ = imEntires;
+        m_imEntries = imEntires;
         updateIMList();
     }
 
@@ -59,17 +59,17 @@ public:
         updateIMList();
     }
 
-    const QString &defaultLayout() const { return defaultLayout_; }
+    const QString &defaultLayout() const { return m_defaultLayout; }
     void setDefaultLayout(const QString &l) {
-        if (defaultLayout_ != l) {
-            defaultLayout_ = l;
+        if (m_defaultLayout != l) {
+            m_defaultLayout = l;
             emitChanged();
             emit defaultLayoutChanged();
         }
     }
 
     Q_INVOKABLE void setLayout(const QString &im, const QString &layout) {
-        for (auto &imEntry : imEntries_) {
+        for (auto &imEntry : m_imEntries) {
             if (imEntry.key() == im) {
                 imEntry.setValue(layout);
                 emitChanged();
@@ -119,21 +119,21 @@ private:
         const FcitxQtInputMethodEntryList &imEntryList,
         const FcitxQtStringKeyValueList &enabledIMList);
 
-    DBusProvider *dbus_;
-    IMProxyModel *availIMModel_;
-    IMConfigModelInterface *internalAvailIMModel_ = nullptr;
+    DBusProvider *m_dbus;
+    IMProxyModel *m_availIMModel;
+    IMConfigModelInterface *m_internalAvailIMModel = nullptr;
     FcitxQtInputMethodItemList *m_currentInputMethodList;
-    QString defaultLayout_;
+    QString m_defaultLayout;
 
     FilteredIMModel *m_currentIMModel;
     FcitxQtStringKeyValueList m_currentIMEntries;
     FcitxQtStringKeyValueList m_currentUseIMEntries;
 
-    FcitxQtStringKeyValueList imEntries_;
-    FcitxQtInputMethodEntryList allIMs_;
-    QStringList groups_;
-    QString lastGroup_;
-    bool needSave_ = false;
+    FcitxQtStringKeyValueList m_imEntries;
+    FcitxQtInputMethodEntryList m_allIMs;
+    QStringList m_groups;
+    QString m_lastGroup;
+    bool m_needSave = false;
 
     int m_mode;
 };

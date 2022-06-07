@@ -291,6 +291,9 @@ void FcitxSettingsGroup::mouseMoveEvent(QMouseEvent *event)
 //    }
     if(m_isPressed) {
         FcitxSettingsItem* selectItem = getItem(m_selectIndex);
+        if(!selectItem) {
+            return;
+        }
         selectItem->move(selectItem->mapTo(this, QPoint(selectItem->x(), selectItem->rect().topRight().y() + (event->pos().y() - m_lastYPosition))));
         for(int index =0; index < itemCount(); index++) {
             FcitxSettingsItem* item = getItem(index);
@@ -328,7 +331,7 @@ void FcitxSettingsGroup::mousePressEvent(QMouseEvent *event)
         QPoint p = item->mapTo(this, r.topLeft());
         QRect r1 = QRect(r.x() + p.x(), r.y() + p.y(),r.width(), r.height());
         if(r1.contains(event->pos())) {
-            qDebug() << "index = " << index;
+            //qDebug() << "index = " << index;
             item->setDraged(true);
             m_selectIndex = index;
         }
@@ -345,6 +348,9 @@ void FcitxSettingsGroup::mouseReleaseEvent(QMouseEvent *event)
     }
     m_isPressed = false;
     FcitxSettingsItem* selectItem = getItem(m_selectIndex);
+    if(!selectItem) {
+        return;
+    }
     selectItem->setDraged(false);
 
     QRect selectRect = selectItem->rect();
@@ -360,7 +366,7 @@ void FcitxSettingsGroup::mouseReleaseEvent(QMouseEvent *event)
         }
     }
     m_lastItem = nullptr;
-    if(m_selectIndex != count) {
+    if(m_selectIndex != count && count <= m_layout->count() - 1) {
         switchItem(m_selectIndex,count);
     } else {
         m_layout->removeWidget(selectItem);

@@ -12,7 +12,7 @@
 #include "addimmodel.h"
 
 IMConfig::IMConfig(DBusProvider *dbus, ModelMode mode, QObject *parent)
-    : QObject(parent), dbus_(dbus), availIMModel_(new IMProxyModel(this)),
+    : QObject(parent), m_dbus(dbus), m_availIMModel(new IMProxyModel(this)),
       m_currentInputMethodList(new FcitxQtInputMethodItemList)
       , m_currentIMModel(new FilteredIMModel(FilteredIMModel::CurrentIM, this)) {
     connect(dbus, &DBusProvider::availabilityChanged, this, &IMConfig::availabilityChanged);
@@ -20,12 +20,12 @@ IMConfig::IMConfig(DBusProvider *dbus, ModelMode mode, QObject *parent)
 
     if (mode == Flatten) {
         auto flattenAvailIMModel = new FilteredIMModel(FilteredIMModel::AvailIM, this);
-        availIMModel_->setSourceModel(flattenAvailIMModel);
-        internalAvailIMModel_ = flattenAvailIMModel;
+        m_availIMModel->setSourceModel(flattenAvailIMModel);
+        m_internalAvailIMModel = flattenAvailIMModel;
     } else {
         auto availIMModel = new AvailIMModel(this);
-        availIMModel_->setSourceModel(availIMModel);
-        internalAvailIMModel_ = availIMModel;
+        m_availIMModel->setSourceModel(availIMModel);
+        m_internalAvailIMModel = availIMModel;
     }
 
     m_mode = mode;
@@ -43,19 +43,19 @@ void IMConfig::testAddIMDeal(int imIndex)
 }
 
 void IMConfig::save() {
-    if (!dbus_->controller()) {
+    if (!m_dbus->controller()) {
         return;
     }
-    if (needSave_) {
-        dbus_->controller()->SetInputMethodGroupInfo(lastGroup_, defaultLayout_, imEntries_);
-        needSave_ = false;
+    if (m_needSave) {
+        m_dbus->controller()->SetInputMethodGroupInfo(m_lastGroup, m_defaultLayout, m_imEntries);
+        m_needSave = false;
     }
 }
 
 void IMConfig::saveSelectedIM(int imIndex) {
-    osaLogInfo(LOG_CFGTOOL_NAME, LOG_CFGTOOL_NUM, "====> imIndex [%d], m_needSave [%d]\n", imIndex, needSave_);
+    osaLogInfo(LOG_CFGTOOL_NAME, LOG_CFGTOOL_NUM, "====> imIndex [%d], m_needSave [%d]\n", imIndex, m_needSave);
 
-    if (!dbus_->controller()) {
+    if (!m_dbus->controller()) {
         osaLogInfo(LOG_EXPANDED_NAME, LOG_EXPANDED_NUM, "<====\n");
         return;
     }
@@ -71,7 +71,7 @@ void IMConfig::saveSelectedIM(int imIndex) {
         } else {
             useIMList.insert(0, m_currentIMEntries.at(imIndex));
         }
-        dbus_->controller()->SetInputMethodGroupInfo(lastGroup_, defaultLayout_, useIMList);
+        m_dbus->controller()->SetInputMethodGroupInfo(m_lastGroup, m_defaultLayout, useIMList);
         //needSave_ = false;
         // emit addIMSignal(imIndex);
         // updateIMList();
@@ -86,7 +86,7 @@ void IMConfig::load() {
 void IMConfig::defaults() {}
 
 int IMConfig::addSelectedIM(int index, QString matchStr) {
-    auto modelIndex = availIMModel_->index(index, 0);
+    auto modelIndex = m_availIMModel->index(index, 0);
     int count = addSelectedIM(modelIndex);
     return count;
 }
@@ -95,7 +95,7 @@ void IMConfig::addIM(const QString &name)
 {
     int row = 0;
     QMap<QString, const FcitxQtInputMethodEntry *> nameMap;
-    for (auto &imEntry : allIMs_) {
+    for (auto &imEntry : m_allIMs) {
         nameMap.insert(imEntry.uniqueName(), &imEntry);
     }
 
@@ -110,6 +110,10 @@ void IMConfig::addIM(const QString &name)
         } else {
             m_currentInputMethodList->insert(1, item);
         }
+        FcitxQtStringKeyValue imEntry;
+        imEntry.setKey(name);
+        m_imEntries.push_back(imEntry);
+
         row++;
     }
     emit imListChanged();
@@ -131,9 +135,9 @@ int IMConfig::addSelectedIM(const QModelIndex &index, QString matchStr) {
             m_currentUseIMEntries.clear();
             FcitxQtStringKeyValueList useIMList = getUseIMList();
             if (matchStr == "") {
-                ((AvailIMModel*)internalAvailIMModel_)->getInputMethodEntryList(row_index, m_currentIMEntries, m_currentUseIMEntries, useIMList);
+                ((AvailIMModel*)m_internalAvailIMModel)->getInputMethodEntryList(row_index, m_currentIMEntries, m_currentUseIMEntries, useIMList);
             } else {
-                ((AvailIMModel*)internalAvailIMModel_)->getInputMethodEntryList(row_index, m_currentIMEntries, m_currentUseIMEntries, useIMList, matchStr);
+                ((AvailIMModel*)m_internalAvailIMModel)->getInputMethodEntryList(row_index, m_currentIMEntries, m_currentUseIMEntries, useIMList, matchStr);
             }
             count = m_currentIMEntries.count();
         } else {
@@ -161,10 +165,10 @@ void IMConfig::move(int from, int to) {
 }
 
 void IMConfig::reloadGroup() {
-    if (!dbus_->controller()) {
+    if (!m_dbus->controller()) {
         return;
     }
-    auto call = dbus_->controller()->InputMethodGroups();
+    auto call = m_dbus->controller()->InputMethodGroups();
     auto watcher = new QDBusPendingCallWatcher(call, this);
     connect(watcher, &QDBusPendingCallWatcher::finished, this,
             [this](QDBusPendingCallWatcher *watcher) {
@@ -177,18 +181,18 @@ void IMConfig::fetchGroupsFinished(QDBusPendingCallWatcher *watcher) {
     watcher->deleteLater();
 
     if (groups.isValid()) {
-        groups_ = groups.value();
-        emit groupsChanged(groups_);
+        m_groups = groups.value();
+        emit groupsChanged(m_groups);
     }
 
-    if (!groups_.empty()) {
-        setCurrentGroup(groups_.front());
+    if (!m_groups.empty()) {
+        setCurrentGroup(m_groups.front());
     }
 }
 
 void IMConfig::reloadIMList()
 {
-    auto old = imEntries_;
+    auto old = m_imEntries;
     FcitxQtStringKeyValueList newEntries;
     for (int i = 0; i < m_currentInputMethodList->count(); ++i) {
         auto item = m_currentInputMethodList->at(i);
@@ -201,18 +205,18 @@ void IMConfig::reloadIMList()
             newEntries.push_back(*iter);
         }
     }
-    imEntries_ = newEntries;
+    m_imEntries = newEntries;
     updateIMList(true);
     emitChanged();
 }
 
 void IMConfig::availabilityChanged() {
-    lastGroup_.clear();
-    if (!dbus_->controller()) {
+    m_lastGroup.clear();
+    if (!m_dbus->controller()) {
         return;
     }
     reloadGroup();
-    auto imcall = dbus_->controller()->AvailableInputMethods();
+    auto imcall = m_dbus->controller()->AvailableInputMethods();
     auto imcallwatcher = new QDBusPendingCallWatcher(imcall, this);
     connect(imcallwatcher, &QDBusPendingCallWatcher::finished, this,
             &IMConfig::fetchInputMethodsFinished);
@@ -223,7 +227,7 @@ void IMConfig::fetchInputMethodsFinished(QDBusPendingCallWatcher *watcher) {
     QDBusPendingReply<FcitxQtInputMethodEntryList> ims = *watcher;
     watcher->deleteLater();
     if (!ims.isError()) {
-        allIMs_ = ims.value();
+        m_allIMs = ims.value();
         updateIMList();
     }
     osaLogInfo(LOG_CFGTOOL_NAME, LOG_CFGTOOL_NUM, "<====\n");
@@ -232,10 +236,10 @@ void IMConfig::fetchInputMethodsFinished(QDBusPendingCallWatcher *watcher) {
 
 void IMConfig::setCurrentGroup(const QString &name) {
     osaLogInfo(LOG_CFGTOOL_NAME, LOG_CFGTOOL_NUM, "====> name [%s]\n", name.toStdString().c_str());
-    if (dbus_->available() && !name.isEmpty()) {
-        auto call = dbus_->controller()->InputMethodGroupInfo(name);
-        lastGroup_ = name;
-        emit currentGroupChanged(lastGroup_);
+    if (m_dbus->available() && !name.isEmpty()) {
+        auto call = m_dbus->controller()->InputMethodGroupInfo(name);
+        m_lastGroup = name;
+        emit currentGroupChanged(m_lastGroup);
         auto watcher = new QDBusPendingCallWatcher(call, this);
         connect(watcher, &QDBusPendingCallWatcher::finished, this,
                 &IMConfig::fetchGroupInfoFinished);
@@ -246,20 +250,20 @@ void IMConfig::setCurrentGroup(const QString &name) {
 void IMConfig::fetchGroupInfoFinished(QDBusPendingCallWatcher *watcher) {
     osaLogInfo(LOG_CFGTOOL_NAME, LOG_CFGTOOL_NUM, "====>\n");
     watcher->deleteLater();
-    needSave_ = false;
+    m_needSave = false;
     QDBusPendingReply<QString, FcitxQtStringKeyValueList> reply = *watcher;
     FcitxQtStringKeyValueList useIMEntries;
     if (!reply.isError()) {
-        defaultLayout_ = reply.argumentAt<0>();
-        imEntries_ = reply.argumentAt<1>();
+        m_defaultLayout = reply.argumentAt<0>();
+        m_imEntries = reply.argumentAt<1>();
         useIMEntries = reply.argumentAt<1>();
     } else {
-        defaultLayout_.clear();
-        imEntries_.clear();
+        m_defaultLayout.clear();
+        m_imEntries.clear();
         useIMEntries.clear();
     }
     emit defaultLayoutChanged();
-    osaLogInfo(LOG_CFGTOOL_NAME, LOG_CFGTOOL_NUM, "----> defaultLayout_ [%s]\n", defaultLayout_.toStdString().c_str());
+    osaLogInfo(LOG_CFGTOOL_NAME, LOG_CFGTOOL_NUM, "----> defaultLayout_ [%s]\n", m_defaultLayout.toStdString().c_str());
     for (const auto& item : useIMEntries) {
         osaLogInfo(LOG_CFGTOOL_NAME, LOG_CFGTOOL_NUM, "----> key [%s], item [%s]\n",
             item.key().toStdString().c_str(), item.value().toStdString().c_str());
@@ -272,18 +276,18 @@ void IMConfig::fetchGroupInfoFinished(QDBusPendingCallWatcher *watcher) {
 }
 
 void IMConfig::emitChanged() {
-    needSave_ = true;
+    m_needSave = true;
     emit changed();
 }
 
 void IMConfig::updateIMList(bool excludeCurrent) {
     osaLogInfo(LOG_CFGTOOL_NAME, LOG_CFGTOOL_NUM, "====> excludeCurrent [%d]\n", excludeCurrent);
     if (!excludeCurrent) {
-        filterIMEntryList(allIMs_, imEntries_);
-        m_currentIMModel->filterIMEntryList(allIMs_, m_currentIMEntries);
+        filterIMEntryList(m_allIMs, m_imEntries);
+        m_currentIMModel->filterIMEntryList(m_allIMs, m_currentIMEntries);
     }
-    internalAvailIMModel_->filterIMEntryList(allIMs_, imEntries_);
-    availIMModel_->filterIMEntryList(allIMs_, imEntries_);
+    m_internalAvailIMModel->filterIMEntryList(m_allIMs, m_imEntries);
+    m_availIMModel->filterIMEntryList(m_allIMs, m_imEntries);
 
     emit imListChanged();
     osaLogInfo(LOG_CFGTOOL_NAME, LOG_CFGTOOL_NUM, "<====\n");
@@ -338,8 +342,8 @@ void IMConfig::filterIMEntryList(
 }
 
 void IMConfig::addGroup(const QString &name) {
-    if (!name.isEmpty() && dbus_->controller()) {
-        auto call = dbus_->controller()->AddInputMethodGroup(name);
+    if (!name.isEmpty() && m_dbus->controller()) {
+        auto call = m_dbus->controller()->AddInputMethodGroup(name);
         auto watcher = new QDBusPendingCallWatcher(call, this);
         connect(watcher, &QDBusPendingCallWatcher::finished, this,
                 [this](QDBusPendingCallWatcher *watcher) {
@@ -352,8 +356,8 @@ void IMConfig::addGroup(const QString &name) {
 }
 
 void IMConfig::deleteGroup(const QString &name) {
-    if (dbus_->controller()) {
-        auto call = dbus_->controller()->RemoveInputMethodGroup(name);
+    if (m_dbus->controller()) {
+        auto call = m_dbus->controller()->RemoveInputMethodGroup(name);
         auto watcher = new QDBusPendingCallWatcher(call, this);
         connect(watcher, &QDBusPendingCallWatcher::finished, this,
                 [this](QDBusPendingCallWatcher *watcher) {
