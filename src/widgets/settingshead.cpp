@@ -45,7 +45,7 @@ FcitxSettingsHead::FcitxSettingsHead(bool isEdit, QFrame *parent)
     , m_state(Cancel)
 {
     m_title->setObjectName("SettingsHeadTitle");
-
+    //m_deleteBtn->setFocusPolicy(Qt::NoFocus);
     DFontSizeManager::instance()->bind(m_title, DFontSizeManager::T5, QFont::DemiBold);
     QHBoxLayout *mainLayout = new QHBoxLayout;
     mainLayout->setMargin(0);
@@ -64,7 +64,8 @@ FcitxSettingsHead::FcitxSettingsHead(bool isEdit, QFrame *parent)
 
     setLayout(mainLayout);
 
-    connect(m_deleteBtn, &DCommandLinkButton::clicked, this, [=](){
+    connect(m_deleteBtn, &DCommandLinkButton::pressed, this, [=](){
+        qDebug() << "DCommandLinkButton clicked";
         emit deleteBtnClicked();
         m_deleteBtn->setEnabled(false);
     });

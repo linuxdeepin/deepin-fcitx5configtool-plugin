@@ -195,8 +195,10 @@ void FcitxIMActivityItem::mouseReleaseEvent(QMouseEvent *event)
 
 void FcitxIMActivityItem::focusOutEvent(QFocusEvent *e)
 {
-    emit selectItem(this, false);
+    emit itemSelect(false);
+    setSelectStatus(false, 0, 0);
     m_isSelected = false;
+    qDebug() << "focusOutEvent";
     update();
 }
 

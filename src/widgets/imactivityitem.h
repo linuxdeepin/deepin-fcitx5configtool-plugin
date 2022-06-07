@@ -63,6 +63,7 @@ signals:
     void configBtnClicked(FcitxQtInputMethodItem*);
     void deleteBtnClicked(FcitxQtInputMethodItem*);
     void selectItem(FcitxSettingsItem * item, bool selected);
+    void itemSelect(bool selected);
 
 protected:
     void enterEvent(QEvent *event) override;

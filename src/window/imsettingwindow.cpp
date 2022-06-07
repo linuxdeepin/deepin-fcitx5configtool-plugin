@@ -75,6 +75,7 @@ void IMSettingWindow::initUI()
             m_editHead->getTitleLabel()->setAccessibleName("Edit");
         }
         connect(head, &FcitxSettingsHead::deleteBtnClicked, this, [=](){
+            qDebug() << "deleteBtnClicked";
             int index = m_IMListGroup->selectIndex();
             this->onItemDelete(m_config->getFcitxQtInputMethodItemList()->at(index));
         });
@@ -309,6 +310,9 @@ void IMSettingWindow::onCurIMChanged(FcitxQtInputMethodItemList* list)
         connect(tmp, &FcitxIMActivityItem::deleteBtnClicked, this, &IMSettingWindow::onItemDelete);
         connect(tmp, &FcitxIMActivityItem::selectItem, this, [=](FcitxSettingsItem * item, bool selected){
             Q_UNUSED(item);
+            m_editHead->setDeleteEnable(selected);
+        });
+        connect(tmp, &FcitxIMActivityItem::itemSelect, this, [=](bool selected){
             m_editHead->setDeleteEnable(selected);
         });
         //tmp->editSwitch(IMModel::instance()->isEdit());
