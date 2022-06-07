@@ -45,7 +45,6 @@ AddIMWindow::AddIMWindow(DBusProvider* dbus, IMConfig* config, DDialog* parent)
     connect(m_impage, &IMPage::closeAddIMWindow, this, &AddIMWindow::closeWindow);
 
     osaLogInfo(LOG_CFGTOOL_NAME, LOG_CFGTOOL_NUM, "before, load.\n");
-    initCategroyLanguageMap();
     load();
     osaLogInfo(LOG_CFGTOOL_NAME, LOG_CFGTOOL_NUM, "after, load.\n");
 }
@@ -74,9 +73,9 @@ void AddIMWindow::keyPressEvent(QKeyEvent *event) {
 
 void AddIMWindow::closeEvent(QCloseEvent* event)
 {
-	DDialog::closeEvent(event);
-	setUseIMLanguageCount(0);
-	setCurrentIMViewIndex(-1);
+    DDialog::closeEvent(event);
+    setUseIMLanguageCount(0);
+    setCurrentIMViewIndex(-1);
 }
 
 }

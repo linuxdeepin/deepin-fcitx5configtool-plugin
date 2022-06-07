@@ -45,7 +45,7 @@ private slots:
     void availIMSelectionChanged();
     void currentIMCurrentChanged();
     void selectCurrentIM(const QModelIndex &index);
-    void clickCurrentIM(const QModelIndex& index);
+    void clickCurrentIM(const QModelIndex &index);
     void clickAvailIM(const QModelIndex &index);
     void selectDefaultLayout();
 

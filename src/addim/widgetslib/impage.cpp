@@ -19,7 +19,9 @@
 #include <QStyledItemDelegate>
 #include <fcitxqtcontrollerproxy.h>
 #include <DDialog>
+#include <DGuiApplicationHelper>
 DWIDGET_USE_NAMESPACE
+using namespace Dtk::Gui;
 
 namespace fcitx {
 namespace addim {
@@ -77,8 +79,8 @@ void IMListDelegate::paint(QPainter* painter, const QStyleOptionViewItem& option
     bool useIM = index.data(FcitxUseIMRole).toBool();
 
     QFont font(QApplication::font());
-    font.setBold(true);
-    font.setPixelSize(14);
+    int point_size = font.pointSize();
+    font.setPixelSize(point_size + 2);
 
     QRectF rect;
     rect.setX(option.rect.x());
@@ -100,18 +102,28 @@ void IMListDelegate::paint(QPainter* painter, const QStyleOptionViewItem& option
 
     if (useIM) {
         painter->setPen(QPen(Qt::gray));
-        painter->fillPath(path, QBrush(Qt::white));
+        painter->fillPath(path, DGuiApplicationHelper::instance()->applicationPalette().base());
     } else {
         int currentIMIndex = getCurrentIMViewIndex();
         if (option.state.testFlag(QStyle::State_Selected) || (index.row() == currentIMIndex && currentIMIndex != -1)) {
             painter->setPen(QPen(Qt::white));
-            painter->fillPath(path, QBrush(QColor(25, 141, 255)));
+            painter->fillPath(path, DGuiApplicationHelper::instance()->applicationPalette().highlight());
         } else if (option.state.testFlag(QStyle::State_MouseOver)) {
-            painter->setPen(QPen(Qt::black));
-            painter->fillPath(path, QBrush(QColor(229, 229, 229)));
+            if (DGuiApplicationHelper::instance()->themeType() == DGuiApplicationHelper::DarkType) {
+                painter->setPen(QPen(Qt::white));
+            }
+            else {
+                painter->setPen(QPen(Qt::black));
+            }
+            painter->fillPath(path, DGuiApplicationHelper::instance()->applicationPalette().light());
         } else {
-            painter->setPen(QPen(Qt::black));
-            painter->fillPath(path, QBrush(Qt::white));
+            if (DGuiApplicationHelper::instance()->themeType() == DGuiApplicationHelper::DarkType) {
+                painter->setPen(QPen(Qt::white));
+            }
+            else {
+                painter->setPen(QPen(Qt::black));
+            }
+            painter->fillPath(path, DGuiApplicationHelper::instance()->applicationPalette().base());
         }
     }
 
@@ -145,8 +157,9 @@ IMPage::IMPage(DBusProvider *dbus, IMConfig *config, QWidget *parent)
     ui_->availIMView->setModel(m_config->availIMModel());
 
     QFont font(QApplication::font());
-    font.setBold(true);
-    font.setPixelSize(14);
+    int point_size = font.pointSize();
+    osaLogInfo(LOG_TEST_NAME, LOG_TEST_NUM, "NOTICE: point_size [%d]\n", point_size);
+    font.setPixelSize(point_size + 2);
     ui_->availIMView->setFont(font);
     ui_->currentIMView->setItemDelegate(new IMListDelegate);
     ui_->currentIMView->setModel(m_config->currentFilteredIMModel());
@@ -283,6 +296,12 @@ void IMPage::save() {
     foreach (QModelIndex index, selected) {
         m_config->saveSelectedIM(index.row());
     }
+
+    if (selected.count() <= 0) {
+        int currentIMIndex;
+        currentIMIndex = getCurrentIMViewIndex();
+        m_config->saveSelectedIM(currentIMIndex);
+    }
 }
 
 void IMPage::load() {
@@ -301,8 +320,7 @@ void IMPage::selectCurrentIM(const QModelIndex &index) {
     ui_->currentIMView->selectionModel()->setCurrentIndex(index, QItemSelectionModel::ClearAndSelect);
 }
 
-void IMPage::clickCurrentIM(const QModelIndex& index)
-{
+void IMPage::clickCurrentIM(const QModelIndex &index) {
     QItemSelectionModel* selections = ui_->currentIMView->selectionModel();
     QModelIndexList selected        = selections->selectedIndexes();
 
@@ -356,8 +374,10 @@ void IMPage::clickedCloseButton() {
 }
 
 void IMPage::clickedAddButton() {
+    osaLogInfo(LOG_CFGTOOL_NAME, LOG_CFGTOOL_NUM, "====>\n");
     save();
     emit closeAddIMWindow();
+    osaLogInfo(LOG_CFGTOOL_NAME, LOG_CFGTOOL_NUM, "<====\n");
 }
 
 int IMPage::addIM(const QModelIndex &index, QString matchStr) { return m_config->addSelectedIM(index, matchStr); }
@@ -409,7 +429,7 @@ void BaseWidget::paintEvent(QPaintEvent* e)
     path.arcTo(QRect(QPoint(paintRect.bottomLeft() - QPoint(0, radius * 2)), QSize(radius * 2, radius * 2)), 180, 90);
     path.lineTo(paintRect.bottomLeft() + QPoint(radius, 0));
     path.arcTo(QRect(QPoint(paintRect.bottomRight() - QPoint(radius * 2, radius * 2)), QSize(radius * 2, radius * 2)), 270, 90);
-    painter.fillPath(path, QBrush(Qt::white));
+    painter.fillPath(path, DGuiApplicationHelper::instance()->applicationPalette().base());
 }
 
 }

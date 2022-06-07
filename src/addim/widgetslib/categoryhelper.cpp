@@ -9,6 +9,9 @@
 #include "categoryhelper.h"
 #include <QApplication>
 #include <QPainterPath>
+#include <QColor>
+#include <DGuiApplicationHelper>
+using namespace Dtk::Gui;
 
 namespace fcitx {
 namespace addim {
@@ -37,8 +40,8 @@ void paintCategoryHeader(QPainter *painter, const QStyleOptionViewItem &option, 
     optRect.setHeight(optRect.height() - SPACING * 2);
 #if 1
     QFont font(QApplication::font());
-    font.setBold(true);
-    font.setPixelSize(14);
+    int point_size = font.pointSize();
+    font.setPixelSize(point_size + 2);
     const QFontMetrics fontMetrics = QFontMetrics(font);
 #endif
 
@@ -65,14 +68,14 @@ void paintCategoryHeader(QPainter *painter, const QStyleOptionViewItem &option, 
         path.quadTo(rect.topRight(), rect.topRight() + QPointF(-radius, -0));
 
         if (option.state.testFlag(QStyle::State_Selected)) {
-            painter->fillPath(path, QBrush(QColor(229, 229, 229)));
+            painter->fillPath(path, DGuiApplicationHelper::instance()->applicationPalette().light());
         } else if (option.state.testFlag(QStyle::State_MouseOver)) {
-            painter->fillPath(path, QBrush(QColor(229, 229, 229)));
+            painter->fillPath(path, DGuiApplicationHelper::instance()->applicationPalette().light());
         } else {
             if (g_selectRow != -1 && g_selectRow == row) {
-                painter->fillPath(path, QBrush(QColor(229, 229, 229)));
+                painter->fillPath(path, DGuiApplicationHelper::instance()->applicationPalette().light());
             } else {
-                painter->fillPath(path, QBrush(Qt::white));
+                painter->fillPath(path, DGuiApplicationHelper::instance()->applicationPalette().base());
             }
         }
     }
@@ -85,8 +88,13 @@ void paintCategoryHeader(QPainter *painter, const QStyleOptionViewItem &option, 
         textRect.setRight(textRect.right() - 8);
 
         painter->setFont(font);
-        QColor penColor(option.palette.text().color());
-        painter->setPen(penColor);
+        if (DGuiApplicationHelper::instance()->themeType() == DGuiApplicationHelper::DarkType) {
+            QColor penColor("#FFFFFF");
+            painter->setPen(penColor);
+        } else {
+            QColor penColor(option.palette.text().color());
+            painter->setPen(penColor);
+        }
         painter->drawText(textRect, Qt::AlignLeft | Qt::AlignVCenter, category);
 
     }

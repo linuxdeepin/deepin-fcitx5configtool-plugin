@@ -693,6 +693,71 @@ s_languageList languageList[] = {
 	{"keyboard-apl-sax", "APL", "APL"},
 	{"keyboard-apl-aplplusII", "APL", "APL"},
 
+	{ "keyboard-mt-alt-gb", "马耳他语", "Maltese" },
+	{ "keyboard-tr-otk", "土耳其", "Turkish" },
+	{ "keyboard-tr-ot", "土耳其", "Turkish" },
+	{ "keyboard-hu-ead", "匈牙利", "Hungarian" },
+	{ "keyboard-gr-polytonic", "希腊语", "Greek" },
+	{ "keyboard-tr-otf", "土耳其", "Turkish" },
+	{ "keyboard-id-phoneticx", "西班牙", "Spanish" },
+	{ "keyboard-us-3l", "英语", "English" },
+	{ "keyboard-de-e1", "德语", "German" },
+	{ "keyboard-us-3l-cros", "英语", "English" },
+	{ "keyboard-in-iipa", "印地语", "Hindi" },
+	{ "keyboard-ru-phonetic_YAZHERTY", "俄语", "Russian" },
+	{ "keyboard-us-colemak_dh", "英语", "English" },
+	{ "keyboard-nl-us", "荷兰语", "Dutch" },
+	{ "keyboard-us-cz_sk_pl_de_es_fi_sv", "英语", "English" },
+	{ "keyboard-bg-bekl", "保加利亚语", "Bulgarian" },
+	{ "keyboard-cn-mon_manchu_galik", "汉语", "Chinese" },
+	{ "keyboard-cz-qwerty-mac", "捷克", "Czech" },
+	{ "keyboard-cz-coder", "捷克", "Czech" },
+	{ "keyboard-lt-ratise", "立陶宛语", "Lithuanian" },
+	{ "keyboard-us-colemak_dh_iso", "英语", "English" },
+	{ "keyboard-cn-mon_trad_manchu", "汉语", "Chinese" },
+	{ "keyboard-pl-colemak_dh", "波兰语", "Polish" },
+	{ "keyboard-mt-alt-us", "马耳他语", "Maltese" },
+	{ "keyboard-by-intl", "白俄罗斯语", "Belarusian" },
+	{ "keyboard-ru-phonetic_mac", "俄语", "Russian" },
+	{ "keyboard-us-drix", "英语", "English" },
+	{ "keyboard-in-urd-navees", "印地语", "Hindi" },
+	{ "keyboard-it-dvorak", "意大利语", "Italian" },
+	{ "keyboard-jv", "印尼语", "Indonesian" },
+	{ "keyboard-fr-bepo_afnor", "法语", "French" },
+	{ "keyboard-cz-typo", "捷克", "Czech" },
+	{ "keyboard-fr-afnor", "法语", "French" },
+	{ "keyboard-lt-sgs", "立陶宛语", "Lithuanian" },
+	{ "keyboard-dz-qwerty-gb-deadkeys", "西班牙", "Spanish" },
+	{ "keyboard-by-ru", "白俄罗斯语", "Belarusian" },
+	{ "keyboard-eg", "科普特语", "Coptic" },
+	{ "keyboard-in-ori-wx", "印地语", "Hindi" },
+	{ "keyboard-cn-mon_trad", "汉语", "Chinese" },
+	{ "keyboard-sk-acc", "斯洛伐克语", "Slovak" },
+	{ "keyboard-cz-prog", "捷克", "Czech" },
+	{ "keyboard-hu-oldhunlig", "匈牙利", "Hungarian" },
+	{ "keyboard-us-symbolic", "英语", "English" },
+	{ "keyboard-pk-urd-navees", "乌尔都语", "Urdu" },
+	{ "keyboard-in-modi-kagapa", "印地语", "Hindi" },
+	{ "keyboard-in-ori-bolnagri", "印地语", "Hindi" },
+	{ "keyboard-de-e2", "德语", "German" },
+	{ "keyboard-ph-ak", "菲律宾语", "Filipino" },
+	{ "keyboard-gb-colemak_dh", "英语", "English" },
+	{ "keyboard-al-veqilharxhi", "阿尔巴尼亚语", "Veqilharxhi" },
+	{ "keyboard-us-haw", "英语", "English" },
+	{ "keyboard-dz-qwerty-us-deadkeys", "西班牙", "Spanish" },
+	{ "keyboard-us-de_se_fi", "英语", "English" },
+	{ "keyboard-cn-mon_trad_galik", "汉语", "Chinese" },
+	{ "keyboard-us-3l-emacs", "英语", "English" },
+	{ "keyboard-cz-prog_typo", "捷克", "Czech" },
+	{ "keyboard-dz-azerty-deadkeys", "西班牙", "Spanish" },
+	{ "keyboard-in-marathi", "印地语", "Hindi" },
+	{ "keyboard-in-san-misc", "印地语", "Hindi" },
+	{ "keyboard-custom", "OM", "OM" },
+	{ "keyboard-lv-apostrophe-deadquotes", "拉脱维亚语", "Latvian" },
+	{ "keyboard-cn-mon_trad_todo", "汉语", "Chinese" },
+	{ "keyboard-cn-mon_trad_xibe", "汉语", "Chinese" },
+	{ "keyboard-cn-mon_todo_galik", "汉语", "Chinese" },
+
 };
 
 int initCategroyLanguageMap()
@@ -723,24 +788,11 @@ QString getEnglishLanguageName(QString uniqueName)
         englishName = g_uniqueNameToEnglishMap[uniqueName];
     } else {
         englishName = "unknown";
+        osaLogInfo(LOG_CFGTOOL_NAME, LOG_CFGTOOL_NUM, "NOTICE: uniqueName [%s] not found english name. unknown.\n", uniqueName.toStdString().c_str());
     }
 
     return englishName;
 }
-
-QString getChineseLanguageName(QString uniqueName)
-{
-    QString chineseName = "";
-
-    if (g_uniqueNameToChineseMap.contains(uniqueName)) {
-        chineseName = g_uniqueNameToChineseMap[uniqueName];
-    } else {
-        chineseName = "unknown";
-
-    }
-    return chineseName;
-}
-
 void setUseIMList(const FcitxQtStringKeyValueList& useIMs)
 {
     g_useIMList = useIMs;
