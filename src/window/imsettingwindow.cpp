@@ -310,7 +310,9 @@ void IMSettingWindow::onCurIMChanged(FcitxQtInputMethodItemList* list)
         connect(tmp, &FcitxIMActivityItem::deleteBtnClicked, this, &IMSettingWindow::onItemDelete);
         connect(tmp, &FcitxIMActivityItem::selectItem, this, [=](FcitxSettingsItem * item, bool selected){
             Q_UNUSED(item);
-            m_editHead->setDeleteEnable(selected);
+            QTimer::singleShot(100, this, [=](){
+                m_editHead->setDeleteEnable(selected);
+            });
         });
         connect(tmp, &FcitxIMActivityItem::itemSelect, this, [=](bool selected){
             QTimer::singleShot(100, this, [=](){
