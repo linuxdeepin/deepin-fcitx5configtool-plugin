@@ -26,7 +26,7 @@ int Fcitx5ConfigPlugin::location() const
 
 ModuleObject* Fcitx5ConfigPlugin::module()
 {
-    ModuleObject *module111 = new ModuleObject(QString("menu1"), tr("输入法"), this);
+    ModuleObject *module111 = new ModuleObject(QString("Manage Input Methods"), tr("输入法"), this);
     module111->setChildType(ModuleObject::Page);
 
         LabelModule *labelModule = new LabelModule();
