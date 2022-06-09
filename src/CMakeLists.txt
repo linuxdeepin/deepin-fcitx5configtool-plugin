@@ -127,18 +127,24 @@ include_directories(${CMAKE_CURRENT_SOURCE_DIR}/addim/configlib)
 include_directories(${CMAKE_CURRENT_SOURCE_DIR}/publisher)
 include_directories(${CMAKE_CURRENT_SOURCE_DIR}/fcitx5Interface)
 
-#add_executable(${PROJECT_NAME}
-#    ${ALL_SRCS}
-#    ${DTNG_QM_FILES}
-#    ${CMAKE_CURRENT_SOURCE_DIR}/main.cpp
-#    )
-
-add_library(${PROJECT_NAME} SHARED
+if(${CMAKE_BUILD_TYPE} MATCHES "Debug")
+    message("Debug----------------")
+    add_executable(${PROJECT_NAME}
         ${ALL_SRCS}
         ${DTNG_QM_FILES}
-       # ${TS_DIR}/translations.qrc
-        #${UI_HEADER_MOCK}
+        ${CMAKE_CURRENT_SOURCE_DIR}/main.cpp
         )
+
+endif()
+
+if(NOT ${CMAKE_BUILD_TYPE} MATCHES "Debug")
+    add_library(${PROJECT_NAME} SHARED
+            ${ALL_SRCS}
+            ${DTNG_QM_FILES}
+           # ${TS_DIR}/translations.qrc
+            #${UI_HEADER_MOCK}
+            )
+endif()
 
 set_target_properties(${PROJECT_NAME} PROPERTIES
     POSITION_INDEPENDENT_CODE TRUE
@@ -182,7 +188,9 @@ if (CMAKE_INSTALL_PREFIX_INITIALIZED_TO_DEFAULT)
 endif ()
 
 # 设置执行 make install 时哪个目标应该被 install 到哪个位置
-install(TARGETS ${PROJECT_NAME} LIBRARY DESTINATION /lib/dde-control-center/modules)
+if(NOT ${CMAKE_BUILD_TYPE} MATCHES "Debug")
+    install(TARGETS ${PROJECT_NAME} LIBRARY DESTINATION /lib/dde-control-center/modules)
+endif()
 
 # 安装 .qm 文件
 install(FILES ${DTNG_QM_FILES} DESTINATION share/${PROJECT_NAME}/translations)
