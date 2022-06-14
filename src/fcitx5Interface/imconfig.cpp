@@ -106,6 +106,14 @@ void IMConfig::addIM(const QString &name)
         item->setUniqueName(value->uniqueName());
         item->setConfigurable(value->configurable());
         item->setLanguageCode(value->languageCode());
+
+        QString name = item->name();
+        if (name.contains("键盘 - ")) {
+            name = name.remove("键盘 - ");
+        } else if(item->name().contains("Keyboard - ")) {
+                name = name.remove("Keyboard - ");
+        }
+        item->setName(name);
         if (m_currentInputMethodList->isEmpty()) {
             m_currentInputMethodList->append(item);
         } else {
@@ -340,6 +348,15 @@ void IMConfig::filterIMEntryList(
                 item->setUniqueName(value->uniqueName());
                 item->setConfigurable(value->configurable());
                 item->setLanguageCode(value->languageCode());
+
+                QString name = item->name();
+                if (name.contains("键盘 - ")) {
+                    name = name.remove("键盘 - ");
+                } else if(item->name().contains("Keyboard - ")) {
+                        name = name.remove("Keyboard - ");
+                }
+                item->setName(name);
+
                 m_currentInputMethodList->append(item);
                 row++;
             }

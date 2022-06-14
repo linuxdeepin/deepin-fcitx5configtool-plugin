@@ -202,16 +202,16 @@ void FcitxIMActivityItem::focusOutEvent(QFocusEvent *e)
     update();
 }
 
-void FcitxIMActivityItem::setSelectStatus(const bool &isEnter, int index, int count)
+void FcitxIMActivityItem::setSelectStatus(const bool &isSelect, int index, int count)
 {
 //    if (!m_bgGroup)
 //        return;
-    if (isEnter)
+    if (isSelect)
         m_isSelected = true;
     else {
         m_isSelected = false;
     }
-    if (!m_isEdit && isEnter) {
+    if (!m_isEdit && isSelect) {
         if (count <= 1) {
             m_upBtn->setEnabled(false);
             m_downBtn->setEnabled(false);
@@ -232,16 +232,44 @@ void FcitxIMActivityItem::setSelectStatus(const bool &isEnter, int index, int co
         m_downBtn->hide();
     }
     //this->update(rect());
+    update();
+}
+
+void FcitxIMActivityItem::setEnterStatus(const bool &isEnter, int index, int count)
+{
+    if (!m_isEdit && isEnter) {
+        if (count <= 1) {
+            m_upBtn->setEnabled(false);
+            m_downBtn->setEnabled(false);
+        } else if (index == 0) {
+            m_upBtn->setEnabled(false);
+            m_downBtn->setEnabled(true);
+        } else if (index == count - 1) {
+            m_upBtn->setEnabled(true);
+            m_downBtn->setEnabled(false);
+        }
+        m_configBtn->show();
+        m_upBtn->show();
+        m_downBtn->show();
+        //update();
+    } else {
+        m_configBtn->hide();
+        m_upBtn->hide();
+        m_downBtn->hide();
+    }
+    update();
 }
 
 void FcitxIMActivityItem::onUpItem()
 {
     emit upBtnClicked(m_item);
+    update();
 }
 
 void FcitxIMActivityItem::onDownItem()
 {
     emit downBtnClicked(m_item);
+    update();
 }
 
 void FcitxIMActivityItem::onConfigItem()
@@ -256,17 +284,15 @@ void FcitxIMActivityItem::onDeleteItem()
 
 void FcitxIMActivityItem::enterEvent(QEvent *event)
 {
-    //setSelectStatus(true);
+    emit enterItem(this, true);
     m_isEntered = true;
-    update();
     FcitxSettingsItem::enterEvent(event);
 }
 
 void FcitxIMActivityItem::leaveEvent(QEvent *event)
 {
-    //setSelectStatus(false);
+    emit enterItem(this, false);
     m_isEntered = false;
-    update();
     FcitxSettingsItem::leaveEvent(event);
 }
 

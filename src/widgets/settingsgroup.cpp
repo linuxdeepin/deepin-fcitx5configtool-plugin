@@ -127,6 +127,7 @@ void FcitxSettingsGroup::appendItem(FcitxSettingsItem *item)
     FcitxIMActivityItem *mItem = dynamic_cast<FcitxIMActivityItem *>(item);
     if (mItem) {
         connect(mItem, &FcitxIMActivityItem::selectItem, this, &FcitxSettingsGroup::onSelectItem);
+        connect(mItem, &FcitxIMActivityItem::enterItem, this, &FcitxSettingsGroup::onEnterItem);
     }
 }
 
@@ -272,6 +273,22 @@ void FcitxSettingsGroup::onSelectItem(FcitxSettingsItem *item, bool selected)
     }
 }
 
+void FcitxSettingsGroup::onEnterItem(FcitxSettingsItem *item, bool entered)
+{
+    if (!item)
+        return;
+
+    for (int index = 0; index < itemCount(); index++) {
+        FcitxSettingsItem* sitem = qobject_cast<FcitxSettingsItem *>(m_layout->itemAt(index)->widget());
+        FcitxIMActivityItem *pItem = dynamic_cast<FcitxIMActivityItem*>(sitem);
+        if(pItem != item) {
+            pItem->setEnterStatus(false, index, itemCount());
+        } else {
+            pItem->setEnterStatus(entered, index, itemCount());
+        }
+    }
+}
+
 void FcitxSettingsGroup::setVerticalPolicy()
 {
     QSizePolicy policy;
@@ -283,12 +300,9 @@ void FcitxSettingsGroup::setVerticalPolicy()
 void FcitxSettingsGroup::mouseMoveEvent(QMouseEvent *event)
 {
     if(!m_switchAble || event->pos().y() < 0 || event->pos().y() > rect().height()) {
+        mouseReleaseEvent(event);
         return QWidget::mouseMoveEvent(event);
     }
-//    if((QDateTime::currentDateTime().toTime_t() - m_time.toTime_t() < 1) || !m_isPressed) {
-//        m_isPressed = false;
-//        return QWidget::mouseMoveEvent(event);
-//    }
     if(m_isPressed) {
         FcitxSettingsItem* selectItem = getItem(m_selectIndex);
         if(!selectItem) {

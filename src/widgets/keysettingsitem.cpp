@@ -224,6 +224,7 @@ void FcitxKeyLabelWidget::clearShortcutKey()
     m_list.clear();
 }
 
+
 void FcitxKeyLabelWidget::setShortcutShow(bool flag)
 {
     if (flag) {
@@ -235,7 +236,7 @@ void FcitxKeyLabelWidget::setShortcutShow(bool flag)
             label->show();
         }
         setMaximumWidth(w);
-
+        setFocus();
     } else {
         for (FcitxKeyLabel *label : m_list) {
             label->hide();

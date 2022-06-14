@@ -88,6 +88,7 @@ protected:
     virtual void focusOutEvent(QFocusEvent *e) override;
 private slots:
     void onSelectItem(FcitxSettingsItem *item, bool selected);
+    void onEnterItem(FcitxSettingsItem *item, bool entered);
 
 signals:
     void switchPosition(FcitxQtInputMethodItem* item, int end);

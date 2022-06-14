@@ -55,7 +55,8 @@ public:
     FcitxIMActivityItem(FcitxQtInputMethodItem *item, itemPosition index, QWidget *parent = nullptr);
     ~FcitxIMActivityItem() override;
     void editSwitch(const bool &flag);
-    void setSelectStatus(const bool &flag, int index, int count);
+    void setSelectStatus(const bool &isSelect, int index, int count);
+    void setEnterStatus(const bool &isEnter, int index, int count);
     void setIndex(itemPosition i) {m_index = i;}
 signals:
     void upBtnClicked(FcitxQtInputMethodItem*);
@@ -63,6 +64,7 @@ signals:
     void configBtnClicked(FcitxQtInputMethodItem*);
     void deleteBtnClicked(FcitxQtInputMethodItem*);
     void selectItem(FcitxSettingsItem * item, bool selected);
+    void enterItem(FcitxSettingsItem * item, bool entered);
     void itemSelect(bool selected);
 
 protected:
