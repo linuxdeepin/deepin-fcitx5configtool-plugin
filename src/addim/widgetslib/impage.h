@@ -26,6 +26,7 @@ class IMProxyModel;
 class CurrentIMModel;
 class ADDIMDBusProvider;
 
+class BaseWidget;
 class IMPage : public QWidget {
     Q_OBJECT
 public:
@@ -65,6 +66,9 @@ private:
     IMConfig *m_config;
     Dtk::Widget::DSearchEdit* m_SearchEdit;
 
+    BaseWidget* m_wleftview;
+    BaseWidget* m_wrightupview;
+    BaseWidget* m_wrightdownview;
 };
 
 class BaseWidget : public QWidget

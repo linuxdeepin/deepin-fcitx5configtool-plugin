@@ -65,7 +65,7 @@ char * osaStrToToken(char *str, const char *delim, char **saveptr)
 */
 int osaSplitStrToToken(char *src_str, const char *delim, char **pp_token, int token_count)
 {
-	char *saveptr;
+	char *saveptr = NULL;
 	int   i;
 
 	i = 0;

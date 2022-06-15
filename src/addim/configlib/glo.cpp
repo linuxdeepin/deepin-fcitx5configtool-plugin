@@ -757,6 +757,7 @@ s_languageList languageList[] = {
 	{ "keyboard-cn-mon_trad_todo", "汉语", "Chinese" },
 	{ "keyboard-cn-mon_trad_xibe", "汉语", "Chinese" },
 	{ "keyboard-cn-mon_todo_galik", "汉语", "Chinese" },
+	{ "anthy", "日语", "Japanese" },
 
 };
 
@@ -786,6 +787,8 @@ QString getEnglishLanguageName(QString uniqueName)
 
     if (g_uniqueNameToEnglishMap.contains(uniqueName)) {
         englishName = g_uniqueNameToEnglishMap[uniqueName];
+        osaLogInfo(LOG_CFGTOOL_NAME, LOG_CFGTOOL_NUM, "uniqueName [%s] found english name. englishName [%s]\n",
+            uniqueName.toStdString().c_str(), englishName.toStdString().c_str());
     } else {
         englishName = "unknown";
         osaLogInfo(LOG_CFGTOOL_NAME, LOG_CFGTOOL_NUM, "NOTICE: uniqueName [%s] not found english name. unknown.\n", uniqueName.toStdString().c_str());
@@ -793,6 +796,7 @@ QString getEnglishLanguageName(QString uniqueName)
 
     return englishName;
 }
+
 void setUseIMList(const FcitxQtStringKeyValueList& useIMs)
 {
     g_useIMList = useIMs;

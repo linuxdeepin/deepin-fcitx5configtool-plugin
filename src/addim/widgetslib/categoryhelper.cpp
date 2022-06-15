@@ -101,14 +101,14 @@ void paintCategoryHeader(QPainter *painter, const QStyleOptionViewItem &option, 
 
     {
         if (option.state & QStyle::State_Selected) {
-            QRect radioRec(optRect.right() - 30, optRect.top() + (optRect.height() - 32) / 2, 32, 32);
+            QRect radioRec(optRect.right() - 34, optRect.top() + (optRect.height() - 32) / 2 + 4, 32, 32);
             QPixmap pix(":/img/check_ok.png");
             painter->drawPixmap(radioRec, pix);
             g_selectRow = row;
         }
         else {
             if (g_selectRow != -1 && g_selectRow == row) {
-                QRect radioRec(optRect.right() - 30, optRect.top() + (optRect.height() - 32) / 2, 32, 32);
+                QRect radioRec(optRect.right() - 34, optRect.top() + (optRect.height() - 32) / 2 + 4, 32, 32);
                 QPixmap pix(":/img/check_ok.png");
                 painter->drawPixmap(radioRec, pix);
             }

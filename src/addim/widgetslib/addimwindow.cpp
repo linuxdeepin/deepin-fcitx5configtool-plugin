@@ -26,7 +26,6 @@ AddIMWindow::AddIMWindow(DBusProvider* dbus, IMConfig* config, DDialog* parent)
     osaLogInfo(LOG_CFGTOOL_NAME, LOG_CFGTOOL_NUM, "====>\n");
     m_config = config;
 
-    setAttribute(Qt::WA_TranslucentBackground, false);
     /** add titleBar */
 
     setIcon(QIcon(":/img/title_img.png"));

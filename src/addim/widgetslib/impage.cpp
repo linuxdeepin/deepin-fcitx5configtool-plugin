@@ -173,40 +173,40 @@ IMPage::IMPage(DBusProvider *dbus, IMConfig *config, QWidget *parent)
     ui_->layout_search_edit->addWidget(m_SearchEdit);
 
     ui_->layout_leftveiw_in->setParent(NULL);
-    BaseWidget* w_leftview = new BaseWidget("");
-    w_leftview->setFixedSize(290, 457);
-    w_leftview->setMinimumHeight(457);
-    w_leftview->setMaximumHeight(457);
-    w_leftview->setMinimumWidth(290);
-    w_leftview->setMaximumWidth(290);
-    w_leftview->setContentsMargins(0, 0, 0, 0);
-    w_leftview->setLayout(ui_->layout_leftveiw_in);
-    ui_->layout_leftview->addWidget(w_leftview);
+    m_wleftview = new BaseWidget("");
+    m_wleftview->setFixedSize(290, 457);
+    m_wleftview->setMinimumHeight(457);
+    m_wleftview->setMaximumHeight(457);
+    m_wleftview->setMinimumWidth(290);
+    m_wleftview->setMaximumWidth(290);
+    m_wleftview->setContentsMargins(0, 0, 0, 0);
+    m_wleftview->setLayout(ui_->layout_leftveiw_in);
+    ui_->layout_leftview->addWidget(m_wleftview);
 
     ui_->layout_middleview_in->setParent(NULL);
     ui_->layout_middleview->addLayout(ui_->layout_middleview_in);
 
     ui_->layout_r_up_view->setParent(NULL);
-    BaseWidget* w_r_up_view = new BaseWidget("");
-    w_r_up_view->setFixedSize(350, 318);
-    w_r_up_view->setMinimumHeight(318);
-    w_r_up_view->setMaximumHeight(318);
-    w_r_up_view->setMinimumWidth(350);
-    w_r_up_view->setMaximumWidth(350);
-    w_r_up_view->setContentsMargins(0, 0, 0, 0);
-    w_r_up_view->setLayout(ui_->layout_r_up_view);
-    ui_->layout_rightview->addWidget(w_r_up_view);
+    m_wrightupview = new BaseWidget("");
+    m_wrightupview->setFixedSize(350, 318);
+    m_wrightupview->setMinimumHeight(318);
+    m_wrightupview->setMaximumHeight(318);
+    m_wrightupview->setMinimumWidth(350);
+    m_wrightupview->setMaximumWidth(350);
+    m_wrightupview->setContentsMargins(0, 0, 0, 0);
+    m_wrightupview->setLayout(ui_->layout_r_up_view);
+    ui_->layout_rightview->addWidget(m_wrightupview);
 
     ui_->layout_r_down_view->setParent(NULL);
-    BaseWidget* w_r_down_view = new BaseWidget("");
-    w_r_down_view->setFixedSize(350, 129);
-    w_r_down_view->setMinimumHeight(129);
-    w_r_down_view->setMaximumHeight(129);
-    w_r_down_view->setMinimumWidth(350);
-    w_r_down_view->setMaximumWidth(350);
-    w_r_down_view->setContentsMargins(0, 0, 0, 0);
-    w_r_down_view->setLayout(ui_->layout_r_down_view);
-    ui_->layout_rightview->addWidget(w_r_down_view);
+    m_wrightdownview = new BaseWidget("");
+    m_wrightdownview->setFixedSize(350, 129);
+    m_wrightdownview->setMinimumHeight(129);
+    m_wrightdownview->setMaximumHeight(129);
+    m_wrightdownview->setMinimumWidth(350);
+    m_wrightdownview->setMaximumWidth(350);
+    m_wrightdownview->setContentsMargins(0, 0, 0, 0);
+    m_wrightdownview->setLayout(ui_->layout_r_down_view);
+    ui_->layout_rightview->addWidget(m_wrightdownview);
 
     QFont label_font(QApplication::font());
     label_font.setPixelSize(12);
@@ -221,6 +221,10 @@ IMPage::IMPage(DBusProvider *dbus, IMConfig *config, QWidget *parent)
 
     ui_->pb_add->setStyleSheet("color:rgb(0,129,255)");
     ui_->pb_add->setEnabled(false);
+
+    connect(m_SearchEdit, &Dtk::Widget::DSearchEdit::focusChanged, this, [this]() {
+            m_wleftview->update();
+        });
 
     connect(m_SearchEdit, &Dtk::Widget::DSearchEdit::textChanged, this,
         [this](const QString& text) {
@@ -352,8 +356,18 @@ void IMPage::clickCurrentIM(const QModelIndex &index) {
 void IMPage::clickAvailIM(const QModelIndex &index)
 {
     QString matchStr = m_SearchEdit->text();
-    setCurrentIMViewIndex(-1);
     addIM(index, matchStr);
+
+    int count;
+    int useCount;
+    int viewItemCount;
+    count = m_config->currentIMEntries().count();
+    useCount = m_config->currentUseIMEntries().count();
+    if (count > useCount) {
+        QModelIndex currentIndex = this->ui_->currentIMView->model()->index(useCount, 0);
+        this->ui_->currentIMView->setCurrentIndex(currentIndex);
+        clickCurrentIM(currentIndex);
+    }
 }
 
 void IMPage::selectDefaultLayout() {

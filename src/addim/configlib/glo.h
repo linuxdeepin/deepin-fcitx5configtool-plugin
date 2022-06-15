@@ -16,6 +16,7 @@ using namespace fcitx;
 int initCategroyLanguageMap();
 
 QString getEnglishLanguageName(QString chineseLanguage);
+QString getChineseLanguageName(QString englishLanguage);
 
 void setUseIMList(const FcitxQtStringKeyValueList& useIMs);
 

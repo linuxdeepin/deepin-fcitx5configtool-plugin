@@ -236,7 +236,7 @@ void AvailIMModel::filterIMEntryList(
                 key = im.name().mid(start_loc, -1);
             }
         } else {
-            key = im.languageCode();
+            key = languageName(im.languageCode());
         }
 
         start_loc = key.indexOf("(");
@@ -496,17 +496,6 @@ int IMProxyModel::compareCategories(const QModelIndex &left, const QModelIndex &
         return 0;
     }
 
-    bool exist_l = left.data(FcitxUseIMLanguageRole).toBool();
-    bool exist_r = right.data(FcitxUseIMLanguageRole).toBool();
-
-    if (exist_l == true && exist_r == false) {
-        osaLogInfo(LOG_EXPANDED_NAME, LOG_EXPANDED_NUM, "<==== exist_l == true && exist_r == false\n");
-        return -1;
-    } else if (exist_l == false && exist_r == true) {
-        osaLogInfo(LOG_EXPANDED_NAME, LOG_EXPANDED_NUM, "<==== exist_l == false && exist_r == true\n");
-        return 1;
-    }
-
     QString loc_name = QLocale().name();
     QString code_l = left.data(FcitxLanguageCode).toString();
     QString code_r = right.data(FcitxLanguageCode).toString();
@@ -517,6 +506,17 @@ int IMProxyModel::compareCategories(const QModelIndex &left, const QModelIndex &
     }
     if (loc_name == code_r) {
         osaLogInfo(LOG_EXPANDED_NAME, LOG_EXPANDED_NUM, "<==== loc_name == code_r\n");
+        return 1;
+    }
+
+    bool exist_l = left.data(FcitxUseIMLanguageRole).toBool();
+    bool exist_r = right.data(FcitxUseIMLanguageRole).toBool();
+
+    if (exist_l == true && exist_r == false) {
+        osaLogInfo(LOG_EXPANDED_NAME, LOG_EXPANDED_NUM, "<==== exist_l == true && exist_r == false\n");
+        return -1;
+    } else if (exist_l == false && exist_r == true) {
+        osaLogInfo(LOG_EXPANDED_NAME, LOG_EXPANDED_NUM, "<==== exist_l == false && exist_r == true\n");
         return 1;
     }
 

@@ -54,7 +54,7 @@ int osaLogPrintf(int log_level, const char *file, const char *function,
 int osaLogPrintfEx(int log_level, const char *file, const char *function,
                       long line, const char *expanded_name, int expanded_num,
                       const char *log_text, int log_size);
-#define NO_USE_OSA_LOG
+
 #ifndef NO_USE_OSA_LOG
 #define osaLogCritical(expanded_name, expanded_num, ...)                                                      \
 	osaLogPrintf(OSA_LOG_CRITICAL, __FILE__, __FUNCTION__  , __LINE__, expanded_name, expanded_num, __VA_ARGS__);
