@@ -207,10 +207,6 @@ void IMSettingWindow::initConnect()
         });
     });
 
-//    connect(m_advSetKey, &QAbstractButton::clicked, [ = ]() {
-//    });
-//    connect(IMModel::instance(), &IMModel::curIMListChanaged, this, &IMSettingWindow::onCurIMChanged);
-//    connect(m_addIMBtn, &DFloatingButton::clicked, this, &IMSettingWindow::onAddBtnCilcked);
     connect(m_IMListGroup, &FcitxSettingsGroup::switchPosition, m_config, [=](FcitxQtInputMethodItem* item, int to){
         int from = m_config->getFcitxQtInputMethodItemList()->indexOf(item);
         m_config->move(from , to);

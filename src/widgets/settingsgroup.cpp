@@ -366,7 +366,7 @@ void FcitxSettingsGroup::mouseReleaseEvent(QMouseEvent *event)
         return;
     }
     selectItem->setDraged(false);
-
+    selectItem->setFocus();
     QRect selectRect = selectItem->rect();
     QPoint selecTopLeft = selectItem->mapTo(this, selectRect.topLeft() + QPoint(10,0));
     int count = selecTopLeft.y() / selectItem->height();
@@ -386,6 +386,7 @@ void FcitxSettingsGroup::mouseReleaseEvent(QMouseEvent *event)
         m_layout->removeWidget(selectItem);
         m_layout->insertWidget(count, selectItem);
     }
+    this->setFocus();
     return QWidget::mouseReleaseEvent(event);
 }
 
