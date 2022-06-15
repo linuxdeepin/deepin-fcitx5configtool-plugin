@@ -40,6 +40,7 @@ void paintCategoryHeader(QPainter *painter, const QStyleOptionViewItem &option, 
     optRect.setHeight(optRect.height() - SPACING * 2);
 #if 1
     QFont font(QApplication::font());
+    font.setFamily("SourceHanSansSC-Medium");
     int point_size = font.pointSize();
     font.setPixelSize(point_size + 2);
     const QFontMetrics fontMetrics = QFontMetrics(font);

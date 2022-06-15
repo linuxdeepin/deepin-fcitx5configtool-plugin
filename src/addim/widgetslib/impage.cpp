@@ -79,6 +79,7 @@ void IMListDelegate::paint(QPainter* painter, const QStyleOptionViewItem& option
     bool useIM = index.data(FcitxUseIMRole).toBool();
 
     QFont font(QApplication::font());
+    font.setFamily("SourceHanSansSC-Medium");
     int point_size = font.pointSize();
     font.setPixelSize(point_size + 2);
 
@@ -144,11 +145,11 @@ void IMListDelegate::paint(QPainter* painter, const QStyleOptionViewItem& option
     painter->restore();
 }
 
-IMPage::IMPage(DBusProvider *dbus, IMConfig *config, QWidget *parent)
+IMPage::IMPage(DBusProvider* dbus, IMConfig* config, QWidget* parent)
     : QWidget(parent)
     , ui_(std::make_unique<Ui::IMPage>())
     , m_dbus(dbus),
-      m_config(config)
+    m_config(config)
 {
     ui_->setupUi(this);
 
@@ -157,6 +158,7 @@ IMPage::IMPage(DBusProvider *dbus, IMConfig *config, QWidget *parent)
     ui_->availIMView->setModel(m_config->availIMModel());
 
     QFont font(QApplication::font());
+    font.setFamily("SourceHanSansSC-Medium");
     int point_size = font.pointSize();
     osaLogInfo(LOG_TEST_NAME, LOG_TEST_NUM, "NOTICE: point_size [%d]\n", point_size);
     font.setPixelSize(point_size + 2);
@@ -218,6 +220,17 @@ IMPage::IMPage(DBusProvider *dbus, IMConfig *config, QWidget *parent)
     outlineColor.setAlphaF(0.15);
     palette.setColor(QPalette::Dark, outlineColor);
     ui_->line->setPalette(palette);
+
+    ui_->pb_close->setFont(font);
+    QColor color;
+    if (DGuiApplicationHelper::instance()->themeType() == DGuiApplicationHelper::DarkType) {
+        color = QColor("#FFFFFF");
+    }
+    palette = ui_->pb_close->palette();
+    palette.setColor(QPalette::ButtonText, color);
+    ui_->pb_close->setPalette(palette);
+
+    ui_->pb_add->setFont(font);
 
     ui_->pb_add->setStyleSheet("color:rgb(0,129,255)");
     ui_->pb_add->setEnabled(false);
