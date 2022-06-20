@@ -11,6 +11,7 @@
 #include "categoryhelper.h"
 #include "addimmodel.h"
 #include "ui_impage.h"
+#include "layoutselector.h"
 #include <QInputDialog>
 #include <QMessageBox>
 #include <QPainter>
@@ -272,8 +273,8 @@ IMPage::IMPage(DBusProvider* dbus, IMConfig* config, QWidget* parent)
             &IMPage::currentIMCurrentChanged);
     connect(m_config, &IMConfig::imListChanged, this,
             &IMPage::availIMSelectionChanged);
-    connect(ui_->defaultLayoutButton, &QPushButton::clicked, this,
-            &IMPage::selectDefaultLayout);
+//    connect(ui_->defaultLayoutButton, &QPushButton::clicked, this,
+//            &IMPage::selectDefaultLayout);
     connect(ui_->availIMView, &QListView::clicked, this, &IMPage::clickAvailIM);
     connect(ui_->currentIMView, &QListView::clicked, this, &IMPage::clickCurrentIM);
 
@@ -297,6 +298,10 @@ IMPage::IMPage(DBusProvider* dbus, IMConfig* config, QWidget* parent)
 		this->ui_->currentIMView->setCurrentIndex(currentIndex);
 		clickCurrentIM(currentIndex);
 	}
+
+    fcitx::kcm::LayoutSelector* la = fcitx::kcm::LayoutSelector::selectLayout(
+                this, m_dbus, _("Select default layout"), "cn");
+    ui_->layout_r_down_view->addWidget(la);
 	osaLogInfo(LOG_EXPANDED_NAME, LOG_EXPANDED_NUM, "<==== count [%d], useCount [%d]\n", count, useCount);
 }
 

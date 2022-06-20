@@ -337,39 +337,17 @@
           <number>0</number>
          </property>
          <property name="leftMargin">
-          <number>10</number>
+          <number>0</number>
          </property>
          <property name="topMargin">
-          <number>10</number>
+          <number>0</number>
          </property>
          <property name="rightMargin">
-          <number>10</number>
+          <number>0</number>
          </property>
          <property name="bottomMargin">
-          <number>10</number>
+          <number>0</number>
          </property>
-         <item>
-          <widget class="QPushButton" name="defaultLayoutButton">
-           <property name="minimumSize">
-            <size>
-             <width>330</width>
-             <height>109</height>
-            </size>
-           </property>
-           <property name="maximumSize">
-            <size>
-             <width>330</width>
-             <height>109</height>
-            </size>
-           </property>
-           <property name="toolTip">
-            <string>Keyboard layout to use when no input method active</string>
-           </property>
-           <property name="text">
-            <string>Select system keyboard layout</string>
-           </property>
-          </widget>
-         </item>
         </layout>
        </item>
       </layout>

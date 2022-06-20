@@ -44,22 +44,23 @@ find_package(PkgConfig REQUIRED)
 find_package(DtkWidget REQUIRED)
 find_package(DtkCore REQUIRED)
 find_package(DtkCore REQUIRED)
+find_package(X11 REQUIRED)
 find_package(DtkCMake REQUIRED)
 find_package(DdeControlCenter REQUIRED)
-find_package(Qt5 COMPONENTS Core REQUIRED)
-find_package(Qt5 COMPONENTS Widgets REQUIRED)
-find_package(Qt5 COMPONENTS DBus REQUIRED)
+find_package(Qt5 ${QT_MIN_VERSION} CONFIG REQUIRED COMPONENTS Core DBus Gui Widgets X11Extras Concurrent)
 find_package(Fcitx5Core 5.0.4 REQUIRED)
 find_package(Fcitx5Config REQUIRED)
 find_package(Fcitx5Utils REQUIRED)
 find_package(Fcitx5Qt5DBusAddons REQUIRED)
 find_package(Fcitx5Qt5WidgetsAddons 5.0.2 REQUIRED)
 pkg_check_modules(DFrameworkDBus REQUIRED dframeworkdbus)
+pkg_check_modules(XkbFile "xkbfile" REQUIRED IMPORTED_TARGET)
+
 #设置资源目录 加载资源文件 翻译文件 源码
 set(APP_RES_DIR "${CMAKE_CURRENT_SOURCE_DIR}/../res")
 set(APP_QRC "${APP_RES_DIR}/fcitx5config.qrc")
 set(ADDIM_QRC "${CMAKE_CURRENT_SOURCE_DIR}/addim/resources.qrc")
-#创建翻译文件 
+#创建翻译文件
 #set(APP_QRC "${TS_DIR}/translations.qrc")
 set(TS_DIR "${CMAKE_CURRENT_SOURCE_DIR}/../translations")
 set(TS_FILES "${TS_DIR}/${PROJECT_NAME}_en_US.ts")
@@ -134,7 +135,6 @@ if(${CMAKE_BUILD_TYPE} MATCHES "Debug")
         ${DTNG_QM_FILES}
         ${CMAKE_CURRENT_SOURCE_DIR}/main.cpp
         )
-
 endif()
 
 if(NOT ${CMAKE_BUILD_TYPE} MATCHES "Debug")
@@ -174,12 +174,14 @@ target_link_libraries(${PROJECT_NAME} PRIVATE
         ${DtkCore_ILIBRARIES}
         ${Qt5Widgets_LIBRARIES}
         ${Qt5DBus_LIBRARIES}
+        Qt5::X11Extras
         ${OBJECT_BINARY_DIR}
         Fcitx5::Core
         Fcitx5::Utils
         Fcitx5Qt5::DBusAddons
         Fcitx5Qt5::WidgetsAddons
         ${GSETTINGS_LIBRARIES}
+        layoutlib
         )
 
 # Install settings
@@ -188,9 +190,12 @@ if (CMAKE_INSTALL_PREFIX_INITIALIZED_TO_DEFAULT)
 endif ()
 
 # 设置执行 make install 时哪个目标应该被 install 到哪个位置
+
 if(NOT ${CMAKE_BUILD_TYPE} MATCHES "Debug")
     install(TARGETS ${PROJECT_NAME} LIBRARY DESTINATION /lib/dde-control-center/modules)
 endif()
+
+add_subdirectory(layout)
 
 # 安装 .qm 文件
 install(FILES ${DTNG_QM_FILES} DESTINATION share/${PROJECT_NAME}/translations)
