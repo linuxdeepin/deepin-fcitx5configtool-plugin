@@ -288,6 +288,10 @@ IMPage::IMPage(DBusProvider* dbus, IMConfig* config, QWidget* parent)
     QModelIndex availIndex = this->ui_->availIMView->model()->index(0, 0);
     addIM(availIndex);
 
+    m_laSelector = fcitx::kcm::LayoutSelector::selectLayout(
+                this, m_dbus, _("Select default layout"), "cn");
+    ui_->layout_r_down_view->addWidget(m_laSelector);
+
 	int count;
 	int useCount;
 	int viewItemCount;
@@ -299,9 +303,7 @@ IMPage::IMPage(DBusProvider* dbus, IMConfig* config, QWidget* parent)
 		clickCurrentIM(currentIndex);
 	}
 
-    fcitx::kcm::LayoutSelector* la = fcitx::kcm::LayoutSelector::selectLayout(
-                this, m_dbus, _("Select default layout"), "cn");
-    ui_->layout_r_down_view->addWidget(la);
+
 	osaLogInfo(LOG_EXPANDED_NAME, LOG_EXPANDED_NUM, "<==== count [%d], useCount [%d]\n", count, useCount);
 }
 
@@ -369,6 +371,20 @@ void IMPage::clickCurrentIM(const QModelIndex &index) {
 
     QModelIndex preIndex = this->ui_->currentIMView->model()->index(preCurrentIMIndex, 0);
     ui_->currentIMView->update(preIndex);
+    QTimer::singleShot(100, this, [&]() {
+        if(index.row() < 0 || m_config->currentIMEntries().count() < index.row()) {
+            return ;
+        }
+        QString str = m_config->currentIMEntries().at(index.row()).key();
+
+        for (auto &imEntry : m_config->allIms()) {
+            if(imEntry.uniqueName() == str) {
+                m_laSelector->setLayout(imEntry.label(), "");
+            }
+        }
+
+    });
+
 }
 
 void IMPage::clickAvailIM(const QModelIndex &index)

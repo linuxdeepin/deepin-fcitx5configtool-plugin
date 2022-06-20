@@ -19,6 +19,13 @@ class IMPage;
 }
 
 namespace fcitx {
+namespace kcm {
+class LayoutSelector;
+}
+}
+
+
+namespace fcitx {
 namespace addim {
 
 class AvailIMModel;
@@ -65,6 +72,7 @@ private:
     DBusProvider *m_dbus;
     IMConfig *m_config;
     Dtk::Widget::DSearchEdit* m_SearchEdit;
+    fcitx::kcm::LayoutSelector* m_laSelector;
 
     BaseWidget* m_wleftview;
     BaseWidget* m_wrightupview;

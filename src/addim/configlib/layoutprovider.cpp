@@ -15,7 +15,8 @@ LayoutProvider::LayoutProvider(DBusProvider *dbus, QObject *parent)
       layoutModel_(new LayoutInfoModel(this)),
       variantModel_(new VariantInfoModel(this)),
       layoutFilterModel_(new LanguageFilterModel(this)),
-      variantFilterModel_(new LanguageFilterModel(this)) {
+      variantFilterModel_(new LanguageFilterModel(this))
+{
     layoutFilterModel_->setSourceModel(layoutModel_);
     variantFilterModel_->setSourceModel(variantModel_);
 

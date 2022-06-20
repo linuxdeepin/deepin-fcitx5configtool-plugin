@@ -48,6 +48,7 @@ public:
     const auto& currentIMEntries() const { return m_currentIMEntries; }
     const auto& currentUseIMEntries() const { return m_currentUseIMEntries; }
     const auto &imEntries() const { return m_imEntries; }
+    const auto &allIms() const { return m_allIMs; }
     void setIMEntries(const FcitxQtStringKeyValueList &imEntires) {
         m_imEntries = imEntires;
         updateIMList();
