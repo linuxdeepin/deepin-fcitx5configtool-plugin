@@ -109,10 +109,10 @@ void IMSettingWindow::initUI()
     m_shortcutGroup = new FcitxSettingsGroup();
     m_shortcutGroup->setSpacing(10);
 
-    m_imSwitchCbox = new FcitxComBoboxSettingsItem(tr("Switch input methods"), {"CTRL_SHIFT", "ALT_SHIFT", "CTRL_SUPER", "ALT_SUPER"});
+    m_imSwitchCbox = new FcitxComBoboxSettingsItem(tr("Scroll between input methods"), {"CTRL_SHIFT", "ALT_SHIFT", "CTRL_SUPER", "ALT_SUPER"});
     m_imSwitchCbox->comboBox()->setAccessibleName("Switch input methods");
 
-    m_defaultIMKey = new FcitxKeySettingsItem(tr("Switch to the first input method"));
+    m_defaultIMKey = new FcitxKeySettingsItem(tr("Switch between the current/first input method"));
     m_resetBtn = new DCommandLinkButton(tr("Restore Defaults"), this);
     DFontSizeManager::instance()->bind(m_resetBtn, DFontSizeManager::T8, QFont::Normal);
     m_resetBtn->setAccessibleName(tr("Restore Defaults"));

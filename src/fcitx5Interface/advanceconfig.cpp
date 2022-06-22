@@ -138,9 +138,14 @@ QVariant AdvanceConfig::value() const
     for (auto optionWidget : optionWidgets) {
         optionWidget->writeValueTo(map);
     }
-    writeVariant(map, QString("Hotkey/EnumerateForwardKeys/0"), m_switchIMShortCuts.split(" ").first());
-    writeVariant(map, QString("Hotkey/EnumerateForwardKeys/1"), m_switchIMShortCuts.split(" ").last());
-    writeVariant(map, "Hotkey/TriggerKeys/0", m_switchFirstIMShortCuts);
+    if(!m_switchIMShortCuts.isEmpty()) {
+        writeVariant(map, QString("Hotkey/EnumerateForwardKeys/0"), m_switchIMShortCuts.split(" ").first());
+        writeVariant(map, QString("Hotkey/EnumerateForwardKeys/1"), m_switchIMShortCuts.split(" ").last());
+    }
+    if(!m_switchFirstIMShortCuts.isEmpty()) {
+        writeVariant(map, "Hotkey/TriggerKeys/0", m_switchFirstIMShortCuts);
+    }
+
     return map;
 }
 

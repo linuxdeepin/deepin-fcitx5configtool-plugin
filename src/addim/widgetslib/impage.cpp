@@ -303,7 +303,6 @@ IMPage::IMPage(DBusProvider* dbus, IMConfig* config, QWidget* parent)
 		clickCurrentIM(currentIndex);
 	}
 
-
 	osaLogInfo(LOG_EXPANDED_NAME, LOG_EXPANDED_NUM, "<==== count [%d], useCount [%d]\n", count, useCount);
 }
 

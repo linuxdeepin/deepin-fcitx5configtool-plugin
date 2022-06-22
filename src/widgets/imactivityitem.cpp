@@ -237,6 +237,7 @@ void FcitxIMActivityItem::setSelectStatus(const bool &isSelect, int index, int c
 
 void FcitxIMActivityItem::setEnterStatus(const bool &isEnter, int index, int count)
 {
+    //qDebug() << "setEnterStatus " << this;
     if (!m_isEdit && isEnter) {
         if (count <= 1) {
             m_upBtn->setEnabled(false);
@@ -263,13 +264,13 @@ void FcitxIMActivityItem::setEnterStatus(const bool &isEnter, int index, int cou
 void FcitxIMActivityItem::onUpItem()
 {
     emit upBtnClicked(m_item);
-    update();
+    //update();
 }
 
 void FcitxIMActivityItem::onDownItem()
 {
     emit downBtnClicked(m_item);
-    update();
+    //update();
 }
 
 void FcitxIMActivityItem::onConfigItem()
@@ -284,6 +285,7 @@ void FcitxIMActivityItem::onDeleteItem()
 
 void FcitxIMActivityItem::enterEvent(QEvent *event)
 {
+    //qDebug() << "enterEvent " << event->type();
     emit enterItem(this, true);
     m_isEntered = true;
     FcitxSettingsItem::enterEvent(event);
@@ -291,6 +293,7 @@ void FcitxIMActivityItem::enterEvent(QEvent *event)
 
 void FcitxIMActivityItem::leaveEvent(QEvent *event)
 {
+    //qDebug() << "leaveEvent";
     emit enterItem(this, false);
     m_isEntered = false;
     FcitxSettingsItem::leaveEvent(event);

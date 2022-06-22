@@ -120,7 +120,7 @@ void IMConfig::addIM(const QString &name)
             m_currentInputMethodList->insert(1, item);
         }
         FcitxQtStringKeyValue imEntry;
-        imEntry.setKey(name);
+        imEntry.setKey(item->uniqueName());
         m_imEntries.push_back(imEntry);
 
         row++;

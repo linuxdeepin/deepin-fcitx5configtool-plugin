@@ -281,10 +281,9 @@ void FcitxSettingsGroup::onEnterItem(FcitxSettingsItem *item, bool entered)
     for (int index = 0; index < itemCount(); index++) {
         FcitxSettingsItem* sitem = qobject_cast<FcitxSettingsItem *>(m_layout->itemAt(index)->widget());
         FcitxIMActivityItem *pItem = dynamic_cast<FcitxIMActivityItem*>(sitem);
-        if(pItem != item) {
-            pItem->setEnterStatus(false, index, itemCount());
-        } else {
-            pItem->setEnterStatus(entered, index, itemCount());
+        if(pItem == item) {
+           qDebug() << "onEnterItem " << index << "  " << entered;
+           pItem->setEnterStatus(entered, index, itemCount());
         }
     }
 }
