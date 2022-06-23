@@ -23,7 +23,7 @@ class LayoutSelector;
 }
 
 namespace fcitx {
-namespace kcm {
+namespace addim {
 class KeyboardLayoutWidget;
 class LanguageFilterModel;
 class LayoutInfoModel;
@@ -48,17 +48,17 @@ private slots:
     void variantComboBoxChanged();
 
 private:
-    std::unique_ptr<Ui::LayoutSelector> ui_;
-    DBusProvider *dbus_;
-    LayoutProvider *layoutProvider_;
-    KeyboardLayoutWidget *keyboardLayoutWidget_ = nullptr;
-    Iso639 iso639_;
+    std::unique_ptr<Ui::LayoutSelector> m_ui;
+    DBusProvider *m_dbus;
+    LayoutProvider *m_layoutProvider;
+    KeyboardLayoutWidget *m_keyboardLayoutWidget = nullptr;
+    Iso639 m_iso639;
 
-    QString preSelectLayout_;
-    QString preSelectVariant_;
+    QString m_preSelectLayout;
+    QString m_preSelectVariant;
 };
 
-} // namespace kcm
+} // namespace addim
 } // namespace fcitx
 
 #endif // _KCM_FCITX_LAYOUTWIDGET_H_

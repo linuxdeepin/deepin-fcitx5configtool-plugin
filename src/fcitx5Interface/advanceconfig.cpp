@@ -64,9 +64,6 @@ void AdvanceConfig::requestConfigFinished(QDBusPendingCallWatcher *watcher)
     if (reply.isError()) {
         return;
     }
-
-    // qCDebug(KCM_FCITX5) << reply.argumentAt<0>().variant();
-
     if (!m_initialized) {
         auto desc = reply.argumentAt<1>();
         if (!desc.size()) {
@@ -265,7 +262,6 @@ void AdvanceConfig::switchIMShortCuts(const QString &shortCuts)
         klist << *it;
     }
     save();
-    qDebug() << "finished";
 }
 
 void AdvanceConfig::switchFirstIMShortCuts(const QString &shortCuts)
@@ -278,7 +274,6 @@ void AdvanceConfig::switchFirstIMShortCuts(const QString &shortCuts)
         klist << *it;
     }
     save();
-    qDebug() << "finished";
 }
 
 void AdvanceConfig::doChanged()

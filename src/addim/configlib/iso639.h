@@ -11,22 +11,22 @@
 #include <fcitx-utils/i18n.h>
 
 namespace fcitx {
-namespace kcm {
+namespace addim {
 
 class Iso639 {
 public:
     Iso639();
 
     QString query(const QString &code) const {
-        auto value = iso639_2data_.value(code);
+        auto value = m_iso639_2data.value(code);
         if (!value.isEmpty()) {
             return translateDomain("iso_639-2", value.toUtf8().constData());
         }
-        value = iso639_3data_.value(code);
+        value = m_iso639_3data.value(code);
         if (!value.isEmpty()) {
             return translateDomain("iso_639-3", value.toUtf8().constData());
         }
-        value = iso639_5data_.value(code);
+        value = m_iso639_5data.value(code);
         if (!value.isEmpty()) {
             return translateDomain("iso_639-5", value.toUtf8().constData());
         }
@@ -34,12 +34,12 @@ public:
     }
 
 private:
-    QMap<QString, QString> iso639_2data_;
-    QMap<QString, QString> iso639_3data_;
-    QMap<QString, QString> iso639_5data_;
+    QMap<QString, QString> m_iso639_2data;
+    QMap<QString, QString> m_iso639_3data;
+    QMap<QString, QString> m_iso639_5data;
 };
 
-} // namespace kcm
+} // namespace addim
 } // namespace fcitx
 
 #endif // _KCM_FCITX_ISO639_H_

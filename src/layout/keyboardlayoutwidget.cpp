@@ -41,7 +41,7 @@ constexpr unsigned int INVALID_KEYCODE = (unsigned int)(-1);
 #endif
 
 namespace fcitx {
-namespace kcm {
+namespace addim {
 
 struct DrawingItemCompare {
     bool operator()(const DrawingItem *a, const DrawingItem *b) {
@@ -1474,5 +1474,5 @@ QString KeyboardLayoutWidget::keySymToString(unsigned long keysym) {
     return text;
 }
 
-} // namespace kcm
+} // namespace addim
 } // namespace fcitx

@@ -288,7 +288,7 @@ IMPage::IMPage(DBusProvider* dbus, IMConfig* config, QWidget* parent)
     QModelIndex availIndex = this->ui_->availIMView->model()->index(0, 0);
     addIM(availIndex);
 
-    m_laSelector = fcitx::kcm::LayoutSelector::selectLayout(
+    m_laSelector = fcitx::addim::LayoutSelector::selectLayout(
                 this, m_dbus, _("Select default layout"), "cn");
     ui_->layout_r_down_view->addWidget(m_laSelector);
 

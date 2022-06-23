@@ -107,18 +107,10 @@ void IMSettingWindow::initUI()
 
     //快捷键 切换输入法 切换虚拟键盘 切换至默认输入法
     m_shortcutGroup = new FcitxSettingsGroup();
-    m_shortcutGroup->setSpacing(10);
-
+    m_shortcutGroup->setSpacing(0);
     m_imSwitchCbox = new FcitxComBoboxSettingsItem(tr("Scroll between input methods"), {"CTRL_SHIFT", "ALT_SHIFT", "CTRL_SUPER", "ALT_SUPER"});
     m_imSwitchCbox->comboBox()->setAccessibleName("Switch input methods");
-
     m_defaultIMKey = new FcitxKeySettingsItem(tr("Switch between the current/first input method"));
-    m_resetBtn = new DCommandLinkButton(tr("Restore Defaults"), this);
-    DFontSizeManager::instance()->bind(m_resetBtn, DFontSizeManager::T8, QFont::Normal);
-    m_resetBtn->setAccessibleName(tr("Restore Defaults"));
-    m_advSetKey = new QPushButton(tr("Advanced Settings"));
-    m_advSetKey->setAccessibleName("Advanced Settings");
-    m_advSetKey->setMaximumWidth(214);
     m_shortcutGroup->appendItem(m_imSwitchCbox);
     m_shortcutGroup->appendItem(m_defaultIMKey);
 
@@ -126,16 +118,27 @@ void IMSettingWindow::initUI()
     scrollAreaLayout->addWidget(newTitleHead(tr("Manage Input Methods"), true));
     scrollAreaLayout->addSpacing(10);
     scrollAreaLayout->addWidget(m_IMListGroup);
+    scrollAreaLayout->addSpacing(30);
 
     //QHBoxLayout 存放m_resetBtn和Shortcuts标题两个控件
     QHBoxLayout *shortcutLayout = new QHBoxLayout();
     QWidget *pWidget = newTitleHead(tr("Shortcuts"));
     shortcutLayout->addWidget(pWidget);
+
+    m_resetBtn = new DCommandLinkButton(tr("Restore Defaults"), this);
+    DFontSizeManager::instance()->bind(m_resetBtn, DFontSizeManager::T8, QFont::Normal);
+    m_resetBtn->setAccessibleName(tr("Restore Defaults"));
+
     shortcutLayout->addWidget(m_resetBtn, 0, Qt::AlignRight | Qt::AlignBottom);
     scrollAreaLayout->addLayout(shortcutLayout);
     scrollAreaLayout->addSpacing(10);
     scrollAreaLayout->addWidget(m_shortcutGroup);
     scrollAreaLayout->addSpacing(20);
+
+    m_advSetKey = new QPushButton(tr("Advanced Settings"));
+    m_advSetKey->setAccessibleName("Advanced Settings");
+    m_advSetKey->setMaximumWidth(214);
+
     scrollAreaLayout->addWidget(m_advSetKey, 0, Qt::AlignHCenter);
     scrollAreaLayout->addStretch();
 

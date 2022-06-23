@@ -13,7 +13,7 @@
 #include <fcitxqtdbustypes.h>
 
 namespace fcitx {
-namespace kcm {
+namespace addim {
 
 enum { LayoutLanguageRole = 0x3423545, LayoutInfoRole };
 
@@ -39,7 +39,7 @@ public:
         return QSortFilterProxyModel::roleNames();
     }
 
-    const QString &language() const { return language_; }
+    const QString &language() const { return m_language; }
     void setLanguage(const QString &language);
 
     Q_INVOKABLE QVariant layoutInfo(int row) const;
@@ -50,7 +50,7 @@ protected:
                   const QModelIndex &right) const override;
 
 private:
-    QString language_;
+    QString m_language;
 };
 
 class LayoutInfoModel : public QAbstractListModel {
@@ -59,7 +59,7 @@ public:
     using QAbstractListModel::QAbstractListModel;
     QHash<int, QByteArray> roleNames() const override;
 
-    auto &layoutInfo() const { return layoutInfo_; }
+    auto &layoutInfo() const { return m_layoutInfo; }
     void setLayoutInfo(FcitxQtLayoutInfoList info);
 
     QVariant data(const QModelIndex &index,
@@ -68,7 +68,7 @@ public:
     int rowCount(const QModelIndex &parent = QModelIndex()) const override;
 
 private:
-    FcitxQtLayoutInfoList layoutInfo_;
+    FcitxQtLayoutInfoList m_layoutInfo;
 };
 
 class VariantInfoModel : public QAbstractListModel {
@@ -77,7 +77,7 @@ public:
     using QAbstractListModel::QAbstractListModel;
     QHash<int, QByteArray> roleNames() const override;
 
-    auto &variantInfo() const { return variantInfo_; }
+    auto &variantInfo() const { return m_variantInfo; }
     void setVariantInfo(const FcitxQtLayoutInfo &info);
 
     QVariant data(const QModelIndex &index,
@@ -86,10 +86,10 @@ public:
     int rowCount(const QModelIndex &parent = QModelIndex()) const override;
 
 private:
-    FcitxQtVariantInfoList variantInfo_;
+    FcitxQtVariantInfoList m_variantInfo;
 };
 
-} // namespace kcm
+} // namespace addim
 } // namespace fcitx
 
 #endif // _CONFIGLIB_LAYOUTMODEL_H_

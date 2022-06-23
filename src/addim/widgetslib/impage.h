@@ -8,6 +8,7 @@
 
 #include "imconfig.h"
 #include "dbusprovider.h"
+#include "layoutselector.h"
 #include <QDBusPendingCallWatcher>
 #include <QWidget>
 #include <fcitxqtdbustypes.h>
@@ -16,12 +17,6 @@
 
 namespace Ui {
 class IMPage;
-}
-
-namespace fcitx {
-namespace kcm {
-class LayoutSelector;
-}
 }
 
 
@@ -72,7 +67,7 @@ private:
     DBusProvider *m_dbus;
     IMConfig *m_config;
     Dtk::Widget::DSearchEdit* m_SearchEdit;
-    fcitx::kcm::LayoutSelector* m_laSelector;
+    fcitx::addim::LayoutSelector* m_laSelector;
 
     BaseWidget* m_wleftview;
     BaseWidget* m_wrightupview;

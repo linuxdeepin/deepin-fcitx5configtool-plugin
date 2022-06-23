@@ -98,7 +98,7 @@ void FcitxSettingsGroup::insertItem(const int index, FcitxSettingsItem *item)
         //当SettingsItem 被加入　FcitxSettingsGroup　时，为其加入背景
         FcitxIMActivityItem *pItem = dynamic_cast<FcitxIMActivityItem*>(item);
         if(pItem == nullptr) {
-            item->addBackground();
+            //item->addBackground();
             //m_layout->addSpacing(5);
         }
     }
@@ -135,9 +135,9 @@ void FcitxSettingsGroup::appendItem(FcitxSettingsItem *item, BackgroundStyle bgS
 {
     if ((ItemBackground == bgStyle) && (m_bgStyle == ItemBackground)) {
         //当SettingsItem 被加入　FcitxSettingsGroup　时，为其加入背景
-        item->addBackground();
+        //item->addBackground();
     }
-    m_layout->addSpacing(5);
+    //m_layout->addSpacing(5);
     m_layout->insertWidget(m_layout->count(), item, 8, Qt::AlignVCenter);
     item->installEventFilter(this);
 
@@ -282,7 +282,6 @@ void FcitxSettingsGroup::onEnterItem(FcitxSettingsItem *item, bool entered)
         FcitxSettingsItem* sitem = qobject_cast<FcitxSettingsItem *>(m_layout->itemAt(index)->widget());
         FcitxIMActivityItem *pItem = dynamic_cast<FcitxIMActivityItem*>(sitem);
         if(pItem == item) {
-           qDebug() << "onEnterItem " << index << "  " << entered;
            pItem->setEnterStatus(entered, index, itemCount());
         }
     }
@@ -380,12 +379,12 @@ void FcitxSettingsGroup::mouseReleaseEvent(QMouseEvent *event)
     m_lastItem = nullptr;
     if(m_selectIndex != count && count <= m_layout->count() - 1) {
         switchItem(m_selectIndex,count);
-        this->setFocus();
-    } else {
+    }/* else {
         m_layout->removeWidget(selectItem);
         m_layout->insertWidget(count, selectItem);
-    }
-
+    }*/
+    selectItem->setFocusPolicy(Qt::StrongFocus);
+    selectItem->setFocus();
     return QWidget::mouseReleaseEvent(event);
 }
 

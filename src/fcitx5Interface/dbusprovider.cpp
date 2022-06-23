@@ -8,26 +8,26 @@
 
 DBusProvider::DBusProvider(QObject *parent)
     : QObject(parent)
-    , watcher_(new FcitxQtWatcher(QDBusConnection::sessionBus(), this))
+    , m_watcher(new FcitxQtWatcher(QDBusConnection::sessionBus(), this))
 {
     registerFcitxQtDBusTypes();
-    connect(watcher_, &FcitxQtWatcher::availabilityChanged, this,
+    connect(m_watcher, &FcitxQtWatcher::availabilityChanged, this,
             &DBusProvider::fcitxAvailabilityChanged);
-    watcher_->watch();
+    m_watcher->watch();
 }
 
-DBusProvider::~DBusProvider() { watcher_->unwatch(); }
+DBusProvider::~DBusProvider() { m_watcher->unwatch(); }
 
 void DBusProvider::fcitxAvailabilityChanged(bool avail) {
-    delete controller_;
-    controller_ = nullptr;
+    delete m_controller;
+    m_controller = nullptr;
 
     if (avail) {
-        controller_ =
-            new FcitxQtControllerProxy(watcher_->serviceName(), "/controller",
-                                       watcher_->connection(), this);
-        controller_->setTimeout(3000);
+        m_controller =
+            new FcitxQtControllerProxy(m_watcher->serviceName(), "/controller",
+                                       m_watcher->connection(), this);
+        m_controller->setTimeout(3000);
     }
 
-    emit availabilityChanged(controller_);
+    emit availabilityChanged(m_controller);
 }

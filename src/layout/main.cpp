@@ -52,7 +52,7 @@ int main(int argc, char *argv[]) {
     mainWindow.setWindowIcon(QIcon::fromTheme("input-keyboard"));
     mainWindow.setWindowTitle(_("Keyboard Layout viewer"));
     mainWindow.setMinimumSize(QSize(900, 400));
-    fcitx::kcm::KeyboardLayoutWidget widget;
+    fcitx::addim::KeyboardLayoutWidget widget;
     if (group > 0 || layout.isNull()) {
         if (group < 0)
             group = 0;

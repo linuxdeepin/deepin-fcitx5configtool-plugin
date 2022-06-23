@@ -12,7 +12,7 @@
 #include <QJsonObject>
 
 namespace fcitx {
-namespace kcm {
+namespace addim {
 namespace {
 
 QMap<QString, QString> readAlpha3ToNameMap(const char *name, const char *base) {
@@ -52,10 +52,10 @@ QMap<QString, QString> readAlpha3ToNameMap(const char *name, const char *base) {
 } // namespace
 
 Iso639::Iso639() {
-    iso639_2data_ = readAlpha3ToNameMap(ISOCODES_ISO639_2_JSON, "639-2");
-    iso639_3data_ = readAlpha3ToNameMap(ISOCODES_ISO639_3_JSON, "639-3");
-    iso639_5data_ = readAlpha3ToNameMap(ISOCODES_ISO639_5_JSON, "639-5");
+    m_iso639_2data = readAlpha3ToNameMap(ISOCODES_ISO639_2_JSON, "639-2");
+    m_iso639_3data = readAlpha3ToNameMap(ISOCODES_ISO639_3_JSON, "639-3");
+    m_iso639_5data = readAlpha3ToNameMap(ISOCODES_ISO639_5_JSON, "639-5");
 }
 
-} // namespace kcm
+} // namespace addim
 } // namespace fcitx

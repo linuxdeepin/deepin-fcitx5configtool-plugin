@@ -39,7 +39,7 @@ typedef enum {
 } KeyboardDrawingGroupLevelPosition;
 
 namespace fcitx {
-namespace kcm {
+namespace addim {
 
 struct DrawingItem {
     DrawingItem()
@@ -153,7 +153,7 @@ private:
     QMap<unsigned int, unsigned int> deadMap;
 };
 
-} // namespace kcm
+} // namespace addim
 } // namespace fcitx
 
 #endif

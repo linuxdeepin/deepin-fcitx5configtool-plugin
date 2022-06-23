@@ -20,38 +20,38 @@
 #include <fcitxqtdbustypes.h>
 
 namespace fcitx {
-namespace kcm {
+namespace addim {
 
 LayoutSelector::LayoutSelector(DBusProvider *dbus, QWidget *parent)
     : QWidget(parent)
-    , ui_(std::make_unique<Ui::LayoutSelector>())
-    , dbus_(dbus)
-    , layoutProvider_(new LayoutProvider(dbus, this))
+    , m_ui(std::make_unique<Ui::LayoutSelector>())
+    , m_dbus(dbus)
+    , m_layoutProvider(new LayoutProvider(dbus, this))
 {
-    ui_->setupUi(this);
-    ui_->layoutComboBox->setVisible(false);
-    ui_->languageComboBox->setVisible(false);
-    ui_->variantComboBox->setVisible(false);
+    m_ui->setupUi(this);
+    m_ui->layoutComboBox->setVisible(false);
+    m_ui->languageComboBox->setVisible(false);
+    m_ui->variantComboBox->setVisible(false);
 
-    ui_->languageComboBox->setModel(layoutProvider_->languageModel());
-    ui_->layoutComboBox->setModel(layoutProvider_->layoutModel());
-    ui_->variantComboBox->setModel(layoutProvider_->variantModel());
+    m_ui->languageComboBox->setModel(m_layoutProvider->languageModel());
+    m_ui->layoutComboBox->setModel(m_layoutProvider->layoutModel());
+    m_ui->variantComboBox->setModel(m_layoutProvider->variantModel());
 
-    connect(ui_->languageComboBox,
+    connect(m_ui->languageComboBox,
             qOverload<int>(&QComboBox::currentIndexChanged), this,
             &LayoutSelector::languageComboBoxChanged);
-    connect(ui_->layoutComboBox,
+    connect(m_ui->layoutComboBox,
             qOverload<int>(&QComboBox::currentIndexChanged), this,
             &LayoutSelector::layoutComboBoxChanged);
-    connect(ui_->variantComboBox,
+    connect(m_ui->variantComboBox,
             qOverload<int>(&QComboBox::currentIndexChanged), this,
             &LayoutSelector::variantComboBoxChanged);
 
     if (QX11Info::isPlatformX11()) {
-        keyboardLayoutWidget_ = new KeyboardLayoutWidget(this);
-        keyboardLayoutWidget_->setMinimumSize(QSize(360, 130));
-        keyboardLayoutWidget_->setContentsMargins(0,-20,0,0);
-        keyboardLayoutWidget_->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
+        m_keyboardLayoutWidget = new KeyboardLayoutWidget(this);
+        m_keyboardLayoutWidget->setMinimumSize(QSize(360, 130));
+        m_keyboardLayoutWidget->setContentsMargins(0,-20,0,0);
+        m_keyboardLayoutWidget->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
         //keyboardLayoutWidget_->resize(this->size());
     }
 }
@@ -72,15 +72,15 @@ LayoutSelector *LayoutSelector::selectLayout(QWidget *parent, DBusProvider *dbus
 
 void LayoutSelector::setLayout(const QString &layout, const QString &variant)
 {
-    ui_->layoutComboBox->setCurrentIndex(layoutProvider_->layoutIndex(layout));
-    if (!layoutProvider_->loaded()) {
-        preSelectLayout_ = layout;
-        preSelectVariant_ = variant;
+    m_ui->layoutComboBox->setCurrentIndex(m_layoutProvider->layoutIndex(layout));
+    if (!m_layoutProvider->loaded()) {
+        m_preSelectLayout = layout;
+        m_preSelectVariant = variant;
         return;
     }
 
-    preSelectLayout_.clear();
-    preSelectVariant_.clear();
+    m_preSelectLayout.clear();
+    m_preSelectVariant.clear();
 }
 
 QPair<QString, QString> LayoutSelector::layout() const
@@ -94,30 +94,30 @@ void LayoutSelector::languageComboBoxChanged()
 
 void LayoutSelector::layoutComboBoxChanged()
 {
-    if (ui_->layoutComboBox->currentIndex() < 0) {
+    if (m_ui->layoutComboBox->currentIndex() < 0) {
         return;
     }
 
-    layoutProvider_->setVariantInfo(
-        ui_->layoutComboBox->currentData(LayoutInfoRole)
+    m_layoutProvider->setVariantInfo(
+        m_ui->layoutComboBox->currentData(LayoutInfoRole)
             .value<FcitxQtLayoutInfo>());
 }
 
 void LayoutSelector::variantComboBoxChanged()
 {
-    if (!keyboardLayoutWidget_) {
+    if (!m_keyboardLayoutWidget) {
         return;
     }
 
-    auto layout = ui_->layoutComboBox->currentData().toString();
-    auto variant = ui_->variantComboBox->currentData().toString();
+    auto layout = m_ui->layoutComboBox->currentData().toString();
+    auto variant = m_ui->variantComboBox->currentData().toString();
     if (layout.isEmpty()) {
-        keyboardLayoutWidget_->setVisible(false);
+        m_keyboardLayoutWidget->setVisible(false);
     } else {
-        keyboardLayoutWidget_->setKeyboardLayout(layout, variant);
-        keyboardLayoutWidget_->setVisible(true);
+        m_keyboardLayoutWidget->setKeyboardLayout(layout, variant);
+        m_keyboardLayoutWidget->setVisible(true);
     }
 }
 
-} // namespace kcm
+} // namespace addim
 } // namespace fcitx

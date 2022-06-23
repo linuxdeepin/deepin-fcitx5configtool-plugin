@@ -168,7 +168,6 @@ void FcitxIMActivityItem::paintEvent(QPaintEvent *event)
         }
         painter.fillPath(path, color);
     }
-    //qDebug() << "isDraged = " << isDraged();
     return FcitxSettingsItem::paintEvent(event);
 }
 
@@ -204,8 +203,12 @@ void FcitxIMActivityItem::focusOutEvent(QFocusEvent *e)
 
 void FcitxIMActivityItem::setSelectStatus(const bool &isSelect, int index, int count)
 {
-//    if (!m_bgGroup)
-//        return;
+    if(m_isSelected == isSelect) {
+        return;
+    }
+
+    qDebug() << "m_isSelected = " << isSelect << "index " << index;
+
     if (isSelect)
         m_isSelected = true;
     else {

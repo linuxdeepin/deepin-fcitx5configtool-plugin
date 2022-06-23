@@ -7,7 +7,7 @@
 #include "layoutmodel.h"
 
 namespace fcitx {
-namespace kcm {
+namespace addim {
 
 LanguageModel::LanguageModel(QObject *parent) : QStandardItemModel(parent) {
     setItemRoleNames({{Qt::DisplayRole, "name"}, {Qt::UserRole, "language"}});
@@ -28,8 +28,8 @@ void LanguageModel::append(const QString &name, const QString &language) {
 }
 
 void LanguageFilterModel::setLanguage(const QString &language) {
-    if (language_ != language) {
-        language_ = language;
+    if (m_language != language) {
+        m_language = language;
         invalidateFilter();
     }
 }
@@ -44,7 +44,7 @@ QVariant LanguageFilterModel::layoutInfo(int row) const {
 
 bool LanguageFilterModel::filterAcceptsRow(int source_row,
                                            const QModelIndex &) const {
-    if (language_.isEmpty()) {
+    if (m_language.isEmpty()) {
         return true;
     }
 
@@ -52,7 +52,7 @@ bool LanguageFilterModel::filterAcceptsRow(int source_row,
     return sourceModel()
         ->data(index, LayoutLanguageRole)
         .toStringList()
-        .contains(language_);
+        .contains(m_language);
 }
 bool LanguageFilterModel::lessThan(const QModelIndex &left,
                                    const QModelIndex &right) const {
@@ -70,15 +70,15 @@ QHash<int, QByteArray> LayoutInfoModel::roleNames() const {
 
 void LayoutInfoModel::setLayoutInfo(FcitxQtLayoutInfoList info) {
     beginResetModel();
-    layoutInfo_ = std::move(info);
+    m_layoutInfo = std::move(info);
     endResetModel();
 }
 
 QVariant LayoutInfoModel::data(const QModelIndex &index, int role) const {
-    if (!index.isValid() || index.row() >= layoutInfo_.size()) {
+    if (!index.isValid() || index.row() >= m_layoutInfo.size()) {
         return QVariant();
     }
-    const auto &layout = layoutInfo_.at(index.row());
+    const auto &layout = m_layoutInfo.at(index.row());
 
     switch (role) {
     case Qt::DisplayRole:
@@ -104,7 +104,7 @@ int LayoutInfoModel::rowCount(const QModelIndex &parent) const {
         return 0;
     }
 
-    return layoutInfo_.size();
+    return m_layoutInfo.size();
 }
 
 QHash<int, QByteArray> VariantInfoModel::roleNames() const {
@@ -117,21 +117,21 @@ QHash<int, QByteArray> VariantInfoModel::roleNames() const {
 
 void VariantInfoModel::setVariantInfo(const FcitxQtLayoutInfo &info) {
     beginResetModel();
-    variantInfo_.clear();
+    m_variantInfo.clear();
     FcitxQtVariantInfo defaultVariant;
     defaultVariant.setVariant("");
     defaultVariant.setDescription(_("Default"));
     defaultVariant.setLanguages(info.languages());
-    variantInfo_ << defaultVariant;
-    variantInfo_ << info.variants();
+    m_variantInfo << defaultVariant;
+    m_variantInfo << info.variants();
     endResetModel();
 }
 
 QVariant VariantInfoModel::data(const QModelIndex &index, int role) const {
-    if (!index.isValid() || index.row() >= variantInfo_.size()) {
+    if (!index.isValid() || index.row() >= m_variantInfo.size()) {
         return QVariant();
     }
-    const auto &layout = variantInfo_.at(index.row());
+    const auto &layout = m_variantInfo.at(index.row());
 
     switch (role) {
 
@@ -154,8 +154,8 @@ int VariantInfoModel::rowCount(const QModelIndex &parent) const {
         return 0;
     }
 
-    return variantInfo_.size();
+    return m_variantInfo.size();
 }
 
-} // namespace kcm
+} // namespace addim
 } // namespace fcitx

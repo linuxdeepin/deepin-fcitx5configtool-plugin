@@ -18,7 +18,7 @@ class QDBusPendingCallWatcher;
 class DBusProvider;
 
 namespace fcitx {
-namespace kcm {
+namespace addim {
 
 class LanguageFilterModel;
 class LayoutInfoModel;
@@ -27,28 +27,28 @@ class VariantInfoModel;
 class LayoutProvider : public QObject {
     Q_OBJECT
     Q_PROPERTY(
-        fcitx::kcm::LanguageModel *languageModel READ languageModel CONSTANT)
+        fcitx::addim::LanguageModel *languageModel READ languageModel CONSTANT)
     Q_PROPERTY(LanguageFilterModel *layoutModel READ layoutModel CONSTANT)
     Q_PROPERTY(LanguageFilterModel *variantModel READ variantModel CONSTANT)
 public:
     LayoutProvider(DBusProvider *dbus, QObject *parent = nullptr);
     ~LayoutProvider();
 
-    auto languageModel() const { return languageModel_; }
-    auto layoutModel() const { return layoutFilterModel_; }
-    auto variantModel() const { return variantFilterModel_; }
+    auto languageModel() const { return m_languageModel; }
+    auto layoutModel() const { return m_layoutFilterModel; }
+    auto variantModel() const { return m_variantFilterModel; }
 
     Q_INVOKABLE int layoutIndex(const QString &layoutString);
     Q_INVOKABLE int variantIndex(const QString &layoutString);
     Q_INVOKABLE QString layoutDescription(const QString &layoutString);
 
     Q_INVOKABLE void setVariantInfo(const FcitxQtLayoutInfo &info) const {
-        variantModel_->setVariantInfo(info);
+        m_variantModel->setVariantInfo(info);
     }
 
     Q_INVOKABLE QString layout(int layoutIdx, int variantIdx) const {
-        auto layoutModelIndex = layoutFilterModel_->index(layoutIdx, 0);
-        auto variantModelIndex = variantFilterModel_->index(variantIdx, 0);
+        auto layoutModelIndex = m_layoutFilterModel->index(layoutIdx, 0);
+        auto variantModelIndex = m_variantFilterModel->index(variantIdx, 0);
         if (layoutModelIndex.isValid() && variantModelIndex.isValid()) {
             auto layout = layoutModelIndex.data(Qt::UserRole).toString();
             auto variant = variantModelIndex.data(Qt::UserRole).toString();
@@ -63,7 +63,7 @@ public:
         return QString();
     }
 
-    bool loaded() const { return loaded_; }
+    bool loaded() const { return m_loaded; }
 
 signals:
     void loadedChanged();
@@ -74,23 +74,23 @@ private slots:
 
 private:
     void setLoaded(bool loaded) {
-        if (loaded != loaded_) {
-            loaded_ = loaded;
+        if (loaded != m_loaded) {
+            m_loaded = loaded;
             emit loadedChanged();
         }
     }
 
-    DBusProvider *dbus_;
-    bool loaded_ = false;
-    LanguageModel *languageModel_;
-    LayoutInfoModel *layoutModel_;
-    VariantInfoModel *variantModel_;
-    LanguageFilterModel *layoutFilterModel_;
-    LanguageFilterModel *variantFilterModel_;
-    Iso639 iso639_;
+    DBusProvider *m_dbus;
+    bool m_loaded = false;
+    LanguageModel *m_languageModel;
+    LayoutInfoModel *m_layoutModel;
+    VariantInfoModel *m_variantModel;
+    LanguageFilterModel *m_layoutFilterModel;
+    LanguageFilterModel *m_variantFilterModel;
+    Iso639 m_iso639;
 };
 
-} // namespace kcm
+} // namespace addim
 } // namespace fcitx
 
 #endif // _CONFIGLIB_LAYOUTPROVIDER_H_

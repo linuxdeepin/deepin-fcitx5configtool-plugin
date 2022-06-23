@@ -20,8 +20,8 @@ public:
     DBusProvider(QObject *parent);
     ~DBusProvider();
 
-    bool available() const { return controller_; }
-    FcitxQtControllerProxy *controller() { return controller_; }
+    bool available() const { return m_controller; }
+    FcitxQtControllerProxy *controller() { return m_controller; }
 
 signals:
     void availabilityChanged(bool avail);
@@ -30,8 +30,8 @@ private slots:
     void fcitxAvailabilityChanged(bool avail);
 
 private:
-    FcitxQtWatcher *watcher_;
-    FcitxQtControllerProxy *controller_ = nullptr;
+    FcitxQtWatcher *m_watcher;
+    FcitxQtControllerProxy *m_controller = nullptr;
 };
 
 #endif
