@@ -16,7 +16,7 @@ int osaIsSub(int start, const char *str, const char *sub)
 	int k;
 	int j;
 	int len;
-	if (str == NULL){
+	if (str == nullptr){
 		return -1;
 	}
 	len = strlen(str);
@@ -45,7 +45,7 @@ char * osaStrToToken(char *str, const char *delim, char **saveptr)
 {
 	int pos;
 
-	if (str == NULL){
+	if (str == nullptr){
 		str = *saveptr;
 	}
 	pos = osaIsSub(0, str, delim);
@@ -54,7 +54,7 @@ char * osaStrToToken(char *str, const char *delim, char **saveptr)
 		*saveptr = &str[pos + strlen(delim)];
 		return str;
 	} else {/* 说明无法找到分隔符位置了 */
-		*saveptr = NULL;
+		*saveptr = nullptr;
 		return str;
 	}
 }
@@ -65,16 +65,16 @@ char * osaStrToToken(char *str, const char *delim, char **saveptr)
 */
 int osaSplitStrToToken(char *src_str, const char *delim, char **pp_token, int token_count)
 {
-	char *saveptr = NULL;
+	char *saveptr = nullptr;
 	int   i;
 
 	i = 0;
 	pp_token[i] = osaStrToToken(src_str, delim, &saveptr);
-	while (pp_token[i] != NULL)
+	while (pp_token[i] != nullptr)
 	{
 		if (++i >= token_count)
 			break;
-		pp_token[i] = osaStrToToken(NULL, delim, &saveptr);
+		pp_token[i] = osaStrToToken(nullptr, delim, &saveptr);
 	}
 
 	return i;
@@ -91,7 +91,7 @@ int osaGetSubCount(int start, const char *str, const char *sub)
 	int j;
 	int len;
 	int count = 0;
-	if (str == NULL){
+	if (str == nullptr){
 		return count;
 	}
 	len = strlen(str);
@@ -181,7 +181,7 @@ int osaTrimStr(char* str)
 	long i, j, str_len;
 	char temp[128];
 
-	if (str == NULL) {
+	if (str == nullptr) {
 		return EC_SUCCESS;
 	}
 
@@ -232,7 +232,7 @@ int osaTakeTagTextFromFile(const char *file_path, const char *before_tag, const 
 	/*TCHAR DealStr[10];*/
 	char element[2]; element[1] = '\0';
 
-	FILE *fp = NULL;
+	FILE *fp = nullptr;
 	fp = fopen(file_path, "rb");
 	if (!fp) {
 		osaLogError(LOG_EXPANDED_NAME, LOG_EXPANDED_NUM, "ERROR: the file [%s] was not opened.\n", file_path);

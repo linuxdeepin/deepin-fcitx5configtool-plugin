@@ -215,6 +215,7 @@ void IMConfig::reloadIMList()
         }
     }
     m_imEntries = newEntries;
+    setUseIMList(m_imEntries);
     updateIMList(true);
     emitChanged();
 }

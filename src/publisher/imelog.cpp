@@ -72,7 +72,7 @@ static int osaClockGettime(clockid_t clk_id, struct timespec *tp)
 static int osaSemInit(osa_sem_t *sem, int pshared, unsigned int value)
 {
 	sem->sem = CreateSemaphore(NULL, value, MAX_SEM_VALUE, NULL);
-	if (sem->sem == NULL)
+	if (sem->sem == nullptr)
 		return -1;
 	return 0;
 }
@@ -296,7 +296,7 @@ static int osaOpenLogFile(const char *expanded_name, int expanded_num)
 	sprintf(log_file_name, "%s_%s_%03d.log", g_osa_log_file_prefix, expanded_name, g_osa_log_file_no[expanded_num]);
 
 	g_osa_log_fp[expanded_num] = fopen(log_file_name, "ab");
-	g_osa_log_open_flag[expanded_num] = (g_osa_log_fp[expanded_num] != NULL);
+	g_osa_log_open_flag[expanded_num] = (g_osa_log_fp[expanded_num] != nullptr);
 	if (!g_osa_log_open_flag[expanded_num]) {
 		printf("open log file : [%s] failed.\n", log_file_name);
 		return ERRNO_EOPENFILE;
@@ -307,7 +307,7 @@ static int osaOpenLogFile(const char *expanded_name, int expanded_num)
 	if (file_len >= MAX_FILE_SIZE)
 	{
 		fclose(g_osa_log_fp[expanded_num]);
-		g_osa_log_fp[expanded_num] = NULL;
+		g_osa_log_fp[expanded_num] = nullptr;
 		g_osa_log_open_flag[expanded_num] = FALSE;
 
 		g_osa_log_fp[expanded_num] = fopen(log_file_name, "wb");
@@ -343,7 +343,7 @@ static int osaWriteErrorFile(const char *data_name, char *data, const char *expa
 	if (file_len >= MAX_FILE_SIZE)
 	{
 		fclose(g_osa_log_fp[expanded_num]);
-		g_osa_log_fp[expanded_num] = NULL;
+		g_osa_log_fp[expanded_num] = nullptr;
 		g_osa_log_open_flag[expanded_num] = FALSE;
 	}
 
@@ -584,9 +584,9 @@ int osaLogPrintf(int log_level, const char *file, const char *function,
 		return 0;
 
 	/*printf("COMPILE_ROOT_DIR [%s].\n", COMPILE_ROOT_DIR);*/
-	if (COMPILE_ROOT_DIR != NULL) {
+	if (COMPILE_ROOT_DIR != nullptr) {
 		/*
-		printf("COMPILE_ROOT_DIR != NULL\n");
+		printf("COMPILE_ROOT_DIR != nullptr\n");
 		printf("strlen(file) [%d], strlen(COMPILE_ROOT_DIR) [%d]\n", strlen(file), strlen(COMPILE_ROOT_DIR));
 		*/
 		if (strlen(file) > strlen(COMPILE_ROOT_DIR)) {

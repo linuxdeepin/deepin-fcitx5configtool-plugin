@@ -21,11 +21,11 @@ enum {
     FcitxIMConfigurableRole,
     FcitxIMLayoutRole,
 
-    FcitxLanguageCode,
-    FcitxUseIMLanguageRole,
+    FcitxLanguageCode,     // 取得语言编码
+    FcitxUseIMLanguageRole,// 是否为使用的输入法语言项（有一个输入法子项被使用，语言项则被使用）
     FcitxRowIndexRole,
-    FcitxUseIMRole,
-    FcitxEnglishNameRole,
+    FcitxUseIMRole,        // 是否为使用的输入法项
+    FcitxEnglishNameRole,  // 取得语言的英文名称
 };
 
 enum { LanguageType, IMType };

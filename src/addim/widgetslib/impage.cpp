@@ -294,7 +294,6 @@ IMPage::IMPage(DBusProvider* dbus, IMConfig* config, QWidget* parent)
 
 	int count;
 	int useCount;
-	int viewItemCount;
 	count    = m_config->currentIMEntries().count();
 	useCount = m_config->currentUseIMEntries().count();
 	if (count > useCount) {
@@ -302,7 +301,6 @@ IMPage::IMPage(DBusProvider* dbus, IMConfig* config, QWidget* parent)
 		this->ui_->currentIMView->setCurrentIndex(currentIndex);
 		clickCurrentIM(currentIndex);
 	}
-
 	osaLogInfo(LOG_EXPANDED_NAME, LOG_EXPANDED_NUM, "<==== count [%d], useCount [%d]\n", count, useCount);
 }
 
@@ -388,8 +386,11 @@ void IMPage::clickCurrentIM(const QModelIndex &index) {
 
 void IMPage::clickAvailIM(const QModelIndex &index)
 {
+    int row_index = index.row();
     QString matchStr = m_SearchEdit->text();
     addIM(index, matchStr);
+
+    setSelectCategoryRow(row_index);
 
     int count;
     int useCount;
