@@ -46,12 +46,6 @@ class FcitxIMActivityItem : public FcitxSettingsItem
 {
     Q_OBJECT
 public:
-    enum itemPosition{
-        firstItem = 0,
-        lastItem = -1,
-        onlyoneItem = -2,
-        otherItem = 1
-    };
     FcitxIMActivityItem(FcitxQtInputMethodItem *item, itemPosition index, QWidget *parent = nullptr);
     ~FcitxIMActivityItem() override;
     void editSwitch(const bool &flag);
@@ -91,7 +85,6 @@ public:
     ClickLabel *m_deleteLabel {nullptr};
     bool m_isEdit {false};
 private:
-    bool m_isSelected {false};
     bool m_isEntered {false};
     itemPosition m_index; //0:第一个， -1：最后一个， -2：只有一个
     bool m_isPressed {false};

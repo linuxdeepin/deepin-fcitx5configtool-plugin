@@ -141,13 +141,13 @@ void FcitxIMActivityItem::paintEvent(QPaintEvent *event)
         path.arcTo(QRect(QPoint(paintRect.bottomRight() - QPoint(radius * 2, radius * 2)),
                          QSize(radius * 2, radius * 2)), 270, 90);
     }
-    if(m_isSelected) {
+    if(isSelected()) {
         QColor color = DGuiApplicationHelper::instance()->applicationPalette().highlight().color();
         if(isDraged()) {
             color.setAlpha(160);
         }
         painter.fillPath(path, color);
-    } else if(m_isEntered && (!m_isSelected)) {
+    } else if(isEntered() && (!isSelected())) {
         QColor color = DGuiApplicationHelper::instance()->applicationPalette().light().color();
         if(isDraged()) {
             color.setAlpha(160);
@@ -196,23 +196,23 @@ void FcitxIMActivityItem::focusOutEvent(QFocusEvent *e)
 {
     emit itemSelect(false);
     setSelectStatus(false, 0, 0);
-    m_isSelected = false;
+    setIsSelected(false);
     qDebug() << "focusOutEvent";
     update();
 }
 
 void FcitxIMActivityItem::setSelectStatus(const bool &isSelect, int index, int count)
 {
-    if(m_isSelected == isSelect) {
+    if(isSelected() == isSelect) {
         return;
     }
 
     qDebug() << "m_isSelected = " << isSelect << "index " << index;
 
     if (isSelect)
-        m_isSelected = true;
+        setIsSelected(true);
     else {
-        m_isSelected = false;
+        setIsSelected(false);
     }
     if (!m_isEdit && isSelect) {
         if (count <= 1) {
@@ -290,7 +290,7 @@ void FcitxIMActivityItem::enterEvent(QEvent *event)
 {
     //qDebug() << "enterEvent " << event->type();
     emit enterItem(this, true);
-    m_isEntered = true;
+    setIsEntered(true);
     FcitxSettingsItem::enterEvent(event);
 }
 
@@ -298,7 +298,7 @@ void FcitxIMActivityItem::leaveEvent(QEvent *event)
 {
     //qDebug() << "leaveEvent";
     emit enterItem(this, false);
-    m_isEntered = false;
+    setIsEntered(false);
     FcitxSettingsItem::leaveEvent(event);
 }
 

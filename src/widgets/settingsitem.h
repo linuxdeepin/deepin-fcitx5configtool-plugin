@@ -37,6 +37,14 @@ namespace widgets {
 
 class FcitxSettingsItem : public QFrame
 {
+public:
+    enum itemPosition{
+        firstItem = 0,
+        lastItem = -1,
+        onlyoneItem = -2,
+        otherItem = 1
+    };
+
     Q_OBJECT
     Q_PROPERTY(bool isErr READ isErr DESIGNABLE true SCRIPTABLE true)
 
@@ -49,14 +57,28 @@ public:
     void addBackground();
     bool isDraged() {return m_isDraged;}
     void setDraged(bool b) {m_isDraged = b;}
+    void setPaint(bool b) {m_neetPaint = b;}
+
+    bool isSelected() const;
+    void setIsSelected(bool isSelected);
+
+    bool isEntered() const;
+    void setIsEntered(bool isEntered);
+
 protected:
     void resizeEvent(QResizeEvent *event) override;
-protected:
-    bool m_isErr;
+    void paintEvent(QPaintEvent *event) override;
 
+protected:
     DTK_WIDGET_NAMESPACE::DFrame *m_bgGroup {nullptr};
+
 private:
+    int m_index {0};
     bool m_isDraged {false};
+    bool m_isSelected {false};
+    bool m_isEntered {false};
+    bool m_neetPaint {false};
+    bool m_isErr {false};
 };
 
 } // namespace widgets
