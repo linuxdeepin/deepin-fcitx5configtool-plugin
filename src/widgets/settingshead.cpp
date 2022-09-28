@@ -53,6 +53,8 @@ FcitxSettingsHead::FcitxSettingsHead(bool isEdit, QFrame *parent)
     mainLayout->setContentsMargins(0, 0, 10, 0);
     mainLayout->addWidget(m_title);
     mainLayout->addStretch();
+    m_deleteBtn->setFocusPolicy(Qt::FocusPolicy::NoFocus);
+    m_addBtn->setFocusPolicy(Qt::FocusPolicy::NoFocus);
     if(isEdit) {
         m_deleteBtn->setEnabled(false);
         //m_deleteBtn->setFixedSize(36,36);

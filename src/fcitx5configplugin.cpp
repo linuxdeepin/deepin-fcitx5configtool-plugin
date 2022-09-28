@@ -1,5 +1,6 @@
 ﻿#include "fcitx5configplugin.h"
 #include "interface/moduleobject.h"
+#include "interface/pagemodule.h"
 
 #include <QLabel>
 #include <qboxlayout.h>
@@ -19,18 +20,16 @@ QString Fcitx5ConfigPlugin::follow() const
     return "keyboard";
 }
 
-int Fcitx5ConfigPlugin::location() const
+QString Fcitx5ConfigPlugin::location() const
 {
-    return 1;
+    return "1";
 }
 
 ModuleObject* Fcitx5ConfigPlugin::module()
 {
-    ModuleObject *module = new ModuleObject(QString("Manage Input Methods"), tr("Input Method"), this);
-    module->setChildType(ModuleObject::Page);
-
-        LabelModule *labelModule = new LabelModule();
-        module->appendChild(labelModule);
+    ModuleObject *module = new PageModule(QString("Manage Input Methods"), tr("Input Method"), this);
+    LabelModule *labelModule = new LabelModule();
+    module->appendChild(labelModule);
 
     return module;
 }

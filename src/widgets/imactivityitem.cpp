@@ -45,8 +45,11 @@ FcitxIMActivityItem::FcitxIMActivityItem(FcitxQtInputMethodItem *item, itemPosit
     m_labelText->setSizePolicy(QSizePolicy::MinimumExpanding, QSizePolicy::Fixed);
     m_layout->addWidget(m_labelText);
     m_upBtn = new DToolButton(this);
+    m_upBtn->setFocusPolicy(Qt::FocusPolicy::NoFocus);
     m_downBtn = new DToolButton(this);
+    m_downBtn->setFocusPolicy(Qt::FocusPolicy::NoFocus);
     m_configBtn = new DToolButton(this);
+    m_configBtn->setFocusPolicy(Qt::FocusPolicy::NoFocus);
     m_deleteLabel = new ClickLabel (this);
     m_upBtn->setIcon(QIcon::fromTheme("arrow_up"));
     m_upBtn->setAccessibleName(item->name()+":arrow_up");

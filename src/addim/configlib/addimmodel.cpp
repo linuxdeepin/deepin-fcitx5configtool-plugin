@@ -660,8 +660,8 @@ QVariant FilteredIMModel::data(const QModelIndex &index, int role) const {
                 return item.key() == imEntry.uniqueName();
             });
         if (iter != useIMList_.end()) {
-            osaLogInfo(LOG_CFGTOOL_NAME, LOG_CFGTOOL_NUM, "----> imEntry.uniqueName() [%s], is true. iter [%p], useIMList_.end() [%p]\n",
-                imEntry.uniqueName().toStdString().c_str(), iter, useIMList_.end());
+            osaLogInfo(LOG_CFGTOOL_NAME, LOG_CFGTOOL_NUM, "----> imEntry.uniqueName() [%s], is true\n",
+                imEntry.uniqueName().toStdString().c_str());
             return true;
         }
         osaLogInfo(LOG_CFGTOOL_NAME, LOG_CFGTOOL_NUM, "----> imEntry.uniqueName() [%s], is false\n", imEntry.uniqueName().toStdString().c_str());

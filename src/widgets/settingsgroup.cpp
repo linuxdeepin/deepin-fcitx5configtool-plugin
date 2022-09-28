@@ -383,6 +383,7 @@ void FcitxSettingsGroup::mouseReleaseEvent(QMouseEvent *event)
         m_layout->removeWidget(selectItem);
         m_layout->insertWidget(count, selectItem);
     }*/
+    this->parentWidget()->setFocus();
     selectItem->setFocusPolicy(Qt::StrongFocus);
     selectItem->setFocus();
     return QWidget::mouseReleaseEvent(event);
