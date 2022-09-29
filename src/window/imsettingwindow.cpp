@@ -215,6 +215,10 @@ void IMSettingWindow::initConnect()
         m_config->move(from , to);
     });
     connect(m_editHead, &FcitxSettingsHead::editChanged, this, &IMSettingWindow::onEditBtnClicked);
+
+    connect(m_advSetKey, &QPushButton::clicked, [ = ]() {
+        system("fcitx5-config-qt");
+    });
 }
 
 //读取配置文件
