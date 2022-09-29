@@ -217,6 +217,7 @@ void FcitxIMActivityItem::setSelectStatus(const bool &isSelect, int index, int c
     else {
         setIsSelected(false);
     }
+    QPalette pe = m_labelText->palette();
     if (!m_isEdit && isSelect) {
         if (count <= 1) {
             m_upBtn->setEnabled(false);
@@ -228,11 +229,15 @@ void FcitxIMActivityItem::setSelectStatus(const bool &isSelect, int index, int c
             m_upBtn->setEnabled(true);
             m_downBtn->setEnabled(false);
         }
+        pe.setColor(QPalette::WindowText, Qt::white);
+        m_labelText->setPalette(pe);
         m_configBtn->show();
         m_upBtn->show();
         m_downBtn->show();
         //update();
     } else {
+        pe.setColor(QPalette::WindowText, QColor("#323232"));
+        m_labelText->setPalette(pe);
         m_configBtn->hide();
         m_upBtn->hide();
         m_downBtn->hide();

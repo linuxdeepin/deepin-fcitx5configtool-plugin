@@ -47,6 +47,7 @@ FcitxIMSettingsItem::FcitxIMSettingsItem(QString str, QFrame *parent)
     m_layout->addWidget(m_labelIcon);
     this->setFixedHeight(40);
     this->setLayout(m_layout);
+    this->setFocusPolicy(Qt::FocusPolicy::NoFocus);
 }
 
 FcitxIMSettingsItem::~FcitxIMSettingsItem()
