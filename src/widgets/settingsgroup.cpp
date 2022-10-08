@@ -253,7 +253,7 @@ void FcitxSettingsGroup::switchItem(int start, int end)
         mItem->setDraged(false);
         mItem->update(mItem->rect());
     }
-
+    this->parentWidget()->setFocus();
     emit switchPosition(mCurrentItem->m_item, end);
 }
 
@@ -383,7 +383,6 @@ void FcitxSettingsGroup::mouseReleaseEvent(QMouseEvent *event)
         m_layout->removeWidget(selectItem);
         m_layout->insertWidget(count, selectItem);
     }*/
-    this->parentWidget()->setFocus();
     selectItem->setFocusPolicy(Qt::StrongFocus);
     selectItem->setFocus();
     return QWidget::mouseReleaseEvent(event);
