@@ -21,6 +21,7 @@
 #include <fcitxqtcontrollerproxy.h>
 #include <DDialog>
 #include <DGuiApplicationHelper>
+#include <DDBusSender>
 DWIDGET_USE_NAMESPACE
 using namespace Dtk::Gui;
 
@@ -215,6 +216,7 @@ IMPage::IMPage(DBusProvider* dbus, IMConfig* config, QWidget* parent)
     label_font.setPixelSize(12);
     ui_->label_store_download->setFont(label_font);
     ui_->label_store_download->setStyleSheet("color:rgb(36,80,255)");
+    ui_->label_store_download->installEventFilter(this);
 
     QPalette palette = ui_->line->palette();
     QColor outlineColor = QColor(0, 0, 0);
@@ -455,6 +457,21 @@ void IMPage::moveDownIM() {
     }
     m_config->move(curIndex.row(), curIndex.row() + 1);
     currentIMCurrentChanged();
+}
+
+bool IMPage::eventFilter(QObject *watched, QEvent *event)
+{
+    if (ui_->label_store_download == watched) {
+        if (event->type() == QEvent::MouseButtonPress) {
+            DDBusSender().service("com.home.appstore.client")
+                    .interface("com.home.appstore.client")
+                    .path("/com/home/appstore/client")
+                    .method("newInstence")
+                    .call();
+            return true;
+        }
+    }
+    return false;
 }
 
 BaseWidget::BaseWidget(const QString& text, QWidget* parent, Qt::WindowFlags f)

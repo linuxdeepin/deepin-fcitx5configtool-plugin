@@ -43,6 +43,9 @@ public slots:
     void load();
     void defaults();
 
+protected:
+    virtual bool eventFilter(QObject *watched, QEvent *event) override;
+
 private slots:
 
     void availIMSelectionChanged();
