@@ -22,7 +22,7 @@ QString Fcitx5ConfigPlugin::follow() const
 
 QString Fcitx5ConfigPlugin::location() const
 {
-    return "1";
+    return "2";
 }
 
 ModuleObject* Fcitx5ConfigPlugin::module()

@@ -307,7 +307,9 @@ void IMSettingWindow::onCurIMChanged(FcitxQtInputMethodItemList* list)
         } else {
             tmp = new FcitxIMActivityItem(list->at(i), FcitxIMActivityItem::otherItem, this);
         }
-        //connect(tmp, &FcitxIMActivityItem::configBtnClicked, IMModel::instance(), &IMModel::onConfigShow);
+        connect(tmp, &FcitxIMActivityItem::configBtnClicked, this, [=]() {
+
+        });
         connect(tmp, &FcitxIMActivityItem::upBtnClicked, this, &IMSettingWindow::onItemUp);
         connect(tmp, &FcitxIMActivityItem::downBtnClicked, this, &IMSettingWindow::onItemDown);
         connect(tmp, &FcitxIMActivityItem::deleteBtnClicked, this, &IMSettingWindow::onItemDelete);
