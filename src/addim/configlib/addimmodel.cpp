@@ -102,8 +102,7 @@ static QString languageName(const QString &langCode) {
             // indistinguishable "unknown"
             return langCode;
         }
-        const bool hasCountry = langCode.indexOf("_") != -1 &&
-                                locale.country() != QLocale::AnyCountry;
+        const bool hasCountry = langCode.indexOf("_") != -1 &&locale.country() != QLocale::AnyCountry;
         QString languageName;
         if (hasCountry) {
             languageName = locale.nativeLanguageName();
@@ -111,6 +110,10 @@ static QString languageName(const QString &langCode) {
         if (languageName.isEmpty()) {
             languageName = "";
             languageName += QLocale::languageToString(locale.language()).toUtf8();
+            //根据locale.language()来进行anthy语言包归类处理
+            if (!languageName.compare("Japanese", Qt::CaseInsensitive)) {
+                languageName = "日语";
+            }
         }
         if (languageName.isEmpty()) {
             languageName = _("Other");
@@ -119,8 +122,7 @@ static QString languageName(const QString &langCode) {
         // QLocale will always assign a default country for us, check if our
         // lang code
 
-        if (langCode.indexOf("_") != -1 &&
-            locale.country() != QLocale::AnyCountry) {
+        if (langCode.indexOf("_") != -1 &&locale.country() != QLocale::AnyCountry) {
             countryName = locale.nativeCountryName();
             if (countryName.isEmpty()) {
                 countryName = QLocale::countryToString(locale.country());

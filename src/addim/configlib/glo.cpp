@@ -290,6 +290,7 @@ s_languageList languageList[] = {
 	{"keyboard-se-svdvorak", "瑞典语", "Swedish"},
 	{"keyboard-nec_vndr/jp", "日语", "Japanese"},
 	{"keyboard-jp", "日语", "Japanese"},
+    {"anthy", "日语", "Japanese" },
 	{"keyboard-jp-sun_type7", "日语", "Japanese"},
 	{"keyboard-jp-mac", "日语", "Japanese"},
 	{"keyboard-jp-OADG109A", "日语", "Japanese"},
@@ -692,7 +693,6 @@ s_languageList languageList[] = {
 	{"keyboard-apl-apl2", "APL", "APL"},
 	{"keyboard-apl-sax", "APL", "APL"},
 	{"keyboard-apl-aplplusII", "APL", "APL"},
-
 	{ "keyboard-mt-alt-gb", "马耳他语", "Maltese" },
 	{ "keyboard-tr-otk", "土耳其", "Turkish" },
 	{ "keyboard-tr-ot", "土耳其", "Turkish" },
@@ -756,8 +756,7 @@ s_languageList languageList[] = {
 	{ "keyboard-lv-apostrophe-deadquotes", "拉脱维亚语", "Latvian" },
 	{ "keyboard-cn-mon_trad_todo", "汉语", "Chinese" },
 	{ "keyboard-cn-mon_trad_xibe", "汉语", "Chinese" },
-	{ "keyboard-cn-mon_todo_galik", "汉语", "Chinese" },
-	{ "anthy", "日语", "Japanese" },
+    { "keyboard-cn-mon_todo_galik", "汉语", "Chinese" }
 
 };
 
