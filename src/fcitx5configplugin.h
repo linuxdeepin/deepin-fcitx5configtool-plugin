@@ -1,9 +1,9 @@
 ﻿#pragma once
 
-#include "interface/moduleobject.h"
-#include "interface/plugininterface.h"
+#include <interface/moduleobject.h>
+#include <interface/plugininterface.h>
 
-DCC_USE_NAMESPACE
+using namespace DCC_NAMESPACE;
 
 class Fcitx5ConfigPlugin : public PluginInterface
 {
