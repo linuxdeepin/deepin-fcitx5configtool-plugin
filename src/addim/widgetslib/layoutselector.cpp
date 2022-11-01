@@ -4,6 +4,7 @@
  * SPDX-License-Identifier: GPL-2.0-or-later
  */
 
+#include "imelog.h"
 #include "layoutselector.h"
 #include "dbusprovider.h"
 #include "keyboardlayoutwidget.h"
@@ -72,7 +73,9 @@ LayoutSelector *LayoutSelector::selectLayout(QWidget *parent, DBusProvider *dbus
 
 void LayoutSelector::setLayout(const QString &layout, const QString &variant)
 {
-    m_ui->layoutComboBox->setCurrentIndex(m_layoutProvider->layoutIndex(layout));
+    int index = m_layoutProvider->layoutIndex(layout);
+    osaLogInfo(LOG_CFGTOOL_NAME, LOG_CFGTOOL_NUM, "set keyboard layout: layoutName=%s, index=%d", layout.toStdString().c_str(), index);
+    m_ui->layoutComboBox->setCurrentIndex(index);
     if (!m_layoutProvider->loaded()) {
         m_preSelectLayout = layout;
         m_preSelectVariant = variant;

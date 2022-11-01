@@ -297,7 +297,7 @@ void FcitxSettingsGroup::setVerticalPolicy()
 
 void FcitxSettingsGroup::mouseMoveEvent(QMouseEvent *event)
 {
-    if(!m_switchAble || event->pos().y() < 0 || event->pos().y() > rect().height()) {
+    if(!m_switchAble || event->pos().y() < 0 || event->pos().y() >= rect().height()) {
         mouseReleaseEvent(event);
         return QWidget::mouseMoveEvent(event);
     }

@@ -20,7 +20,7 @@ public:
     DBusProvider(QObject *parent);
     ~DBusProvider();
 
-    bool available() const { return m_controller; }
+    bool available() const { return m_controller != nullptr; }
     FcitxQtControllerProxy *controller() { return m_controller; }
 
 signals:

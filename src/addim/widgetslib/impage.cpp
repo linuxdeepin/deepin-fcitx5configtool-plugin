@@ -343,6 +343,32 @@ void IMPage::selectCurrentIM(const QModelIndex &index) {
     ui_->currentIMView->selectionModel()->setCurrentIndex(index, QItemSelectionModel::ClearAndSelect);
 }
 
+static QString getLayoutString(const fcitx::FcitxQtInputMethodEntry &entry)
+{
+    QString layoutStr = "cn";
+    QString uniqName = entry.uniqueName();
+    if (uniqName.startsWith("keyboard-")){
+        // layout, name likes keyboard-xx-xxx, such as keyboard-cn-mon_trad_manchu
+        auto dashPos = uniqName.indexOf("-");
+        if (dashPos >= 0) {
+            layoutStr = uniqName.mid(dashPos+1);
+        }
+        else{
+            osaLogInfo(LOG_CFGTOOL_NAME, LOG_CFGTOOL_NUM, "unexpected uniqName=%s", uniqName.toStdString().c_str());
+            assert(0);
+        }
+    }
+    else{
+        // uniq name is not layout name, just input method name,
+        // such as pinyin, wbx, wbpy, shuangpin
+        // maybe we should use languageCode info in FcitxQtInputMethodEntry
+        if (entry.languageCode() == QString("zh_CN")){
+            layoutStr = "cn";
+        }
+    }
+    return layoutStr;
+}
+
 void IMPage::clickCurrentIM(const QModelIndex &index) {
     QItemSelectionModel* selections = ui_->currentIMView->selectionModel();
     QModelIndexList selected        = selections->selectedIndexes();
@@ -370,19 +396,19 @@ void IMPage::clickCurrentIM(const QModelIndex &index) {
 
     QModelIndex preIndex = this->ui_->currentIMView->model()->index(preCurrentIMIndex, 0);
     ui_->currentIMView->update(preIndex);
-    QTimer::singleShot(100, this, [&]() {
-        if(index.row() < 0 || m_config->currentIMEntries().count() < index.row()) {
-            return ;
-        }
-        QString str = m_config->currentIMEntries().at(index.row()).key();
 
-        for (auto &imEntry : m_config->allIms()) {
-            if(imEntry.uniqueName() == str) {
-                m_laSelector->setLayout(imEntry.label(), "");
-            }
-        }
+    osaLogInfo(LOG_CFGTOOL_NAME, LOG_CFGTOOL_NUM, "index=%d, count=%d\n", index.row(), m_config->currentIMEntries().count());
+    assert(index.row() >= 0 && index.row() < m_config->currentIMEntries().count());
+    if(index.row() < 0 || index.row() >= m_config->currentIMEntries().count()) {
+        return ;
+    }
+    QString str = m_config->currentIMEntries().at(index.row()).key();
 
-    });
+    for (auto &imEntry : m_config->allIms()) {
+        if(imEntry.uniqueName() == str) {
+            m_laSelector->setLayout(getLayoutString(imEntry), "");
+        }
+    }
 
 }
 
