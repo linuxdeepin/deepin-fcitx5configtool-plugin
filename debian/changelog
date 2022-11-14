@@ -1,3 +1,9 @@
+deepin-fcitx5configtool-plugin (5.0.8) UNRELEASED; urgency=medium
+
+  * fix bug
+
+ -- yaoyongjie <yaoyongjie@uniontech.com>  Mon, 14 Nov 2022 17:34:20 +0000
+
 deepin-fcitx5configtool-plugin (5.0.7) UNRELEASED; urgency=medium
 
   * fix bug
