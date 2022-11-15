@@ -41,6 +41,9 @@ Homepage:  https://www.deepin.org/
 
 Package: deepin-fcitx5configtool-plugin
 Architecture: any
-Depends: ${shlibs:Depends}, ${misc:Depends}
+Depends:
+  ${shlibs:Depends},
+  ${misc:Depends},
+  fcitx5-module-xorg,
 Description: New Fcitx Configtool for Deepin Desktop Environment - development files
  Deepin Fcitxconfigtool Plugin is DDE Control Center plugin for Config Fcitx.
