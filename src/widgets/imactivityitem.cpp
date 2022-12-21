@@ -26,7 +26,8 @@
 #include <DGuiApplicationHelper>
 #include <QTimer>
 #include <QPainterPath>
-#include "window/settingsdef.h"
+#include "configsetting/configsetting.h"
+
 using namespace Dtk::Widget;
 namespace dcc_fcitx_configtool {
 namespace widgets {
@@ -35,6 +36,7 @@ FcitxIMActivityItem::FcitxIMActivityItem(FcitxQtInputMethodItem *item, itemPosit
     : FcitxSettingsItem(parent)
     , m_item(item)
     , m_index(index)
+    , m_setting(new ConfigSettings())
 {
     m_layout = new QHBoxLayout(this);
     m_layout->setContentsMargins(0, 0, 10, 0);
@@ -95,6 +97,34 @@ void FcitxIMActivityItem::editSwitch(const bool &flag)
         m_downBtn->hide();
     } else {
         m_deleteLabel->hide();
+    }
+}
+
+void FcitxIMActivityItem::enableSortButton()
+{
+    auto del = m_setting->GetKeyValue(DCONFIG_ADJUST_BUTTON);
+    bool enable = (del == WindowState::Hide);
+    if (enable) {
+        m_upBtn->hide();
+        m_downBtn->hide();
+    }
+    enable = (del == WindowState::Disable);
+    if (enable) {
+        m_upBtn->setEnabled(false);
+        m_downBtn->setEnabled(false);
+    }
+}
+
+void FcitxIMActivityItem::enableSettingButton()
+{
+    auto del = m_setting->GetKeyValue(DCONFIG_SETTING_BUTTON);
+    bool enable = (del == WindowState::Hide);
+    if (enable) {
+        m_configBtn->hide();
+    }
+    enable = (del == WindowState::Disable);
+    if (enable) {
+        m_configBtn->setEnabled(false);
     }
 }
 
@@ -243,6 +273,8 @@ void FcitxIMActivityItem::setSelectStatus(const bool &isSelect, int index, int c
         m_downBtn->hide();
     }
     //this->update(rect());
+    enableSortButton();
+    enableSettingButton();
     update();
 }
 
@@ -269,6 +301,8 @@ void FcitxIMActivityItem::setEnterStatus(const bool &isEnter, int index, int cou
         m_upBtn->hide();
         m_downBtn->hide();
     }
+    enableSortButton();
+    enableSettingButton();
     update();
 }
 

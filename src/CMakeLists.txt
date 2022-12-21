@@ -83,6 +83,7 @@ add_custom_target(translations ALL DEPENDS ${DTNG_QM_FILES})
 
 FILE(GLOB_RECURSE HEAD_FILES
     ${CMAKE_CURRENT_SOURCE_DIR}/fcitx5Interface/*.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/configsetting/*.h
     ${CMAKE_CURRENT_SOURCE_DIR}/fcitx5Interface/configwidgetslib/*.h
     ${CMAKE_CURRENT_SOURCE_DIR}/widgets/*.h
     ${CMAKE_CURRENT_SOURCE_DIR}/window/*.h
@@ -94,6 +95,7 @@ FILE(GLOB_RECURSE HEAD_FILES
 
 FILE(GLOB_RECURSE SOURCE_FILES
     ${CMAKE_CURRENT_SOURCE_DIR}/fcitx5Interface/*.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/configsetting/*.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/fcitx5Interface/configwidgetslib/*.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/widgets/*.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/window/*.cpp
@@ -200,3 +202,4 @@ add_subdirectory(layout)
 # 安装 .qm 文件
 install(FILES ${DTNG_QM_FILES} DESTINATION share/${PROJECT_NAME}/translations)
 
+dconfig_meta_files(APPID org.deepin.fcitx5.configtoolplugin FILES ../configs/org.deepin.fcitx5.configtoolplugin.json)

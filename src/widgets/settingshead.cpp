@@ -32,7 +32,7 @@
 #include <QMouseEvent>
 #include <QApplication>
 #include <DFontSizeManager>
-#include "window/settingsdef.h"
+#include "configsetting/configsetting.h"
 
 using namespace dcc_fcitx_configtool::widgets;
 DWIDGET_USE_NAMESPACE
@@ -43,6 +43,7 @@ FcitxSettingsHead::FcitxSettingsHead(bool isEdit, QFrame *parent)
     , m_deleteBtn(new DIconButton(DStyle::SP_DecreaseElement))
     , m_addBtn(new DIconButton(DStyle::SP_IncreaseElement))
     , m_state(Cancel)
+    , m_setting(new ConfigSettings())
 {
     m_title->setObjectName("SettingsHeadTitle");
     //m_deleteBtn->setFocusPolicy(Qt::NoFocus);
@@ -63,7 +64,9 @@ FcitxSettingsHead::FcitxSettingsHead(bool isEdit, QFrame *parent)
         mainLayout->addSpacing(10);
         mainLayout->addWidget(m_addBtn);
     }
-
+    hideDeleteEnable();
+    setAddEnable();
+    hideAddEnable();
     setLayout(mainLayout);
 
     connect(m_deleteBtn, &DCommandLinkButton::pressed, this, [=](){
@@ -86,7 +89,39 @@ void FcitxSettingsHead::setTitle(const QString &title)
 
 void FcitxSettingsHead::setDeleteEnable(bool state)
 {
+    auto del = m_setting->GetKeyValue(DCONFIG_DELETE);
+    bool enable = (del == WindowState::Disable);
+    if (enable) {
+        state = false;
+    }
     m_deleteBtn->setEnabled(state);
+}
+
+void FcitxSettingsHead::hideDeleteEnable()
+{
+    auto del = m_setting->GetKeyValue(DCONFIG_DELETE);
+
+    bool enable = (del == WindowState::Hide);
+
+    if (enable) {
+        m_deleteBtn->hide();
+    }
+}
+
+void FcitxSettingsHead::setAddEnable()
+{
+    auto del = m_setting->GetKeyValue(DCONFIG_ADD_IM);
+    bool enable = (del == WindowState::Disable);
+    m_addBtn->setEnabled(!enable);
+}
+
+void FcitxSettingsHead::hideAddEnable()
+{
+    auto del = m_setting->GetKeyValue(DCONFIG_ADD_IM);
+    bool enable = (del == WindowState::Hide);
+    if (enable) {
+        m_addBtn->hide();
+    }
 }
 
 FcitxTitleLabel* FcitxSettingsHead::getTitleLabel()

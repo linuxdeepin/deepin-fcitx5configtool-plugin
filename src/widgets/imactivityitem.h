@@ -29,6 +29,8 @@
 
 using namespace dcc_fcitx_configtool::widgets;
 using namespace Dtk::Widget;
+
+class ConfigSettings;
 namespace dcc_fcitx_configtool {
 namespace widgets {
 
@@ -69,6 +71,8 @@ protected:
     void mousePressEvent(QMouseEvent *event) override;
     void mouseReleaseEvent(QMouseEvent *event) override;
     void focusOutEvent(QFocusEvent *e) override;
+    void enableSortButton();
+    void enableSettingButton();
 
 private slots:
     void onUpItem();
@@ -88,6 +92,7 @@ private:
     bool m_isEntered {false};
     itemPosition m_index; //0:第一个， -1：最后一个， -2：只有一个
     bool m_isPressed {false};
+    ConfigSettings *m_setting;
 };
 
 } // namespace widgets

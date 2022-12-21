@@ -31,13 +31,18 @@
 #include <QPushButton>
 #include "widgets/settingsgroup.h"
 #include "widgets/settingsitem.h"
+#include <DLog>
+
 DWIDGET_USE_NAMESPACE
+DCORE_USE_NAMESPACE
 using namespace std;
 using namespace dcc_fcitx_configtool::widgets;
 
 int main(int argc, char *argv[])
 {
     QGuiApplication::setAttribute(Qt::AA_UseHighDpiPixmaps);
+    DLogManager::registerConsoleAppender();
+    DLogManager::registerFileAppender();
     DApplication a(argc, argv);
     a.setOrganizationName("deepin");
     a.setApplicationName("dcc-fcitx5configtool-plugin");

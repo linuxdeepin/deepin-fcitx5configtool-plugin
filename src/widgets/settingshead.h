@@ -28,12 +28,14 @@
 
 #include "settingsitem.h"
 #include "titlelabel.h"
+
 #include <QPushButton>
 #include <DIconButton>
 
 DWIDGET_BEGIN_NAMESPACE
 class DCommandLinkButton;
 DWIDGET_END_NAMESPACE
+class ConfigSettings;
 namespace dcc_fcitx_configtool {
 namespace widgets {
 
@@ -55,6 +57,9 @@ public:
 
     void setTitle(const QString &title);
     void setDeleteEnable(bool state = true);
+    void hideDeleteEnable();
+    void hideAddEnable();
+    void setAddEnable();
     FcitxTitleLabel* getTitleLabel();
 
 Q_SIGNALS:
@@ -67,6 +72,7 @@ private:
     DTK_WIDGET_NAMESPACE::DIconButton *m_addBtn;
     bool m_editVisible;
     State m_state;
+    ConfigSettings *m_setting;
 };
 
 } // namespace widgets

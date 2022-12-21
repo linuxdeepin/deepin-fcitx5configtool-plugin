@@ -39,6 +39,7 @@ AdvanceConfig::AdvanceConfig(const QString &uri, DBusProvider *dbus, QObject *pa
     , m_uri(uri)
     , m_dbus(dbus)
     , m_configWidget(new QWidget)
+    , isDisableSwitchIMShortCutsFunc(false)
 {
     requestConfig();
 }
@@ -255,6 +256,9 @@ void AdvanceConfig::switchIMShortCuts(const QString &shortCuts)
     } else if(shortCuts == "ALT_SUPER") {
         m_switchIMShortCuts = "Alt+Super+Alt_L Alt+Super+Alt_R";
     }
+    if (isDisableSwitchIMShortCutsFunc) {
+        m_switchIMShortCuts = "Alt+Alt";
+    }
     KeyList list = Key::keyListFromString(m_switchIMShortCuts.toStdString());
     QList<fcitx::Key> klist;
     for(std::vector<fcitx::Key>::iterator it = list.begin(); it != list.end(); it++)
@@ -264,9 +268,18 @@ void AdvanceConfig::switchIMShortCuts(const QString &shortCuts)
     save();
 }
 
+void AdvanceConfig::disableSwitchIMShortCutsFunc(const bool isDisable)
+{
+    isDisableSwitchIMShortCutsFunc = isDisable;
+}
+
+
 void AdvanceConfig::switchFirstIMShortCuts(const QString &shortCuts)
 {
     m_switchFirstIMShortCuts = publisherFunc::transFirstUpper(shortCuts);
+    if (isDisableSwitchIMShortCutsFunc) {
+        m_switchFirstIMShortCuts = "Control+ctrl";
+    }
     KeyList list = Key::keyListFromString(m_switchFirstIMShortCuts.toStdString());
     QList<fcitx::Key> klist;
     for(std::vector<fcitx::Key>::iterator it = list.begin(); it != list.end(); it++)

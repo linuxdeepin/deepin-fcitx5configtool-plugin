@@ -30,8 +30,6 @@
 
 #define for_int(count) for (int i = 0; i < count; ++i)
 
-#define Debug 0
-
 #define Dynamic_Cast(Type, obj, base) \
     Type *obj = dynamic_cast<Type *>(base)
 

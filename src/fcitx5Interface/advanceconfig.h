@@ -33,6 +33,7 @@ public:
     auto &description() const { return m_desc; }
     void switchIMShortCuts(const QString& shortCuts);
     void switchFirstIMShortCuts(const QString& shortCuts);
+    void disableSwitchIMShortCutsFunc(const bool isDisable);
 signals:
     void changed();
     void switchIMShortCutsChanged(const QString& shortCuts);
@@ -65,6 +66,7 @@ private:
     QString m_switchIMShortCuts;
     QString m_switchFirstIMShortCuts;
     QWidget *m_configWidget;
+    bool    isDisableSwitchIMShortCutsFunc;
 };
 
 AdvanceConfig *getConfigWidget(QWidget *widget);

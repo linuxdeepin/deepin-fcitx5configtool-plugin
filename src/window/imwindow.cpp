@@ -33,7 +33,7 @@
 
 #include "widgets/titlelabel.h"
 #include <DWidget>
-
+#include "configsetting/configsetting.h"
 
 IMWindow::IMWindow(QWidget *parent)
     : QWidget(parent)
@@ -53,9 +53,11 @@ void IMWindow::initFcitxInterface()
 
 void IMWindow::initUI()
 {
+    ConfigSettings *conf = new ConfigSettings(this);
     DBusProvider *dbus = new DBusProvider(this);
     m_stackedWidget = new QStackedWidget(this);
     m_settingWindow = new IMSettingWindow(dbus, this);
+    qInfo() << "load setting window" << endl;
     connect(m_settingWindow, &IMSettingWindow::requestNextPage, this, &IMWindow::requestNextPage);
    // m_addWindow = new IMAddWindow(this);
    // m_addWindow->setAccessibleName("addWindow");

@@ -50,6 +50,7 @@ class DFloatingButton;
 class DBusProvider;
 class IMConfig;
 class AdvanceConfig;
+class ConfigSettings;
 
 class IMSettingWindow : public QWidget
 {
@@ -68,7 +69,16 @@ private:
     void initUI(); //初始化界面
     void initConnect(); //初始化信号槽
     void readConfig(); //读取配置文件
+    void initWindows();
     void itemSwap(FcitxQtInputMethodItem* item, const bool &isUp = true);
+
+    void setResetButtonEnable();
+    void hideResetButtonEnable();
+    void setSwitchFirstEnable();
+    void hideSwitchFirstButtonEnable();
+    void setAdvanceButtonEnable();
+    void hideAdvanceButtonEnable();
+    void setSwitchFirstFuncEnable();
 private slots:
     void onEditBtnClicked(const bool &flag); //启用编辑
     void onCurIMChanged(FcitxQtInputMethodItemList* list);
@@ -91,6 +101,7 @@ private:
     DBusProvider* m_dbus;
     IMConfig *m_config;
     AdvanceConfig *m_advanceConfig;
+    ConfigSettings *m_setting;
 };
 
 #endif // IMSETTINGWINDOW_H

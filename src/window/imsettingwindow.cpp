@@ -29,7 +29,6 @@
 #include "publisher/publisherdef.h"
 #include "fcitx5Interface/imconfig.h"
 #include "widgets/contentwidget.h"
-#include "settingsdef.h"
 #include "addim/widgetslib/addimwindow.h"
 #include "fcitx5Interface/advanceconfig.h"
 
@@ -42,6 +41,7 @@
 #include <QPushButton>
 #include <QEvent>
 #include <libintl.h>
+#include "configsetting/configsetting.h"
 
 DWIDGET_USE_NAMESPACE
 
@@ -50,6 +50,7 @@ IMSettingWindow::IMSettingWindow(DBusProvider* dbus, QWidget *parent)
     : QWidget(parent)
     , m_dbus(dbus)
     , m_config(new IMConfig(dbus, IMConfig::Tree, this))
+    , m_setting(new ConfigSettings())
     , m_advanceConfig(new AdvanceConfig("fcitx://config/global", m_dbus, this))
 {
     initUI();
@@ -68,20 +69,20 @@ void IMSettingWindow::initUI()
         FcitxSettingsHead *head = new FcitxSettingsHead(isEdit);
         head->setParent(this);
         head->setTitle(str);
-        //head->setDeleteEnable(isEdit);
+        //head->setDeleteEnable(false);
         head->layout()->setContentsMargins(10, 4, 10, 0);
         if (isEdit) {
             m_editHead = head;
             m_editHead->getTitleLabel()->setAccessibleName("Edit");
         }
         connect(head, &FcitxSettingsHead::deleteBtnClicked, this, [=](){
-            qDebug() << "deleteBtnClicked";
+            qInfo() << "user clicked delete button" << endl;
             int index = m_IMListGroup->selectIndex();
             this->onItemDelete(m_config->getFcitxQtInputMethodItemList()->at(index));
         });
 
         connect(head, &FcitxSettingsHead::addBtnClicked, this, [=]() {
-            printf("addBtnClicked.\n");
+            qInfo() << "user clicked add button" << endl;
             fcitx::addim::AddIMWindow mainWindow(m_dbus, m_config, (DDialog*)this);
             Dtk::Widget::moveToCenter(&mainWindow);
             mainWindow.exec();
@@ -91,8 +92,6 @@ void IMSettingWindow::initUI()
     };
 
     m_mainLayout = new QVBoxLayout();
-
-
     //滑动窗口
 
     QVBoxLayout *scrollAreaLayout = new QVBoxLayout(this);
@@ -144,7 +143,9 @@ void IMSettingWindow::initUI()
 
     //添加至主界面内
     setLayout(scrollAreaLayout);
+    qInfo() << "read config:" << m_config->getFcitxQtInputMethodItemList()->count() << endl;
     readConfig();
+    initWindows();
 }
 
 void IMSettingWindow::onReloadConnect()
@@ -156,6 +157,7 @@ void IMSettingWindow::onReloadConnect()
 void IMSettingWindow::initConnect()
 {
     connect(m_config, &IMConfig::imListChanged, this, [=]() {
+        qInfo() << "list changed:" << m_config->getFcitxQtInputMethodItemList()->count() << endl;
         onCurIMChanged(m_config->getFcitxQtInputMethodItemList());
     });
     auto reloadFcitx = [ = ](bool flag) {
@@ -169,7 +171,10 @@ void IMSettingWindow::initConnect()
         m_defaultIMKey->setList(m_defaultIMKey->getKeyToStr().split("_"));
     });
 
-//    onReloadConnect();
+//    onReloadConnect();//    if (IMModel::instance()->isEdit()) {
+//        onEditBtnClicked(false);
+//    }
+//    readConfig();
 
     connect(m_imSwitchCbox->comboBox(), &QComboBox::currentTextChanged, [ = ]() {
         m_imSwitchCbox->comboBox()->setAccessibleName(m_imSwitchCbox->comboBox()->currentText());
@@ -221,12 +226,84 @@ void IMSettingWindow::initConnect()
     });
 }
 
+void IMSettingWindow::setResetButtonEnable()
+{
+    auto del = m_setting->GetKeyValue(DCONFIG_SHORTCUT_RESTORE);
+    bool enable = (del == WindowState::Disable);
+    m_resetBtn->setEnabled(!enable);
+}
+
+void IMSettingWindow::hideResetButtonEnable()
+{
+    auto del = m_setting->GetKeyValue(DCONFIG_SHORTCUT_RESTORE);
+    bool enable = (del == WindowState::Hide);
+    if (enable) {
+        m_resetBtn->hide();
+    }
+}
+
+void IMSettingWindow::setSwitchFirstFuncEnable()
+{
+    auto del = m_setting->GetKeyValue(DCONFIG_SHORTCUT_SWITCHTORFIRSTFUN);
+    bool disbale = (del == WindowState::Disable);
+    if (disbale) {
+        m_advanceConfig->disableSwitchIMShortCutsFunc(disbale);
+        m_advanceConfig->switchIMShortCuts(m_imSwitchCbox->comboBox()->currentText());
+        m_advanceConfig->switchFirstIMShortCuts(m_defaultIMKey->getKeyToStr());
+    }
+}
+
+void IMSettingWindow::setSwitchFirstEnable()
+{
+    auto del = m_setting->GetKeyValue(DCONFIG_SHORTCUT_SWITCHTORFIRST);
+    bool enable = (del == WindowState::Disable);
+    m_defaultIMKey->setEnabled(!enable);
+    m_imSwitchCbox->setEnabled(!enable);
+}
+
+void IMSettingWindow::hideSwitchFirstButtonEnable()
+{
+    auto del = m_setting->GetKeyValue(DCONFIG_SHORTCUT_SWITCHTORFIRST);
+    bool enable = (del == WindowState::Hide);
+    if (enable) {
+        m_defaultIMKey->hide();
+        m_imSwitchCbox->hide();
+    }
+}
+
+void IMSettingWindow::setAdvanceButtonEnable()
+{
+    auto del = m_setting->GetKeyValue(DCONFIG_ADVANCE_SETTING);
+    bool enable = (del == WindowState::Disable);
+    m_advSetKey->setEnabled(!enable);
+}
+
+void IMSettingWindow::hideAdvanceButtonEnable()
+{
+    auto del = m_setting->GetKeyValue(DCONFIG_ADVANCE_SETTING);
+    bool enable = (del == WindowState::Hide);
+    if (enable) {
+        m_advSetKey->hide();
+    }
+}
+
 //读取配置文件
 void IMSettingWindow::readConfig()
 {
 //    int index = m_imSwitchCbox->comboBox()->findText(IMConfig::IMSwitchKey());
 //    m_imSwitchCbox->comboBox()->setCurrentIndex(index < 0 ? 0 : index);
 //    m_defaultIMKey->setList(IMConfig::defaultIMKey().split("_"));
+}
+
+void IMSettingWindow::initWindows()
+{
+    setResetButtonEnable();
+    hideResetButtonEnable();
+    setSwitchFirstEnable();
+    hideSwitchFirstButtonEnable();
+    setAdvanceButtonEnable();
+    hideAdvanceButtonEnable();
+    setSwitchFirstFuncEnable();
 }
 
 void IMSettingWindow::updateUI()
@@ -293,6 +370,7 @@ void IMSettingWindow::onEditBtnClicked(const bool &flag)
 void IMSettingWindow::onCurIMChanged(FcitxQtInputMethodItemList* list)
 {
     m_IMListGroup->clear();
+
     for (int i = 0; i < list->count(); ++i) {
         FcitxIMActivityItem *tmp = nullptr;
         if (i == 0) {
@@ -326,6 +404,7 @@ void IMSettingWindow::onCurIMChanged(FcitxQtInputMethodItemList* list)
         });
         //tmp->editSwitch(IMModel::instance()->isEdit());
         m_IMListGroup->appendItem(tmp);
+        qInfo() << "manager im changed:" << list->at(i)->name() << endl;
         tmp->repaint();
     }
     m_IMListGroup->adjustSize();
