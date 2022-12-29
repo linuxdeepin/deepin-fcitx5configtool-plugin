@@ -1,7 +1,7 @@
 #版本设置
 set(VERSION 34.1)
 #二进制名称
-set(BIN_NAME deepin-fcitx5configtool-plugin)
+set(BIN_NAME dcc-fcitx5configtool-plugin)
 #项目名称设置
 project(${BIN_NAME})
 

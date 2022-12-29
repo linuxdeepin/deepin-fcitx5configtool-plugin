@@ -40,13 +40,13 @@ int main(int argc, char *argv[])
     QGuiApplication::setAttribute(Qt::AA_UseHighDpiPixmaps);
     DApplication a(argc, argv);
     a.setOrganizationName("deepin");
-    a.setApplicationName("deepin-fcitx5configtool-plugin");
+    a.setApplicationName("dcc-fcitx5configtool-plugin");
     a.setApplicationVersion("1.0");
     a.setProductIcon(QIcon());
-    a.setProductName("deepin-fcitx5configtool-plugin");
-    a.setApplicationDescription("This is a dtk deepin-fcitx5configtool-plugin");
+    a.setProductName("dcc-fcitx5configtool-plugin");
+    a.setApplicationDescription("This is a dtk dcc-fcitx5configtool-plugin");
     a.loadTranslator();
-    a.setApplicationDisplayName("deepin-fcitx5configtool-plugin");
+    a.setApplicationDisplayName("dcc-fcitx5configtool-plugin");
     DMainWindow m;
     IMWindow w(&m);
     m.resize(800, 600);
