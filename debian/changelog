@@ -1,3 +1,9 @@
+deepin-fcitx5configtool-plugin (5.0.9) UNRELEASED; urgency=medium
+
+  * Adaptive dde control center
+
+ -- liuchenghao <liuchenghao@uniontech.com>  Fri, 30 Dec 2022 09:34:20 +0800
+
 deepin-fcitx5configtool-plugin (5.0.8) UNRELEASED; urgency=medium
 
   * fix bug
@@ -14,7 +20,7 @@ deepin-fcitx5configtool-plugin (5.0.6) unstable; urgency=medium
 
   * 修改遗留bug
 
- -- zhaoyue <zhaoyue@uniontech.com>  Wed, 15 Jun 2022 16:51:52 +0000 
+ -- zhaoyue <zhaoyue@uniontech.com>  Wed, 15 Jun 2022 16:51:52 +0000
 
 deepin-fcitx5configtool-plugin (5.0.1) unstable; urgency=medium
 
