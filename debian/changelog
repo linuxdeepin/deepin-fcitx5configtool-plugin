@@ -1,3 +1,9 @@
+deepin-fcitx5configtool-plugin (5.0.10) UNRELEASED; urgency=medium
+
+  * Increase the specified component functions
+
+ -- liuchenghao <liuchenghao@uniontech.com>  Tue, 3 Jan 2023 17:34:20 +0800
+
 deepin-fcitx5configtool-plugin (5.0.9) UNRELEASED; urgency=medium
 
   * Adaptive dde control center
