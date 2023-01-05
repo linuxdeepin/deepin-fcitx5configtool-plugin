@@ -64,9 +64,9 @@ FcitxSettingsHead::FcitxSettingsHead(bool isEdit, QFrame *parent)
         mainLayout->addSpacing(10);
         mainLayout->addWidget(m_addBtn);
     }
-    hideDeleteEnable();
-    setAddEnable();
-    hideAddEnable();
+    hideDeleteButton();
+    setAddButtonEnable();
+    hideAddButton();
     setLayout(mainLayout);
 
     connect(m_deleteBtn, &DCommandLinkButton::pressed, this, [=](){
@@ -87,7 +87,7 @@ void FcitxSettingsHead::setTitle(const QString &title)
     m_deleteBtn->setAccessibleName(title);
 }
 
-void FcitxSettingsHead::setDeleteEnable(bool state)
+void FcitxSettingsHead::setDeleteButtonEnable(bool state)
 {
     auto del = m_setting->GetKeyValue(DCONFIG_DELETE);
     bool enable = (del == WindowState::Disable);
@@ -97,7 +97,7 @@ void FcitxSettingsHead::setDeleteEnable(bool state)
     m_deleteBtn->setEnabled(state);
 }
 
-void FcitxSettingsHead::hideDeleteEnable()
+void FcitxSettingsHead::hideDeleteButton()
 {
     auto del = m_setting->GetKeyValue(DCONFIG_DELETE);
 
@@ -108,14 +108,14 @@ void FcitxSettingsHead::hideDeleteEnable()
     }
 }
 
-void FcitxSettingsHead::setAddEnable()
+void FcitxSettingsHead::setAddButtonEnable()
 {
     auto del = m_setting->GetKeyValue(DCONFIG_ADD_IM);
     bool enable = (del == WindowState::Disable);
     m_addBtn->setEnabled(!enable);
 }
 
-void FcitxSettingsHead::hideAddEnable()
+void FcitxSettingsHead::hideAddButton()
 {
     auto del = m_setting->GetKeyValue(DCONFIG_ADD_IM);
     bool enable = (del == WindowState::Hide);

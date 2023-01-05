@@ -31,6 +31,7 @@
 #include "widgets/contentwidget.h"
 #include "addim/widgetslib/addimwindow.h"
 #include "fcitx5Interface/advanceconfig.h"
+#include "fcitx5Interface/configwidgetslib/configwidget.h"
 
 #include <DWidgetUtil>
 #include <DFloatingButton>
@@ -233,7 +234,7 @@ void IMSettingWindow::setResetButtonEnable()
     m_resetBtn->setEnabled(!enable);
 }
 
-void IMSettingWindow::hideResetButtonEnable()
+void IMSettingWindow::hideResetButton()
 {
     auto del = m_setting->GetKeyValue(DCONFIG_SHORTCUT_RESTORE);
     bool enable = (del == WindowState::Hide);
@@ -261,7 +262,7 @@ void IMSettingWindow::setSwitchFirstEnable()
     m_imSwitchCbox->setEnabled(!enable);
 }
 
-void IMSettingWindow::hideSwitchFirstButtonEnable()
+void IMSettingWindow::hideSwitchFirstButton()
 {
     auto del = m_setting->GetKeyValue(DCONFIG_SHORTCUT_SWITCHTORFIRST);
     bool enable = (del == WindowState::Hide);
@@ -278,7 +279,7 @@ void IMSettingWindow::setAdvanceButtonEnable()
     m_advSetKey->setEnabled(!enable);
 }
 
-void IMSettingWindow::hideAdvanceButtonEnable()
+void IMSettingWindow::hideAdvanceButton()
 {
     auto del = m_setting->GetKeyValue(DCONFIG_ADVANCE_SETTING);
     bool enable = (del == WindowState::Hide);
@@ -298,11 +299,11 @@ void IMSettingWindow::readConfig()
 void IMSettingWindow::initWindows()
 {
     setResetButtonEnable();
-    hideResetButtonEnable();
+    hideResetButton();
     setSwitchFirstEnable();
-    hideSwitchFirstButtonEnable();
+    hideSwitchFirstButton();
     setAdvanceButtonEnable();
-    hideAdvanceButtonEnable();
+    hideAdvanceButton();
     setSwitchFirstFuncEnable();
 }
 
@@ -385,21 +386,19 @@ void IMSettingWindow::onCurIMChanged(FcitxQtInputMethodItemList* list)
         } else {
             tmp = new FcitxIMActivityItem(list->at(i), FcitxIMActivityItem::otherItem, this);
         }
-        connect(tmp, &FcitxIMActivityItem::configBtnClicked, this, [=]() {
-
-        });
+        connect(tmp, &FcitxIMActivityItem::configBtnClicked, this, &IMSettingWindow::onItemConfig);
         connect(tmp, &FcitxIMActivityItem::upBtnClicked, this, &IMSettingWindow::onItemUp);
         connect(tmp, &FcitxIMActivityItem::downBtnClicked, this, &IMSettingWindow::onItemDown);
         connect(tmp, &FcitxIMActivityItem::deleteBtnClicked, this, &IMSettingWindow::onItemDelete);
         connect(tmp, &FcitxIMActivityItem::selectItem, this, [=](FcitxSettingsItem * item, bool selected){
             Q_UNUSED(item);
             QTimer::singleShot(100, this, [=](){
-                m_editHead->setDeleteEnable(selected);
+                m_editHead->setDeleteButtonEnable(selected);
             });
         });
         connect(tmp, &FcitxIMActivityItem::itemSelect, this, [=](bool selected){
             QTimer::singleShot(100, this, [=](){
-                m_editHead->setDeleteEnable(selected);
+                m_editHead->setDeleteButtonEnable(selected);
             });
         });
         //tmp->editSwitch(IMModel::instance()->isEdit());
@@ -413,6 +412,17 @@ void IMSettingWindow::onCurIMChanged(FcitxQtInputMethodItemList* list)
 void IMSettingWindow::onItemUp(FcitxQtInputMethodItem* item)
 {
     itemSwap(item, true);
+}
+
+void IMSettingWindow::onItemConfig(FcitxQtInputMethodItem* item)
+{
+    QString uniqueName = item->uniqueName();
+    QString title = item->name();
+    QPointer<QDialog> dialog = ConfigWidget::configDialog(
+        this, m_dbus, QString("fcitx://config/inputmethod/%1").arg(uniqueName),
+        title);
+    dialog->exec();
+    delete dialog;
 }
 
 void IMSettingWindow::onItemDown(FcitxQtInputMethodItem* item)

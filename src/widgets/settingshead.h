@@ -56,10 +56,10 @@ public:
     ~FcitxSettingsHead();
 
     void setTitle(const QString &title);
-    void setDeleteEnable(bool state = true);
-    void hideDeleteEnable();
-    void hideAddEnable();
-    void setAddEnable();
+    void setDeleteButtonEnable(bool state = true);
+    void hideDeleteButton();
+    void hideAddButton();
+    void setAddButtonEnable();
     FcitxTitleLabel* getTitleLabel();
 
 Q_SIGNALS:

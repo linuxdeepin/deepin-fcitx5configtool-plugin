@@ -73,11 +73,11 @@ private:
     void itemSwap(FcitxQtInputMethodItem* item, const bool &isUp = true);
 
     void setResetButtonEnable();
-    void hideResetButtonEnable();
+    void hideResetButton();
     void setSwitchFirstEnable();
-    void hideSwitchFirstButtonEnable();
+    void hideSwitchFirstButton();
     void setAdvanceButtonEnable();
-    void hideAdvanceButtonEnable();
+    void hideAdvanceButton();
     void setSwitchFirstFuncEnable();
 private slots:
     void onEditBtnClicked(const bool &flag); //启用编辑
@@ -86,6 +86,7 @@ private slots:
     void onItemUp(FcitxQtInputMethodItem* item);
     void onItemDown(FcitxQtInputMethodItem* item);
     void onItemDelete(FcitxQtInputMethodItem* item);
+    void onItemConfig(FcitxQtInputMethodItem* item);
     void doReloadConfigUI();
     void onReloadConnect();
 private:

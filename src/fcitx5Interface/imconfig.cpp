@@ -27,9 +27,11 @@ IMConfig::IMConfig(DBusProvider *dbus, ModelMode mode, QObject *parent)
         m_availIMModel->setSourceModel(availIMModel);
         m_internalAvailIMModel = availIMModel;
     }
+
     m_mode = mode;
     initCategroyLanguageMap();
     availabilityChanged();
+
     connect(this, &IMConfig::addIMSignal, this, &IMConfig::testAddIMDeal);
 }
 
