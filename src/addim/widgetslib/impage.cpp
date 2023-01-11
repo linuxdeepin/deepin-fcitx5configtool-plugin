@@ -214,6 +214,7 @@ IMPage::IMPage(DBusProvider* dbus, IMConfig* config, QWidget* parent)
 
     QFont label_font(QApplication::font());
     label_font.setPixelSize(12);
+    ui_->label_store_download->setText(tr("Find more in App Store"));
     ui_->label_store_download->setFont(label_font);
     ui_->label_store_download->setStyleSheet("color:rgb(36,80,255)");
     ui_->label_store_download->installEventFilter(this);
@@ -224,6 +225,7 @@ IMPage::IMPage(DBusProvider* dbus, IMConfig* config, QWidget* parent)
     palette.setColor(QPalette::Dark, outlineColor);
     ui_->line->setPalette(palette);
 
+    ui_->pb_close->setText(tr("Cancel"));
     ui_->pb_close->setFont(font);
     QColor color;
     if (DGuiApplicationHelper::instance()->themeType() == DGuiApplicationHelper::DarkType) {
@@ -232,9 +234,9 @@ IMPage::IMPage(DBusProvider* dbus, IMConfig* config, QWidget* parent)
     palette = ui_->pb_close->palette();
     palette.setColor(QPalette::ButtonText, color);
     ui_->pb_close->setPalette(palette);
-
+    
+    ui_->pb_add->setText(tr("Add"));
     ui_->pb_add->setFont(font);
-
     ui_->pb_add->setStyleSheet("color:rgb(0,129,255)");
     ui_->pb_add->setEnabled(false);
 

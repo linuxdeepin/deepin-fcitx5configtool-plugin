@@ -11,7 +11,7 @@ class Fcitx5ConfigPlugin : public PluginInterface
     Q_PLUGIN_METADATA(IID "com.deepin.dde.ControlCenter.Plugin_fcitx5" FILE "plugin-fcitx.json")
     Q_INTERFACES(DCC_NAMESPACE::PluginInterface)
 public:
-    Fcitx5ConfigPlugin(){}
+    Fcitx5ConfigPlugin();
     virtual QString name() const override;
     virtual ModuleObject *module() override;
     virtual QString follow() const override;
@@ -25,6 +25,5 @@ public:
     LabelModule(QObject *parent = nullptr) : ModuleObject(parent) {}
     LabelModule(const QString &name, const QString &displayName = {}, QObject *parent = nullptr) : ModuleObject(name, displayName, parent) {}
     virtual QWidget *page() override;
-
 };
 

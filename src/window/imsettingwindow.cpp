@@ -127,7 +127,7 @@ void IMSettingWindow::initUI()
 
     m_resetBtn = new DCommandLinkButton(tr("Restore Defaults"), this);
     DFontSizeManager::instance()->bind(m_resetBtn, DFontSizeManager::T8, QFont::Normal);
-    m_resetBtn->setAccessibleName(tr("Restore Defaults"));
+    m_resetBtn->setAccessibleName("Restore Defaults");
 
     shortcutLayout->addWidget(m_resetBtn, 0, Qt::AlignRight | Qt::AlignBottom);
     scrollAreaLayout->addLayout(shortcutLayout);

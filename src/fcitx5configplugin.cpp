@@ -7,8 +7,17 @@
 #include <qlabel.h>
 #include <qpushbutton.h>
 #include <qwidget.h>
-
+#include <QCoreApplication>
+#include <QTranslator>
+#include <QLocale>
 #include "window/imwindow.h"
+
+Fcitx5ConfigPlugin::Fcitx5ConfigPlugin()
+{
+    QTranslator *translator = new QTranslator(this);
+    translator->load(QString("/usr/share/deepin-fcitx5configtool-plugin/translations/deepin-fcitx5configtool-plugin_%1.qm").arg(QLocale().name()));
+    QCoreApplication::installTranslator(translator); //安装翻译器
+}
 
 QString Fcitx5ConfigPlugin::name() const
 {
@@ -22,7 +31,7 @@ QString Fcitx5ConfigPlugin::follow() const
 
 QString Fcitx5ConfigPlugin::location() const
 {
-    return "2";
+    return QString("2");
 }
 
 ModuleObject* Fcitx5ConfigPlugin::module()

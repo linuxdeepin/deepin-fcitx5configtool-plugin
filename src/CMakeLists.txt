@@ -2,8 +2,11 @@
 set(VERSION 34.1)
 #二进制名称
 set(BIN_NAME dcc-fcitx5configtool-plugin)
+
+#项目名称
+set(PROJECT_NAME deepin-fcitx5configtool-plugin)
 #项目名称设置
-project(${BIN_NAME})
+project(${PROJECT_NAME})
 
 #龙芯机器缺少符号表
 if (CMAKE_HOST_SYSTEM_PROCESSOR MATCHES "mips64")
@@ -53,6 +56,7 @@ find_package(Fcitx5Config REQUIRED)
 find_package(Fcitx5Utils REQUIRED)
 find_package(Fcitx5Qt5DBusAddons REQUIRED)
 find_package(Fcitx5Qt5WidgetsAddons 5.0.2 REQUIRED)
+#find_package(Qt5 COMPONENTS LinguistTools)
 pkg_check_modules(DFrameworkDBus REQUIRED dframeworkdbus)
 pkg_check_modules(XkbFile "xkbfile" REQUIRED IMPORTED_TARGET)
 
@@ -68,13 +72,8 @@ set(TS_FILES "${TS_DIR}/${PROJECT_NAME}_en_US.ts")
 find_program(LUPDATE_EXECUTABLE lupdate)
 foreach(_ts_file ${TS_FILES})
     execute_process(
-        COMMAND ${LUPDATE_EXECUTABLE} -recursive ${CMAKE_SOURCE_DIR} -ts ${_ts_file})  #递归扫描源码 输出ts文件
+        COMMAND ${LUPDATE_EXECUTABLE} -extensions c,c++,cc,cpp,cxx -recursive ${CMAKE_SOURCE_DIR} -ts ${_ts_file})  #递归扫描源码 输出ts文件
 endforeach()
-
-#创建qm文件
-file (GLOB DTNG_TS_FILES ${TS_DIR}/*.ts)
-#qt5_add_translation(DTNG_QM_FILES ${CMAKE_SOURCE_DIR} ${DTNG_TS_FILES})
-add_custom_target(translations ALL DEPENDS ${DTNG_QM_FILES})
 
 #set(UI_HEADER
 #    ${CMAKE_CURRENT_SOURCE_DIR}/fcitx5configplugin.h
@@ -118,7 +117,6 @@ set(ALL_SRCS
     ${SOURCE_FILES}
     ${APP_QRC}
     ${ADDIM_QRC}
-    ${DTNG_QM_FILES}
     )
 
 set(TEST_SRCS
@@ -132,23 +130,21 @@ include_directories(${CMAKE_CURRENT_SOURCE_DIR}/fcitx5Interface)
 
 if(${CMAKE_BUILD_TYPE} MATCHES "Debug")
     message("Debug----------------")
-    add_executable(${PROJECT_NAME}
+    add_executable(${BIN_NAME}
         ${ALL_SRCS}
-        ${DTNG_QM_FILES}
         ${CMAKE_CURRENT_SOURCE_DIR}/main.cpp
         )
 endif()
 
 if(NOT ${CMAKE_BUILD_TYPE} MATCHES "Debug")
-    add_library(${PROJECT_NAME} SHARED
+    add_library(${BIN_NAME} SHARED
             ${ALL_SRCS}
-            ${DTNG_QM_FILES}
            # ${TS_DIR}/translations.qrc
             #${UI_HEADER_MOCK}
             )
 endif()
 
-set_target_properties(${PROJECT_NAME} PROPERTIES
+set_target_properties(${BIN_NAME} PROPERTIES
     POSITION_INDEPENDENT_CODE TRUE
     AUTOMOC TRUE
     AUTOUIC TRUE
@@ -157,7 +153,7 @@ set_target_properties(${PROJECT_NAME} PROPERTIES
 
 get_target_property(FCITX5_QT5_GUI_WRAPPER Fcitx5Qt5::gui-wrapper IMPORTED_LOCATION)
 #include("${FCITX_INSTALL_CMAKECONFIG_DIR}/Fcitx5Utils/Fcitx5CompilerSettings.cmake")
-target_include_directories(${PROJECT_NAME} PUBLIC
+target_include_directories(${BIN_NAME} PUBLIC
         "/usr/include/dde-control-center"
         ${DdeControlCenter_INCLUDE_DIRS}
         ${DtkCore_INCLUDE_DIRS}
@@ -167,7 +163,7 @@ target_include_directories(${PROJECT_NAME} PUBLIC
         ${GSETTINGS_INCLUDE_DIRS}
         )
 
-target_link_libraries(${PROJECT_NAME} PRIVATE
+target_link_libraries(${BIN_NAME} PRIVATE
         "/usr/lib/dde-control-center"
         dcc-interface
         ${DdeControlCenter_LIBRARIES}
@@ -194,12 +190,9 @@ endif ()
 # 设置执行 make install 时哪个目标应该被 install 到哪个位置
 
 if(NOT ${CMAKE_BUILD_TYPE} MATCHES "Debug")
-    install(TARGETS ${PROJECT_NAME} LIBRARY DESTINATION /lib/dde-control-center/modules)
+    install(TARGETS ${BIN_NAME} LIBRARY DESTINATION /lib/dde-control-center/modules)
 endif()
 
 add_subdirectory(layout)
-
-# 安装 .qm 文件
-install(FILES ${DTNG_QM_FILES} DESTINATION share/${PROJECT_NAME}/translations)
 
 dconfig_meta_files(APPID org.deepin.fcitx5.configtoolplugin FILES ../configs/org.deepin.fcitx5.configtoolplugin.json)

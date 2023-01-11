@@ -22,9 +22,6 @@
     <height>620</height>
    </size>
   </property>
-  <property name="windowTitle">
-   <string>浏览使用语言并添加输入法</string>
-  </property>
   <property name="windowIcon">
    <iconset theme="fcitx">
     <normaloff/>

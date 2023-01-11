@@ -28,12 +28,12 @@ AddIMWindow::AddIMWindow(DBusProvider* dbus, IMConfig* config, DDialog* parent)
 
     /** add titleBar */
 
-    setIcon(QIcon(":/img/title_img.png"));
-    setWindowTitle(tr("浏览使用语言并添加输入法"));
-
+    setIcon(QIcon(":/img/title_img.png"));    
     setupUi(this);
-    setWindowFlags(windowFlags() & ~Qt::WindowMaximizeButtonHint & ~Qt::WindowMinimizeButtonHint);
+    //浏览使用语言并添加输入法
+    setWindowTitle(tr("Select your language and add input methods"));
 
+    setWindowFlags(windowFlags() & ~Qt::WindowMaximizeButtonHint & ~Qt::WindowMinimizeButtonHint);
     osaLogInfo(LOG_CFGTOOL_NAME, LOG_CFGTOOL_NUM, "before, connect.\n");
     connect(m_impage, &IMPage::changed, this, [this]() {
         emit changed(true);
