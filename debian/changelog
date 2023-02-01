@@ -1,8 +1,14 @@
-deepin-fcitx5configtool-plugin (5.0.11) UNRELEASED; urgency=medium
+deepin-fcitx5configtool-plugin (5.0.12) UNRELEASED; urgency=medium
+
+  * Modify the version number
+
+ -- liuchenghao <liuchenghao@uniontech.com>  Feb, 1 Wed 2023 14:50:01 +0800
+
+ deepin-fcitx5configtool-plugin (5.0.11) UNRELEASED; urgency=medium
 
   * Increase the translation
 
- -- liuchenghao <liuchenghao@uniontech.com>  Mon, 30 Jan 2023 18:26:01 +0800
+ -- liuchenghao <liuchenghao@uniontech.com>  Mon, 30 Jan 2023 19:26:01 +0800
 
 deepin-fcitx5configtool-plugin (5.0.10) UNRELEASED; urgency=medium
 
