@@ -40,6 +40,7 @@
 #include <QScrollArea>
 #include <QStackedWidget>
 #include <QPushButton>
+#include <QProcess>
 #include <QEvent>
 #include <libintl.h>
 #include "configsetting/configsetting.h"
@@ -49,10 +50,11 @@ DWIDGET_USE_NAMESPACE
 using namespace dcc_fcitx_configtool::widgets;
 IMSettingWindow::IMSettingWindow(DBusProvider* dbus, QWidget *parent)
     : QWidget(parent)
+    , m_advSetProcess(new QProcess(this))
     , m_dbus(dbus)
     , m_config(new IMConfig(dbus, IMConfig::Tree, this))
-    , m_setting(new ConfigSettings())
     , m_advanceConfig(new AdvanceConfig("fcitx://config/global", m_dbus, this))
+    , m_setting(new ConfigSettings())
 {
     initUI();
     initConnect();
@@ -61,6 +63,10 @@ IMSettingWindow::IMSettingWindow(DBusProvider* dbus, QWidget *parent)
 
 IMSettingWindow::~IMSettingWindow()
 {
+    if (m_advSetProcess->state() == QProcess::Running) {
+        m_advSetProcess->kill();
+        m_advSetProcess->waitForFinished();
+    }
 }
 
 void IMSettingWindow::initUI()
@@ -223,7 +229,11 @@ void IMSettingWindow::initConnect()
     connect(m_editHead, &FcitxSettingsHead::editChanged, this, &IMSettingWindow::onEditBtnClicked);
 
     connect(m_advSetKey, &QPushButton::clicked, [ = ]() {
-        system("fcitx5-config-qt");
+        if (m_advSetProcess->state() == QProcess::Running) {
+            return;
+        }
+
+        m_advSetProcess->start("fcitx5-config-qt", QStringList{});
     });
 }
 
