@@ -11,7 +11,7 @@ set_target_properties(configwidgetslib PROPERTIES
     AUTOUIC_OPTIONS "-tr=fcitx::tr2fcitx;--include=fcitxqti18nhelper.h"
 )
 
-#Ó¦ÓÃDTK¿â
+#åº”ç”¨DTKåº“
 set(DTK Widget Core Gui)
 find_package(Dtk COMPONENTS ${DTK} REQUIRED)
 
