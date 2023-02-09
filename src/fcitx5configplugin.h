@@ -1,4 +1,4 @@
-﻿#pragma once
+#pragma once
 
 #include <interface/moduleobject.h>
 #include <interface/plugininterface.h>

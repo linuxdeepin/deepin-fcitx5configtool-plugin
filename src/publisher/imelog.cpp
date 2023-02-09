@@ -1,4 +1,4 @@
-﻿#include "imelog.h"
+#include "imelog.h"
 
 #include <stdio.h>
 #include <stdarg.h>

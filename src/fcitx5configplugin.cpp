@@ -1,4 +1,4 @@
-﻿#include "fcitx5configplugin.h"
+#include "fcitx5configplugin.h"
 #include "interface/moduleobject.h"
 #include "interface/pagemodule.h"
 
