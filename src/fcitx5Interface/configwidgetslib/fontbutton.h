@@ -1,8 +1,9 @@
-/*
- * SPDX-FileCopyrightText: 2012~2017 CSSlayer <wengxt@gmail.com>
- *
- * SPDX-License-Identifier: GPL-2.0-or-later
- */
+// SPDX-FileCopyrightText: 2012~2017 CSSlayer <wengxt@gmail.com>
+// SPDX-FileCopyrightText: 2023 Deepin Technology Co., Ltd.
+//
+// SPDX-License-Identifier: GPL-2.0-or-later
+// SPDX-License-Identifier: GPL-3.0-or-later
+
 #ifndef FONTBUTTON_H_
 #define FONTBUTTON_H_
 

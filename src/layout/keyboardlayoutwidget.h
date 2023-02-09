@@ -1,9 +1,8 @@
-/*
- * SPDX-FileCopyrightText: 2011~2011 CSSlayer <wengxt@gmail.com>
- *
- * SPDX-License-Identifier: GPL-2.0-or-later
- *
- */
+// SPDX-FileCopyrightText: 2011~2011 CSSlayer <wengxt@gmail.com>
+// SPDX-FileCopyrightText: 2023 Deepin Technology Co., Ltd.
+//
+// SPDX-License-Identifier: GPL-2.0-or-later
+// SPDX-License-Identifier: GPL-3.0-or-later
 
 /* this file is based on from libgnomekbd/libgnomekbd/gkbd-keyboard-drawing.c */
 
