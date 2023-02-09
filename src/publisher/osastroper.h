@@ -1,4 +1,4 @@
-﻿#ifndef OSASTROPER_H
+#ifndef OSASTROPER_H
 #define OSASTROPER_H
 
 #ifdef __cplusplus
