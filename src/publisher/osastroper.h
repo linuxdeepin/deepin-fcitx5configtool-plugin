@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: 2023 Deepin Technology Co., Ltd.
+//
+// SPDX-License-Identifier: GPL-3.0-or-later
+
 #ifndef OSASTROPER_H
 #define OSASTROPER_H
 
