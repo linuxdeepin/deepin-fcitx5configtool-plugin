@@ -32,7 +32,7 @@ extern "C" {
 #define LOG_DBUS_NAME       (char *)"[dbus]"
 #define LOG_DBUS_NUM        5
 
-/*定义日志级别*/
+/*瀹氫箟鏃ュ織绾у埆*/
 #define OSA_LOG_CRITICAL    0
 #define OSA_LOG_ERROR       1
 #define OSA_LOG_WARNING     2
