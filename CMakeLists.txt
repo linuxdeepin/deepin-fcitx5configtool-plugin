@@ -9,6 +9,8 @@ find_package(IsoCodes REQUIRED)
 configure_file(config.h.in config.h)
 include_directories(${CMAKE_CURRENT_BINARY_DIR})
 
+add_compile_definitions(FCITX_GETTEXT_DOMAIN="fcitx5-configtool")
+
 #加载子目录
 add_subdirectory(src)
 
