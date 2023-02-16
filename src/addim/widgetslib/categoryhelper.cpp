@@ -4,13 +4,17 @@
 // SPDX-License-Identifier: GPL-2.0-or-later
 // SPDX-License-Identifier: GPL-3.0-or-later
 
-#include "glo.h"
-#include "imelog.h"
 #include "categoryhelper.h"
-#include <QApplication>
-#include <QPainterPath>
-#include <QColor>
+
+#include "glo.h"
+
 #include <DGuiApplicationHelper>
+
+#include <QApplication>
+#include <QColor>
+#include <QDebug>
+#include <QPainterPath>
+
 using namespace Dtk::Gui;
 
 namespace fcitx {

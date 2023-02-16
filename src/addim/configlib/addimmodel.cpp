@@ -4,15 +4,18 @@
 // SPDX-License-Identifier: GPL-2.0-or-later
 // SPDX-License-Identifier: GPL-3.0-or-later
 
-#include "glo.h"
-#include "imelog.h"
 #include "addimmodel.h"
-#include <QCollator>
-#include <QLocale>
-#include <QSize>
+
+#include "glo.h"
+
 #include <fcitx-utils/i18n.h>
 
 #include <DPinyin>
+
+#include <QCollator>
+#include <QDebug>
+#include <QLocale>
+#include <QSize>
 DCORE_USE_NAMESPACE
 
 CategorizedItemModel::CategorizedItemModel(QObject *parent)
@@ -204,7 +207,7 @@ QVariant AvailIMModel::dataForItem(const QModelIndex &index, int role) const {
         return imEntry.languageCode();
 
     default:
-        osaLogInfo(LOG_EXPANDED_NAME, LOG_EXPANDED_NUM, "NOTICE: role is not exist.\n");
+        qInfo("NOTICE: role is not exist.");
     }
     return QVariant();
 }
@@ -276,7 +279,7 @@ void AvailIMModel::filterIMEntryList(
         m_filteredIMEntryList[idx].second.append(im);
 
         uniqueName = im.uniqueName();
-        osaLogInfo(LOG_EXPANDED_NAME, LOG_EXPANDED_NUM, "uniqueName [%s]\n", uniqueName.toStdString().c_str());
+        qInfo("uniqueName [%s]", uniqueName.toStdString().c_str());
 
         englishName = getEnglishLanguageName(uniqueName);
         if (loc_name.startsWith("zh") && englishName == "Chinese") {
@@ -306,18 +309,18 @@ void AvailIMModel::filterIMEntryList(
     setUseIMLanguageCount(useLanguageCount);
 
     endResetModel();
-    osaLogInfo(LOG_CFGTOOL_NAME, LOG_CFGTOOL_NUM, "<==== useLanguageCount [%d]\n", useLanguageCount);
+    qInfo("<==== useLanguageCount [%d]", useLanguageCount);
 }
 
 void AvailIMModel::getInputMethodEntryList(int row, FcitxQtStringKeyValueList& currentNameList)
 {
     FcitxQtInputMethodEntryList imEntryList = m_filteredIMEntryList[row].second;
-    osaLogInfo(LOG_EXPANDED_NAME, LOG_EXPANDED_NUM, "imEntryList size() [%d]\n", imEntryList.size());
+    qInfo("imEntryList size() [%d]", imEntryList.size());
     for (FcitxQtInputMethodEntry& im : imEntryList) {
         FcitxQtStringKeyValue imEntry;
         QString uniqueName = im.uniqueName();
 
-        osaLogInfo(LOG_EXPANDED_NAME, LOG_EXPANDED_NUM, "uniqueName [%s]\n", uniqueName.toStdString().c_str());
+        qInfo("uniqueName [%s]", uniqueName.toStdString().c_str());
 
         imEntry.setKey(im.uniqueName());
         currentNameList.push_back(imEntry);
@@ -363,14 +366,17 @@ void AvailIMModel::getInputMethodEntryList(int row, FcitxQtStringKeyValueList& c
         FcitxQtStringKeyValue imEntry;
         QString uniqueName = im.uniqueName();
 
-        osaLogInfo(LOG_EXPANDED_NAME, LOG_EXPANDED_NUM, "uniqueName [%s]\n", uniqueName.toStdString().c_str());
+        qInfo("uniqueName [%s]", uniqueName.toStdString().c_str());
 
-        auto iter = std::find_if(useIMList.begin(), useIMList.end(),
-            [&im](const FcitxQtStringKeyValue& item) {
-                osaLogInfo(LOG_CFGTOOL_NAME, LOG_CFGTOOL_NUM, "----> item.key() [%s], im.uniqueName() [%s], = [%d]\n",
-                    item.key().toStdString().c_str(), im.uniqueName().toStdString().c_str(), item.key() == im.uniqueName());
-                return item.key() == im.uniqueName();
-            });
+        auto iter = std::find_if(useIMList.begin(),
+                                 useIMList.end(),
+                                 [&im](const FcitxQtStringKeyValue &item) {
+                                     qInfo("----> item.key() [%s], im.uniqueName() [%s], = [%d]",
+                                           item.key().toStdString().c_str(),
+                                           im.uniqueName().toStdString().c_str(),
+                                           item.key() == im.uniqueName());
+                                     return item.key() == im.uniqueName();
+                                 });
 
         entry_name = im.name();
         loc = entry_name.indexOf("键盘 - ");
@@ -432,7 +438,7 @@ void IMProxyModel::setShowOnlyCurrentLanguage(bool show) {
 }
 
 void IMProxyModel::filterIMEntryList(const FcitxQtInputMethodEntryList &imEntryList, const FcitxQtStringKeyValueList &enabledIMList) {
-    osaLogInfo(LOG_CFGTOOL_NAME, LOG_CFGTOOL_NUM, "====>\n");
+    qInfo("====>");
 
     m_languageSet.clear();
 
@@ -449,7 +455,7 @@ void IMProxyModel::filterIMEntryList(const FcitxQtInputMethodEntryList &imEntryL
         }
     }
     invalidate();
-    osaLogInfo(LOG_CFGTOOL_NAME, LOG_CFGTOOL_NUM, "<====\n");
+    qInfo("<====");
 }
 
 bool IMProxyModel::filterAcceptsRow(int source_row, const QModelIndex &source_parent) const {
@@ -522,9 +528,11 @@ int comparePinyinAndEnglishName(QString& chLeft, QString& chRight, QString& enLe
     if (locName == "zh" || locName == "zh_CN") {
         QString chPyLeft = Dtk::Core::Chinese2Pinyin(chLeft).toLower();
         QString chPyRight = Dtk::Core::Chinese2Pinyin(chRight).toLower();
-        osaLogInfo(LOG_EXPANDED_NAME, LOG_EXPANDED_NUM, "c_py_l [%s], c_py_r [%s] <-- c_l [%s], c_r [%s]\n",
-            chPyLeft.toStdString().c_str(), chPyRight.toStdString().c_str(),
-            chLeft.toStdString().c_str(), chRight.toStdString().c_str());
+        qInfo("c_py_l [%s], c_py_r [%s] <-- c_l [%s], c_r [%s]",
+              chPyLeft.toStdString().c_str(),
+              chPyRight.toStdString().c_str(),
+              chLeft.toStdString().c_str(),
+              chRight.toStdString().c_str());
 
         if (chPyLeft.at(0) > chPyRight.at(0)) {
             ret = 1;
@@ -547,11 +555,14 @@ int IMProxyModel::compareCategories(const QModelIndex &left, const QModelIndex &
 
     c_l = left.data(FcitxLanguageRole).toString();
     c_r = right.data(FcitxLanguageRole).toString();
-    osaLogInfo(LOG_EXPANDED_NAME, LOG_EXPANDED_NUM, "====> c_l [%s], c_r [%s], en_l [%s], en_r [%s]\n",
-        c_l.toStdString().c_str(), c_r.toStdString().c_str(), en_l.toStdString().c_str(), en_r.toStdString().c_str());
+    qInfo("====> c_l [%s], c_r [%s], en_l [%s], en_r [%s]",
+          c_l.toStdString().c_str(),
+          c_r.toStdString().c_str(),
+          en_l.toStdString().c_str(),
+          en_r.toStdString().c_str());
 
     if (c_l == c_r) {
-        osaLogInfo(LOG_EXPANDED_NAME, LOG_EXPANDED_NUM, "<==== c_l == c_r\n");
+        qInfo("<==== c_l == c_r");
         return 0;
     }
 
@@ -559,28 +570,30 @@ int IMProxyModel::compareCategories(const QModelIndex &left, const QModelIndex &
     QString code_l = left.data(FcitxLanguageCode).toString();
     QString code_r = right.data(FcitxLanguageCode).toString();
 
-    osaLogInfo(LOG_EXPANDED_NAME, LOG_EXPANDED_NUM, "loc_name [%s], code_l [%s], code_r [%s]\n",
-        loc_name.toStdString().c_str(), code_l.toStdString().c_str(), code_r.toStdString().c_str());
+    qInfo("loc_name [%s], code_l [%s], code_r [%s]",
+          loc_name.toStdString().c_str(),
+          code_l.toStdString().c_str(),
+          code_r.toStdString().c_str());
     if (loc_name.startsWith("zh") && en_l == en_r && en_l == "Chinese") {
-        osaLogInfo(LOG_EXPANDED_NAME, LOG_EXPANDED_NUM, "<==== loc_name [%s], en_l==en_r [Chinese]\n", loc_name.toStdString().c_str());
+        qInfo("<==== loc_name [%s], en_l==en_r [Chinese]", loc_name.toStdString().c_str());
         ret = comparePinyinAndEnglishName(c_l, c_r, en_l, en_r, loc_name);
         return ret;
     }
     if (loc_name.startsWith("zh") && en_l == "Chinese") {
-        osaLogInfo(LOG_EXPANDED_NAME, LOG_EXPANDED_NUM, "<==== loc_name [%s], en_l [Chinese]\n", loc_name.toStdString().c_str());
+        qInfo("<==== loc_name [%s], en_l [Chinese]", loc_name.toStdString().c_str());
         return -1;
     }
     if (loc_name.startsWith("zh") && en_r == "Chinese") {
-        osaLogInfo(LOG_EXPANDED_NAME, LOG_EXPANDED_NUM, "<==== loc_name [%s], en_r [Chinese]\n", loc_name.toStdString().c_str());
+        qInfo("<==== loc_name [%s], en_r [Chinese]", loc_name.toStdString().c_str());
         return 1;
     }
 
     if (loc_name == code_l) {
-        osaLogInfo(LOG_EXPANDED_NAME, LOG_EXPANDED_NUM, "<==== loc_name == code_l\n");
+        qInfo("<==== loc_name == code_l");
         return -1;
     }
     if (loc_name == code_r) {
-        osaLogInfo(LOG_EXPANDED_NAME, LOG_EXPANDED_NUM, "<==== loc_name == code_r\n");
+        qInfo("<==== loc_name == code_r");
         return 1;
     }
 
@@ -588,15 +601,15 @@ int IMProxyModel::compareCategories(const QModelIndex &left, const QModelIndex &
     bool exist_r = right.data(FcitxUseIMLanguageRole).toBool();
 
     if (exist_l == true && exist_r == false) {
-        osaLogInfo(LOG_EXPANDED_NAME, LOG_EXPANDED_NUM, "<==== exist_l == true && exist_r == false\n");
+        qInfo("<==== exist_l == true && exist_r == false");
         return -1;
     } else if (exist_l == false && exist_r == true) {
-        osaLogInfo(LOG_EXPANDED_NAME, LOG_EXPANDED_NUM, "<==== exist_l == false && exist_r == true\n");
+        qInfo("<==== exist_l == false && exist_r == true");
         return 1;
     }
 
     ret = comparePinyinAndEnglishName(c_l, c_r, en_l, en_r, loc_name);
-    osaLogInfo(LOG_EXPANDED_NAME, LOG_EXPANDED_NUM, "<==== ret [%d]\n", ret);
+    qInfo("<==== ret [%d]", ret);
     return ret;
 }
 
@@ -663,11 +676,12 @@ QVariant FilteredIMModel::data(const QModelIndex &index, int role) const {
                 return item.key() == imEntry.uniqueName();
             });
         if (iter != useIMList_.end()) {
-            osaLogInfo(LOG_CFGTOOL_NAME, LOG_CFGTOOL_NUM, "----> imEntry.uniqueName() [%s], is true\n",
-                imEntry.uniqueName().toStdString().c_str());
+            qInfo("----> imEntry.uniqueName() [%s], is true",
+                  imEntry.uniqueName().toStdString().c_str());
             return true;
         }
-        osaLogInfo(LOG_CFGTOOL_NAME, LOG_CFGTOOL_NUM, "----> imEntry.uniqueName() [%s], is false\n", imEntry.uniqueName().toStdString().c_str());
+        qInfo("----> imEntry.uniqueName() [%s], is false",
+              imEntry.uniqueName().toStdString().c_str());
         return false;
     }
 

@@ -4,13 +4,16 @@
 // SPDX-License-Identifier: GPL-2.0-or-later
 // SPDX-License-Identifier: GPL-3.0-or-later
 
-#include "glo.h"
-#include "imelog.h"
 #include "addimwindow.h"
 
+#include "glo.h"
+
+#include <fcitx-utils/i18n.h>
+
+#include <QDebug>
 #include <QKeyEvent>
 #include <QPushButton>
-#include <fcitx-utils/i18n.h>
+
 #if DTK_VERSION_MAJOR == 5
 #include <DTitlebar>
 #endif
@@ -23,7 +26,7 @@ AddIMWindow::AddIMWindow(DBusProvider* dbus, IMConfig* config, DDialog* parent)
     , m_dbus(dbus)
     , m_impage(new IMPage(m_dbus, config, this))
 {
-    osaLogInfo(LOG_CFGTOOL_NAME, LOG_CFGTOOL_NUM, "====>\n");
+    qInfo("====>");
     m_config = config;
 
     /** add titleBar */
@@ -34,7 +37,7 @@ AddIMWindow::AddIMWindow(DBusProvider* dbus, IMConfig* config, DDialog* parent)
     setWindowTitle(tr("Select your language and add input methods"));
 
     setWindowFlags(windowFlags() & ~Qt::WindowMaximizeButtonHint & ~Qt::WindowMinimizeButtonHint);
-    osaLogInfo(LOG_CFGTOOL_NAME, LOG_CFGTOOL_NUM, "before, connect.\n");
+    qInfo("before, connect.");
     connect(m_impage, &IMPage::changed, this, [this]() {
         emit changed(true);
     });
@@ -43,9 +46,9 @@ AddIMWindow::AddIMWindow(DBusProvider* dbus, IMConfig* config, DDialog* parent)
     connect(this, &AddIMWindow::changed, this, &AddIMWindow::handleChanged);
     connect(m_impage, &IMPage::closeAddIMWindow, this, &AddIMWindow::closeWindow);
 
-    osaLogInfo(LOG_CFGTOOL_NAME, LOG_CFGTOOL_NUM, "before, load.\n");
+    qInfo("before, load.");
     load();
-    osaLogInfo(LOG_CFGTOOL_NAME, LOG_CFGTOOL_NUM, "after, load.\n");
+    qInfo("after, load.");
 }
 
 void AddIMWindow::handleChanged(bool changed) {
@@ -57,10 +60,10 @@ void AddIMWindow::closeWindow()
 }
 
 void AddIMWindow::load() {
-    osaLogInfo(LOG_CFGTOOL_NAME, LOG_CFGTOOL_NUM, "====>\n");
+    qInfo("====>");
     m_impage->load();
     emit changed(false);
-    osaLogInfo(LOG_CFGTOOL_NAME, LOG_CFGTOOL_NUM, "<====\n");
+    qInfo("<====");
 }
 
 void AddIMWindow::keyPressEvent(QKeyEvent *event) {

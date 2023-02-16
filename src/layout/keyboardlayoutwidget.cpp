@@ -371,7 +371,7 @@ void KeyboardLayoutWidget::init() {
         unsigned int priority;
 
         // qDebug() << "initing section " << i << " containing " <<
-        // section->num_rows << " rows\n";
+        // section->num_rows << " rows";
 
         x = section->left;
         y = section->top;

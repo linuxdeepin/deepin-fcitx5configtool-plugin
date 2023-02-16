@@ -5,9 +5,11 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 
 #include "glo.h"
-#include "imelog.h"
 
 #include <DPinyin>
+
+#include <QDebug>
+
 DCORE_USE_NAMESPACE
 
 QMap<QString, QString> g_uniqueNameToEnglishMap;
@@ -786,11 +788,13 @@ QString getEnglishLanguageName(QString uniqueName)
 
     if (g_uniqueNameToEnglishMap.contains(uniqueName)) {
         englishName = g_uniqueNameToEnglishMap[uniqueName];
-        osaLogInfo(LOG_CFGTOOL_NAME, LOG_CFGTOOL_NUM, "uniqueName [%s] found english name. englishName [%s]\n",
-            uniqueName.toStdString().c_str(), englishName.toStdString().c_str());
+        qInfo("uniqueName [%s] found english name. englishName [%s]",
+              uniqueName.toStdString().c_str(),
+              englishName.toStdString().c_str());
     } else {
         englishName = "unknown";
-        osaLogInfo(LOG_CFGTOOL_NAME, LOG_CFGTOOL_NUM, "NOTICE: uniqueName [%s] not found english name. unknown.\n", uniqueName.toStdString().c_str());
+        qInfo("NOTICE: uniqueName [%s] not found english name. unknown.",
+              uniqueName.toStdString().c_str());
     }
 
     return englishName;
