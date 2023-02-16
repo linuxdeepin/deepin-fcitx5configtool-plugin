@@ -4,21 +4,24 @@
 // SPDX-License-Identifier: GPL-2.0-or-later
 // SPDX-License-Identifier: GPL-3.0-or-later
 
-#include "imelog.h"
 #include "layoutselector.h"
+
 #include "dbusprovider.h"
 #include "keyboardlayoutwidget.h"
 #include "layoutmodel.h"
 #include "ui_layoutselector.h"
+
+#include <fcitx-utils/i18n.h>
+#include <fcitxqtcontrollerproxy.h>
+#include <fcitxqtdbustypes.h>
+
 #include <QDBusPendingCallWatcher>
+#include <QDebug>
 #include <QDialog>
 #include <QDialogButtonBox>
 #include <QPushButton>
 #include <QStringListModel>
 #include <QX11Info>
-#include <fcitx-utils/i18n.h>
-#include <fcitxqtcontrollerproxy.h>
-#include <fcitxqtdbustypes.h>
 
 namespace fcitx {
 namespace addim {
@@ -74,7 +77,7 @@ LayoutSelector *LayoutSelector::selectLayout(QWidget *parent, DBusProvider *dbus
 void LayoutSelector::setLayout(const QString &layout, const QString &variant)
 {
     int index = m_layoutProvider->layoutIndex(layout);
-    osaLogInfo(LOG_CFGTOOL_NAME, LOG_CFGTOOL_NUM, "set keyboard layout: layoutName=%s, index=%d", layout.toStdString().c_str(), index);
+    qInfo("set keyboard layout: layoutName=%s, index=%d", layout.toStdString().c_str(), index);
     m_ui->layoutComboBox->setCurrentIndex(index);
     if (!m_layoutProvider->loaded()) {
         m_preSelectLayout = layout;

@@ -5,11 +5,12 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 
 #include "glo.h"
-#include "imelog.h"
 //#include "osastroper.h"
-#include "imconfig.h"
-#include "dbusprovider.h"
 #include "addimmodel.h"
+#include "dbusprovider.h"
+#include "imconfig.h"
+
+#include <QDebug>
 
 IMConfig::IMConfig(DBusProvider *dbus, ModelMode mode, QObject *parent)
     : QObject(parent), m_dbus(dbus), m_availIMModel(new IMProxyModel(this)),
@@ -39,8 +40,8 @@ IMConfig::~IMConfig() {}
 
 void IMConfig::testAddIMDeal(int imIndex)
 {
-    osaLogInfo(LOG_EXPANDED_NAME, LOG_EXPANDED_NUM, "====> imIndex [%d]\n", imIndex);
-    osaLogInfo(LOG_EXPANDED_NAME, LOG_EXPANDED_NUM, "<====\n");
+    qInfo("====> imIndex [%d]", imIndex);
+    qInfo("<====");
 }
 
 void IMConfig::save() {
@@ -54,15 +55,15 @@ void IMConfig::save() {
 }
 
 void IMConfig::saveSelectedIM(int imIndex) {
-    osaLogInfo(LOG_CFGTOOL_NAME, LOG_CFGTOOL_NUM, "====> imIndex [%d], m_needSave [%d]\n", imIndex, m_needSave);
+    qInfo("====> imIndex [%d], m_needSave [%d]", imIndex, m_needSave);
 
     if (!m_dbus->controller()) {
-        osaLogInfo(LOG_EXPANDED_NAME, LOG_EXPANDED_NUM, "<====\n");
+        qInfo("<====");
         return;
     }
 
     if (imIndex >= m_currentIMEntries.size()) {
-        osaLogError(LOG_EXPANDED_NAME, LOG_EXPANDED_NUM, "<==== ERROR: imIndex >= m_imEntries.size()\n");
+        qWarning("<==== ERROR: imIndex >= m_imEntries.size()");
         return;
     }
 
@@ -77,7 +78,7 @@ void IMConfig::saveSelectedIM(int imIndex) {
         // emit addIMSignal(imIndex);
         // updateIMList();
         addIM(m_currentIMEntries.at(imIndex).key());
-    osaLogInfo(LOG_CFGTOOL_NAME, LOG_CFGTOOL_NUM, "<====\n");
+        qInfo("<====");
 }
 
 void IMConfig::load() {
@@ -130,7 +131,7 @@ void IMConfig::addIM(const QString &name)
 
 int IMConfig::addSelectedIM(const QModelIndex &index, QString matchStr) {
     int count = 0;
-    osaLogInfo(LOG_EXPANDED_NAME, LOG_EXPANDED_NUM, "====> m_mode [%d]\n", m_mode);
+    qInfo("====> m_mode [%d]", m_mode);
     if (!index.isValid()) {
         return count;
     }
@@ -138,7 +139,7 @@ int IMConfig::addSelectedIM(const QModelIndex &index, QString matchStr) {
     if (!index.parent().isValid()) {
         if (m_mode == Tree) {
             int row_index = index.data(FcitxRowIndexRole).toInt();
-            osaLogInfo(LOG_EXPANDED_NAME, LOG_EXPANDED_NUM, "row_index [%d]\n", row_index);
+            qInfo("row_index [%d]", row_index);
 
             m_currentIMEntries.clear();
             m_currentUseIMEntries.clear();
@@ -150,14 +151,14 @@ int IMConfig::addSelectedIM(const QModelIndex &index, QString matchStr) {
             }
             count = m_currentIMEntries.count();
         } else {
-            osaLogError(LOG_EXPANDED_NAME, LOG_EXPANDED_NUM, "ERROR: m_mode != Tree. m_mode [%d]\n", m_mode);
+            qWarning("ERROR: m_mode != Tree. m_mode [%d]", m_mode);
         }
 
         updateIMList();
         emitChanged();
     }
 
-    osaLogInfo(LOG_EXPANDED_NAME, LOG_EXPANDED_NUM, "<==== count [%d]\n", count);
+    qInfo("<==== count [%d]", count);
     return count;
 }
 
@@ -233,7 +234,7 @@ void IMConfig::availabilityChanged() {
 }
 
 void IMConfig::fetchInputMethodsFinished(QDBusPendingCallWatcher *watcher) {
-    osaLogInfo(LOG_CFGTOOL_NAME, LOG_CFGTOOL_NUM, "====>\n");
+    qInfo("====>");
     QDBusPendingReply<FcitxQtInputMethodEntryList> ims = *watcher;
     watcher->deleteLater();
     if (!ims.isError()) {
@@ -247,27 +248,28 @@ void IMConfig::fetchInputMethodsFinished(QDBusPendingCallWatcher *watcher) {
     for (auto& imEntry : m_allIMs) {
         englishName = getEnglishLanguageName(imEntry.uniqueName());
         if (englishName == "unknown") {
-            osaLogError(LOG_TEST_NAME, LOG_TEST_NUM,
-                "NOTICE NO DATA: [%d/%d] uniqueName [%s], name [%s], nativeName [%s], icon [%s], label [%s], languageCode [%s], configurable [%d]\n",
-                index + 1, count,
-                imEntry.uniqueName().toStdString().c_str(),
-                imEntry.name().toStdString().c_str(),
-                imEntry.nativeName().toStdString().c_str(),
-                imEntry.icon().toStdString().c_str(),
-                imEntry.label().toStdString().c_str(),
-                imEntry.languageCode().toStdString().c_str(),
-                imEntry.configurable());
+            qWarning("NOTICE NO DATA: [%d/%d] uniqueName [%s], name [%s], nativeName [%s], icon "
+                     "[%s], label [%s], languageCode [%s], configurable [%d]",
+                     index + 1,
+                     count,
+                     imEntry.uniqueName().toStdString().c_str(),
+                     imEntry.name().toStdString().c_str(),
+                     imEntry.nativeName().toStdString().c_str(),
+                     imEntry.icon().toStdString().c_str(),
+                     imEntry.label().toStdString().c_str(),
+                     imEntry.languageCode().toStdString().c_str(),
+                     imEntry.configurable());
         }
 
         index += 1;
     }
 
-    osaLogInfo(LOG_CFGTOOL_NAME, LOG_CFGTOOL_NUM, "<====\n");
+    qInfo("<====");
     return;
 }
 
 void IMConfig::setCurrentGroup(const QString &name) {
-    osaLogInfo(LOG_CFGTOOL_NAME, LOG_CFGTOOL_NUM, "====> name [%s]\n", name.toStdString().c_str());
+    qInfo("====> name [%s]", name.toStdString().c_str());
     if (m_dbus->available() && !name.isEmpty()) {
         auto call = m_dbus->controller()->InputMethodGroupInfo(name);
         m_lastGroup = name;
@@ -276,11 +278,11 @@ void IMConfig::setCurrentGroup(const QString &name) {
         connect(watcher, &QDBusPendingCallWatcher::finished, this,
                 &IMConfig::fetchGroupInfoFinished);
     }
-    osaLogInfo(LOG_CFGTOOL_NAME, LOG_CFGTOOL_NUM, "<====\n");
+    qInfo("<====");
 }
 
 void IMConfig::fetchGroupInfoFinished(QDBusPendingCallWatcher *watcher) {
-    osaLogInfo(LOG_CFGTOOL_NAME, LOG_CFGTOOL_NUM, "====>\n");
+    qInfo("====>");
     watcher->deleteLater();
     m_needSave = false;
     QDBusPendingReply<QString, FcitxQtStringKeyValueList> reply = *watcher;
@@ -295,16 +297,17 @@ void IMConfig::fetchGroupInfoFinished(QDBusPendingCallWatcher *watcher) {
         useIMEntries.clear();
     }
     emit defaultLayoutChanged();
-    osaLogInfo(LOG_CFGTOOL_NAME, LOG_CFGTOOL_NUM, "----> defaultLayout_ [%s]\n", m_defaultLayout.toStdString().c_str());
+    qInfo("----> defaultLayout_ [%s]", m_defaultLayout.toStdString().c_str());
     for (const auto& item : useIMEntries) {
-        osaLogInfo(LOG_CFGTOOL_NAME, LOG_CFGTOOL_NUM, "----> key [%s], item [%s]\n",
-            item.key().toStdString().c_str(), item.value().toStdString().c_str());
+        qInfo("----> key [%s], item [%s]",
+              item.key().toStdString().c_str(),
+              item.value().toStdString().c_str());
     }
 
     setUseIMList(useIMEntries);
 
     updateIMList();
-    osaLogInfo(LOG_CFGTOOL_NAME, LOG_CFGTOOL_NUM, "<====\n");
+    qInfo("<====");
 }
 
 void IMConfig::emitChanged() {
@@ -313,7 +316,7 @@ void IMConfig::emitChanged() {
 }
 
 void IMConfig::updateIMList(bool excludeCurrent) {
-    osaLogInfo(LOG_CFGTOOL_NAME, LOG_CFGTOOL_NUM, "====> excludeCurrent [%d]\n", excludeCurrent);
+    qInfo("====> excludeCurrent [%d]", excludeCurrent);
     if (!excludeCurrent) {
         filterIMEntryList(m_allIMs, m_imEntries);
         m_currentIMModel->filterIMEntryList(m_allIMs, m_currentIMEntries);
@@ -322,7 +325,7 @@ void IMConfig::updateIMList(bool excludeCurrent) {
     m_availIMModel->filterIMEntryList(m_allIMs, m_imEntries);
 
     emit imListChanged();
-    osaLogInfo(LOG_CFGTOOL_NAME, LOG_CFGTOOL_NUM, "<====\n");
+    qInfo("<====");
 }
 
 void IMConfig::filterIMEntryList(

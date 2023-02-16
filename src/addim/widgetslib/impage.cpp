@@ -4,23 +4,28 @@
 // SPDX-License-Identifier: GPL-2.0-or-later
 // SPDX-License-Identifier: GPL-3.0-or-later
 
-#include "glo.h"
-#include "imelog.h"
 #include "impage.h"
-#include "categoryhelper.h"
+
 #include "addimmodel.h"
-#include "ui_impage.h"
+#include "categoryhelper.h"
+#include "glo.h"
 #include "layoutselector.h"
-#include <QInputDialog>
-#include <QMessageBox>
-#include <QPainter>
-#include <QPaintEvent>
-#include <QPainterPath>
-#include <QStyledItemDelegate>
+#include "ui_impage.h"
+
 #include <fcitxqtcontrollerproxy.h>
+
+#include <DDBusSender>
 #include <DDialog>
 #include <DGuiApplicationHelper>
-#include <DDBusSender>
+
+#include <QDebug>
+#include <QInputDialog>
+#include <QMessageBox>
+#include <QPaintEvent>
+#include <QPainter>
+#include <QPainterPath>
+#include <QStyledItemDelegate>
+
 DWIDGET_USE_NAMESPACE
 using namespace Dtk::Gui;
 
@@ -161,7 +166,7 @@ IMPage::IMPage(DBusProvider* dbus, IMConfig* config, QWidget* parent)
     QFont font(QApplication::font());
     font.setFamily("SourceHanSansSC-Medium");
     int point_size = font.pointSize();
-    osaLogInfo(LOG_TEST_NAME, LOG_TEST_NUM, "NOTICE: point_size [%d]\n", point_size);
+    qInfo("NOTICE: point_size [%d]", point_size);
     font.setPixelSize(point_size + 2);
     ui_->availIMView->setFont(font);
     ui_->currentIMView->setItemDelegate(new IMListDelegate);
@@ -304,7 +309,7 @@ IMPage::IMPage(DBusProvider* dbus, IMConfig* config, QWidget* parent)
 		this->ui_->currentIMView->setCurrentIndex(currentIndex);
 		clickCurrentIM(currentIndex);
 	}
-	osaLogInfo(LOG_EXPANDED_NAME, LOG_EXPANDED_NUM, "<==== count [%d], useCount [%d]\n", count, useCount);
+        qInfo("<==== count [%d], useCount [%d]", count, useCount);
 }
 
 IMPage::~IMPage() {
@@ -355,7 +360,7 @@ static QString getLayoutString(const fcitx::FcitxQtInputMethodEntry &entry)
             layoutStr = uniqName.mid(dashPos+1);
         }
         else{
-            osaLogInfo(LOG_CFGTOOL_NAME, LOG_CFGTOOL_NUM, "unexpected uniqName=%s", uniqName.toStdString().c_str());
+            qInfo("unexpected uniqName=%s", uniqName.toStdString().c_str());
             assert(0);
         }
     }
@@ -387,7 +392,7 @@ void IMPage::clickCurrentIM(const QModelIndex &index) {
     int preCurrentIMIndex;
     preCurrentIMIndex = getCurrentIMViewIndex();
     setCurrentIMViewIndex(currentIMIndex);
-    printf("m_currentIMIndex [%d]\n", currentIMIndex);
+    printf("m_currentIMIndex [%d]", currentIMIndex);
 
     if (existUsedIM == false) {
         ui_->pb_add->setEnabled(true);
@@ -398,7 +403,7 @@ void IMPage::clickCurrentIM(const QModelIndex &index) {
     QModelIndex preIndex = this->ui_->currentIMView->model()->index(preCurrentIMIndex, 0);
     ui_->currentIMView->update(preIndex);
 
-    osaLogInfo(LOG_CFGTOOL_NAME, LOG_CFGTOOL_NUM, "index=%d, count=%d\n", index.row(), m_config->currentIMEntries().count());
+    qInfo("index=%d, count=%d", index.row(), m_config->currentIMEntries().count());
     assert(index.row() >= 0 && index.row() < m_config->currentIMEntries().count());
     if(index.row() < 0 || index.row() >= m_config->currentIMEntries().count()) {
         return ;
@@ -451,10 +456,10 @@ void IMPage::clickedCloseButton() {
 }
 
 void IMPage::clickedAddButton() {
-    osaLogInfo(LOG_CFGTOOL_NAME, LOG_CFGTOOL_NUM, "====>\n");
+    qInfo("====>");
     save();
     emit closeAddIMWindow();
-    osaLogInfo(LOG_CFGTOOL_NAME, LOG_CFGTOOL_NUM, "<====\n");
+    qInfo("<====");
 }
 
 int IMPage::addIM(const QModelIndex &index, QString matchStr) { return m_config->addSelectedIM(index, matchStr); }

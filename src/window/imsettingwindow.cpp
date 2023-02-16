@@ -61,14 +61,14 @@ void IMSettingWindow::initUI()
             m_editHead = head;
             m_editHead->getTitleLabel()->setAccessibleName("Edit");
         }
-        connect(head, &FcitxSettingsHead::deleteBtnClicked, this, [=](){
-            qInfo() << "user clicked delete button" << endl;
+        connect(head, &FcitxSettingsHead::deleteBtnClicked, this, [=]() {
+            qInfo() << "user clicked delete button";
             int index = m_IMListGroup->selectIndex();
             this->onItemDelete(m_config->getFcitxQtInputMethodItemList()->at(index));
         });
 
         connect(head, &FcitxSettingsHead::addBtnClicked, this, [=]() {
-            qInfo() << "user clicked add button" << endl;
+            qInfo() << "user clicked add button";
             fcitx::addim::AddIMWindow mainWindow(m_dbus, m_config, (DDialog*)this);
             Dtk::Widget::moveToCenter(&mainWindow);
             mainWindow.exec();
@@ -129,7 +129,7 @@ void IMSettingWindow::initUI()
 
     //添加至主界面内
     setLayout(scrollAreaLayout);
-    qInfo() << "read config:" << m_config->getFcitxQtInputMethodItemList()->count() << endl;
+    qInfo() << "read config:" << m_config->getFcitxQtInputMethodItemList()->count();
     readConfig();
     initWindows();
 }
@@ -143,7 +143,7 @@ void IMSettingWindow::onReloadConnect()
 void IMSettingWindow::initConnect()
 {
     connect(m_config, &IMConfig::imListChanged, this, [=]() {
-        qInfo() << "list changed:" << m_config->getFcitxQtInputMethodItemList()->count() << endl;
+        qInfo() << "list changed:" << m_config->getFcitxQtInputMethodItemList()->count();
         onCurIMChanged(m_config->getFcitxQtInputMethodItemList());
     });
     auto reloadFcitx = [ = ](bool flag) {
@@ -388,7 +388,7 @@ void IMSettingWindow::onCurIMChanged(FcitxQtInputMethodItemList* list)
         });
         //tmp->editSwitch(IMModel::instance()->isEdit());
         m_IMListGroup->appendItem(tmp);
-        qInfo() << "manager im changed:" << list->at(i)->name() << endl;
+        qInfo() << "manager im changed:" << list->at(i)->name();
         tmp->repaint();
     }
     m_IMListGroup->adjustSize();

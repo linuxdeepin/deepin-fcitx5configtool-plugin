@@ -42,7 +42,7 @@ void IMWindow::initUI()
     DBusProvider *dbus = new DBusProvider(this);
     m_stackedWidget = new QStackedWidget(this);
     m_settingWindow = new IMSettingWindow(dbus, this);
-    qInfo() << "load setting window" << endl;
+    qInfo() << "load setting window";
     connect(m_settingWindow, &IMSettingWindow::requestNextPage, this, &IMWindow::requestNextPage);
    // m_addWindow = new IMAddWindow(this);
    // m_addWindow->setAccessibleName("addWindow");

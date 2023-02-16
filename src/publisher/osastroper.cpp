@@ -2,8 +2,10 @@
 //
 // SPDX-License-Identifier: GPL-3.0-or-later
 
-#include "imelog.h"
 #include "osastroper.h"
+
+#include <QDebug>
+
 #include <stdio.h>
 #include <string.h>
 
@@ -239,9 +241,9 @@ int osaTakeTagTextFromFile(const char *file_path, const char *before_tag, const 
 	FILE *fp = nullptr;
 	fp = fopen(file_path, "rb");
 	if (!fp) {
-		osaLogError(LOG_EXPANDED_NAME, LOG_EXPANDED_NUM, "ERROR: the file [%s] was not opened.\n", file_path);
-		return balance;
-	}
+            qWarning("ERROR: the file [%s] was not opened.", file_path);
+            return balance;
+        }
 
 	int RSIZE = 1 * sizeof(char);/*读取大小*/
 	int j = 0;
