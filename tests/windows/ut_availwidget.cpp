@@ -120,15 +120,3 @@ TEST_F(ut_availwidget, initConnect)
     AvailWidget availWidget;
     availWidget.initConnect();
 }
-
-TEST_F(ut_availwidget, clearItemStatusAndFilter)
-{
-    AvailWidget availWidget;
-
-    dcc_fcitx_configtool::widgets::FcitxSettingsGroup group;
-    dcc_fcitx_configtool::widgets::FcitxSettingsItem item;
-    group.appendItem(&item);
-    availWidget.clearItemStatusAndFilter(&group);
-}
-
-

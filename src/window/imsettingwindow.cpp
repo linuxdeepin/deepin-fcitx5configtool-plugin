@@ -5,39 +5,45 @@
 
 #include "imsettingwindow.h"
 
-#include "fcitx5Interface/dbusprovider.h"
-#include "widgets/settingsheaderitem.h"
-#include "widgets/settingsgroup.h"
-#include "widgets/keysettingsitem.h"
-#include "widgets/imactivityitem.h"
-#include "widgets/settingshead.h"
-#include "publisher/publisherdef.h"
-#include "fcitx5Interface/imconfig.h"
-#include "widgets/contentwidget.h"
 #include "addim/widgetslib/addimwindow.h"
+#include "configsetting/configsetting.h"
 #include "fcitx5Interface/advanceconfig.h"
 #include "fcitx5Interface/configwidgetslib/configwidget.h"
+#include "fcitx5Interface/dbusprovider.h"
+#include "fcitx5Interface/imconfig.h"
+#include "publisher/publisherdef.h"
+#include "widgets/contentwidget.h"
+#include "widgets/keysettingsitem.h"
 
-#include <DWidgetUtil>
+#include <libintl.h>
+#include <widgets/settingsgroup.h>
+#include <widgets/settingshead.h>
+#include <widgets/settingsitem.h>
+#include <widgets/titlelabel.h>
+
+#include <DCommandLinkButton>
 #include <DFloatingButton>
 #include <DFontSizeManager>
-#include <DCommandLinkButton>
+#include <DListView>
+#include <DStandardItem>
+#include <DWidgetUtil>
+
+#include <QEvent>
+#include <QPushButton>
 #include <QScrollArea>
 #include <QStackedWidget>
-#include <QPushButton>
-#include <QEvent>
-#include <libintl.h>
-#include "configsetting/configsetting.h"
+#include <QStandardItemModel>
 
 DWIDGET_USE_NAMESPACE
 
 using namespace dcc_fcitx_configtool::widgets;
-IMSettingWindow::IMSettingWindow(DBusProvider* dbus, QWidget *parent)
+
+IMSettingWindow::IMSettingWindow(DBusProvider *dbus, QWidget *parent)
     : QWidget(parent)
     , m_dbus(dbus)
     , m_config(new IMConfig(dbus, IMConfig::Tree, this))
-    , m_setting(new ConfigSettings())
     , m_advanceConfig(new AdvanceConfig("fcitx://config/global", m_dbus, this))
+    , m_setting(new ConfigSettings())
 {
     initUI();
     initConnect();
@@ -50,71 +56,138 @@ IMSettingWindow::~IMSettingWindow()
 
 void IMSettingWindow::initUI()
 {
-    //创建标题
-    auto newTitleHead = [this](QString str, bool isEdit = false) {
-        FcitxSettingsHead *head = new FcitxSettingsHead(isEdit);
-        head->setParent(this);
-        head->setTitle(str);
-        //head->setDeleteEnable(false);
-        head->layout()->setContentsMargins(10, 4, 10, 0);
-        if (isEdit) {
-            m_editHead = head;
-            m_editHead->getTitleLabel()->setAccessibleName("Edit");
-        }
-        connect(head, &FcitxSettingsHead::deleteBtnClicked, this, [=]() {
-            qInfo() << "user clicked delete button";
-            int index = m_IMListGroup->selectIndex();
-            this->onItemDelete(m_config->getFcitxQtInputMethodItemList()->at(index));
-        });
-
-        connect(head, &FcitxSettingsHead::addBtnClicked, this, [=]() {
-            qInfo() << "user clicked add button";
-            fcitx::addim::AddIMWindow mainWindow(m_dbus, m_config, (DDialog*)this);
-            Dtk::Widget::moveToCenter(&mainWindow);
-            mainWindow.exec();
-        });
-
-        return head;
-    };
-
-    m_mainLayout = new QVBoxLayout();
     //滑动窗口
+    m_mainLayout = new QVBoxLayout();
 
     QVBoxLayout *scrollAreaLayout = new QVBoxLayout(this);
     scrollAreaLayout->setContentsMargins(10, 0, 10, 0);
     scrollAreaLayout->setSpacing(0);
 
+    QHBoxLayout *imHeaderLayout = new QHBoxLayout();
+
+    //创建标题
+    m_editHead = new DCC_NAMESPACE::SettingsHead();
+    m_editHead->setEditEnable(false);
+    m_editHead->setTitle(tr("Manage Input Methods"));
+    m_editHead->layout()->setContentsMargins(10, 4, 10, 0);
+    m_deleteBtn = new DIconButton(DStyle::SP_DecreaseElement);
+    m_deleteBtn->setEnabled(false);
+    auto *addBtn = new DIconButton(DStyle::SP_IncreaseElement);
+    connect(m_deleteBtn, &DIconButton::clicked, this, [=]() {
+        qInfo() << "user clicked delete button";
+        int row = m_IMListGroup->currentIndex().row();
+        onItemDelete(row);
+    });
+
+    imHeaderLayout->addWidget(m_editHead);
+    imHeaderLayout->addStretch();
+    imHeaderLayout->addWidget(m_deleteBtn);
+    imHeaderLayout->addWidget(addBtn);
+
+    connect(addBtn, &DIconButton::clicked, this, [=]() {
+        qInfo() << "user clicked add button";
+        fcitx::addim::AddIMWindow mainWindow(m_dbus, m_config, (DDialog *)this);
+        Dtk::Widget::moveToCenter(&mainWindow);
+        mainWindow.exec();
+    });
+
     //输入法管理 编辑按钮
-    m_IMListGroup = new FcitxSettingsGroup();
-    m_IMListGroup->setSwitchAble(true);
+    m_IMListGroup = new DListView(this);
+    m_IMListGroup->setEditTriggers(QAbstractItemView::NoEditTriggers);
+    m_IMListGroup->setBackgroundType(DStyledItemDelegate::BackgroundType::ClipCornerBackground);
+    // m_IMListGroup->setSwitchAble(true);
     m_IMListGroup->setSpacing(0);
+
+    m_IMListModel = new QStandardItemModel(this);
+    m_IMListGroup->setModel(m_IMListModel);
+
     onCurIMChanged(m_config->getFcitxQtInputMethodItemList());
 
-    //快捷键 切换输入法 切换虚拟键盘 切换至默认输入法
-    m_shortcutGroup = new FcitxSettingsGroup();
-    m_shortcutGroup->setSpacing(0);
-    m_imSwitchCbox = new FcitxComBoboxSettingsItem(tr("Scroll between input methods"), {"CTRL_SHIFT", "ALT_SHIFT", "CTRL_SUPER", "ALT_SUPER"});
+    connect(m_IMListGroup->selectionModel(),
+            &QItemSelectionModel::currentChanged,
+            this,
+            [this](const QModelIndex &current, const QModelIndex &previous) {
+                m_deleteBtn->setEnabled(current.isValid());
+                if (previous.isValid()) {
+                    auto *item =
+                            dynamic_cast<DStandardItem *>(m_IMListModel->itemFromIndex(previous));
+                    item->setActionList(Qt::Edge::RightEdge, {});
+                }
+                if (current.isValid()) {
+                    auto *item =
+                            dynamic_cast<DStandardItem *>(m_IMListModel->itemFromIndex(current));
+                    auto row = current.row();
+
+                    auto *upAction = new DViewItemAction(Qt::AlignVCenter, QSize(), QSize(), true);
+                    upAction->setIcon(QIcon::fromTheme("arrow_up"));
+                    upAction->setDisabled(row == 0);
+
+                    auto *downAction =
+                            new DViewItemAction(Qt::AlignVCenter, QSize(), QSize(), true);
+                    downAction->setIcon(QIcon::fromTheme("arrow_down"));
+                    downAction->setDisabled(row == m_IMListModel->rowCount() - 1);
+
+                    auto *configAction =
+                            new DViewItemAction(Qt::AlignVCenter, QSize(), QSize(), true);
+                    configAction->setIcon(QIcon::fromTheme("setting"));
+
+                    item->setActionList(Qt::Edge::RightEdge,
+                                        { upAction, downAction, configAction });
+
+                    connect(upAction, &DViewItemAction::triggered, this, [this, current]() {
+                        int row = current.row();
+                        if (row == 0) {
+                            return;
+                        }
+
+                        qDebug() << "user clicked up button";
+                        onItemUp(row);
+                    });
+
+                    connect(downAction, &DViewItemAction::triggered, this, [this, current]() {
+                        int row = current.row();
+                        if (row == m_IMListModel->rowCount() - 1) {
+                            return;
+                        }
+
+                        qDebug() << "user clicked down button";
+                        onItemDown(row);
+                    });
+
+                    connect(configAction, &DViewItemAction::triggered, this, [this, current]() {
+                        int row = current.row();
+                        onItemConfig(row);
+                    });
+                }
+            });
+
+    QHBoxLayout *shortcutLayout = new QHBoxLayout();
+    auto *headTitle = new DCC_NAMESPACE::TitleLabel(tr("Shortcuts"));
+    headTitle->setContentsMargins(10, 0, 0, 0);
+    DFontSizeManager::instance()->bind(headTitle,
+                                       DFontSizeManager::T5,
+                                       QFont::DemiBold); // 设置label字体
+    m_resetBtn = new DCommandLinkButton(tr("Restore Defaults"), this);
+    m_resetBtn->setAccessibleName("Restore Defaults");
+    shortcutLayout->addWidget(headTitle);
+    shortcutLayout->addStretch();
+    shortcutLayout->addWidget(m_resetBtn);
+
+    // 快捷键 切换输入法 切换虚拟键盘 切换至默认输入法
+    m_shortcutGroup = new DCC_NAMESPACE::SettingsGroup(nullptr, DCC_NAMESPACE::SettingsGroup::GroupBackground);
+    m_imSwitchCbox = new DCC_NAMESPACE::ComboxWidget(tr("Scroll between input methods"));
+    m_imSwitchCbox->setComboxOption({ "CTRL_SHIFT", "ALT_SHIFT", "CTRL_SUPER", "ALT_SUPER" });
     m_imSwitchCbox->comboBox()->setAccessibleName("Switch input methods");
     m_defaultIMKey = new FcitxKeySettingsItem(tr("Switch between the current/first input method"));
     m_shortcutGroup->appendItem(m_imSwitchCbox);
     m_shortcutGroup->appendItem(m_defaultIMKey);
 
     //控件添加至滑动窗口内
-    scrollAreaLayout->addWidget(newTitleHead(tr("Manage Input Methods"), true));
+    scrollAreaLayout->addLayout(imHeaderLayout);
     scrollAreaLayout->addSpacing(10);
     scrollAreaLayout->addWidget(m_IMListGroup);
     scrollAreaLayout->addSpacing(30);
 
-    //QHBoxLayout 存放m_resetBtn和Shortcuts标题两个控件
-    QHBoxLayout *shortcutLayout = new QHBoxLayout();
-    QWidget *pWidget = newTitleHead(tr("Shortcuts"));
-    shortcutLayout->addWidget(pWidget);
-
-    m_resetBtn = new DCommandLinkButton(tr("Restore Defaults"), this);
-    DFontSizeManager::instance()->bind(m_resetBtn, DFontSizeManager::T8, QFont::Normal);
-    m_resetBtn->setAccessibleName("Restore Defaults");
-
-    shortcutLayout->addWidget(m_resetBtn, 0, Qt::AlignRight | Qt::AlignBottom);
     scrollAreaLayout->addLayout(shortcutLayout);
     scrollAreaLayout->addSpacing(10);
     scrollAreaLayout->addWidget(m_shortcutGroup);
@@ -129,7 +202,7 @@ void IMSettingWindow::initUI()
 
     //添加至主界面内
     setLayout(scrollAreaLayout);
-    qInfo() << "read config:" << m_config->getFcitxQtInputMethodItemList()->count();
+    qInfo() << "read config:" << m_IMListModel->rowCount();
     readConfig();
     initWindows();
 }
@@ -143,7 +216,7 @@ void IMSettingWindow::onReloadConnect()
 void IMSettingWindow::initConnect()
 {
     connect(m_config, &IMConfig::imListChanged, this, [=]() {
-        qInfo() << "list changed:" << m_config->getFcitxQtInputMethodItemList()->count();
+        qInfo() << "list changed:" << m_IMListModel->rowCount();
         onCurIMChanged(m_config->getFcitxQtInputMethodItemList());
     });
     auto reloadFcitx = [ = ](bool flag) {
@@ -200,12 +273,6 @@ void IMSettingWindow::initConnect()
             m_imSwitchCbox->comboBox()->setCurrentText(("CTRL_SHIFT"));
         });
     });
-
-    connect(m_IMListGroup, &FcitxSettingsGroup::switchPosition, m_config, [=](FcitxQtInputMethodItem* item, int to){
-        int from = m_config->getFcitxQtInputMethodItemList()->indexOf(item);
-        m_config->move(from , to);
-    });
-    connect(m_editHead, &FcitxSettingsHead::editChanged, this, &IMSettingWindow::onEditBtnClicked);
 
     connect(m_advSetKey, &QPushButton::clicked, [ = ]() {
         system("fcitx5-config-qt");
@@ -300,107 +367,34 @@ void IMSettingWindow::updateUI()
 //    readConfig();
 }
 
-void IMSettingWindow::itemSwap(FcitxQtInputMethodItem* item, const bool &isUp)
-{
-    int row = m_config->getFcitxQtInputMethodItemList()->indexOf(item);
-    Dynamic_Cast_CheckNull(FcitxIMActivityItem, t, m_IMListGroup->getItem(row));
-
-    if (isUp) {
-        m_IMListGroup->moveItem(t, row - 1);
-        m_config->move(row, row - 1);
-    } else {
-        if (row == m_config->getFcitxQtInputMethodItemList()->count() - 1) {
-            return;
-        }
-        m_IMListGroup->moveItem(t, row + 1);
-        m_config->move(row, row + 1);
-    }
-
-    t->setSelectStatus(false, row, m_config->getFcitxQtInputMethodItemList()->count());
-    int count = m_IMListGroup->indexOf(t);
-    if(count == 0) {
-        t->setIndex(FcitxIMActivityItem::firstItem);
-    } else if(count == m_IMListGroup->itemCount() -1){
-        t->setIndex(FcitxIMActivityItem::lastItem);
-    } else {
-        t->setIndex(FcitxIMActivityItem::otherItem);
-    }
-    Dynamic_Cast_CheckNull(FcitxIMActivityItem, t2, m_IMListGroup->getItem(row));
-    t2->setSelectStatus(true, row, m_config->getFcitxQtInputMethodItemList()->count());
-
-    int count2 = m_IMListGroup->indexOf(t2);
-    if(count2 == 0) {
-        t2->setIndex(FcitxIMActivityItem::firstItem);
-    } else if(count2 == m_IMListGroup->itemCount() -1){
-        t2->setIndex(FcitxIMActivityItem::lastItem);
-    } else {
-        t2->setIndex(FcitxIMActivityItem::otherItem);
-    }
-}
-
-//编辑当前输入法列表
-void IMSettingWindow::onEditBtnClicked(const bool &flag)
-{
-//    IMModel::instance()->setEdit(flag);
-//    m_IMListGroup->setSwitchAble(!flag);
-//    m_editHead->setEdit(flag);
-//    for (int i = 0; i < m_IMListGroup->itemCount(); ++i) {
-//        Dynamic_Cast(FcitxIMActivityItem, mItem, m_IMListGroup->getItem(i));
-//        if (mItem) {
-//            mItem->editSwitch(flag);
-//        }
-//    }
-}
-
 //当前输入法列表改变
 void IMSettingWindow::onCurIMChanged(FcitxQtInputMethodItemList* list)
 {
-    m_IMListGroup->clear();
+    m_deleteBtn->setEnabled(false);
+    m_IMListModel->clear();
 
     for (int i = 0; i < list->count(); ++i) {
-        FcitxIMActivityItem *tmp = nullptr;
-        if (i == 0) {
-            if(list->count() == 1) {
-                tmp = new FcitxIMActivityItem(list->at(i), FcitxIMActivityItem::onlyoneItem, this);
-            } else {
-                tmp = new FcitxIMActivityItem(list->at(i), FcitxIMActivityItem::firstItem, this);
-            }
-
-        } else if (i == list->count() - 1) {
-            tmp = new FcitxIMActivityItem(list->at(i), FcitxIMActivityItem::lastItem, this);
-        } else {
-            tmp = new FcitxIMActivityItem(list->at(i), FcitxIMActivityItem::otherItem, this);
-        }
-        connect(tmp, &FcitxIMActivityItem::configBtnClicked, this, &IMSettingWindow::onItemConfig);
-        connect(tmp, &FcitxIMActivityItem::upBtnClicked, this, &IMSettingWindow::onItemUp);
-        connect(tmp, &FcitxIMActivityItem::downBtnClicked, this, &IMSettingWindow::onItemDown);
-        connect(tmp, &FcitxIMActivityItem::deleteBtnClicked, this, &IMSettingWindow::onItemDelete);
-        connect(tmp, &FcitxIMActivityItem::selectItem, this, [=](FcitxSettingsItem * item, bool selected){
-            Q_UNUSED(item);
-            QTimer::singleShot(100, this, [=](){
-                m_editHead->setDeleteButtonEnable(selected);
-            });
-        });
-        connect(tmp, &FcitxIMActivityItem::itemSelect, this, [=](bool selected){
-            QTimer::singleShot(100, this, [=](){
-                m_editHead->setDeleteButtonEnable(selected);
-            });
-        });
-        //tmp->editSwitch(IMModel::instance()->isEdit());
-        m_IMListGroup->appendItem(tmp);
+        DStandardItem *tmp = new DStandardItem(list->at(i)->name());
+        m_IMListModel->appendRow(tmp);
         qInfo() << "manager im changed:" << list->at(i)->name();
-        tmp->repaint();
     }
-    m_IMListGroup->adjustSize();
 }
 
-void IMSettingWindow::onItemUp(FcitxQtInputMethodItem* item)
+void IMSettingWindow::onItemUp(int row)
 {
-    itemSwap(item, true);
+    m_config->move(row, row - 1);
+    m_IMListGroup->setCurrentIndex(m_IMListModel->index(row - 1, 0));
 }
 
-void IMSettingWindow::onItemConfig(FcitxQtInputMethodItem* item)
+void IMSettingWindow::onItemDown(int row)
 {
+    m_config->move(row, row + 1);
+    m_IMListGroup->setCurrentIndex(m_IMListModel->index(row + 1, 0));
+}
+
+void IMSettingWindow::onItemConfig(int row)
+{
+    auto item = m_config->getFcitxQtInputMethodItemList()->at(row);
     QString uniqueName = item->uniqueName();
     QString title = item->name();
     QPointer<QDialog> dialog = ConfigWidget::configDialog(
@@ -410,20 +404,10 @@ void IMSettingWindow::onItemConfig(FcitxQtInputMethodItem* item)
     delete dialog;
 }
 
-void IMSettingWindow::onItemDown(FcitxQtInputMethodItem* item)
+void IMSettingWindow::onItemDelete(int row)
 {
-    itemSwap(item, false);
-}
-
-void IMSettingWindow::onItemDelete(FcitxQtInputMethodItem* item)
-{
-    int index = m_config->getFcitxQtInputMethodItemList()->indexOf(item);
-    Dynamic_Cast_CheckNull(FcitxIMActivityItem, t, m_IMListGroup->getItem(index));
-
-    auto it = m_IMListGroup->getItem(index);
-    m_IMListGroup->removeItem(it);
-    it->deleteLater();
-    m_config->removeIM(index);
+    m_IMListModel->removeRow(row);
+    m_config->removeIM(row);
 }
 
 //添加按钮点击
