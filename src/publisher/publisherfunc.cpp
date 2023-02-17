@@ -4,17 +4,19 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 
 #include "publisherfunc.h"
-#include <QDir>
-#include <QFile>
-#include <QTime>
-#include <QImage>
+
 #include <QApplication>
 #include <QDesktopWidget>
-#include <QMessageBox>
-#include <QJsonParseError>
-#include <QJsonObject>
+#include <QDir>
+#include <QFile>
+#include <QImage>
 #include <QJsonArray>
+#include <QJsonObject>
+#include <QJsonParseError>
 #include <QKeyEvent>
+#include <QMessageBox>
+#include <QScreen>
+#include <QTime>
 
 namespace publisherFunc {
 
@@ -84,7 +86,7 @@ QPair<int, QString> startPopen(const QString &cmd, const QString &model)
 void moveToWindowCenter(QWidget *widget)
 {
     //获取主屏幕分辨率
-    QRect screenRect = QApplication::desktop()->screenGeometry();
+    QRect screenRect = QGuiApplication::primaryScreen()->availableGeometry();
     widget->move(screenRect.width() / 2 - widget->width() / 2, screenRect.height() / 2 - widget->height() / 2 - 100);
 }
 

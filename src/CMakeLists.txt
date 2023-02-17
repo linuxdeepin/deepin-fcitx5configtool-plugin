@@ -164,7 +164,8 @@ target_include_directories(${BIN_NAME} PUBLIC
 
 target_link_libraries(${BIN_NAME} PRIVATE
         dcc-interface
-        ${DdeControlCenter_LIBRARIES}
+        dcc-widgets
+        ${DCC_INTERFACE_LIBRARIES}
         ${DFrameworkDBus_LIBRARIES}
         ${DtkWidget_LIBRARIES}
         ${DtkCore_ILIBRARIES}

@@ -5,20 +5,20 @@
 
 #include "keysettingsitem.h"
 
-#include <DFontSizeManager>
-#include <DCommandLinkButton>
-#include <QComboBox>
-#include <QMouseEvent>
-#include <QLineEdit>
-#include <QCheckBox>
-#include <QLabel>
-#include <QBrush>
-#include <QProcess>
-#include <QKeyEvent>
-#include <QPainterPath>
-
-#include "settingsgroup.h"
 #include "publisher/publisherdef.h"
+
+#include <DCommandLinkButton>
+#include <DFontSizeManager>
+
+#include <QBrush>
+#include <QCheckBox>
+#include <QComboBox>
+#include <QKeyEvent>
+#include <QLabel>
+#include <QLineEdit>
+#include <QMouseEvent>
+#include <QPainterPath>
+#include <QProcess>
 
 namespace dcc_fcitx_configtool {
 namespace widgets {
@@ -112,14 +112,6 @@ void FcitxKeyLabelWidget::mousePressEvent(QMouseEvent *event)
         return;
     setShortcutShow(!m_keyEdit->isHidden());
     QWidget::mousePressEvent(event);
-}
-
-void FcitxKeyLabelWidget::resizeEvent(QResizeEvent *event)
-{
-    if (!m_eidtFlag)
-        return;
-    setShortcutShow(m_keyEdit->isHidden());
-    QWidget::resizeEvent(event);
 }
 
 bool FcitxKeyLabelWidget::eventFilter(QObject *watched, QEvent *event)
@@ -297,8 +289,10 @@ bool FcitxKeyLabelWidget::checkNewKey(bool isRelease)
     return true;
 }
 
-FcitxKeySettingsItem::FcitxKeySettingsItem(const QString &text, const QStringList &list, QFrame *parent)
-    : FcitxSettingsItem(parent)
+FcitxKeySettingsItem::FcitxKeySettingsItem(const QString &text,
+                                           const QStringList &list,
+                                           QFrame *parent)
+    : SettingsItem(parent)
 {
     m_label = new FcitxShortenLabel(text, this);
     m_keyWidget = new FcitxKeyLabelWidget(list, parent);
@@ -325,42 +319,6 @@ void FcitxKeySettingsItem::enableSingleKey()
     m_keyWidget->enableSingleKey();
 }
 
-void FcitxKeySettingsItem::paintEvent(QPaintEvent *event)
-{
-    QPainter painter( this);
-    const int radius = 8;
-    QRect paintRect = this->rect();
-    QPainterPath path;
-    path.moveTo(paintRect.bottomRight() - QPoint(0, radius));
-    path.lineTo(paintRect.topRight() + QPoint(0, radius));
-    path.arcTo(QRect(QPoint(paintRect.topRight() - QPoint(radius * 2, 0)),
-                     QSize(radius * 2, radius * 2)), 0, 90);
-    path.lineTo(paintRect.topLeft() + QPoint(radius, 0));
-    path.arcTo(QRect(QPoint(paintRect.topLeft()), QSize(radius * 2, radius * 2)), 90, 90);
-    path.lineTo(paintRect.bottomLeft() - QPoint(0, radius));
-    path.arcTo(QRect(QPoint(paintRect.bottomLeft() - QPoint(0, radius * 2)),
-                     QSize(radius * 2, radius * 2)), 180, 90);
-    path.lineTo(paintRect.bottomLeft() + QPoint(radius, 0));
-    path.arcTo(QRect(QPoint(paintRect.bottomRight() - QPoint(radius * 2, radius * 2)),
-                     QSize(radius * 2, radius * 2)), 270, 90);
-
-
-    DPalette p;
-    QColor color = DGuiApplicationHelper::instance()->applicationPalette().frameBorder().color();
-    if(DGuiApplicationHelper::instance()->themeType() == DGuiApplicationHelper::DarkType) {
-        color = QColor("#323232");
-        color.setAlpha(230);
-    } else {
-        color = DGuiApplicationHelper::instance()->applicationPalette().frameBorder().color();
-    }
-    if(isDraged()) {
-        color = DGuiApplicationHelper::instance()->applicationPalette().light().color();
-        color.setAlpha(80);
-    }
-    painter.fillPath(path, color);
-    return FcitxSettingsItem::paintEvent(event);
-}
-
 QString FcitxKeySettingsItem::getLabelText()
 {
     return m_label->text();
@@ -381,36 +339,15 @@ void FcitxKeySettingsItem::setList(const QStringList &list)
     m_keyWidget->setList(list);
 }
 
-void FcitxKeySettingsItem::resizeEvent(QResizeEvent *event)
-{
-    updateSize();
-    FcitxSettingsItem::resizeEvent(event);
-}
-
-//void FcitxKeySettingsItem::paintEvent(QPaintEvent *event)
-//{
-//    updateSize();
-//    FcitxSettingsItem::paintEvent(event);
-//}
-
 void FcitxKeySettingsItem::doShortCutError(const QStringList &list, QString &name)
 {
     emit FcitxKeySettingsItem::shortCutError(m_label->text(), list, name);
 }
 
-void FcitxKeySettingsItem::updateSize()
-{
-    int v = width() - m_keyWidget->width() - 32;
-    int titleWidth = publisherFunc::fontSize(m_label->text());
-    if (titleWidth <= v) {
-        m_label->setFixedWidth(titleWidth);
-    } else {
-        m_label->setFixedWidth(v);
-    }
-}
-
-FcitxHotKeySettingsItem::FcitxHotKeySettingsItem(const QString &text, const QStringList &list, QFrame *parent)
-    : FcitxSettingsItem(parent)
+FcitxHotKeySettingsItem::FcitxHotKeySettingsItem(const QString &text,
+                                                 const QStringList &list,
+                                                 QFrame *parent)
+    : SettingsItem(parent)
 {
     m_label = new FcitxShortenLabel(text, this);
     m_keyWidget = new FcitxKeyLabelWidget(list, parent);
@@ -457,288 +394,9 @@ void FcitxHotKeySettingsItem::setList(const QStringList &list)
     m_keyWidget->setList(list);
 }
 
-void FcitxHotKeySettingsItem::resizeEvent(QResizeEvent *event)
-{
-    updateSize();
-    FcitxSettingsItem::resizeEvent(event);
-}
-
 void FcitxHotKeySettingsItem::doShortCutError(const QStringList &list, QString &name)
 {
     emit FcitxHotKeySettingsItem::shortCutError(m_label->text(), list, name);
-}
-
-void FcitxHotKeySettingsItem::updateSize()
-{
-    int v = width() - m_keyWidget->width() - 32;
-    int titleWidth = publisherFunc::fontSize(m_label->text());
-    if (titleWidth <= v) {
-        m_label->setFixedWidth(titleWidth);
-    } else {
-        m_label->setFixedWidth(v);
-    }
-}
-
-FcitxComBoboxSettingsItem::FcitxComBoboxSettingsItem(const QString &text, const QStringList &list, QFrame *parent)
-    : FcitxSettingsItem(parent)
-{
-    m_combox = new QComboBox(this);
-    m_combox->setFixedHeight(36);
-    m_combox->addItems(list);
-    m_label = new FcitxShortenLabel(text, this);
-    DFontSizeManager::instance()->bind(m_label, DFontSizeManager::T6);
-    m_mainLayout = new QHBoxLayout(this);
-    m_mainLayout->addWidget(m_label);
-    m_mainLayout->addWidget(m_combox);
-    m_mainLayout->setContentsMargins(10, 0, 10, 0);
-    setLayout(m_mainLayout);
-    setFixedHeight(48);
-}
-
-QString FcitxComBoboxSettingsItem::getLabelText()
-{
-    return m_label->text();
-}
-
-void FcitxComBoboxSettingsItem::paintEvent(QPaintEvent *event)
-{
-    QPainter painter( this);
-    const int radius = 8;
-    QRect paintRect = this->rect();
-    QPainterPath path;
-    path.moveTo(paintRect.bottomRight() - QPoint(0, radius));
-    path.lineTo(paintRect.topRight() + QPoint(0, radius));
-    path.arcTo(QRect(QPoint(paintRect.topRight() - QPoint(radius * 2, 0)),
-                     QSize(radius * 2, radius * 2)), 0, 90);
-    path.lineTo(paintRect.topLeft() + QPoint(radius, 0));
-    path.arcTo(QRect(QPoint(paintRect.topLeft()), QSize(radius * 2, radius * 2)), 90, 90);
-    path.lineTo(paintRect.bottomLeft() - QPoint(0, radius));
-    path.arcTo(QRect(QPoint(paintRect.bottomLeft() - QPoint(0, radius * 2)),
-                     QSize(radius * 2, radius * 2)), 180, 90);
-    path.lineTo(paintRect.bottomLeft() + QPoint(radius, 0));
-    path.arcTo(QRect(QPoint(paintRect.bottomRight() - QPoint(radius * 2, radius * 2)),
-                     QSize(radius * 2, radius * 2)), 270, 90);
-
-
-    DPalette p;
-    QColor color = DGuiApplicationHelper::instance()->applicationPalette().frameBorder().color();
-    if(DGuiApplicationHelper::instance()->themeType() == DGuiApplicationHelper::DarkType) {
-        color = QColor("#323232");
-        color.setAlpha(230);
-    } else {
-        color = DGuiApplicationHelper::instance()->applicationPalette().frameBorder().color();
-    }
-    if(isDraged()) {
-        color = DGuiApplicationHelper::instance()->applicationPalette().light().color();
-        color.setAlpha(80);
-    }
-    painter.fillPath(path, color);
-    return FcitxSettingsItem::paintEvent(event);
-}
-
-FcitxComBoboxSettingsItem::~FcitxComBoboxSettingsItem()
-{
-}
-
-FcitxCheckBoxSettingsItem::FcitxCheckBoxSettingsItem(QWidget *parent)
-    : FcitxSettingsItem(parent)
-{
-    QHBoxLayout* horizontalLayout = new QHBoxLayout(this);
-    horizontalLayout->setContentsMargins(0, 0, 0, 0);
-    QCheckBox *checkbox = new QCheckBox();
-   // checkbox->setAccessibleName(addon->name);
-    checkbox->setMaximumWidth(20);
-    horizontalLayout->addSpacing(10);
-    horizontalLayout->addWidget(checkbox, Qt::AlignLeft);
-    horizontalLayout->addSpacing(10);
-    //checkbox->setCheckState(addon->bEnabled ? Qt::Checked : Qt::Unchecked);
-    connect(checkbox, &QCheckBox::clicked, this, [=](bool value){
-//        addon->bEnabled = value;
-//        QString buf = QString("%1.conf").arg(addon->name);
-//        FILE* fp = FcitxXDGGetFileUserWithPrefix("addon", buf.toLocal8Bit().constData(), "w", nullptr);
-//        if (fp) {
-//            fprintf(fp, "[Addon]\nEnabled=%s\n", addon->bEnabled ? "True" : "False");
-//            fclose(fp);
-////            if(Fcitx::Global::instance()->inputMethodProxy() != nullptr) {
-////                Fcitx::Global::instance()->inputMethodProxy()->ReloadConfig();
-////            }
-//            emit onChecked();
-//        }
-    });
-
-    QHBoxLayout* hLayout2 = new QHBoxLayout();
-    hLayout2->setContentsMargins(0, 0, 0, 0);
-    hLayout2->setSpacing(0);
-    QLabel* label2 = new QLabel();
-    //label2->setText(addon->generalname);
-    QFont f;
-    f.setPixelSize(13);
-    f.setFamily("SourceHanSansSC");
-    f.setWeight(QFont::DemiBold);
-    label2->setFont(f);
-    hLayout2->addWidget(label2, Qt::AlignLeft);
-
-//    QString configDescName = QString(addon->name) + ".desc";
-//    QByteArray configDescNamestr = configDescName.toLocal8Bit();
-//    FcitxConfigFileDesc* cfdesc = getConfigDesc(configDescNamestr.data());
-//    bool configurable = (cfdesc != nullptr || strlen(addon->subconfig) != 0);
-//    if(!QString(addon->subconfig).isEmpty() || configurable) {
-//        DCommandLinkButton* label = new DCommandLinkButton(tr("Configure"));
-//        DFontSizeManager::instance()->bind(label, DFontSizeManager::T8);
-//        hLayout2->addStretch();
-//        hLayout2->addWidget(label);
-//        hLayout2->addSpacing(8);
-//        connect(label, &DCommandLinkButton::clicked, this, [=](){
-//            if (QString(addon->name).contains("iflyime")) {
-//                QProcess::startDetached("sh -c " + IMConfig::IMPluginKey("iflyime"));
-//                return;
-//            }
-//            QProcess::startDetached("sh -c \"fcitx-config-gtk3 " + QString(addon->name) + "\"");
-//        });
-//    }
-    QVBoxLayout *vlayout = new QVBoxLayout;
-    vlayout->addSpacing(8);
-    vlayout->addLayout(hLayout2);
-    PushLable* label3 = new PushLable();
-    //label3->setOriginText(addon->comment);
-    QFont f2;
-    f2.setPixelSize(12);
-    label3->setFont(f2);
-    label3->setMidLineWidth(350);
-    QPalette pal2;
-    pal2.setColor(QPalette::WindowText, QColor("#526a7f"));
-    label3->setPalette(pal2);
-    vlayout->addWidget(label3);
-    vlayout->addSpacing(8);
-    horizontalLayout->addLayout(vlayout);
-    this->setLayout(horizontalLayout);
-}
-
-//FcitxConfigFileDesc *FcitxCheckBoxSettingsItem::getConfigDesc(char *filename)
-//{
-//    ConfigDescSet *desc = nullptr;
-//    //HASH_FIND_STR(m_configDescSet, filename, desc);
-//    if (!desc) {
-//        FILE * tmpfp = FcitxXDGGetFileWithPrefix("configdesc", filename, "r", nullptr);
-//        if (tmpfp) {
-//            desc = static_cast<ConfigDescSet *>(malloc(sizeof(ConfigDescSet))) ;
-//            memset(desc, 0 , sizeof(ConfigDescSet));
-//            desc->filename = strdup(filename);
-//            desc->cfdesc = FcitxConfigParseConfigFileDescFp(tmpfp);
-//            fclose(tmpfp);
-
-//           // HASH_ADD_KEYPTR(hh, m_configDescSet, desc->filename, strlen(desc->filename), desc);
-//        } else {
-//            return nullptr;
-//        }
-//    }
-
-//    return desc->cfdesc;
-//}
-
-FcitxCheckBoxSettingsItem::~FcitxCheckBoxSettingsItem()
-{
-
-}
-
-PushLable::PushLable(QWidget *parent)
-    : QLabel (parent)
-{
-
-}
-
-void PushLable::setOriginText(const QString &text)
-{
-    setText(text);
-    m_originText = text;
-}
-
-void PushLable::mousePressEvent(QMouseEvent *ev)
-{
-    Q_UNUSED(ev);
-    emit clicked();
-}
-
-void PushLable::resizeEvent(QResizeEvent *event)
-{
-    if(!m_originText.isEmpty()) {
-        QString name = fontMetrics().elidedText(m_originText, Qt::ElideRight, width());
-        setText(name);
-        if(name != m_originText) {
-            setToolTip(m_originText);
-        } else {
-            setToolTip("");
-        }
-    }
-    QLabel::resizeEvent(event);
-}
-
-FcitxGlobalSettingsItem::FcitxGlobalSettingsItem(QFrame *parent)
-    : FcitxSettingsItem(parent)
-{
-
-}
-
-FcitxGlobalSettingsItem::~FcitxGlobalSettingsItem()
-{
-
-}
-
-void FcitxGlobalSettingsItem::paintEvent(QPaintEvent *event)
-{
-    QPainter painter( this);
-    const int radius = 8;
-    QRect paintRect = this->rect();
-    QPainterPath path;
-    if(m_index == firstItem) {
-        path.moveTo(paintRect.bottomRight());
-        path.lineTo(paintRect.topRight() + QPoint(0, radius));
-        path.arcTo(QRect(QPoint(paintRect.topRight() - QPoint(radius * 2, 0)),
-                         QSize(radius * 2, radius * 2)), 0, 90);
-        path.lineTo(paintRect.topLeft() + QPoint(radius, 0));
-        path.arcTo(QRect(QPoint(paintRect.topLeft()), QSize(radius * 2, radius * 2)), 90, 90);
-        path.lineTo(paintRect.bottomLeft());
-        path.lineTo(paintRect.bottomRight());
-    } if(m_index == lastItem) {
-        path.moveTo(paintRect.bottomRight() - QPoint(0, radius));
-        path.lineTo(paintRect.topRight());
-        path.lineTo(paintRect.topLeft());
-        path.lineTo(paintRect.bottomLeft() - QPoint(0, radius));
-        path.arcTo(QRect(QPoint(paintRect.bottomLeft() - QPoint(0, radius * 2)),
-                         QSize(radius * 2, radius * 2)), 180, 90);
-        path.lineTo(paintRect.bottomLeft() + QPoint(radius, 0));
-        path.arcTo(QRect(QPoint(paintRect.bottomRight() - QPoint(radius * 2, radius * 2)),
-                         QSize(radius * 2, radius * 2)), 270, 90);
-    } if(m_index == otherItem) {
-        path.moveTo(paintRect.bottomRight());
-        path.lineTo(paintRect.topRight());
-        path.lineTo(paintRect.topLeft());
-        path.lineTo(paintRect.bottomLeft());
-        path.lineTo(paintRect.bottomRight());
-    }
-    DPalette p;
-
-    QColor color = DGuiApplicationHelper::instance()->applicationPalette().frameBorder().color();
-    if(DGuiApplicationHelper::instance()->themeType() == DGuiApplicationHelper::DarkType) {
-        color = QColor("#323232");
-        color.setAlpha(230);
-    } else {
-        color = DGuiApplicationHelper::instance()->applicationPalette().frameBorder().color();
-        color.setAlphaF(0.04);
-    }
-    painter.fillPath(path, color);
-    return FcitxSettingsItem::paintEvent(event);
-}
-
-void FcitxGlobalSettingsItem::mouseMoveEvent(QMouseEvent *e)
-{
-    update(rect());
-    return FcitxSettingsItem::mouseMoveEvent(e);
-}
-
-void FcitxGlobalSettingsItem::resizeEvent(QResizeEvent *event)
-{
-    FcitxSettingsItem::resizeEvent(event);
 }
 
 } // namespace widgets

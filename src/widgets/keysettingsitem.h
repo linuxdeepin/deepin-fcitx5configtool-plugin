@@ -5,10 +5,12 @@
 
 #ifndef KETSETTINGSITEM_H
 #define KETSETTINGSITEM_H
-#include "keylabel.h"
-#include "settingsitem.h"
-#include "labels/shortenlabel.h"
 #include "DLineEdit"
+#include "keylabel.h"
+#include "labels/shortenlabel.h"
+
+#include <widgets/settingsitem.h>
+
 #include <QComboBox>
 #include <QPushButton>
 
@@ -37,7 +39,6 @@ signals:
 
 protected:
     void mousePressEvent(QMouseEvent *event) override;
-    void resizeEvent(QResizeEvent *event) override;
     virtual bool eventFilter(QObject *watched, QEvent *event) override;
     void keyPressEvent(QKeyEvent *event) override;
     void keyReleaseEvent(QKeyEvent *event) override;
@@ -59,7 +60,7 @@ private:
     bool m_isSingle {false};
 };
 
-class FcitxKeySettingsItem : public FcitxSettingsItem
+class FcitxKeySettingsItem : public DCC_NAMESPACE::SettingsItem
 {
     Q_OBJECT
 public:
@@ -75,9 +76,6 @@ public:
      */
     void enableSingleKey();
 
-protected:
-    void paintEvent(QPaintEvent *event) override;
-
 signals:
     void editedFinish();
     void shortCutError(const QString &curName, const QStringList &list, QString &name);
@@ -85,20 +83,13 @@ signals:
 public slots:
     void doShortCutError(const QStringList &list, QString &name);
 
-protected:
-    void resizeEvent(QResizeEvent *event);
-    //void paintEvent(QPaintEvent *event);
-
-private:
-    void updateSize();
-
 private:
     FcitxShortenLabel *m_label {nullptr};
     QHBoxLayout *m_hLayout {nullptr};
     FcitxKeyLabelWidget *m_keyWidget {nullptr};
 };
 
-class FcitxHotKeySettingsItem : public FcitxSettingsItem
+class FcitxHotKeySettingsItem : public DCC_NAMESPACE::SettingsItem
 {
     Q_OBJECT
 public:
@@ -121,90 +112,10 @@ signals:
 public slots:
     void doShortCutError(const QStringList &list, QString &name);
 
-protected:
-    void resizeEvent(QResizeEvent *event);
-
-private:
-    void updateSize();
-
 private:
     FcitxShortenLabel *m_label {nullptr};
     QHBoxLayout *m_hLayout {nullptr};
     FcitxKeyLabelWidget *m_keyWidget {nullptr};
-};
-
-
-class FcitxComBoboxSettingsItem : public FcitxSettingsItem
-{
-    Q_OBJECT
-public:
-    FcitxComBoboxSettingsItem(const QString &text, const QStringList &list = {}, QFrame *parent = nullptr);
-    virtual ~FcitxComBoboxSettingsItem() override;
-    QComboBox *comboBox() { return m_combox; }
-    QString getLabelText();
-protected:
-    void paintEvent(QPaintEvent *event) override;
-private:
-    QHBoxLayout *m_mainLayout {nullptr};
-    QComboBox *m_combox {nullptr};
-    FcitxShortenLabel *m_label {nullptr};
-};
-
-class FcitxCheckBoxSettingsItem : public FcitxSettingsItem
-{
-//    typedef struct ConfigDescSet {
-//        char *filename;
-//        FcitxConfigFileDesc *cfdesc;
-//        UT_hash_handle hh;
-//    } ConfigDescSet;
-
-    Q_OBJECT
-public:
-    FcitxCheckBoxSettingsItem(/*FcitxAddon* addon, */QWidget *parent = nullptr);
-    virtual ~FcitxCheckBoxSettingsItem() override;
-signals:
-    void onChecked();
-
-private:
-    //FcitxConfigFileDesc *getConfigDesc(char *filename);
-
-private:
-    //ConfigDescSet* m_configDescSet;
-};
-
-class FcitxGlobalSettingsItem : public FcitxSettingsItem
-{
-    enum itemPosition{
-        firstItem = 0,
-        lastItem = -1,
-        onlyoneItem = -2,
-        otherItem = 1
-    };
-    Q_OBJECT
-public:
-    FcitxGlobalSettingsItem(QFrame *parent = nullptr);
-    virtual ~FcitxGlobalSettingsItem() override;
-    void setIndex(int index) {m_index = index;}
-protected:
-    void paintEvent(QPaintEvent *event) override;
-    void mouseMoveEvent(QMouseEvent *e) override;
-    void resizeEvent(QResizeEvent *event) override;
-private:
-    int m_index {1};
-};
-
-class PushLable : public QLabel {
-    Q_OBJECT
-public:
-    PushLable(QWidget* parent = nullptr);
-    void setOriginText(const QString& text);
-protected:
-    void mousePressEvent(QMouseEvent* ev) override;
-    void resizeEvent(QResizeEvent *event) override;
-signals:
-    void clicked();
-private:
-    QString m_originText;
 };
 
 } // namespace widgets
