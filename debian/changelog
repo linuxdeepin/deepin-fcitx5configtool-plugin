@@ -1,3 +1,9 @@
+deepin-fcitx5configtool-plugin (5.0.14) unstable; urgency=medium
+
+  * Fix build failure
+
+ -- zsien <quezhiyong@uniontech.com>  Mon, 20 Feb 2023 17:08:22 +0800
+
 deepin-fcitx5configtool-plugin (5.0.13) unstable; urgency=medium
 
   * 修复输入方式设置页面按钮没翻译
