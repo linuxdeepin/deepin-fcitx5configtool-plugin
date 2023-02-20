@@ -134,8 +134,7 @@ include_directories(${PROJECT_NAME_TEST} PUBLIC
     ${CMAKE_CURRENT_SOURCE_DIR}/../src)
 
 target_include_directories(${PROJECT_NAME_TEST} PUBLIC
-        "/usr/include/dde-control-center"
-#${DdeControlCenter_INCLUDE_DIR}
+        ${DdeControlCenter_INCLUDE_DIR}
         ${DtkCore_INCLUDE_DIRS}
         ${DtkWidget_INCLUDE_DIRS}
         ${DFrameworkDBus_INCLUDE_DIRS}
@@ -145,7 +144,6 @@ target_include_directories(${PROJECT_NAME_TEST} PUBLIC
         )
 
 target_link_libraries(${PROJECT_NAME_TEST} PRIVATE
-        "/usr/lib/dde-control-center"
 #${DdeControlCenter_LIBRARIES}
         KF5::I18n
         ${DFrameworkDBus_LIBRARIES}
