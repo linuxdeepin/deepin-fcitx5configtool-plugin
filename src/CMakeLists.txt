@@ -154,8 +154,7 @@ set_target_properties(${BIN_NAME} PROPERTIES
 get_target_property(FCITX5_QT5_GUI_WRAPPER Fcitx5Qt5::gui-wrapper IMPORTED_LOCATION)
 #include("${FCITX_INSTALL_CMAKECONFIG_DIR}/Fcitx5Utils/Fcitx5CompilerSettings.cmake")
 target_include_directories(${BIN_NAME} PUBLIC
-        "/usr/include/dde-control-center"
-        ${DdeControlCenter_INCLUDE_DIRS}
+        ${DdeControlCenter_INCLUDE_DIR}
         ${DtkCore_INCLUDE_DIRS}
         ${DtkWidget_INCLUDE_DIRS}
         ${DFrameworkDBus_INCLUDE_DIRS}
@@ -164,7 +163,6 @@ target_include_directories(${BIN_NAME} PUBLIC
         )
 
 target_link_libraries(${BIN_NAME} PRIVATE
-        "/usr/lib/dde-control-center"
         dcc-interface
         ${DdeControlCenter_LIBRARIES}
         ${DFrameworkDBus_LIBRARIES}
