@@ -4,8 +4,8 @@
 // SPDX-License-Identifier: GPL-2.0-or-later
 // SPDX-License-Identifier: GPL-3.0-or-later
 
-#ifndef ADDIMMODEL_H
-#define ADDIMMODEL_H
+#ifndef MODEL_H
+#define MODEL_H
 
 #include <QAbstractListModel>
 #include <QSet>
@@ -21,12 +21,7 @@ enum {
     FcitxIMUniqueNameRole,
     FcitxIMConfigurableRole,
     FcitxIMLayoutRole,
-
-    FcitxLanguageCode,     // 取得语言编码
-    FcitxUseIMLanguageRole,// 是否为使用的输入法语言项（有一个输入法子项被使用，语言项则被使用）
-    FcitxRowIndexRole,
-    FcitxUseIMRole,        // 是否为使用的输入法项
-    FcitxEnglishNameRole,  // 取得语言的英文名称
+    FcitxIMActiveRole,
 };
 
 enum { LanguageType, IMType };
@@ -68,11 +63,6 @@ public:
     filterIMEntryList(const FcitxQtInputMethodEntryList &imEntryList,
                       const FcitxQtStringKeyValueList &enabledIMs) override;
 
-    void getInputMethodEntryList(int row, FcitxQtStringKeyValueList& currentNameList);
-    void getInputMethodEntryList(int row, FcitxQtStringKeyValueList& currentNameList, FcitxQtStringKeyValueList& currentUseNameList, FcitxQtStringKeyValueList& useIMList);
-    void getInputMethodEntryList(int row, FcitxQtStringKeyValueList& currentNameList, FcitxQtStringKeyValueList& currentUseNameList, FcitxQtStringKeyValueList& useIMList, QString matchStr);
-    bool existUseIMEntryList(int row, FcitxQtStringKeyValueList& useIMList) const;
-
 protected:
     int listSize() const override { return m_filteredIMEntryList.size(); }
     int subListSize(int idx) const override {
@@ -82,7 +72,6 @@ protected:
     QVariant dataForCategory(const QModelIndex &index, int role) const override;
 
 private:
-    QList<QPair<QString, bool>> m_filteredUseIMLanguageList;
     QList<QPair<QString, FcitxQtInputMethodEntryList>> m_filteredIMEntryList;
 };
 
@@ -96,6 +85,7 @@ class IMProxyModel : public QSortFilterProxyModel,
 public:
     IMProxyModel(QObject *parent = nullptr);
 
+    // Forward role names.
     QHash<int, QByteArray> roleNames() const override {
         if (sourceModel()) {
             return sourceModel()->roleNames();
@@ -113,9 +103,12 @@ public:
                       const FcitxQtStringKeyValueList &enabledIMs) override;
 
 protected:
-    bool filterAcceptsRow(int source_row, const QModelIndex &source_parent) const override;
-    bool lessThan(const QModelIndex &left, const QModelIndex &right) const override;
-    int compareCategories(const QModelIndex &left, const QModelIndex &right) const;
+    bool filterAcceptsRow(int source_row,
+                          const QModelIndex &source_parent) const override;
+    bool lessThan(const QModelIndex &left,
+                  const QModelIndex &right) const override;
+    int compareCategories(const QModelIndex &left,
+                          const QModelIndex &right) const;
 
 private:
     bool filterLanguage(const QModelIndex &index) const;
@@ -135,21 +128,24 @@ public:
     enum Mode { CurrentIM, AvailIM };
 
     FilteredIMModel(Mode mode, QObject *parent = nullptr);
-    QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const override;
+    QVariant data(const QModelIndex &index,
+                  int role = Qt::DisplayRole) const override;
     int rowCount(const QModelIndex &parent = QModelIndex()) const override;
 
     QHash<int, QByteArray> roleNames() const override;
-    void filterIMEntryList(const FcitxQtInputMethodEntryList &imEntryList, const FcitxQtStringKeyValueList &enabledIMs) override;
+    void
+    filterIMEntryList(const FcitxQtInputMethodEntryList &imEntryList,
+                      const FcitxQtStringKeyValueList &enabledIMs) override;
 
     int count() const { return rowCount(); }
     Q_INVOKABLE QString imAt(int idx) const {
         return index(idx).data(FcitxIMUniqueNameRole).toString();
     }
-public slots:
+public Q_SLOTS:
     void move(int from, int to);
     void remove(int index);
 
-signals:
+Q_SIGNALS:
     void imListChanged(FcitxQtInputMethodEntryList list);
 
 private:

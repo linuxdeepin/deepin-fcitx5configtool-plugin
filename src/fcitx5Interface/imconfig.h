@@ -23,40 +23,36 @@ using namespace fcitx;
 
 class IMConfig : public QObject {
     Q_OBJECT
+    Q_PROPERTY(FilteredIMModel *currentIMModel READ currentIMModel
+                   CONSTANT)
+    Q_PROPERTY(IMProxyModel *availIMModel READ availIMModel CONSTANT)
+    Q_PROPERTY(QString defaultLayout READ defaultLayout WRITE setDefaultLayout
+                   NOTIFY defaultLayoutChanged)
+    Q_PROPERTY(QStringList groups READ groups NOTIFY groupsChanged)
+    Q_PROPERTY(QString currentGroup READ currentGroup WRITE setCurrentGroup)
+    Q_PROPERTY(bool needSave READ needSave)
+    Q_PROPERTY(bool needUpdate READ needUpdate NOTIFY needUpdateChanged)
 public:
     enum ModelMode { Tree, Flatten };
 
     IMConfig(DBusProvider *dbus, ModelMode mode, QObject *parent);
     ~IMConfig();
 
-    void testAddIMDeal(int imIndex);
-
-    FilteredIMModel *currentFilteredIMModel() const { return m_currentIMModel; }
-    FcitxQtInputMethodItemList *currentIMModel() const { return m_currentInputMethodList; }
+    FilteredIMModel *currentIMModel() const { return m_currentIMModel; }
     IMProxyModel *availIMModel() const { return m_availIMModel; }
     const QStringList &groups() const { return m_groups; }
     const QString &currentGroup() const { return m_lastGroup; }
     void setCurrentGroup(const QString &name);
     bool needSave() const { return m_needSave; }
+    bool needUpdate() const { return m_needUpdate; }
 
-    //void addIM(FcitxQtInputMethodItem* item);
-    //void removeIM(int index);
+    void addIM(const QModelIndex &index);
+    void addIMs(const QModelIndexList &indexes);
+    void removeIM(const QModelIndex &index);
 
-    int addSelectedIM(int index, QString matchStr = "");
-    int addSelectedIM(const QModelIndex& index, QString matchStr = "");
-
-    const auto& currentIMEntries() const { return m_currentIMEntries; }
-    const auto& currentUseIMEntries() const { return m_currentUseIMEntries; }
     const auto &imEntries() const { return m_imEntries; }
-    const auto &allIms() const { return m_allIMs; }
     void setIMEntries(const FcitxQtStringKeyValueList &imEntires) {
         m_imEntries = imEntires;
-        updateIMList();
-    }
-
-    void clearCurrentIMEntries()
-    {
-        m_currentIMEntries.clear();
         updateIMList();
     }
 
@@ -65,7 +61,7 @@ public:
         if (m_defaultLayout != l) {
             m_defaultLayout = l;
             emitChanged();
-            emit defaultLayoutChanged();
+            Q_EMIT defaultLayoutChanged();
         }
     }
 
@@ -82,61 +78,48 @@ public:
 
     void emitChanged();
 
-    void load_test_data();
-
-    FcitxQtInputMethodItemList* getFcitxQtInputMethodItemList() {return m_currentInputMethodList;}
-
-public slots:
+public Q_SLOTS:
     void addGroup(const QString &name);
     void deleteGroup(const QString &name);
     void save();
-    void saveSelectedIM(int imIndex);
     void load();
     void defaults();
-    //void addIM(int index);
-    void addIM(const QString& name);
+    void addIM(int index);
     void removeIM(int index);
     void move(int from, int to);
+    void refresh();
+    void restart();
 
-signals:
+Q_SIGNALS:
     void changed();
     void currentGroupChanged(const QString &group);
     void groupsChanged(const QStringList &groups);
     void imListChanged();
     void defaultLayoutChanged();
-    void addIMSignal(int imIndex);
+    void needUpdateChanged(bool);
 
-private slots:
+private Q_SLOTS:
     void availabilityChanged();
     void fetchGroupInfoFinished(QDBusPendingCallWatcher *watcher);
     void fetchInputMethodsFinished(QDBusPendingCallWatcher *watcher);
     void fetchGroupsFinished(QDBusPendingCallWatcher *watcher);
+    void checkUpdateFinished(QDBusPendingCallWatcher *watcher);
 
 private:
-    void reloadIMList();
     void reloadGroup();
     void updateIMList(bool excludeCurrent = false);
-    void filterIMEntryList(
-        const FcitxQtInputMethodEntryList &imEntryList,
-        const FcitxQtStringKeyValueList &enabledIMList);
 
     DBusProvider *m_dbus;
     IMProxyModel *m_availIMModel;
     IMConfigModelInterface *m_internalAvailIMModel = nullptr;
-    FcitxQtInputMethodItemList *m_currentInputMethodList;
-    QString m_defaultLayout;
-
     FilteredIMModel *m_currentIMModel;
-    FcitxQtStringKeyValueList m_currentIMEntries;
-    FcitxQtStringKeyValueList m_currentUseIMEntries;
-
+    QString m_defaultLayout;
     FcitxQtStringKeyValueList m_imEntries;
     FcitxQtInputMethodEntryList m_allIMs;
     QStringList m_groups;
     QString m_lastGroup;
     bool m_needSave = false;
-
-    int m_mode;
+    bool m_needUpdate = false;
 };
 
 #endif

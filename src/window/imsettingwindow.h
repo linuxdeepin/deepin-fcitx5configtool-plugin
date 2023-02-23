@@ -38,6 +38,7 @@ class IMConfig;
 class AdvanceConfig;
 class ConfigSettings;
 class QStandardItemModel;
+class FilteredIMModel;
 
 class IMSettingWindow : public QWidget
 {
@@ -66,7 +67,7 @@ private:
     void hideAdvanceButton();
     void setSwitchFirstFuncEnable();
 private slots:
-    void onCurIMChanged(FcitxQtInputMethodItemList* list);
+    void onCurIMChanged(FilteredIMModel* model);
     void onAddBtnCilcked();
     void onItemUp(int row);
     void onItemDown(int row);
