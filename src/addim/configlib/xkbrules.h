@@ -20,7 +20,7 @@ public:
 
     bool open(const QString &filename);
 
-    layout layout(const QString &keyboard) const { return m_keyboardLayoutsMap[keyboard]; }
+    layout layout(const QString &keyboard) const { return m_keyboardLayoutsMap.value(keyboard); }
     static QString tr(const QString &text);
 
 private:

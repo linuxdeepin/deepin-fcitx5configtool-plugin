@@ -7,30 +7,30 @@
 #ifndef ADDIM_IMPAGE_H
 #define ADDIM_IMPAGE_H
 
-#include "imconfig.h"
 #include "dbusprovider.h"
+#include "imconfig.h"
 #include "layoutselector.h"
+
+#include <fcitxqtdbustypes.h>
+#include <widgets/buttontuple.h>
+
+#include <DAbstractDialog>
+#include <DListView>
+#include <DSearchEdit>
+#include <DWidget>
+#include <DCommandLinkButton>
+
 #include <QDBusPendingCallWatcher>
 #include <QWidget>
-#include <fcitxqtdbustypes.h>
-#include <memory>
-#include <DSearchEdit>
 
-namespace Ui {
-class IMPage;
-}
-
+class QLabel;
+class QPushButton;
 
 namespace fcitx {
 namespace addim {
 
-class AvailIMModel;
-class IMProxyModel;
-class CurrentIMModel;
-class ADDIMDBusProvider;
-
-class BaseWidget;
-class IMPage : public QWidget {
+class IMPage : public DTK_WIDGET_NAMESPACE::DAbstractDialog
+{
     Q_OBJECT
 public:
     IMPage(DBusProvider *dbus, IMConfig *config, QWidget *parent);
@@ -48,43 +48,26 @@ protected:
     virtual bool eventFilter(QObject *watched, QEvent *event) override;
 
 private slots:
-
-    void availIMSelectionChanged();
-    void currentIMCurrentChanged();
-    void selectCurrentIM(const QModelIndex &index);
-    void clickCurrentIM(const QModelIndex &index);
-    void clickAvailIM(const QModelIndex &index);
-    void selectDefaultLayout();
-
-    void moveDownIM();
-    void moveUpIM();
+    void availIMCurrentChanged(const QModelIndex &index);
+    void childIMSelectionChanged(const QItemSelection &selection);
 
     void clickedCloseButton();
     void clickedAddButton();
 
 private:
-    int addIM(const QModelIndex &index, QString matchStr = "");
-    void checkDefaultLayout();
-
-private:
-    std::unique_ptr<Ui::IMPage> ui_;
     DBusProvider *m_dbus;
     IMConfig *m_config;
-    Dtk::Widget::DSearchEdit* m_SearchEdit;
-    fcitx::addim::LayoutSelector* m_laSelector;
 
-    BaseWidget* m_wleftview;
-    BaseWidget* m_wrightupview;
-    BaseWidget* m_wrightdownview;
-};
-
-class BaseWidget : public QWidget
-{
-	Q_OBJECT
-public:
-	BaseWidget(const QString& text, QWidget* parent = nullptr, Qt::WindowFlags f = Qt::WindowFlags());
-protected:
-	void paintEvent(QPaintEvent* e) override;
+    QHBoxLayout *m_contentLayout;
+    QVBoxLayout *m_leftLayout;
+    Dtk::Widget::DSearchEdit *m_searchEdit;
+    QFrame *line;
+    Dtk::Widget::DListView *m_availIMList;
+    QVBoxLayout *m_rightLayout;
+    Dtk::Widget::DListView *m_childIMList;
+    fcitx::addim::LayoutSelector *m_laSelector;
+    Dtk::Widget::DCommandLinkButton *m_findMoreLabel;
+    DCC_NAMESPACE::ButtonTuple *m_buttonTuple;
 };
 
 }

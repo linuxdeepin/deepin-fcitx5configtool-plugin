@@ -5,7 +5,8 @@
 
 #include "imsettingwindow.h"
 
-#include "addim/widgetslib/addimwindow.h"
+#include "addim/widgetslib/impage.h"
+#include "model.h"
 #include "configsetting/configsetting.h"
 #include "fcitx5Interface/advanceconfig.h"
 #include "fcitx5Interface/configwidgetslib/configwidget.h"
@@ -86,7 +87,7 @@ void IMSettingWindow::initUI()
 
     connect(addBtn, &DIconButton::clicked, this, [=]() {
         qInfo() << "user clicked add button";
-        fcitx::addim::AddIMWindow mainWindow(m_dbus, m_config, (DDialog *)this);
+        fcitx::addim::IMPage mainWindow(m_dbus, m_config, this);
         Dtk::Widget::moveToCenter(&mainWindow);
         mainWindow.exec();
     });
@@ -101,7 +102,7 @@ void IMSettingWindow::initUI()
     m_IMListModel = new QStandardItemModel(this);
     m_IMListGroup->setModel(m_IMListModel);
 
-    onCurIMChanged(m_config->getFcitxQtInputMethodItemList());
+    onCurIMChanged(m_config->currentIMModel());
 
     connect(m_IMListGroup->selectionModel(),
             &QItemSelectionModel::currentChanged,
@@ -217,7 +218,7 @@ void IMSettingWindow::initConnect()
 {
     connect(m_config, &IMConfig::imListChanged, this, [=]() {
         qInfo() << "list changed:" << m_IMListModel->rowCount();
-        onCurIMChanged(m_config->getFcitxQtInputMethodItemList());
+        onCurIMChanged(m_config->currentIMModel());
     });
     auto reloadFcitx = [ = ](bool flag) {
 //        if (Global::instance()->inputMethodProxy() && flag)
@@ -368,35 +369,38 @@ void IMSettingWindow::updateUI()
 }
 
 //当前输入法列表改变
-void IMSettingWindow::onCurIMChanged(FcitxQtInputMethodItemList* list)
+void IMSettingWindow::onCurIMChanged(FilteredIMModel* model)
 {
     m_deleteBtn->setEnabled(false);
     m_IMListModel->clear();
 
-    for (int i = 0; i < list->count(); ++i) {
-        DStandardItem *tmp = new DStandardItem(list->at(i)->name());
+    for (int i = 0; i < model->rowCount(); ++i) {
+        QString name = model->index(i).data(Qt::DisplayRole).toString();
+        DStandardItem *tmp = new DStandardItem(name);
         m_IMListModel->appendRow(tmp);
-        qInfo() << "manager im changed:" << list->at(i)->name();
+        qInfo() << "manager im changed:" << name;
     }
 }
 
 void IMSettingWindow::onItemUp(int row)
 {
     m_config->move(row, row - 1);
+    m_config->save();
     m_IMListGroup->setCurrentIndex(m_IMListModel->index(row - 1, 0));
 }
 
 void IMSettingWindow::onItemDown(int row)
 {
     m_config->move(row, row + 1);
+    m_config->save();
     m_IMListGroup->setCurrentIndex(m_IMListModel->index(row + 1, 0));
 }
 
 void IMSettingWindow::onItemConfig(int row)
 {
-    auto item = m_config->getFcitxQtInputMethodItemList()->at(row);
-    QString uniqueName = item->uniqueName();
-    QString title = item->name();
+    auto item = m_config->currentIMModel()->index(row);
+    QString uniqueName = item.data(FcitxIMUniqueNameRole).toString();
+    QString title = item.data(Qt::DisplayRole).toString();
     QPointer<QDialog> dialog = ConfigWidget::configDialog(
         this, m_dbus, QString("fcitx://config/inputmethod/%1").arg(uniqueName),
         title);
@@ -408,6 +412,7 @@ void IMSettingWindow::onItemDelete(int row)
 {
     m_IMListModel->removeRow(row);
     m_config->removeIM(row);
+    m_config->save();
 }
 
 //添加按钮点击

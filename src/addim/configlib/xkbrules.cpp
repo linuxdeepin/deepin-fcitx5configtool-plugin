@@ -27,7 +27,7 @@ XkbRules &XkbRules::instance() {
 bool XkbRules::open(const QString &filename) {
     QFile xmlFile(filename);
     if (!xmlFile.open(QIODevice::ReadOnly | QIODevice::Text)) {
-        return 1;
+        return false;
     }
 
     QDomDocument xmlReader;
