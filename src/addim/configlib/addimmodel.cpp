@@ -7,6 +7,7 @@
 #include "addimmodel.h"
 
 #include "glo.h"
+#include "xkbrules.h"
 
 #include <fcitx-utils/i18n.h>
 
@@ -143,6 +144,28 @@ static QString languageName(const QString &langCode) {
     }
 }
 
+static QString getEnglishLanguageName(const QString &uniqueName, const QString &languageCode)
+{
+    const auto &xkbrules = XkbRules::instance();
+    QString englishName;
+
+    if (uniqueName.startsWith("keyboard-")) {
+        auto layout = xkbrules.layout(uniqueName);
+        englishName = layout.description;
+    }
+
+    if (englishName.isEmpty()) {
+        englishName = QLocale::languageToString(QLocale(languageCode).language());
+    }
+
+    if (englishName.isEmpty()) {
+        englishName = "unknown";
+        qInfo("NOTICE: uniqueName [%s] not found english name. unknown.", uniqueName.toStdString().c_str());
+    }
+
+    return englishName;
+}
+
 AvailIMModel::AvailIMModel(QObject *parent) : CategorizedItemModel(parent) {}
 
 QVariant AvailIMModel::dataForCategory(const QModelIndex &index, int role) const {
@@ -152,13 +175,13 @@ QVariant AvailIMModel::dataForCategory(const QModelIndex &index, int role) const
     switch (role) {
     case Qt::DisplayRole:
         language    = languageName(m_filteredIMEntryList[index.row()].first);
-        englishName = getEnglishLanguageName(m_filteredIMEntryList[index.row()].second.at(0).uniqueName());
+        englishName = getEnglishLanguageName(m_filteredIMEntryList[index.row()].second.at(0).uniqueName(), m_filteredIMEntryList[index.row()].first);
 
         categoryLanguageName = language + " - " + englishName;
         return categoryLanguageName;
 
     case FcitxEnglishNameRole:
-        englishName = getEnglishLanguageName(m_filteredIMEntryList[index.row()].second.at(0).uniqueName());
+        englishName = getEnglishLanguageName(m_filteredIMEntryList[index.row()].second.at(0).uniqueName(), m_filteredIMEntryList[index.row()].first);
         return englishName;
 
     case FcitxLanguageRole:
@@ -212,41 +235,22 @@ QVariant AvailIMModel::dataForItem(const QModelIndex &index, int role) const {
     return QVariant();
 }
 
-QString buildKeyByIMNameAndLanguageCode(const QString &name, const QString& languageCode)
-{
-    QString key;
-    int start_loc;
-    start_loc = name.indexOf(" - ");
-    if (start_loc != -1) {
-        start_loc += 3;
-        int end_loc = name.indexOf(" - ", start_loc);
-        if (end_loc != -1) {
-            key = name.mid(start_loc, end_loc - start_loc);
-        }
-        else {
-            key = name.mid(start_loc, -1);
+QString buildKeyByIMNameAndLanguageCode(const QString &uniqueName, const QString &languageCode) {
+    const auto &xkbrules = XkbRules::instance();
+    if (uniqueName.startsWith("keyboard-")) {
+        QString description = xkbrules.layout(uniqueName).description;
+        if (!description.isEmpty()) {
+            return XkbRules::tr(description);
         }
     }
-    else {
-        key = languageName(languageCode);
-    }
 
-    start_loc = key.indexOf("(");
-    if (start_loc != -1) {
-        key = key.mid(0, start_loc);
-    }
-
-    start_loc = key.indexOf("（");
-    if (start_loc != -1) {
-        key = key.mid(0, start_loc);
-    }
-    key = key.trimmed();
-    return key;
+    return QLocale(languageCode).name();
 }
 
 void AvailIMModel::filterIMEntryList(
     const FcitxQtInputMethodEntryList &imEntryList,
     const FcitxQtStringKeyValueList &enabledIMList) {
+
     beginResetModel();
 
     FcitxQtStringKeyValueList useIMList = getUseIMList();
@@ -265,7 +269,10 @@ void AvailIMModel::filterIMEntryList(
     QString englishName;
     QString loc_name = QLocale().name();
     for (const FcitxQtInputMethodEntry &im : imEntryList) {
-        key = buildKeyByIMNameAndLanguageCode(im.name(), im.languageCode());
+        uniqueName = im.uniqueName();
+        qInfo("uniqueName [%s]", uniqueName.toStdString().c_str());
+
+        key = buildKeyByIMNameAndLanguageCode(uniqueName, im.languageCode());
 
         if (!languageMap.contains(key)) {
             idx = m_filteredIMEntryList.count();
@@ -278,10 +285,7 @@ void AvailIMModel::filterIMEntryList(
         }
         m_filteredIMEntryList[idx].second.append(im);
 
-        uniqueName = im.uniqueName();
-        qInfo("uniqueName [%s]", uniqueName.toStdString().c_str());
-
-        englishName = getEnglishLanguageName(uniqueName);
+        englishName = getEnglishLanguageName(uniqueName, im.languageCode());
         if (loc_name.startsWith("zh") && englishName == "Chinese") {
             m_filteredUseIMLanguageList[idx].second = true;
             continue;
@@ -389,8 +393,8 @@ void AvailIMModel::getInputMethodEntryList(int row, FcitxQtStringKeyValueList& c
             }
         }
 
-        QString key = buildKeyByIMNameAndLanguageCode(im.name(), im.languageCode());
-        QString englishName = getEnglishLanguageName(uniqueName);
+        QString key = buildKeyByIMNameAndLanguageCode(im.uniqueName(), im.languageCode());
+        QString englishName = getEnglishLanguageName(uniqueName, im.languageCode());
 
         if (iter != useIMList.end()) {
             if (entry_name.contains(matchStr, Qt::CaseInsensitive) ||
@@ -495,8 +499,8 @@ bool IMProxyModel::filterIM(const QModelIndex &index) const {
         return true;
     }
 
-    QString key         = buildKeyByIMNameAndLanguageCode(name, languageCode);
-    QString englishName = getEnglishLanguageName(uniqueName);
+    QString key         = buildKeyByIMNameAndLanguageCode(uniqueName, languageCode);
+    QString englishName = getEnglishLanguageName(uniqueName, languageCode);
 
     bool flag = true;
     if (!m_filterText.isEmpty()) {

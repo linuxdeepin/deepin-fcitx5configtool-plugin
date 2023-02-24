@@ -30,7 +30,6 @@ IMConfig::IMConfig(DBusProvider *dbus, ModelMode mode, QObject *parent)
     }
 
     m_mode = mode;
-    initCategroyLanguageMap();
     availabilityChanged();
 
     connect(this, &IMConfig::addIMSignal, this, &IMConfig::testAddIMDeal);
@@ -240,28 +239,6 @@ void IMConfig::fetchInputMethodsFinished(QDBusPendingCallWatcher *watcher) {
     if (!ims.isError()) {
         m_allIMs = ims.value();
         updateIMList();
-    }
-
-    QString englishName = "";
-    int index = 0;
-    int count = m_allIMs.count();
-    for (auto& imEntry : m_allIMs) {
-        englishName = getEnglishLanguageName(imEntry.uniqueName());
-        if (englishName == "unknown") {
-            qWarning("NOTICE NO DATA: [%d/%d] uniqueName [%s], name [%s], nativeName [%s], icon "
-                     "[%s], label [%s], languageCode [%s], configurable [%d]",
-                     index + 1,
-                     count,
-                     imEntry.uniqueName().toStdString().c_str(),
-                     imEntry.name().toStdString().c_str(),
-                     imEntry.nativeName().toStdString().c_str(),
-                     imEntry.icon().toStdString().c_str(),
-                     imEntry.label().toStdString().c_str(),
-                     imEntry.languageCode().toStdString().c_str(),
-                     imEntry.configurable());
-        }
-
-        index += 1;
     }
 
     qInfo("<====");

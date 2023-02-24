@@ -4,6 +4,8 @@ project(deepin-fcitx5configtool-plugin VERSION 5.0.5)
 
 
 set(CMAKE_MODULE_PATH ${ECM_MODULE_PATH} ${ECM_KDE_MODULE_DIR} ${CMAKE_CURRENT_SOURCE_DIR}/cmake)
+set(DEFAULT_XKB_RULES "evdev" CACHE STRING "Xkb rules name")
+
 find_package(XKeyboardConfig REQUIRED)
 find_package(IsoCodes REQUIRED)
 configure_file(config.h.in config.h)
