@@ -45,10 +45,6 @@ AddIMWindow::AddIMWindow(DBusProvider* dbus, IMConfig* config, DDialog* parent)
 
     connect(this, &AddIMWindow::changed, this, &AddIMWindow::handleChanged);
     connect(m_impage, &IMPage::closeAddIMWindow, this, &AddIMWindow::closeWindow);
-
-    qInfo("before, load.");
-    load();
-    qInfo("after, load.");
 }
 
 void AddIMWindow::handleChanged(bool changed) {
