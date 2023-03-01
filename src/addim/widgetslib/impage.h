@@ -44,12 +44,11 @@ public slots:
     void load();
     void defaults();
 
-protected:
-    virtual bool eventFilter(QObject *watched, QEvent *event) override;
-
 private slots:
     void availIMCurrentChanged(const QModelIndex &index);
     void childIMSelectionChanged(const QItemSelection &selection);
+
+    void clickedFindMoreButton();
 
     void clickedCloseButton();
     void clickedAddButton();
