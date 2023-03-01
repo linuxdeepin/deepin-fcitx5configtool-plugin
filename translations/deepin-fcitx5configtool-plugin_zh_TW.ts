@@ -1,13 +1,15 @@
-<?xml version="1.0" ?><!DOCTYPE TS><TS version="2.1" language="zh_TW">
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE TS>
+<TS version="2.1" language="zh_TW">
 <context>
     <name>Fcitx5ConfigPlugin</name>
     <message>
-        <location filename="../src/fcitx5configplugin.cpp" line="15"/>
+        <location filename="../src/fcitx5configplugin.cpp" line="28"/>
         <source>Input Methods</source>
         <translation>輸入法</translation>
     </message>
     <message>
-        <location filename="../src/fcitx5configplugin.cpp" line="30"/>
+        <location filename="../src/fcitx5configplugin.cpp" line="43"/>
         <source>Input Method</source>
         <translation>輸入法</translation>
     </message>
@@ -15,32 +17,32 @@
 <context>
     <name>IMSettingWindow</name>
     <message>
-        <location filename="../src/window/imsettingwindow.cpp" line="110"/>
+        <location filename="../src/window/imsettingwindow.cpp" line="179"/>
         <source>Scroll between input methods</source>
         <translation>輪序切換輸入法</translation>
     </message>
     <message>
-        <location filename="../src/window/imsettingwindow.cpp" line="112"/>
+        <location filename="../src/window/imsettingwindow.cpp" line="182"/>
         <source>Switch between the current/first input method</source>
         <translation>切換目前/第一個輸入法</translation>
     </message>
     <message>
-        <location filename="../src/window/imsettingwindow.cpp" line="117"/>
+        <location filename="../src/window/imsettingwindow.cpp" line="72"/>
         <source>Manage Input Methods</source>
         <translation>輸入法管理</translation>
     </message>
     <message>
-        <location filename="../src/window/imsettingwindow.cpp" line="124"/>
+        <location filename="../src/window/imsettingwindow.cpp" line="166"/>
         <source>Shortcuts</source>
         <translation>快捷鍵</translation>
     </message>
     <message>
-        <location filename="../src/window/imsettingwindow.cpp" line="127"/>
+        <location filename="../src/window/imsettingwindow.cpp" line="171"/>
         <source>Restore Defaults</source>
         <translation>還原至預設值</translation>
     </message>
     <message>
-        <location filename="../src/window/imsettingwindow.cpp" line="137"/>
+        <location filename="../src/window/imsettingwindow.cpp" line="197"/>
         <source>Advanced Settings</source>
         <translation>進階設定</translation>
     </message>
@@ -48,13 +50,13 @@
 <context>
     <name>dcc_fcitx_configtool::widgets::FcitxKeyLabelWidget</name>
     <message>
-        <location filename="../src/widgets/keysettingsitem.cpp" line="46"/>
-        <location filename="../src/widgets/keysettingsitem.cpp" line="169"/>
+        <location filename="../src/widgets/keysettingsitem.cpp" line="31"/>
+        <location filename="../src/widgets/keysettingsitem.cpp" line="146"/>
         <source>None</source>
         <translation>無</translation>
     </message>
     <message>
-        <location filename="../src/widgets/keysettingsitem.cpp" line="52"/>
+        <location filename="../src/widgets/keysettingsitem.cpp" line="37"/>
         <source>Enter a new shortcut</source>
         <translation>請輸入新的快捷鍵</translation>
     </message>
@@ -62,25 +64,29 @@
 <context>
     <name>fcitx::addim::AddIMWindow</name>
     <message>
-        <location filename="../src/addim/widgetslib/addimwindow.cpp" line="34"/>
         <source>Select your language and add input methods</source>
-        <translation>選擇使用語言並添加輸入法</translation>
+        <translation type="vanished">選擇使用語言並添加輸入法</translation>
     </message>
 </context>
 <context>
     <name>fcitx::addim::IMPage</name>
     <message>
-        <location filename="../src/addim/widgetslib/impage.cpp" line="217"/>
+        <location filename="../src/addim/widgetslib/impage.cpp" line="59"/>
+        <source>Select your language and add input methods</source>
+        <translation type="unfinished">選擇使用語言並添加輸入法</translation>
+    </message>
+    <message>
+        <location filename="../src/addim/widgetslib/impage.cpp" line="131"/>
         <source>Find more in App Store</source>
         <translation>前往商店下載</translation>
     </message>
     <message>
-        <location filename="../src/addim/widgetslib/impage.cpp" line="228"/>
+        <location filename="../src/addim/widgetslib/impage.cpp" line="142"/>
         <source>Cancel</source>
         <translation>取消</translation>
     </message>
     <message>
-        <location filename="../src/addim/widgetslib/impage.cpp" line="238"/>
+        <location filename="../src/addim/widgetslib/impage.cpp" line="145"/>
         <source>Add</source>
         <translation>添加</translation>
     </message>
