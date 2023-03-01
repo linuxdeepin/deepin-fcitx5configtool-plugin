@@ -130,7 +130,6 @@ IMPage::IMPage(DBusProvider *dbus, IMConfig *config, QWidget *parent)
 
     m_findMoreLabel = new DCommandLinkButton(tr("Find more in App Store"), this);
     m_findMoreLabel->setAccessibleName("Find more in App Store");
-    m_findMoreLabel->installEventFilter(this);
     findMoreLayout->addWidget(m_findMoreLabel);
     findMoreLayout->addStretch(1);
 
@@ -148,15 +147,12 @@ IMPage::IMPage(DBusProvider *dbus, IMConfig *config, QWidget *parent)
 
     connect(m_config, &IMConfig::changed, this, &IMPage::changed);
 
-    connect(m_searchEdit,
-            &Dtk::Widget::DSearchEdit::textChanged,
-            this,
-            [this](const QString &text) {
-                m_config->availIMModel()->setFilterText(text);
-            });
+    connect(m_searchEdit, &Dtk::Widget::DSearchEdit::textChanged, m_config->availIMModel(), &IMProxyModel::setFilterText);
 
     connect(m_availIMList->selectionModel(), &QItemSelectionModel::currentChanged, this, &IMPage::availIMCurrentChanged);
     connect(m_childIMList->selectionModel(), &QItemSelectionModel::selectionChanged, this, &IMPage::childIMSelectionChanged);
+
+    connect(m_findMoreLabel, &DCommandLinkButton::clicked, this, &IMPage::clickedFindMoreButton);
 
     connect(cancel, &QPushButton::clicked, this, &IMPage::clickedCloseButton);
     connect(ok, &QPushButton::clicked, this, &IMPage::clickedAddButton);
@@ -226,6 +222,16 @@ void IMPage::childIMSelectionChanged(const QItemSelection &selection)
     }
 }
 
+void IMPage::clickedFindMoreButton()
+{
+    DDBusSender()
+            .service("com.home.appstore.client")
+            .interface("com.home.appstore.client")
+            .path("/com/home/appstore/client")
+            .method("newInstence")
+            .call();
+}
+
 void IMPage::clickedCloseButton()
 {
     close();
@@ -238,22 +244,6 @@ void IMPage::clickedAddButton()
 
     close();
     deleteLater();
-}
-
-bool IMPage::eventFilter(QObject *watched, QEvent *event)
-{
-    if (m_findMoreLabel == watched) {
-        if (event->type() == QEvent::MouseButtonPress) {
-            DDBusSender()
-                    .service("com.home.appstore.client")
-                    .interface("com.home.appstore.client")
-                    .path("/com/home/appstore/client")
-                    .method("newInstence")
-                    .call();
-            return true;
-        }
-    }
-    return false;
 }
 
 }
