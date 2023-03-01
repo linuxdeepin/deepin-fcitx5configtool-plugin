@@ -149,7 +149,10 @@ IMPage::IMPage(DBusProvider *dbus, IMConfig *config, QWidget *parent)
 
     connect(m_searchEdit, &Dtk::Widget::DSearchEdit::textChanged, m_config->availIMModel(), &IMProxyModel::setFilterText);
 
-    connect(m_availIMList->selectionModel(), &QItemSelectionModel::currentChanged, this, &IMPage::availIMCurrentChanged);
+    connect(m_availIMList->model(), &QAbstractItemModel::layoutChanged, this, [this]() {
+        m_availIMList->setCurrentIndex(m_availIMList->model()->index(0, 0));
+    });
+    connect(m_availIMList->selectionModel(), &QItemSelectionModel::currentChanged, this, &IMPage::availIMCurrentChanged, Qt::QueuedConnection);
     connect(m_childIMList->selectionModel(), &QItemSelectionModel::selectionChanged, this, &IMPage::childIMSelectionChanged);
 
     connect(m_findMoreLabel, &DCommandLinkButton::clicked, this, &IMPage::clickedFindMoreButton);
@@ -206,9 +209,18 @@ static QString getLayoutString(const QString &uniqName, const QString &langCode)
 
 void IMPage::availIMCurrentChanged(const QModelIndex &index)
 {
+    if (!index.isValid()) {
+        return;
+    }
+
+    auto firstChild = index.model()->index(0, 0, index);
+    if (!firstChild.isValid()) {
+        return;
+    }
+
     // workaround: index 与 child 的 parent 不同
-    m_childIMList->setRootIndex(index.model()->index(0, 0, index).parent());
-    m_childIMList->selectionModel()->setCurrentIndex(index.model()->index(0, 0, index), QItemSelectionModel::ClearAndSelect);
+    m_childIMList->setRootIndex(firstChild.parent());
+    m_childIMList->selectionModel()->setCurrentIndex(firstChild, QItemSelectionModel::ClearAndSelect);
 }
 
 void IMPage::childIMSelectionChanged(const QItemSelection &selection)
