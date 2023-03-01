@@ -81,11 +81,7 @@ IMPage::IMPage(DBusProvider *dbus, IMConfig *config, QWidget *parent)
     m_searchEdit = new Dtk::Widget::DSearchEdit();
     m_leftLayout->addWidget(m_searchEdit);
 
-    line = new QFrame(this);
-    line->setObjectName(QString::fromUtf8("line"));
-    line->setFrameShadow(QFrame::Raised);
-    line->setLineWidth(1);
-    line->setFrameShape(QFrame::HLine);
+    line = new DHorizontalLine(this);
     m_leftLayout->addWidget(line);
 
     m_availIMList = new DListView(this);
