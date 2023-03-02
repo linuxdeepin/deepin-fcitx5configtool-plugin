@@ -18,6 +18,7 @@
 #include <DGuiApplicationHelper>
 #include <DTitlebar>
 #include <DFrame>
+#include <DStyle>
 
 #include <QApplication>
 #include <QDebug>
@@ -37,6 +38,24 @@
 DWIDGET_USE_NAMESPACE
 using namespace Dtk::Gui;
 using namespace DCC_NAMESPACE;
+
+class AvailItemDelegate : public DStyledItemDelegate {
+public:
+    using DStyledItemDelegate::DStyledItemDelegate;
+
+    void paint(QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index) const override {
+        QStyleOptionViewItem opt(option);
+        // 对选中项增加 checked 样式，删除选中样式，并增加鼠标悬停样式
+        opt.features |= QStyleOptionViewItem::HasCheckIndicator;
+        if (opt.state & QStyle::State_Selected) {
+            opt.checkState = Qt::Checked;
+            opt.state &= ~QStyle::State_Selected;
+            opt.state |= QStyle::State_MouseOver;
+        }
+
+        DStyledItemDelegate::paint(painter, opt, index);
+    }
+};
 
 namespace fcitx {
 namespace addim {
@@ -85,6 +104,7 @@ IMPage::IMPage(DBusProvider *dbus, IMConfig *config, QWidget *parent)
     m_leftLayout->addWidget(line);
 
     m_availIMList = new DListView(this);
+    m_availIMList->setItemDelegate(new AvailItemDelegate(m_availIMList));
     m_availIMList->setModel(m_config->availIMModel());
     m_availIMList->setBackgroundType(DStyledItemDelegate::BackgroundType::RoundedBackground);
     m_availIMList->setFocusPolicy(Qt::NoFocus);
