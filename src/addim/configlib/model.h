@@ -127,7 +127,7 @@ class FilteredIMModel : public QAbstractListModel,
 public:
     enum Mode { CurrentIM, AvailIM };
 
-    FilteredIMModel(Mode mode, QObject *parent = nullptr);
+    explicit FilteredIMModel(Mode mode, QObject *parent = nullptr);
     QVariant data(const QModelIndex &index,
                   int role = Qt::DisplayRole) const override;
     int rowCount(const QModelIndex &parent = QModelIndex()) const override;
