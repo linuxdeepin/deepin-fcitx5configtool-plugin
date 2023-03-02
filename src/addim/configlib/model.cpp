@@ -12,11 +12,13 @@
 #include <fcitx-utils/i18n.h>
 
 #include <DPinyin>
+#include <DStyleOption>
 
 #include <QCollator>
 #include <QDebug>
 #include <QLocale>
 #include <QSize>
+#include <QColor>
 
 DCORE_USE_NAMESPACE
 
@@ -174,6 +176,10 @@ QVariant AvailIMModel::dataForCategory(const QModelIndex &index,
     case FcitxRowTypeRole:
         return LanguageType;
 
+    // 设置背景色
+    case Dtk::ViewItemBackgroundRole:
+        return QVariant::fromValue(QPair<int, int>{QPalette::Base, DPalette::NoType});
+
     default:
         return QVariant();
     }
@@ -198,6 +204,10 @@ QVariant AvailIMModel::dataForItem(const QModelIndex &index, int role) const {
 
     case FcitxLanguageRole:
         return imEntry.languageCode();
+
+    // 设置背景色
+    case Dtk::ViewItemBackgroundRole:
+        return QVariant::fromValue(QPair<int, int>{QPalette::Base, DPalette::NoType});
 
     }
     return QVariant();
