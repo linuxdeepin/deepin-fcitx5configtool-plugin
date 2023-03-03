@@ -258,7 +258,8 @@ void IMSettingWindow::initConnect()
     });
 
     connect(m_advanceConfig, &AdvanceConfig::switchFirstIMShortCutsChanged, this, [=](const QString& shortCuts) {
-        m_defaultIMKey->setList(shortCuts.split("+"));
+        // 只需要第一组快捷键
+        m_defaultIMKey->setList(shortCuts.split(" ").first().split("+"));
     });
 
     connect(m_resetBtn, &QPushButton::clicked, [ = ]() {
