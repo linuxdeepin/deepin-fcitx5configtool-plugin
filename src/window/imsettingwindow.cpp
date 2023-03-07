@@ -34,10 +34,55 @@
 #include <QScrollArea>
 #include <QStackedWidget>
 #include <QStandardItemModel>
+#include <QProcess>
 
 DWIDGET_USE_NAMESPACE
 
 using namespace dcc_fcitx_configtool::widgets;
+
+class EventConsumer : public QEventLoop
+{
+public:
+    explicit EventConsumer(QObject *producer = qApp, QObject *parent = nullptr);
+    ~EventConsumer() override;
+    bool eventFilter(QObject *watched, QEvent *event) override;
+
+private:
+    QObject *m_producer;
+};
+
+EventConsumer::EventConsumer(QObject *producer, QObject *parent)
+    : QEventLoop(parent)
+    , m_producer(producer)
+{
+    if (m_producer) {
+        m_producer->installEventFilter(this);
+    }
+}
+
+EventConsumer::~EventConsumer()
+{
+    if (m_producer) {
+        m_producer->removeEventFilter(this);
+    }
+}
+
+bool EventConsumer::eventFilter(QObject *watched, QEvent *event)
+{
+    Q_UNUSED(watched)
+    switch (event->type())
+    {
+    case QEvent::MouseButtonPress:
+    case QEvent::MouseButtonRelease:
+    case QEvent::MouseButtonDblClick:
+    case QEvent::MouseMove:
+    case QEvent::KeyPress:
+    case QEvent::KeyRelease:
+        return true;
+    default:
+        return false;
+    }
+}
 
 IMSettingWindow::IMSettingWindow(DBusProvider *dbus, QWidget *parent)
     : QWidget(parent)
@@ -276,8 +321,18 @@ void IMSettingWindow::initConnect()
         });
     });
 
-    connect(m_advSetKey, &QPushButton::clicked, [ = ]() {
-        system("fcitx5-config-qt");
+    connect(m_advSetKey, &QPushButton::clicked, this, [ = ]() {
+        QProcess advancedSettingProcess(this);
+        advancedSettingProcess.setProgram("fcitx5-config-qt");
+        EventConsumer loop;
+        advancedSettingProcess.start();
+#if QT_VERSION >= QT_VERSION_CHECK(5, 13, 0)
+        auto finished = QOverload<int, QProcess::ExitStatus>::of(&QProcess::finished);
+#else
+        auto finished = QOverload<int>::of(&QProcess::finished);
+#endif
+        connect(&advancedSettingProcess, finished, &loop, &EventConsumer::quit);
+        loop.exec();
     });
 }
 
