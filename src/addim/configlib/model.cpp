@@ -267,6 +267,9 @@ void AvailIMModel::filterIMEntryList(
         }
         m_filteredIMEntryList[idx].second.append(im);
     }
+
+    setUseIMLanguageCount(m_enabledIMs.count());
+
     endResetModel();
 }
 
