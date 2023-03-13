@@ -9,6 +9,10 @@
 
 struct xkb_context;
 
+class QLabel;
+
+enum class LayoutStatus;
+
 class LayoutWidget : public DTK_WIDGET_NAMESPACE::DFrame
 {
     Q_OBJECT
@@ -18,6 +22,8 @@ public:
     ~LayoutWidget();
 
     void setKeyboardLayout(const QString &layout, const QString &variant = QString());
+    void showMulti();
+    void showNoLayout();
 
 protected:
     void paintEvent(QPaintEvent *event) override;
@@ -25,10 +31,15 @@ protected:
 private:
     xkb_context *m_ctx;
 
+    LayoutStatus m_status;
     std::string m_layout;
     std::string m_variant;
+    
+    QLabel *m_label;
 
     void paintLayout(QPainter &painter);
+    void showNoLayoutLabel();
+    void showMultiLayoutLabel();
 };
 
 #endif

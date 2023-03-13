@@ -238,18 +238,29 @@ void IMPage::availIMCurrentChanged(const QModelIndex &index)
     m_childIMList->setCurrentIndex(defaultChild);
 }
 
-void IMPage::childIMSelectionChanged(const QItemSelection &selection)
+void IMPage::childIMSelectionChanged()
 {
-    m_buttonTuple->rightButton()->setEnabled(!selection.isEmpty());
+    auto selected = m_childIMList->selectionModel()->selectedIndexes();
 
-    for (auto &i : selection.indexes()) {
-        QString uniqueName = i.data(FcitxIMUniqueNameRole).toString();
+    m_buttonTuple->rightButton()->setEnabled(!selected.isEmpty());
 
-        QString layout;
-        QString variant;
-        std::tie(layout, variant) = getLayoutString(uniqueName);
-        m_laSelector->setKeyboardLayout(layout, variant);
+    if (selected.isEmpty()) {
+        m_laSelector->showNoLayout();
+        return;
     }
+
+    if (selected.count() > 1) {
+        m_laSelector->showMulti();
+        return;
+    }
+
+    QModelIndex i = selected.at(0);
+    QString uniqueName = i.data(FcitxIMUniqueNameRole).toString();
+
+    QString layout;
+    QString variant;
+    std::tie(layout, variant) = getLayoutString(uniqueName);
+    m_laSelector->setKeyboardLayout(layout, variant);
 }
 
 void IMPage::clickedFindMoreButton()

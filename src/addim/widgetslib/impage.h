@@ -46,7 +46,7 @@ public slots:
 
 private slots:
     void availIMCurrentChanged(const QModelIndex &index);
-    void childIMSelectionChanged(const QItemSelection &selection);
+    void childIMSelectionChanged();
 
     void clickedFindMoreButton();
 
