@@ -15,6 +15,12 @@
 
 DWIDGET_USE_NAMESPACE
 
+enum class LayoutStatus {
+    NoLayout,
+    MultiLayout,
+    SingleLayout,
+};
+
 struct Item
 {
     int key;
@@ -116,7 +122,19 @@ static QVector<QVector<Item>> keyboardLayout{
 LayoutWidget::LayoutWidget(QWidget *parent)
     : DFrame(parent)
     , m_ctx(xkb_context_new(XKB_CONTEXT_NO_FLAGS))
+    , m_status(LayoutStatus::NoLayout)
+    , m_label(new QLabel(this))
 {
+    QHBoxLayout *hBoxLayout = new QHBoxLayout;
+    hBoxLayout->setContentsMargins(0, 0, 0, 0);
+    setLayout(hBoxLayout);
+
+    m_label->setAlignment(Qt::AlignmentFlag::AlignCenter);
+    m_label->setContentsMargins(0, 0, 0, 0);
+    m_label->setSizePolicy(QSizePolicy::MinimumExpanding, QSizePolicy::MinimumExpanding);
+    m_label->hide();
+
+    hBoxLayout->addWidget(m_label);
 }
 
 LayoutWidget::~LayoutWidget()
@@ -126,8 +144,25 @@ LayoutWidget::~LayoutWidget()
 
 void LayoutWidget::setKeyboardLayout(const QString &layout, const QString &variant)
 {
+    m_status = LayoutStatus::SingleLayout;
     m_layout = layout.toStdString();
     m_variant = variant.toStdString();
+    update();
+}
+
+void LayoutWidget::showMulti()
+{
+    m_status = LayoutStatus::MultiLayout;
+    m_layout = "";
+    m_variant = "";
+    update();
+}
+
+void LayoutWidget::showNoLayout()
+{
+    m_status = LayoutStatus::NoLayout;
+    m_layout = "";
+    m_variant = "";
     update();
 }
 
@@ -139,13 +174,17 @@ void LayoutWidget::paintLayout(QPainter &painter)
 
     auto *keymap = xkb_keymap_new_from_names(m_ctx, &rnames, XKB_KEYMAP_COMPILE_NO_FLAGS);
     if (!keymap) {
+        showNoLayoutLabel();
         return;
     }
 
     auto *state = xkb_state_new(keymap);
     if (!state) {
+        showNoLayoutLabel();
         return;
     }
+
+    m_label->hide();
 
     const int unitWidth = 22;
     const int unitHheight = 20;
@@ -220,6 +259,18 @@ void LayoutWidget::paintLayout(QPainter &painter)
     painter.end();
 }
 
+void LayoutWidget::showNoLayoutLabel()
+{
+    m_label->setText(QString("- %1 -").arg(tr("The current input method has no keyboard layout")));
+    m_label->show();
+}
+
+void LayoutWidget::showMultiLayoutLabel()
+{
+    m_label->setText(QString("- %1 -").arg(tr("Multiple input methods have been selected")));
+    m_label->show();
+}
+
 void LayoutWidget::paintEvent(QPaintEvent *event)
 {
     DFrame::paintEvent(event);
@@ -227,10 +278,22 @@ void LayoutWidget::paintEvent(QPaintEvent *event)
         return;
     }
 
-    QPainter painter;
-    painter.begin(this);
+    switch (m_status) {
+    case LayoutStatus::MultiLayout:
+        showMultiLayoutLabel();
+        break;
+    case LayoutStatus::NoLayout:
+        showNoLayoutLabel();
+        break;
+    case LayoutStatus::SingleLayout: {
+        QPainter painter;
+        painter.begin(this);
 
-    paintLayout(painter);
+        paintLayout(painter);
 
-    painter.end();
+        painter.end();
+
+        break;
+    }
+    }
 }
