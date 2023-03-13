@@ -9,7 +9,7 @@
 
 #include "dbusprovider.h"
 #include "imconfig.h"
-#include "layoutselector.h"
+#include "layoutwidget.h"
 
 #include <fcitxqtdbustypes.h>
 #include <widgets/buttontuple.h>
@@ -64,7 +64,7 @@ private:
     Dtk::Widget::DListView *m_availIMList;
     QVBoxLayout *m_rightLayout;
     Dtk::Widget::DListView *m_childIMList;
-    fcitx::addim::LayoutSelector *m_laSelector;
+    LayoutWidget *m_laSelector;
     Dtk::Widget::DCommandLinkButton *m_findMoreLabel;
     DCC_NAMESPACE::ButtonTuple *m_buttonTuple;
 };

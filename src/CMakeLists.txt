@@ -59,6 +59,7 @@ find_package(Fcitx5Qt5WidgetsAddons 5.0.2 REQUIRED)
 #find_package(Qt5 COMPONENTS LinguistTools)
 pkg_check_modules(DFrameworkDBus REQUIRED dframeworkdbus)
 pkg_check_modules(XkbFile "xkbfile" REQUIRED IMPORTED_TARGET)
+pkg_check_modules(xkbcommon REQUIRED IMPORTED_TARGET xkbcommon)
 
 #设置资源目录 加载资源文件 翻译文件 源码
 set(APP_RES_DIR "${CMAKE_CURRENT_SOURCE_DIR}/../res")
@@ -178,7 +179,7 @@ target_link_libraries(${BIN_NAME} PRIVATE
         Fcitx5Qt5::DBusAddons
         Fcitx5Qt5::WidgetsAddons
         ${GSETTINGS_LIBRARIES}
-        layoutlib
+        PkgConfig::xkbcommon
         )
 
 # Install settings

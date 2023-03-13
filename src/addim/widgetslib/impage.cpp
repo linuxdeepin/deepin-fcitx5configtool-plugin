@@ -8,7 +8,7 @@
 
 #include "model.h"
 #include "glo.h"
-#include "layoutselector.h"
+#include "layoutwidget.h"
 
 #include <fcitxqtcontrollerproxy.h>
 #include <widgets/buttontuple.h>
@@ -129,17 +129,9 @@ IMPage::IMPage(DBusProvider *dbus, IMConfig *config, QWidget *parent)
     m_childIMList->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     rightListFrameLayout->addWidget(m_childIMList);
 
-    DFrame *laFrame = new DFrame(this);
-    laFrame->setFixedSize(350, 130);
-    QVBoxLayout *laFrameLayout = new QVBoxLayout();
-    laFrame->setLayout(laFrameLayout);
-    m_rightLayout->addWidget(laFrame);
-
-    m_laSelector = fcitx::addim::LayoutSelector::selectLayout(this,
-                                                              m_dbus,
-                                                              _("Select default layout"),
-                                                              "cn");
-    laFrameLayout->addWidget(m_laSelector);
+    m_laSelector = new LayoutWidget(this);
+    m_laSelector->setFixedSize(350, 140);
+    m_rightLayout->addWidget(m_laSelector);
 
     auto *findMoreLayout =  new QHBoxLayout(this);
     mainLayout->addLayout(findMoreLayout);
@@ -200,27 +192,23 @@ void IMPage::load() {
 
 void IMPage::defaults() { }
 
-static QString getLayoutString(const QString &uniqName, const QString &langCode)
+static std::tuple<QString, QString> getLayoutString(const QString &uniqName)
 {
-    QString layoutStr = "cn";
+    QString layout = "";
+    QString variant = "";
     if (uniqName.startsWith("keyboard-")) {
         // layout, name likes keyboard-xx-xxx, such as keyboard-cn-mon_trad_manchu
-        auto dashPos = uniqName.indexOf("-");
-        if (dashPos >= 0) {
-            layoutStr = uniqName.mid(dashPos + 1);
+        auto layoutPos = uniqName.indexOf("-") + 1;
+        auto secondDashPos = uniqName.indexOf("-", layoutPos);
+        if (secondDashPos > 0) {
+            int variantPos = secondDashPos + 1;
+            layout = uniqName.mid(layoutPos, secondDashPos - layoutPos);
+            variant = uniqName.mid(variantPos);
         } else {
-            qInfo("unexpected uniqName=%s", uniqName.toStdString().c_str());
-            assert(0);
-        }
-    } else {
-        // uniq name is not layout name, just input method name,
-        // such as pinyin, wbx, wbpy, shuangpin
-        // maybe we should use languageCode info in FcitxQtInputMethodEntry
-        if (langCode == QString("zh_CN")) {
-            layoutStr = "cn";
+            layout = uniqName.mid(layoutPos);
         }
     }
-    return layoutStr;
+    return {layout, variant};
 }
 
 void IMPage::availIMCurrentChanged(const QModelIndex &index)
@@ -256,8 +244,11 @@ void IMPage::childIMSelectionChanged(const QItemSelection &selection)
 
     for (auto &i : selection.indexes()) {
         QString uniqueName = i.data(FcitxIMUniqueNameRole).toString();
-        QString langCode = i.data(FcitxLanguageRole).toString();
-        m_laSelector->setLayout(getLayoutString(uniqueName, langCode), "");
+
+        QString layout;
+        QString variant;
+        std::tie(layout, variant) = getLayoutString(uniqueName);
+        m_laSelector->setKeyboardLayout(layout, variant);
     }
 }
 
