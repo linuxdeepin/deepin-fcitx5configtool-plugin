@@ -48,6 +48,19 @@
     </message>
 </context>
 <context>
+    <name>LayoutWidget</name>
+    <message>
+        <location filename="../src/addim/widgetslib/layoutwidget.cpp" line="264"/>
+        <source>The current input method has no keyboard layout</source>
+        <translation>當前輸入法無鍵盤樣式</translation>
+    </message>
+    <message>
+        <location filename="../src/addim/widgetslib/layoutwidget.cpp" line="270"/>
+        <source>Multiple input methods have been selected</source>
+        <translation>已選定多個輸入法</translation>
+    </message>
+</context>
+<context>
     <name>dcc_fcitx_configtool::widgets::FcitxKeyLabelWidget</name>
     <message>
         <location filename="../src/widgets/keysettingsitem.cpp" line="31"/>
@@ -71,22 +84,22 @@
 <context>
     <name>fcitx::addim::IMPage</name>
     <message>
-        <location filename="../src/addim/widgetslib/impage.cpp" line="59"/>
+        <location filename="../src/addim/widgetslib/impage.cpp" line="78"/>
         <source>Select your language and add input methods</source>
         <translation type="unfinished">選擇使用語言並添加輸入法</translation>
     </message>
     <message>
-        <location filename="../src/addim/widgetslib/impage.cpp" line="131"/>
+        <location filename="../src/addim/widgetslib/impage.cpp" line="139"/>
         <source>Find more in App Store</source>
         <translation>前往商店下載</translation>
     </message>
     <message>
-        <location filename="../src/addim/widgetslib/impage.cpp" line="142"/>
+        <location filename="../src/addim/widgetslib/impage.cpp" line="150"/>
         <source>Cancel</source>
         <translation>取消</translation>
     </message>
     <message>
-        <location filename="../src/addim/widgetslib/impage.cpp" line="145"/>
+        <location filename="../src/addim/widgetslib/impage.cpp" line="153"/>
         <source>Add</source>
         <translation>添加</translation>
     </message>
