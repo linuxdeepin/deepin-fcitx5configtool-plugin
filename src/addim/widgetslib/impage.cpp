@@ -19,6 +19,7 @@
 #include <DTitlebar>
 #include <DFrame>
 #include <DStyle>
+#include <DPaletteHelper>
 
 #include <QApplication>
 #include <QDebug>
@@ -54,7 +55,22 @@ public:
         }
 
         DStyledItemDelegate::paint(painter, opt, index);
+
+        const int useCount = getUseIMLanguageCount();
+        if (Q_LIKELY(m_line) && useCount > 0 && (useCount - 1 == index.row())) {
+            const DPalette &dp = DPaletteHelper::instance()->palette(m_line);
+            const QColor &outlineColor = dp.frameBorder().color();
+            QPoint start(opt.rect.left(), opt.rect.bottom() - (margins().bottom() / 2));
+            painter->fillRect(QRect(start, QSize(opt.rect.width(), m_line->lineWidth())), outlineColor);
+        }
     }
+
+    inline void setLineSplitter(QFrame *line)
+    {
+        m_line = line;
+    }
+private:
+    QPointer<QFrame> m_line;
 };
 
 namespace fcitx {
@@ -104,7 +120,9 @@ IMPage::IMPage(DBusProvider *dbus, IMConfig *config, QWidget *parent)
     m_leftLayout->addWidget(line);
 
     m_availIMList = new DListView(this);
-    m_availIMList->setItemDelegate(new AvailItemDelegate(m_availIMList));
+    auto availIMDelegate = new AvailItemDelegate(m_availIMList);
+    availIMDelegate->setLineSplitter(line);
+    m_availIMList->setItemDelegate(availIMDelegate);
     m_availIMList->setModel(m_config->availIMModel());
     m_availIMList->setBackgroundType(DStyledItemDelegate::BackgroundType::RoundedBackground);
     m_availIMList->setFocusPolicy(Qt::NoFocus);
