@@ -143,6 +143,8 @@ void IMSettingWindow::initUI()
     m_IMListGroup->setBackgroundType(DStyledItemDelegate::BackgroundType::ClipCornerBackground);
     // m_IMListGroup->setSwitchAble(true);
     m_IMListGroup->setSpacing(0);
+    m_IMListGroup->setAttribute(Qt::WA_Hover, true);
+    m_IMListGroup->installEventFilter(this);
 
     m_IMListModel = new QStandardItemModel(this);
     m_IMListGroup->setModel(m_IMListModel);
@@ -152,59 +154,9 @@ void IMSettingWindow::initUI()
     connect(m_IMListGroup->selectionModel(),
             &QItemSelectionModel::currentChanged,
             this,
-            [this](const QModelIndex &current, const QModelIndex &previous) {
+            [this](const QModelIndex &current, [[maybe_unused]] const QModelIndex &previous) {
                 m_deleteBtn->setEnabled(current.isValid());
-                if (previous.isValid()) {
-                    auto *item =
-                            dynamic_cast<DStandardItem *>(m_IMListModel->itemFromIndex(previous));
-                    item->setActionList(Qt::Edge::RightEdge, {});
-                }
-                if (current.isValid()) {
-                    auto *item =
-                            dynamic_cast<DStandardItem *>(m_IMListModel->itemFromIndex(current));
-                    auto row = current.row();
-
-                    auto *upAction = new DViewItemAction(Qt::AlignVCenter, QSize(), QSize(), true);
-                    upAction->setIcon(QIcon::fromTheme("arrow_up"));
-                    upAction->setDisabled(row == 0);
-
-                    auto *downAction =
-                            new DViewItemAction(Qt::AlignVCenter, QSize(), QSize(), true);
-                    downAction->setIcon(QIcon::fromTheme("arrow_down"));
-                    downAction->setDisabled(row == m_IMListModel->rowCount() - 1);
-
-                    auto *configAction =
-                            new DViewItemAction(Qt::AlignVCenter, QSize(), QSize(), true);
-                    configAction->setIcon(QIcon::fromTheme("setting"));
-
-                    item->setActionList(Qt::Edge::RightEdge,
-                                        { upAction, downAction, configAction });
-
-                    connect(upAction, &DViewItemAction::triggered, this, [this, current]() {
-                        int row = current.row();
-                        if (row == 0) {
-                            return;
-                        }
-
-                        qDebug() << "user clicked up button";
-                        onItemUp(row);
-                    });
-
-                    connect(downAction, &DViewItemAction::triggered, this, [this, current]() {
-                        int row = current.row();
-                        if (row == m_IMListModel->rowCount() - 1) {
-                            return;
-                        }
-
-                        qDebug() << "user clicked down button";
-                        onItemDown(row);
-                    });
-
-                    connect(configAction, &DViewItemAction::triggered, this, [this, current]() {
-                        int row = current.row();
-                        onItemConfig(row);
-                    });
-                }
+                updateActions();
             });
 
     QHBoxLayout *shortcutLayout = new QHBoxLayout();
@@ -424,6 +376,48 @@ void IMSettingWindow::updateUI()
 //    readConfig();
 }
 
+bool IMSettingWindow::eventFilter(QObject *watched, QEvent *event) {
+    if (watched == m_IMListGroup) {
+        switch (event->type()) {
+        case QEvent::HoverLeave:
+            m_hoveredRow = -1;
+            updateActions();
+            break;
+        case QEvent::HoverMove: {
+            auto *he = dynamic_cast<QHoverEvent *>(event);
+            int newRow = m_IMListGroup->indexAt(he->pos()).row();
+            if (newRow != m_hoveredRow) {
+                m_hoveredRow = newRow;
+                updateActions();
+            }
+
+            break;
+        }
+        default:
+            break;
+        }
+    }
+    return QWidget::eventFilter(watched, event);
+}
+
+void IMSettingWindow::updateActions() {
+    auto selections = m_IMListGroup->selectionModel()->selectedIndexes();
+
+    for (int i = 0; i < m_IMListModel->rowCount(); ++i) {
+        auto *item = dynamic_cast<DStandardItem *>(m_IMListModel->item(i));
+        auto actions = item->actionList(Qt::Edge::RightEdge);
+        if (m_hoveredRow == i || selections.contains(item->index())) {
+            for (auto *action : actions) {
+                action->setVisible(true);
+            }
+        } else {
+            for (auto *action : actions) {
+                action->setVisible(false);
+            }
+        }
+    }
+}
+
 //当前输入法列表改变
 void IMSettingWindow::onCurIMChanged(FilteredIMModel* model)
 {
@@ -432,8 +426,40 @@ void IMSettingWindow::onCurIMChanged(FilteredIMModel* model)
 
     for (int i = 0; i < model->rowCount(); ++i) {
         QString name = model->index(i).data(Qt::DisplayRole).toString();
-        DStandardItem *tmp = new DStandardItem(name);
-        m_IMListModel->appendRow(tmp);
+        DStandardItem *item = new DStandardItem(name);
+
+        auto *upAction = new DViewItemAction(Qt::AlignVCenter, QSize(), QSize(), true);
+        upAction->setIcon(QIcon::fromTheme("arrow_up"));
+        upAction->setVisible(false);
+        upAction->setDisabled(i == 0);
+
+        auto *downAction =
+                new DViewItemAction(Qt::AlignVCenter, QSize(), QSize(), true);
+        downAction->setIcon(QIcon::fromTheme("arrow_down"));
+        downAction->setVisible(false);
+        downAction->setDisabled(i == model->rowCount() - 1);
+
+        auto *configAction =
+                new DViewItemAction(Qt::AlignVCenter, QSize(), QSize(), true);
+        configAction->setIcon(QIcon::fromTheme("setting"));
+        configAction->setVisible(false);
+
+        item->setActionList(Qt::Edge::RightEdge,
+                            { upAction, downAction, configAction });
+
+        connect(upAction, &DViewItemAction::triggered, this, [this, i]() {
+            onItemUp(i);
+        });
+
+        connect(downAction, &DViewItemAction::triggered, this, [this, i]() {
+            onItemDown(i);
+        });
+
+        connect(configAction, &DViewItemAction::triggered, this, [this, i]() {
+            onItemConfig(i);
+        });
+
+        m_IMListModel->appendRow(item);
         qInfo() << "manager im changed:" << name;
     }
 }

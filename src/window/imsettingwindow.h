@@ -47,6 +47,8 @@ public:
     explicit IMSettingWindow(DBusProvider* dbus, QWidget *parent = nullptr);
     virtual ~IMSettingWindow();
     void updateUI(); //刷新界面
+    bool eventFilter(QObject *watched, QEvent *event) override;
+
 signals:
     void popIMAddWindow(); //弹出添加输入法界面
     void popShortKeyListWindow(const QString &curName, const QStringList &list, QString &name); //弹出快捷键冲突界面
@@ -66,6 +68,7 @@ private:
     void setAdvanceButtonEnable();
     void hideAdvanceButton();
     void setSwitchFirstFuncEnable();
+    void updateActions();
 private slots:
     void onCurIMChanged(FilteredIMModel* model);
     void onAddBtnCilcked();
@@ -91,6 +94,7 @@ private:
     IMConfig *m_config;
     AdvanceConfig *m_advanceConfig;
     ConfigSettings *m_setting;
+    int m_hoveredRow = -1;
 };
 
 #endif // IMSETTINGWINDOW_H
