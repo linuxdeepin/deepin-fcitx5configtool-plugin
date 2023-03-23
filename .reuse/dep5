@@ -4,7 +4,7 @@ Upstream-Contact: Deepin Technology Co., Ltd.
 Source: https://github.com/linuxdeepin/deepin-fcitx5configtool-plugin
 
 # ci
-Files: .github/* .gitlab-ci.yml
+Files: .github/* .gitlab-ci.yml .obs/workflows.yml
 Copyright: None
 License: CC0-1.0
 
