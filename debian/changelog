@@ -1,3 +1,12 @@
+deepin-fcitx5configtool-plugin (5.0.15) unstable; urgency=medium
+
+  * Fix actions are not displayed when hovering
+  * Fix open advanced setting page block
+  * Improve keyboard layout indication
+  * Refactor the pages
+
+ -- zsien <quezhiyong@uniontech.com>  Tue, 28 Mar 2023 15:48:05 +0800
+
 deepin-fcitx5configtool-plugin (5.0.14) unstable; urgency=medium
 
   * Fix build failure
