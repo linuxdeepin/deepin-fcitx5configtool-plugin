@@ -156,7 +156,9 @@ void IMSettingWindow::initUI()
             this,
             [this](const QModelIndex &current, [[maybe_unused]] const QModelIndex &previous) {
                 m_deleteBtn->setEnabled(current.isValid());
-                updateActions();
+                QTimer::singleShot(0, [this]() {
+                    updateActions();
+                });
             });
 
     QHBoxLayout *shortcutLayout = new QHBoxLayout();
