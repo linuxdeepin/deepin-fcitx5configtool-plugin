@@ -1,3 +1,10 @@
+deepin-fcitx5configtool-plugin (5.0.16) unstable; urgency=medium
+
+  * fix the actions in the list are displayed incorrectly
+  * fix missing line splitter for enabled language
+
+ -- zsien <quezhiyong@uniontech.com>  Wed, 12 Apr 2023 14:42:13 +0800
+
 deepin-fcitx5configtool-plugin (5.0.15) unstable; urgency=medium
 
   * Fix actions are not displayed when hovering
