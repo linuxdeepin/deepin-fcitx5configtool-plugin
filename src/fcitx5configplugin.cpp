@@ -18,14 +18,11 @@
 
 Fcitx5ConfigPlugin::Fcitx5ConfigPlugin()
 {
-    QTranslator *translator = new QTranslator(this);
-    translator->load(QString("/usr/share/deepin-fcitx5configtool-plugin/translations/deepin-fcitx5configtool-plugin_%1.qm").arg(QLocale().name()));
-    QCoreApplication::installTranslator(translator); //安装翻译器
 }
 
 QString Fcitx5ConfigPlugin::name() const
 {
-    return tr("Input Methods");
+    return tr("deepin-fcitx5configtool-plugin");
 }
 
 QString Fcitx5ConfigPlugin::follow() const

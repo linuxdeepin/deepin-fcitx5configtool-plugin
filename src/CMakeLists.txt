@@ -190,7 +190,7 @@ endif ()
 # 设置执行 make install 时哪个目标应该被 install 到哪个位置
 
 if(NOT ${CMAKE_BUILD_TYPE} MATCHES "Debug")
-    install(TARGETS ${BIN_NAME} LIBRARY DESTINATION /lib/dde-control-center/modules)
+    install(TARGETS ${BIN_NAME} LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}/dde-control-center/modules)
 endif()
 
 add_subdirectory(layout)

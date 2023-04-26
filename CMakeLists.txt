@@ -2,6 +2,7 @@
 cmake_minimum_required(VERSION 3.7)
 project(deepin-fcitx5configtool-plugin VERSION 5.0.5)
 
+include(GNUInstallDirs)
 
 set(CMAKE_MODULE_PATH ${ECM_MODULE_PATH} ${ECM_KDE_MODULE_DIR} ${CMAKE_CURRENT_SOURCE_DIR}/cmake)
 set(DEFAULT_XKB_RULES "evdev" CACHE STRING "Xkb rules name")
@@ -22,4 +23,4 @@ execute_process(COMMAND bash translate_generation.sh
 
 ## qm files
 file(GLOB QM_FILES "translations/*.qm")
-install(FILES ${QM_FILES} DESTINATION share/deepin-fcitx5configtool-plugin/translations)
+install(FILES ${QM_FILES} DESTINATION ${CMAKE_INSTALL_DATAROOTDIR}/dde-control-center/translations)
