@@ -1,3 +1,9 @@
+deepin-fcitx5configtool-plugin (5.0.17) unstable; urgency=medium
+
+  * load translations in dde-control-center 
+
+ -- zsien <quezhiyong@uniontech.com>  Fri, 05 May 2023 10:07:55 +0800
+
 deepin-fcitx5configtool-plugin (5.0.16) unstable; urgency=medium
 
   * fix the actions in the list are displayed incorrectly
