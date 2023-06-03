@@ -163,9 +163,9 @@ QVariant AvailIMModel::dataForCategory(const QModelIndex &index,
                                        int role) const {
     switch (role) {
 
-    case Qt::DisplayRole: {
+    case Qt::DisplayRole:
+    case Qt::ToolTipRole:
         return m_filteredIMEntryList[index.row()].first;
-    }
 
     case FcitxLanguageRole:
         return m_filteredIMEntryList[index.row()].second.at(0).languageCode();
@@ -194,6 +194,7 @@ QVariant AvailIMModel::dataForItem(const QModelIndex &index, int role) const {
     switch (role) {
 
     case Qt::DisplayRole:
+    case Qt::ToolTipRole:
         return imEntry.name();
 
     case FcitxRowTypeRole:
