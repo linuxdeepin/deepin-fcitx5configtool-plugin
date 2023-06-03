@@ -236,7 +236,18 @@ void IMPage::availIMCurrentChanged(const QModelIndex &index)
 
     // workaround: index 与 child 的 parent 不同
     m_childIMList->setRootIndex(firstChild.parent());
-    m_childIMList->selectionModel()->setCurrentIndex(firstChild, QItemSelectionModel::ClearAndSelect);
+
+    // 默认选择第一个未被启用的输入法，当不存在未被启用的输入法时，选择空 index（清空选择）
+    QModelIndex defaultChild;
+    for (int i = 0; i < index.model()->rowCount(index); i++) {
+        auto item = index.model()->index(i, 0, index);
+        bool imEnabled = item.data(FcitxIMEnabledRole).toBool();
+        if (!imEnabled) {
+            defaultChild = item;
+            break;
+        }
+    }
+    m_childIMList->setCurrentIndex(defaultChild);
 }
 
 void IMPage::childIMSelectionChanged(const QItemSelection &selection)
