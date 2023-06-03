@@ -22,6 +22,8 @@ enum {
     FcitxIMConfigurableRole,
     FcitxIMLayoutRole,
     FcitxIMActiveRole,
+
+    FcitxIMEnabledRole,
 };
 
 enum { LanguageType, IMType };
@@ -62,6 +64,7 @@ public:
     void
     filterIMEntryList(const FcitxQtInputMethodEntryList &imEntryList,
                       const FcitxQtStringKeyValueList &enabledIMs) override;
+    Qt::ItemFlags flags(const QModelIndex &index) const override;
 
 protected:
     int listSize() const override { return m_filteredIMEntryList.size(); }
@@ -72,6 +75,7 @@ protected:
     QVariant dataForCategory(const QModelIndex &index, int role) const override;
 
 private:
+    QSet<QString> m_enabledIMs;
     QList<QPair<QString, FcitxQtInputMethodEntryList>> m_filteredIMEntryList;
 };
 
@@ -109,6 +113,8 @@ protected:
                   const QModelIndex &right) const override;
     int compareCategories(const QModelIndex &left,
                           const QModelIndex &right) const;
+    int compareItems(const QModelIndex &left,
+                     const QModelIndex &right) const;
 
 private:
     bool filterLanguage(const QModelIndex &index) const;

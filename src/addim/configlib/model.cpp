@@ -205,12 +205,29 @@ QVariant AvailIMModel::dataForItem(const QModelIndex &index, int role) const {
     case FcitxLanguageRole:
         return imEntry.languageCode();
 
+    case FcitxIMEnabledRole:
+        return m_enabledIMs.contains(imEntry.uniqueName());
+
     // 设置背景色
     case Dtk::ViewItemBackgroundRole:
         return QVariant::fromValue(QPair<int, int>{QPalette::Base, DPalette::NoType});
 
     }
     return QVariant();
+}
+
+Qt::ItemFlags AvailIMModel::flags(const QModelIndex &index) const {
+    auto flags = CategorizedItemModel::flags(index);
+
+    // 已被启用的输入法，置灰且不可选择
+    if (index.data(FcitxRowTypeRole) == IMType) {
+        bool imEnabled = index.data(FcitxIMEnabledRole).toBool();
+        if (imEnabled) {
+            flags &= ~ (Qt::ItemIsEnabled | Qt::ItemIsSelectable);
+        }
+    }
+
+    return flags;
 }
 
 static QString buildKeyByIMNameAndLanguageCode(const QString &uniqueName, const QString &languageCode) {
@@ -228,17 +245,14 @@ void AvailIMModel::filterIMEntryList(
     beginResetModel();
 
     QMap<QString, int> languageMap;
+    m_enabledIMs.clear();
     m_filteredIMEntryList.clear();
 
-    QSet<QString> enabledIMs;
     for (const auto &item : enabledIMList) {
-        enabledIMs.insert(item.key());
+        m_enabledIMs.insert(item.key());
     }
 
     for (const FcitxQtInputMethodEntry &im : imEntryList) {
-        if (enabledIMs.contains(im.uniqueName())) {
-            continue;
-        }
         QString key = buildKeyByIMNameAndLanguageCode(im.uniqueName(), im.languageCode());
         int idx;
         if (!languageMap.contains(key)) {
@@ -353,11 +367,20 @@ bool IMProxyModel::filterIM(const QModelIndex &index) const {
 
 bool IMProxyModel::lessThan(const QModelIndex &left,
                             const QModelIndex &right) const {
-    int result = compareCategories(left, right);
-    if (result < 0) {
-        return true;
-    } else if (result > 0) {
-        return false;
+    if (left.data(FcitxRowTypeRole) == LanguageType) {
+        int result = compareCategories(left, right);
+        if (result < 0) {
+            return true;
+        } else if (result > 0) {
+            return false;
+        }
+    } else {
+        int result = compareItems(left, right);
+        if (result < 0) {
+            return true;
+        } else if (result > 0) {
+            return false;
+        }
     }
 
     QString l = left.data(Qt::DisplayRole).toString();
@@ -365,71 +388,94 @@ bool IMProxyModel::lessThan(const QModelIndex &left,
     return QCollator().compare(l, r) < 0;
 }
 
+enum class CONTAIN_CUR_LANG {
+    NO,
+    YES,
+    DIFF_VARIANT,
+};
+
+static std::tuple<bool, CONTAIN_CUR_LANG> checkCategories(QAbstractItemModel *model, const QModelIndex &index) {
+    bool containsEnabledIM = false;
+    auto containsCurrentLanguage = CONTAIN_CUR_LANG::NO;
+
+    auto childrenCount = model->rowCount(index);
+    for (int r = 0; r < childrenCount; r++) {
+        auto i = model->index(r, 0, index);
+        bool enabled = i.data(FcitxIMEnabledRole).toBool();
+        if (enabled) {
+            containsEnabledIM = true;
+        }
+
+        QString lang = i.data(FcitxLanguageRole).toString();
+        if (lang.isEmpty()) {
+            continue;
+        }
+
+        if (QLocale().name() == lang) {
+            containsCurrentLanguage = CONTAIN_CUR_LANG::YES;
+        }
+
+        if (containsCurrentLanguage == CONTAIN_CUR_LANG::NO) {
+            if (QLocale().name().startsWith(lang.left(2))) {
+                containsCurrentLanguage = CONTAIN_CUR_LANG::DIFF_VARIANT;
+            }
+        }
+    }
+
+    return {containsEnabledIM, containsCurrentLanguage};
+}
+
 int IMProxyModel::compareCategories(const QModelIndex &left,
                                     const QModelIndex &right) const {
-    int leftH = 0;
-    auto leftChildrenCount = sourceModel()->rowCount(left);
-    if (leftChildrenCount != 0) {
-        for (int r = 0; r < leftChildrenCount; r++) {
-            auto i = sourceModel()->index(r, 0, left);
-            QString lang = i.data(FcitxLanguageRole).toString();
-            if (lang.isEmpty()) {
-                continue;
-            }
+    bool leftContainsEnabledIM = false;
+    auto leftContainsCurrentLanguage = CONTAIN_CUR_LANG::NO;
+    std::tie(leftContainsEnabledIM, leftContainsCurrentLanguage) = checkCategories(sourceModel(), left);
 
-            if (QLocale().name() == lang) {
-                leftH = 1;
-                break;
-            }
+    bool rightContainsEnabledIM = false;
+    auto rightContainsCurrentLanguage = CONTAIN_CUR_LANG::NO;
+    std::tie(rightContainsEnabledIM, rightContainsCurrentLanguage) = checkCategories(sourceModel(), right);
 
-            if (QLocale().name().startsWith(lang.left(2))) {
-                leftH = 2;
-            }
-        }
+    if (leftContainsEnabledIM != rightContainsEnabledIM) {
+        return leftContainsEnabledIM ? -1 : 1;
     }
 
-    int rightH = 0;
-    auto rightChildrenCount = sourceModel()->rowCount(right);
-    if (rightChildrenCount != 0) {
-        for (int r = 0; r < rightChildrenCount; r++) {
-            auto i = sourceModel()->index(r, 0, right);
-            QString lang = i.data(FcitxLanguageRole).toString();
-            if (lang.isEmpty()) {
-                continue;
-            }
-
-            if (QLocale().name() == lang) {
-                rightH = 1;
-                break;
-            }
-
-            if (QLocale().name().startsWith(lang.left(2))) {
-                rightH = 2;
-            }
-        }
-    }
-
-    if (leftH == rightH) {
+    if (leftContainsCurrentLanguage == rightContainsCurrentLanguage) {
         return 0;
     }
 
-    if (leftH == 1) {
+    if (leftContainsCurrentLanguage == CONTAIN_CUR_LANG::YES) {
         return -1;
     }
 
-    if (rightH == 1) {
+    if (rightContainsCurrentLanguage == CONTAIN_CUR_LANG::YES) {
         return 1;
     }
 
-    if (leftH == 2) {
+    if (leftContainsCurrentLanguage == CONTAIN_CUR_LANG::DIFF_VARIANT) {
         return -1;
     }
 
-    if (rightH == 2) {
+    if (rightContainsCurrentLanguage == CONTAIN_CUR_LANG::DIFF_VARIANT) {
         return 1;
     }
 
     return 0;
+}
+
+int IMProxyModel::compareItems(const QModelIndex &left,
+                               const QModelIndex &right) const {
+    bool leftEnabled = left.data(FcitxIMEnabledRole).toBool();
+    bool rightEnabled = right.data(FcitxIMEnabledRole).toBool();
+
+    if (leftEnabled == rightEnabled) {
+        return 0;
+    }
+
+    if (leftEnabled) {
+        return -1;
+    }
+
+    return 1;
 }
 
 FilteredIMModel::FilteredIMModel(Mode mode, QObject *parent)
