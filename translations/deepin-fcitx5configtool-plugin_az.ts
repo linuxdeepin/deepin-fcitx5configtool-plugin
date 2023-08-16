@@ -1,15 +1,15 @@
-<?xml version="1.0" ?><!DOCTYPE TS><TS version="2.1" language="zh_CN">
+<?xml version="1.0" ?><!DOCTYPE TS><TS version="2.1" language="az">
 <context>
     <name>Fcitx5ConfigPlugin</name>
     <message>
         <location filename="../src/fcitx5configplugin.cpp" line="15"/>
         <source>Input Methods</source>
-        <translation>输入法</translation>
+        <translation>Daxiletmə üsulları</translation>
     </message>
     <message>
         <location filename="../src/fcitx5configplugin.cpp" line="30"/>
         <source>Input Method</source>
-        <translation>输入法</translation>
+        <translation>Daxiletmə üsulu</translation>
     </message>
 </context>
 <context>
@@ -17,32 +17,32 @@
     <message>
         <location filename="../src/window/imsettingwindow.cpp" line="110"/>
         <source>Scroll between input methods</source>
-        <translation>轮序切换输入法</translation>
+        <translation>Daxiletmə üsulları arasında keçid edin</translation>
     </message>
     <message>
         <location filename="../src/window/imsettingwindow.cpp" line="112"/>
         <source>Switch between the current/first input method</source>
-        <translation>切换当前/第一个输入法</translation>
+        <translation>Hazırkı və ya birinci daxiletmə üsulları arasında keçid edin</translation>
     </message>
     <message>
         <location filename="../src/window/imsettingwindow.cpp" line="117"/>
         <source>Manage Input Methods</source>
-        <translation>输入法管理</translation>
+        <translation>Daxiletmə üsulunun idarə edilməsi</translation>
     </message>
     <message>
         <location filename="../src/window/imsettingwindow.cpp" line="124"/>
         <source>Shortcuts</source>
-        <translation>快捷键</translation>
+        <translation>Qısayollar</translation>
     </message>
     <message>
         <location filename="../src/window/imsettingwindow.cpp" line="127"/>
         <source>Restore Defaults</source>
-        <translation>恢复默认</translation>
+        <translation>Varsayəlanların bərpası</translation>
     </message>
     <message>
         <location filename="../src/window/imsettingwindow.cpp" line="137"/>
         <source>Advanced Settings</source>
-        <translation>高级设置</translation>
+        <translation>Təkmil ayarlar</translation>
     </message>
 </context>
 <context>
@@ -51,12 +51,12 @@
         <location filename="../src/widgets/keysettingsitem.cpp" line="46"/>
         <location filename="../src/widgets/keysettingsitem.cpp" line="169"/>
         <source>None</source>
-        <translation>无</translation>
+        <translation>Heç biri</translation>
     </message>
     <message>
         <location filename="../src/widgets/keysettingsitem.cpp" line="52"/>
         <source>Enter a new shortcut</source>
-        <translation>请输入新的快捷键</translation>
+        <translation>Yeni qısayol daxil edin</translation>
     </message>
 </context>
 <context>
@@ -64,7 +64,7 @@
     <message>
         <location filename="../src/addim/widgetslib/addimwindow.cpp" line="34"/>
         <source>Select your language and add input methods</source>
-        <translation>选择使用语言并添加输入法</translation>
+        <translation>Dili seçin və daxiletmə üsullarını daxil edin</translation>
     </message>
 </context>
 <context>
@@ -72,17 +72,17 @@
     <message>
         <location filename="../src/addim/widgetslib/impage.cpp" line="217"/>
         <source>Find more in App Store</source>
-        <translation>前往商店下载</translation>
+        <translation>Tətbiq Mağazasında daha çox tapın</translation>
     </message>
     <message>
         <location filename="../src/addim/widgetslib/impage.cpp" line="228"/>
         <source>Cancel</source>
-        <translation>取消</translation>
+        <translation>İmtina</translation>
     </message>
     <message>
         <location filename="../src/addim/widgetslib/impage.cpp" line="238"/>
         <source>Add</source>
-        <translation>添加</translation>
+        <translation>Əlavə edin</translation>
     </message>
 </context>
 </TS>
