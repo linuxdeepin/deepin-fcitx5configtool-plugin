@@ -276,7 +276,7 @@ void AdvanceConfig::disableSwitchIMShortCutsFunc(const bool isDisable)
 
 void AdvanceConfig::switchFirstIMShortCuts(const QString &shortCuts)
 {
-    m_switchFirstIMShortCuts = publisherFunc::transFirstUpper(shortCuts);
+    m_switchFirstIMShortCuts = shortCuts;
     if (isDisableSwitchIMShortCutsFunc) {
         m_switchFirstIMShortCuts = "Control+ctrl";
     }

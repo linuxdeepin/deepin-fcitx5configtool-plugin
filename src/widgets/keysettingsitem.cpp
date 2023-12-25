@@ -22,14 +22,11 @@
 
 namespace dcc_fcitx_configtool {
 namespace widgets {
-FcitxKeyLabelWidget::FcitxKeyLabelWidget(QStringList list, QWidget *p)
+FcitxKeyLabelWidget::FcitxKeyLabelWidget(fcitx::Key list, QWidget *p)
     : QWidget(p)
     , m_curlist(list)
 {
     m_eidtFlag = true;
-    if (m_curlist.isEmpty()) {
-        m_curlist << tr("None");
-    }
     m_keyEdit = new QLineEdit(this);
     m_keyEdit->installEventFilter(this);
     m_keyEdit->setReadOnly(true);
@@ -49,32 +46,19 @@ FcitxKeyLabelWidget::~FcitxKeyLabelWidget()
     clearShortcutKey();
 }
 
-void FcitxKeyLabelWidget::setKeyId(const QString &id)
-{
-    m_id = id;
-}
-
-void FcitxKeyLabelWidget::setList(const QStringList &list)
+void FcitxKeyLabelWidget::setList(const fcitx::Key &list)
 {
     m_curlist = list;
-    m_curlist.removeDuplicates();
     initLableList(m_curlist);
 }
 
-void FcitxKeyLabelWidget::initLableList(const QStringList &list)
+void FcitxKeyLabelWidget::initLableList(const fcitx::Key &list)
 {
    // qDebug() << "initLableList " << list;
     clearShortcutKey();
-    for (const QString &key : list) {
-        QString tmpKey = key.toLower();
-        if(tmpKey.compare("control") == 0){
-            tmpKey = "ctrl";
-        }
-        if (!tmpKey.isEmpty()) {
-            tmpKey[0] = tmpKey[0].toUpper();
-        }
-        FcitxKeyLabel *label = new FcitxKeyLabel(tmpKey);
-        label->setAccessibleName(tmpKey);
+    for (const QString &key : QString::fromStdString(list.toString(fcitx::KeyStringFormat::Localized)).split("+")) {
+        FcitxKeyLabel *label = new FcitxKeyLabel(key);
+        label->setAccessibleName(key);
         label->setBackgroundRole(DPalette::DarkLively);
         m_list << label;
         m_mainLayout->addWidget(label);
@@ -85,15 +69,7 @@ void FcitxKeyLabelWidget::initLableList(const QStringList &list)
 
 QString FcitxKeyLabelWidget::getKeyToStr()
 {
-    QString key;
-    for (int i = 0; i < m_list.count(); ++i) {
-        if (i == m_list.count() - 1) {
-            key += m_list[i]->text();
-        } else {
-            key += (m_list[i]->text() + "_");
-        }
-    }
-    return key.toUpper();
+    return QString::fromStdString(m_curlist.toString());
 }
 
 void FcitxKeyLabelWidget::setEnableEdit(bool flag)
@@ -125,70 +101,51 @@ bool FcitxKeyLabelWidget::eventFilter(QObject *watched, QEvent *event)
             setShortcutShow(false);
             return true;
         }
-        if (event->type() == QEvent::KeyPress) {
-           // Dynamic_Cast(QKeyEvent, e, event);
-            QKeyEvent* e = dynamic_cast<QKeyEvent*>(event);
-
-            auto func = [=](QStringList &list, const QString &key) {
-                clearShortcutKey();
-                list.clear();
-//                if((key == "Ctrl" && m_curlist.contains("CTRL", Qt::CaseInsensitive)) || (key == "Alt" && m_curlist.contains("ALT", Qt::CaseInsensitive))){
-//                    return;
-//                }
-                list << key;
-                qDebug() << "func: " << m_curlist;
-                initLableList(list);
-                setShortcutShow(true);
-            };
-
-            if (e) {
-                if (e->key() == Qt::Key_Delete || e->key() == Qt::Key_Backspace) {
-                    func(m_curlist, tr("None"));
-
-                } else if (e->key() == Qt::Key_Control || e->key() == Qt::Key_Alt || m_isSingle) {
-                    setFocus();
-                    func(m_newlist, publisherFunc::getKeyValue(e->key()));
-                } else {
-                    setShortcutShow(true);
-                }
-                return true;
-            }
-            return false;
-        }
     }
     return false;
 }
 
 void FcitxKeyLabelWidget::keyPressEvent(QKeyEvent *event)
 {
-    if (!m_eidtFlag)
+    if (!m_eidtFlag) {
         return;
-    quint32 tmpScanCode = event->nativeScanCode();
-    if(tmpScanCode == 64){
-        m_newlist << publisherFunc::getKeyValue( Qt::Key_Alt);
     }
-    else{
-        m_newlist << publisherFunc::getKeyValue( event->key());
+
+    bool done = true;
+    auto newlist = fcitx::Key(
+        static_cast<fcitx::KeySym>(event->nativeVirtualKey()),
+        fcitx::KeyStates(event->nativeModifiers()), event->nativeScanCode()).normalize();
+    if (newlist.toString() == "") {
+        done = false;
     }
-    initLableList(m_newlist);
-    if (m_newlist.count() >= 2 && !checkNewKey()) {
-        initLableList(m_curlist);
-        qDebug() << "m_newlist.count() >= 2 && !checkNewKey()";
+
+    auto modifiers =
+        event->modifiers() & (Qt::ShiftModifier | Qt::ControlModifier |
+                              Qt::AltModifier | Qt::MetaModifier);
+    if (modifiers == 0) {
+        done = false;
     }
+
+    if (done) {
+        m_curlist = newlist;
+    }
+
+    initLableList(m_curlist);
     setShortcutShow(true);
+    emit editedFinish();
     QWidget::keyPressEvent(event);
 }
 
 void FcitxKeyLabelWidget::keyReleaseEvent(QKeyEvent *event)
 {
-    qDebug() << "keyReleaseEvent";
-    if (!m_eidtFlag)
-        return;
-    if ((m_newlist.count() < 2 && !m_isSingle) || !checkNewKey(true)) {
-        m_curlist.removeDuplicates();
-        initLableList(m_curlist);
-    }
-    setShortcutShow(true);
+    // qDebug() << "keyReleaseEvent";
+    // if (!m_eidtFlag)
+    //     return;
+    // if ((m_newlist.count() < 2 && !m_isSingle) || !checkNewKey(true)) {
+    //     m_curlist.removeDuplicates();
+    //     initLableList(m_curlist);
+    // }
+    // setShortcutShow(true);
     //    QWidget::keyReleaseEvent(event);
 }
 
@@ -227,70 +184,8 @@ void FcitxKeyLabelWidget::setShortcutShow(bool flag)
     update();
 }
 
-bool FcitxKeyLabelWidget::checkNewKey(bool isRelease)
-{
-    QStringList list {publisherFunc::getKeyValue(Qt::Key_Control),
-                      publisherFunc::getKeyValue(Qt::Key_Alt),
-                      publisherFunc::getKeyValue(Qt::Key_Shift),
-                      publisherFunc::getKeyValue(Qt::Key_Super_L)};
-
-    if (m_newlist.count() == 2) {
-        for (int i = 0; i < list.count(); ++i) {
-            if (m_newlist.at(0) == list.at(i)) {
-                if (list.indexOf(m_newlist[1]) != -1) {
-                    if (m_newlist[1] != m_newlist[0]) {
-                        return !isRelease;
-                    }
-                    return false;
-                }
-                if (list.indexOf(m_newlist[1]) == -1) {
-                    QStringList tmpList;
-                    for (const QString &key : m_newlist) {
-                        QString tmpKey = key.toUpper();
-                        tmpList.append(tmpKey);
-                    }
-
-                    QString configName;
-                    if (m_curlist == tmpList) {
-                        emit shortCutError(m_newlist, configName);
-                        return false;
-                    }
-                    setList(m_newlist);
-                    focusNextChild();
-                    emit editedFinish();
-                    return true;
-                }
-            }
-        }
-    }
-    if (m_newlist.count() >= 3) {
-        if (list.indexOf(m_newlist[0]) == -1 || list.indexOf(m_newlist[1]) == -1 || list.indexOf(m_newlist[2]) != -1) {
-            focusNextChild();
-            return false;
-        }
-        QStringList tmpList;
-        for (const QString &key : m_newlist) {
-            QString tmpKey = key.toUpper();
-            tmpList.append(tmpKey);
-        }
-        QString configName;
-        if (m_curlist != tmpList /*&& !IMConfig::checkShortKey(m_newlist, configName)*/) {
-            emit shortCutError(m_newlist, configName);
-            return false;
-        }
-        setList(m_newlist);
-        focusNextChild();
-        emit editedFinish();
-        return true;
-    }
-    if(m_newlist.count() == 1 && m_isSingle) {
-        emit editedFinish();
-    }
-    return true;
-}
-
 FcitxKeySettingsItem::FcitxKeySettingsItem(const QString &text,
-                                           const QStringList &list,
+                                           const fcitx::Key &list,
                                            QFrame *parent)
     : SettingsItem(parent)
 {
@@ -329,12 +224,7 @@ void FcitxKeySettingsItem::setEnableEdit(bool flag)
     m_keyWidget->setEnableEdit(flag);
 }
 
-void FcitxKeySettingsItem::setKeyId(const QString &id)
-{
-    m_keyWidget->setKeyId(id);
-}
-
-void FcitxKeySettingsItem::setList(const QStringList &list)
+void FcitxKeySettingsItem::setList(const fcitx::Key &list)
 {
     m_keyWidget->setList(list);
 }
@@ -345,7 +235,7 @@ void FcitxKeySettingsItem::doShortCutError(const QStringList &list, QString &nam
 }
 
 FcitxHotKeySettingsItem::FcitxHotKeySettingsItem(const QString &text,
-                                                 const QStringList &list,
+                                                 const fcitx::Key &list,
                                                  QFrame *parent)
     : SettingsItem(parent)
 {
@@ -384,12 +274,7 @@ void FcitxHotKeySettingsItem::setEnableEdit(bool flag)
     m_keyWidget->setEnableEdit(flag);
 }
 
-void FcitxHotKeySettingsItem::setKeyId(const QString &id)
-{
-    m_keyWidget->setKeyId(id);
-}
-
-void FcitxHotKeySettingsItem::setList(const QStringList &list)
+void FcitxHotKeySettingsItem::setList(const fcitx::Key &list)
 {
     m_keyWidget->setList(list);
 }
