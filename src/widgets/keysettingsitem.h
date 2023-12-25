@@ -9,6 +9,7 @@
 #include "keylabel.h"
 #include "labels/shortenlabel.h"
 
+#include <fcitx-utils/key.h>
 #include <widgets/settingsitem.h>
 
 #include <QComboBox>
@@ -23,10 +24,9 @@ class FcitxKeyLabelWidget : public QWidget
 {
     Q_OBJECT
 public:
-    FcitxKeyLabelWidget(QStringList list = {}, QWidget *p = nullptr);
+    FcitxKeyLabelWidget(fcitx::Key list = fcitx::Key(""), QWidget *p = nullptr);
     virtual ~FcitxKeyLabelWidget();
-    void setKeyId(const QString &id);
-    void setList(const QStringList &list);
+    void setList(const fcitx::Key &list);
     QString getKeyToStr();
     void setEnableEdit(bool flag);
     /**
@@ -39,23 +39,20 @@ signals:
 
 protected:
     void mousePressEvent(QMouseEvent *event) override;
-    virtual bool eventFilter(QObject *watched, QEvent *event) override;
+    bool eventFilter(QObject *watched, QEvent *event) override;
     void keyPressEvent(QKeyEvent *event) override;
     void keyReleaseEvent(QKeyEvent *event) override;
 
 private:
     void clearShortcutKey();
     void setShortcutShow(bool flag);
-    bool checkNewKey(bool isRelease = false);
-    void initLableList(const QStringList &list);
+    void initLableList(const fcitx::Key &list);
 
 private:
     QHBoxLayout *m_mainLayout {nullptr};
     QLineEdit *m_keyEdit {nullptr};
     QList<FcitxKeyLabel *> m_list;
-    QString m_id;
-    QStringList m_curlist;
-    QStringList m_newlist;
+    fcitx::Key m_curlist;
     bool m_eidtFlag;
     bool m_isSingle {false};
 };
@@ -64,9 +61,8 @@ class FcitxKeySettingsItem : public DCC_NAMESPACE::SettingsItem
 {
     Q_OBJECT
 public:
-    FcitxKeySettingsItem(const QString &text = "", const QStringList &list = {}, QFrame *parent = nullptr);
-    void setKeyId(const QString &id);
-    void setList(const QStringList &list);
+    FcitxKeySettingsItem(const QString &text = "", const fcitx::Key &list = fcitx::Key(""), QFrame *parent = nullptr);
+    void setList(const fcitx::Key &list);
     QString getKeyToStr() { return m_keyWidget->getKeyToStr(); }
     void setEnableEdit(bool flag);
     QString getLabelText();
@@ -93,9 +89,8 @@ class FcitxHotKeySettingsItem : public DCC_NAMESPACE::SettingsItem
 {
     Q_OBJECT
 public:
-    FcitxHotKeySettingsItem(const QString &text = "", const QStringList &list = {}, QFrame *parent = nullptr);
-    void setKeyId(const QString &id);
-    void setList(const QStringList &list);
+    FcitxHotKeySettingsItem(const QString &text = "", const fcitx::Key &list = fcitx::Key(""), QFrame *parent = nullptr);
+    void setList(const fcitx::Key &list);
     QString getKeyToStr() { return m_keyWidget->getKeyToStr(); }
     void setEnableEdit(bool flag);
     QString getLabelText();

@@ -227,7 +227,6 @@ void IMSettingWindow::initConnect()
 
     connect(m_defaultIMKey, &FcitxKeySettingsItem::editedFinish, [ = ]() {
         m_advanceConfig->switchFirstIMShortCuts(m_defaultIMKey->getKeyToStr());
-        m_defaultIMKey->setList(m_defaultIMKey->getKeyToStr().split("_"));
     });
 
 //    onReloadConnect();//    if (IMModel::instance()->isEdit()) {
@@ -258,12 +257,12 @@ void IMSettingWindow::initConnect()
 
     connect(m_advanceConfig, &AdvanceConfig::switchFirstIMShortCutsChanged, this, [=](const QString& shortCuts) {
         // 只需要第一组快捷键
-        m_defaultIMKey->setList(shortCuts.split(" ").first().split("+"));
+        m_defaultIMKey->setList(fcitx::Key(shortCuts.split(" ").first().toStdString()));
     });
 
     connect(m_resetBtn, &QPushButton::clicked, [ = ]() {
         m_advanceConfig->switchFirstIMShortCuts("CTRL_SPACE");
-        m_defaultIMKey->setList(QString("CTRL_SPACE").split("_"));
+        m_defaultIMKey->setList(fcitx::Key("CTRL_SPACE"));
         //保持间隔内不要重新加载
 #if defined(USE_MIPS64)
         QTimer::singleShot(200, this, [=](){
