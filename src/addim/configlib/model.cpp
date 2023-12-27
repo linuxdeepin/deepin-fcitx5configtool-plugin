@@ -178,7 +178,7 @@ QVariant AvailIMModel::dataForCategory(const QModelIndex &index,
 
     // 设置背景色
     case Dtk::ViewItemBackgroundRole:
-        return QVariant::fromValue(QPair<int, int>{QPalette::Base, DPalette::NoType});
+        return QVariant::fromValue(QPair<int, int>{QPalette::Base, Dtk::Gui::DPalette::NoType});
 
     default:
         return QVariant();
@@ -211,7 +211,7 @@ QVariant AvailIMModel::dataForItem(const QModelIndex &index, int role) const {
 
     // 设置背景色
     case Dtk::ViewItemBackgroundRole:
-        return QVariant::fromValue(QPair<int, int>{QPalette::Base, DPalette::NoType});
+        return QVariant::fromValue(QPair<int, int>{QPalette::Base, Dtk::Gui::DPalette::NoType});
 
     }
     return QVariant();
