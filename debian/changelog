@@ -1,3 +1,12 @@
+deepin-fcitx5configtool-plugin (5.0.18) unstable; urgency=medium
+
+  * 修复打开高级设置后切换页面控制中心崩溃
+  * fix build errors
+  * fix setting shortcut failed
+  * update translations
+
+ -- zsien <quezhiyong@deepin.org>  Thu, 28 Dec 2023 10:32:42 +0800
+
 deepin-fcitx5configtool-plugin (5.0.17) unstable; urgency=medium
 
   * load translations in dde-control-center 
