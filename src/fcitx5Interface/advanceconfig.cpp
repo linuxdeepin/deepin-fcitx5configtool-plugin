@@ -247,7 +247,9 @@ QDialog *AdvanceConfig::configDialog(QWidget *parent, DBusProvider *dbus,
 
 void AdvanceConfig::switchIMShortCuts(const QString &shortCuts)
 {
-    if(shortCuts == "CTRL_SHIFT") {
+    if(shortCuts == "NONE") {
+        m_switchIMShortCuts = "";
+    } else if(shortCuts == "CTRL_SHIFT") {
         m_switchIMShortCuts = "Control+Shift+Shift_L Control+Shift+Shift_R";
     } else if(shortCuts == "ALT_SHIFT") {
         m_switchIMShortCuts = "Alt+Shift+Shift_R Alt+Shift+Shift_L";
