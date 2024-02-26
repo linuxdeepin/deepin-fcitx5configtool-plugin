@@ -132,7 +132,7 @@ void IMSettingWindow::initUI()
     // 快捷键 切换输入法 切换虚拟键盘 切换至默认输入法
     m_shortcutGroup = new DCC_NAMESPACE::SettingsGroup(nullptr, DCC_NAMESPACE::SettingsGroup::GroupBackground);
     m_imSwitchCbox = new DCC_NAMESPACE::ComboxWidget(tr("Scroll between input methods"));
-    m_imSwitchCbox->setComboxOption({ "CTRL_SHIFT", "ALT_SHIFT", "CTRL_SUPER", "ALT_SUPER" });
+    m_imSwitchCbox->setComboxOption({ "NONE", "CTRL_SHIFT", "ALT_SHIFT", "CTRL_SUPER", "ALT_SUPER" });
     m_imSwitchCbox->comboBox()->setAccessibleName("Switch input methods");
     m_defaultIMKey = new FcitxKeySettingsItem(tr("Switch between the current/first input method"));
     m_shortcutGroup->appendItem(m_imSwitchCbox);
