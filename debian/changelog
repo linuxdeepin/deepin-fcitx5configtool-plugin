@@ -1,3 +1,9 @@
+deepin-fcitx5configtool-plugin (5.0.19) unstable; urgency=medium
+
+  * fix: shortcut of "Scroll bewteen input methods" is wrong
+
+ -- zsien <quezhiyong@deepin.org>  Fri, 01 Mar 2024 13:04:11 +0800
+
 deepin-fcitx5configtool-plugin (5.0.18) unstable; urgency=medium
 
   * 修复打开高级设置后切换页面控制中心崩溃
