@@ -457,6 +457,9 @@ void IMSettingWindow::onItemDelete(int row)
     m_IMListModel->removeRow(row);
     m_config->removeIM(row);
     m_config->save();
+
+    int newSelectedRow = row >= m_IMListModel->rowCount() ? row - 1 : row;
+    m_IMListGroup->setCurrentIndex(m_IMListModel->index(newSelectedRow, 0));
 }
 
 //添加按钮点击
