@@ -116,6 +116,10 @@ void AdvanceConfig::setValue(const QVariant &value)
     } else {
         map = value.toMap();
     }
+    for (auto optionWidget : optionWidgets) {
+        optionWidget->readValueFrom(map);
+    }
+
     QList<fcitx::Key> keyList1 = readValue(map, "Hotkey/TriggerKeys");
     QList<fcitx::Key> keyList2 = readValue(map, "Hotkey/EnumerateForwardKeys");
     QString s1 = QString::fromUtf8(Key::keyListToString(keyList1, KeyStringFormat::Portable).c_str());
@@ -123,9 +127,6 @@ void AdvanceConfig::setValue(const QVariant &value)
     emit switchIMShortCutsChanged(s2);
     emit switchFirstIMShortCutsChanged(s1);
 
-    for (auto optionWidget : optionWidgets) {
-        optionWidget->readValueFrom(map);
-    }
     m_dontEmitChanged = false;
 }
 
