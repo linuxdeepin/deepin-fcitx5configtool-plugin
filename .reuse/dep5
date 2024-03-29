@@ -24,12 +24,12 @@ Copyright: Deepin Technology Co., Ltd.
 License: CC-BY-4.0
 
 # desktop
-Files: *.desktop
+Files: *.desktop *.desktop.in
 Copyright: None
 License: CC0-1.0
 
 # translation
-Files: *.ts
+Files: *.ts *.po *.pot **/LINGUAS
 Copyright: Deepin Technology Co., Ltd.
 License: GPL-3.0-or-later
 

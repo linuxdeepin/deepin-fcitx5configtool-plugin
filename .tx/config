@@ -4,8 +4,8 @@ minimum_perc = 80
 mode = developer
 
 [o:linuxdeepin:p:deepin-desktop-environment:r:deepin-fcitx5configtool-plugin]
-file_filter = translations/deepin-fcitx5configtool-plugin_<lang>.ts
-source_file = translations/deepin-fcitx5configtool-plugin.ts
+file_filter = src/dcc-module/translations/deepin-fcitx5configtool-plugin_<lang>.ts
+source_file = src/dcc-module/translations/deepin-fcitx5configtool-plugin.ts
 source_lang = en
 type = QT
 
