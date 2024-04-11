@@ -16,6 +16,7 @@
 #include "widgets/settingsgroup.h"
 #include "widgets/settingsitem.h"
 #include <DLog>
+#include <QTranslator>
 
 DWIDGET_USE_NAMESPACE
 DCORE_USE_NAMESPACE
