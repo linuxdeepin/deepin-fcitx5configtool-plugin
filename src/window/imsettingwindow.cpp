@@ -133,6 +133,14 @@ void IMSettingWindow::initUI()
     m_shortcutGroup = new DCC_NAMESPACE::SettingsGroup(nullptr, DCC_NAMESPACE::SettingsGroup::GroupBackground);
     m_imSwitchCbox = new DCC_NAMESPACE::ComboxWidget(tr("Scroll between input methods"));
     m_imSwitchCbox->setComboxOption({ "NONE", "CTRL_SHIFT", "ALT_SHIFT", "CTRL_SUPER", "ALT_SUPER" });
+    for (auto child : m_imSwitchCbox->children()) {
+       if (auto label = qobject_cast<QLabel *>(child)) {
+         QFontMetrics fm(label->font());
+         int pixelsWide = fm.horizontalAdvance(tr("Scroll between input methods"));
+         label->setMinimumWidth(pixelsWide);
+         break;
+       }
+    }
     m_imSwitchCbox->comboBox()->setAccessibleName("Switch input methods");
     m_defaultIMKey = new FcitxKeySettingsItem(tr("Switch between the current/first input method"));
     m_shortcutGroup->appendItem(m_imSwitchCbox);
