@@ -1,3 +1,9 @@
+deepin-fcitx5configtool-plugin (5.0.21) unstable; urgency=medium
+
+  * fix: elide text
+
+ -- Wang Fei<wangfei@deepin.org>  Wed, 17 Apr 2024 10:08:10 +0800
+
 deepin-fcitx5configtool-plugin (5.0.20) unstable; urgency=medium
 
   * fix: will clear the shortcuts
