@@ -18,6 +18,7 @@
 #include <DStyle>
 #include <DTableView>
 #include <DTitlebar>
+#include <DUtil>
 
 #include <QApplication>
 #include <QDebug>
@@ -295,10 +296,13 @@ void AddIMPage::childIMSelectionChanged()
 void AddIMPage::clickedFindMoreButton()
 {
     DDBusSender()
-        .service("com.home.appstore.client")
-        .interface("com.home.appstore.client")
-        .path("/com/home/appstore/client")
-        .method("newInstence")
+        .service("org.desktopspec.ApplicationManager1")
+        .path(QStringLiteral("/org/desktopspec/ApplicationManager1/") + DUtil::escapeToObjectPath("deepin-app-store"))
+        .interface("org.desktopspec.ApplicationManager1.Application")
+        .method("Launch")
+        .arg(QString(""))
+        .arg(QStringList())
+        .arg(QVariantMap())
         .call();
 }
 
