@@ -1,3 +1,9 @@
+deepin-fcitx5configtool-plugin (5.0.22) unstable; urgency=medium
+
+  * chore: 修改打开应用商店的方式 (linuxdeepin/developer-center#8849)
+
+ -- zsien <quezhiyong@deepin.org>  Fri, 07 Jun 2024 14:25:24 +0800
+
 deepin-fcitx5configtool-plugin (5.0.21) unstable; urgency=medium
 
   * 重构代码
