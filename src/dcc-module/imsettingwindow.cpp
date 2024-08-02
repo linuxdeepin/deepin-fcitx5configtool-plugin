@@ -24,6 +24,8 @@
 #include <DListView>
 #include <DStandardItem>
 #include <DWidgetUtil>
+#include <DDBusSender>
+#include <DUtil>
 
 #include <QEvent>
 #include <QProcess>
@@ -33,6 +35,9 @@
 #include <QStandardItemModel>
 
 DWIDGET_USE_NAMESPACE
+
+const QString SOGOU_IM_UNIQUE_NAME = "com.sogou.ime.ng.fcitx5.deepin";
+const QString SOGOU_CONFIGURE_APP_ID = "com.sogou.ime.ng.fcitx5.deepin.configurer";
 
 using namespace dcc_fcitx_configtool::widgets;
 
@@ -383,6 +388,20 @@ void IMSettingWindow::onItemConfig(int row)
 {
     auto item = m_config->currentIMModel()->index(row);
     QString uniqueName = item.data(fcitx::kcm::FcitxIMUniqueNameRole).toString();
+
+    if (uniqueName == SOGOU_IM_UNIQUE_NAME) {
+        DDBusSender()
+            .service("org.desktopspec.ApplicationManager1")
+            .path(QStringLiteral("/org/desktopspec/ApplicationManager1/") + DUtil::escapeToObjectPath(SOGOU_CONFIGURE_APP_ID))
+            .interface("org.desktopspec.ApplicationManager1.Application")
+            .method("Launch")
+            .arg(QString(""))
+            .arg(QStringList())
+            .arg(QVariantMap())
+            .call();
+        return;
+    }
+
     QString title = item.data(Qt::DisplayRole).toString();
     QPointer<QDialog> dialog = fcitx::kcm::ConfigWidget::configDialog(
         this,
