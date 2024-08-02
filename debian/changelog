@@ -1,3 +1,10 @@
+deepin-fcitx5configtool-plugin (5.0.23) unstable; urgency=medium
+
+  * chore: 特化打开搜狗输入法设置页面方式
+    Issues: linuxdeepin/developer-center#10079
+
+ -- zsien <quezhiyong@deepin.org>  Fri, 02 Aug 2024 11:13:09 +0800
+
 deepin-fcitx5configtool-plugin (5.0.22) unstable; urgency=medium
 
   * chore: 修改打开应用商店的方式 (linuxdeepin/developer-center#8849)
