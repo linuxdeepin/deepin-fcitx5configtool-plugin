@@ -110,7 +110,9 @@ void IMSettingWindow::initUI()
             &QItemSelectionModel::currentChanged,
             this,
             [this](const QModelIndex &current, [[maybe_unused]] const QModelIndex &previous) {
-                m_deleteBtn->setEnabled(current.isValid());
+                if (m_IMListModel->rowCount() > 1) {
+                     m_deleteBtn->setEnabled(current.isValid());
+                }
                 QTimer::singleShot(0, [this]() {
                     updateActions();
                 });
