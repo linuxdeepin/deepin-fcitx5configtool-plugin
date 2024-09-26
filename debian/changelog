@@ -1,3 +1,9 @@
+deepin-fcitx5configtool-plugin (5.0.24) unstable; urgency=medium
+
+  * feat: 输入法管理中应不允许删除所有输入法,至少需要保留一个输入法 (#45)
+
+ -- Yutao Meng <mengyutao@deepin.org>  Thu, 26 Sep 2024 13:35:45 +0800
+
 deepin-fcitx5configtool-plugin (5.0.23) unstable; urgency=medium
 
   * chore: 特化打开搜狗输入法设置页面方式
