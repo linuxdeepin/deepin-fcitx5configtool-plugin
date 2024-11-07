@@ -1,2 +1,1 @@
-add_subdirectory(lib)
-add_subdirectory(dcc-module)
+add_subdirectory(dcc-fcitx5configtool)
