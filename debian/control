@@ -28,6 +28,12 @@ Build-Depends:
  qtquickcontrols2-5-dev,
  qttools5-dev,
  xkb-data,
+ libfcitx5-qt6-dev,
+ qt6-base-dev,
+ qt6-declarative-dev,
+ qt6-tools-dev,
+ libdtk6widget-dev,
+ libdtk6core-dev,
 Standards-Version: 4.6.2
 Rules-Requires-Root: no
 Homepage: https://github.com/fcitx/fcitx5-configtool
