@@ -39,17 +39,21 @@ add_library(${DccFcitx5configtool_Name} MODULE
 
 target_include_directories(${DccFcitx5configtool_Name} PUBLIC
     Dde::Control-Center
+    configlib${QT_MAJOR_VERSION}
+    configwidgetslib${QT_MAJOR_VERSION}
 )
 
 set(DccFcitx5configtool_Libraries
-        Qt6::DBus
-        Qt6::Gui
-        Dtk6::Core
+        Qt${QT_MAJOR_VERSION}::DBus
+        Qt${QT_MAJOR_VERSION}::Gui
+        Dtk${QT_MAJOR_VERSION}::Core
         Dde::Control-Center
 )
 
 target_link_libraries(${DccFcitx5configtool_Name} PRIVATE
         ${DccFcitx5configtool_Libraries}
+        configlib${QT_MAJOR_VERSION}
+        configwidgetslib${QT_MAJOR_VERSION}
 )
 
 dcc_install_plugin(NAME ${DccFcitx5configtool_Name} TARGET ${DccFcitx5configtool_Name})
