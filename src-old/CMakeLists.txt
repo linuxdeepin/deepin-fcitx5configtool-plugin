@@ -1,3 +1,8 @@
+include(KDEInstallDirs)
+include(KDECMakeSettings)
+include(KDECompilerSettings)
+option(ENABLE_KCM "Enable KDE Config Module" On)
+
 find_package(Qt5 ${QT_MIN_VERSION} CONFIG REQUIRED COMPONENTS Core Gui Widgets X11Extras Concurrent)
 find_package(DtkCore REQUIRED)
 find_package(DtkWidget REQUIRED)
