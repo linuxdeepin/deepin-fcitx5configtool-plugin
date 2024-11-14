@@ -8,81 +8,39 @@ import org.deepin.dcc 1.0
 import org.deepin.dtk 1.0 as D
 
 DccObject {
+    // Manage input methods
     DccObject {
-        name: "ManageInputMethodsTitle"
-        parentName: "Fcitx5configtool"
-        displayName: qsTr("Manage input methods")
-        weight: 10
-        hasBackground: false
+        name: "ManageInputMethods"
+        weight: 100
         pageType: DccObject.Item
-        page: RowLayout {
-            Label {
-                Layout.leftMargin: 10
-                font: D.DTK.fontManager.t4
-                text: dccObj.displayName
-            }
+        page: DccGroupView {
+            spacing: 0
+            isGroup: false
         }
+        ManageInputMethodsModule {}
     }
 
+    // Shortcuts
     DccObject {
-        name: "ShortcutsTitle"
-        parentName: "Fcitx5configtool"
-        displayName: qsTr("Shortcuts")
-        weight: 20
-        hasBackground: false
+        name: "Shortcuts"
+        weight: 200
         pageType: DccObject.Item
-        page: RowLayout {
-            Label {
-                Layout.leftMargin: 10
-                font: D.DTK.fontManager.t4
-                text: dccObj.displayName
-            }
+        page: DccGroupView {
+            spacing: 0
+            isGroup: false
         }
+        ShortcutsModule {}
     }
 
+    // Advanced Settings
     DccObject {
-        name: "AdvancedSettingsTitle"
-        parentName: "Fcitx5configtool"
-        displayName: qsTr("Advanced Settings")
-        weight: 30
-        hasBackground: false
+        name: "AdvancedSettings"
+        weight: 300
         pageType: DccObject.Item
-        page: ColumnLayout {
-            Label {
-                Layout.leftMargin: 10
-                font: D.DTK.fontManager.t4
-                text: dccObj.displayName
-            }
-            Label {
-                Layout.leftMargin: 10
-                Layout.rightMargin: 10
-                Layout.fillWidth: tru
-                font: D.DTK.fontManager.t8
-                text: qsTr("\"Advanced Settings\" is only valid for the input method that uses the system settings, if the input method has its own settings, its own settings shall prevail.")
-                opacity: 0.5
-                wrapMode: Text.Wrap
-            }
+        page: DccGroupView {
+            spacing: 0
+            isGroup: false
         }
-    }
-
-    DccObject {
-        name: "GlobalConfigPage"
-        parentName: "Fcitx5configtool"
-        displayName: qsTr("Global Config")
-        weight: 31
-        page: DccRightView {
-            spacing: 5
-        }
-        GlobalConfigPage {}
-    }
-    DccObject {
-        name: "AddonsPage"
-        parentName: "Fcitx5configtool"
-        displayName: qsTr("Add-ons")
-        weight: 32
-        page: DccRightView {
-            spacing: 5
-        }
-        AddonsPage {}
+        AdvancedSettingsModule {}
     }
 }

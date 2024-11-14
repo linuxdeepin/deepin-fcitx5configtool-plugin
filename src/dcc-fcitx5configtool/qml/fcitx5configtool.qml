@@ -7,5 +7,5 @@ DccObject {
     parentName: "Keyboard"
     displayName: qsTr("Input method")
     icon: "dcc_nav_input_method"
-    weight: 40
+    weight: 200 // 101~299 for InputMethod in Keyboard-plguin
 }
