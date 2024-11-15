@@ -18,7 +18,7 @@ ADD_DEFINITIONS("-fstack-protector-strong -D_FORTITY_SOURCE=1 -z noexecstack -pi
 # find_package(QT NAMES Qt6 Qt5)
 # set(QT_MAJOR_VERSION 6)
 # set(QT_DEFAULT_MAJOR_VERSION 6)
-find_package(Qt6 COMPONENTS Core Gui DBus LinguistTools REQUIRED)
+find_package(Qt6 COMPONENTS Core Gui DBus LinguistTools Qml REQUIRED)
 find_package(DdeControlCenter REQUIRED)
 find_package(Dtk6 COMPONENTS Core REQUIRED)
 find_package(PkgConfig REQUIRED)
@@ -29,6 +29,7 @@ file(GLOB_RECURSE DccFcitx5configtool_SRCS
         "operation/qrc/*.qrc"
         "*.cpp"
         "*.h"
+        "private/*.h"
         "operation/*.cpp"
         "operation/*.h"
 )
@@ -46,6 +47,7 @@ target_include_directories(${DccFcitx5configtool_Name} PUBLIC
 set(DccFcitx5configtool_Libraries
         Qt${QT_MAJOR_VERSION}::DBus
         Qt${QT_MAJOR_VERSION}::Gui
+        Qt${QT_MAJOR_VERSION}::Qml
         Dtk${QT_MAJOR_VERSION}::Core
         Dde::Control-Center
 )
