@@ -24,8 +24,6 @@ Rectangle {
             delegate: D.ItemDelegate {
                 Layout.fillWidth: true
                 visible: true
-                leftPadding: 10
-                rightPadding: 10
                 cascadeSelected: true
                 checkable: false
                 contentFlow: true
@@ -41,7 +39,35 @@ Rectangle {
                     }
 
                     D.ToolButton {
+                        id: imManageButton
                         icon.name: "dcc_immanage"
+                        onClicked: imMenu.popup()
+
+                        D.Menu {
+                            id: imMenu
+
+                            D.MenuItem {
+                                text: qsTr("Move Up")
+                                // onTriggered: { /* 处理上移逻辑 */ }
+                            }
+
+                            D.MenuItem {
+                                text: qsTr("Move Down")
+                                // onTriggered: { /* 处理下移逻辑 */ }
+                            }
+
+                            D.MenuItem {
+                                text: qsTr("Settings")
+                                // onTriggered: { /* 处理设置逻辑 */ }
+                            }
+
+                            D.MenuSeparator {}
+
+                            D.MenuItem {
+                                text: qsTr("Remove")
+                                // onTriggered: { /* 处理删除逻辑 */ }
+                            }
+                        }
                     }
                 }
                 background: DccItemBackground {
