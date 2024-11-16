@@ -34,8 +34,13 @@ DccObject {
                 textColor: D.Palette {
                     normal: D.DTK.makeColor(D.Color.Highlight)
                 }
+                InputMethodsChooser {
+                    id: imsChooser
+                }
+
                 onClicked: {
                     console.log("Add input method button clicked")
+                    imsChooser.active = true
                 }
             }
         }

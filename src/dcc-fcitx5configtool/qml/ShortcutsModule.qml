@@ -51,7 +51,7 @@ DccObject {
             flat: true
             model: ["None", "CTRL_SHIFT", "ALT_SHIFT", "CTRL_SUPER", "ALT_SUPER"]
             currentIndex: 1 // TODO(zhangs): config
-            
+
             onCurrentIndexChanged: {
                 console.log("Current index changed to:", currentIndex,
                             "with text:", model[currentIndex])
