@@ -5,6 +5,7 @@
 #define FCITX5CONFIGTOOL_H
 
 #include "fcitx5configproxy.h"
+#include "imlistmodel.h"
 
 #include <QObject>
 #include <QVariant>
@@ -16,12 +17,16 @@ class Fcitx5ConfigToolWorkerPrivate;
 class Fcitx5ConfigToolWorker : public QObject
 {
     Q_OBJECT
-    Q_PROPERTY(Fcitx5ConfigProxy* fcitx5ConfigProxy READ fcitx5ConfigProxy NOTIFY requestConfigFinished)
+    Q_PROPERTY(Fcitx5ConfigProxy *fcitx5ConfigProxy READ fcitx5ConfigProxy NOTIFY requestConfigFinished)
 
 public:
     explicit Fcitx5ConfigToolWorker(QObject *parent = nullptr);
 
     Fcitx5ConfigProxy *fcitx5ConfigProxy() const;
+    Q_INVOKABLE IMListModel *imlistModel() const;
+
+    Q_INVOKABLE void openDeepinAppStore() const;
+    Q_INVOKABLE void showIMSettingsDialog(int index);
 
 Q_SIGNALS:
     void requestConfigFinished();

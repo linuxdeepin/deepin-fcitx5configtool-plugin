@@ -9,12 +9,12 @@ import Qt.labs.qmlmodels 1.2
 import org.deepin.dtk 1.0 as D
 
 import org.deepin.dcc 1.0
-import com.deepin.dcc.fcitx5configtool 1.0
+import org.deepin.dcc.fcitx5configtool 1.0
 
 DccObject {
     id: root
     property bool loading: true
-    
+
     DccRepeater {
         model: dccData.fcitx5ConfigProxy.globalConfigTypes()
         delegate: Component {

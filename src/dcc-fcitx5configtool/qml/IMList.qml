@@ -20,14 +20,15 @@ Rectangle {
 
         Repeater {
             id: repeater
-            model: imListModel
+            model: dccData.imlistModel()
             delegate: D.ItemDelegate {
                 Layout.fillWidth: true
                 visible: true
                 cascadeSelected: true
                 checkable: false
                 contentFlow: true
-                corners: getCornersForBackground(index, imListModel.count)
+                corners: getCornersForBackground(index,
+                                                 dccData.imlistModel().count())
 
                 content: RowLayout {
                     Layout.fillWidth: true
@@ -35,7 +36,7 @@ Rectangle {
 
                     DccLabel {
                         Layout.fillWidth: true
-                        text: model.title
+                        text: model.name
                     }
 
                     D.ToolButton {
@@ -48,24 +49,31 @@ Rectangle {
 
                             D.MenuItem {
                                 text: qsTr("Move Up")
-                                // onTriggered: { /* 处理上移逻辑 */ }
+                                enabled: dccData.imlistModel().canMoveUp(index)
+                                onTriggered: dccData.imlistModel().moveItem(
+                                                 index, index - 1)
                             }
 
                             D.MenuItem {
                                 text: qsTr("Move Down")
-                                // onTriggered: { /* 处理下移逻辑 */ }
+                                enabled: dccData.imlistModel(
+                                             ).canMoveDown(index)
+                                onTriggered: dccData.imlistModel().moveItem(
+                                                 index, index + 1)
                             }
 
                             D.MenuItem {
                                 text: qsTr("Settings")
-                                // onTriggered: { /* 处理设置逻辑 */ }
+                                onTriggered: dccData.showIMSettingsDialog(index)
                             }
 
                             D.MenuSeparator {}
 
                             D.MenuItem {
                                 text: qsTr("Remove")
-                                // onTriggered: { /* 处理删除逻辑 */ }
+                                enabled: dccData.imlistModel().canRemove()
+                                onTriggered: dccData.imlistModel(
+                                                 ).removeItem(index)
                             }
                         }
                     }
@@ -75,24 +83,6 @@ Rectangle {
                     highlightEnable: false
                 }
             }
-        }
-    }
-
-    // TODO(zhangs): read from config
-    ListModel {
-        id: imListModel
-
-        ListElement {
-            title: qsTr("AAAAAAAAA")
-        }
-        ListElement {
-            title: qsTr("BBBBBBBBBB")
-        }
-        ListElement {
-            title: qsTr("CCCCCCCC")
-        }
-        ListElement {
-            title: qsTr("DDDDDDDDDD")
         }
     }
 }

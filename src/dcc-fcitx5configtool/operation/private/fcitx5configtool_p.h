@@ -16,6 +16,7 @@ class DBusProvider;
 namespace deepin {
 namespace fcitx5configtool {
 class Fcitx5ConfigProxy;
+class IMListModel;
 class Fcitx5ConfigToolWorker;
 class Fcitx5ConfigToolWorkerPrivate : public QObject
 {
@@ -26,6 +27,7 @@ class Fcitx5ConfigToolWorkerPrivate : public QObject
     fcitx::kcm::IMConfig *imConfig { nullptr };
     fcitx::kcm::DBusProvider *dbusProvider { nullptr };
     Fcitx5ConfigProxy *configProxy { nullptr };
+    IMListModel *imListModel { nullptr };
 
 private:
     void init();
