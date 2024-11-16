@@ -32,6 +32,7 @@ DccObject {
                     normal: D.DTK.makeColor(D.Color.Highlight)
                 }
                 onClicked: {
+                    dccData.fcitx5ConfigProxy.restoreDefault("Hotkey")
                     console.log("Restore Defaults button clicked")
                 }
             }

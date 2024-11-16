@@ -37,6 +37,7 @@ public Q_SLOTS:
     void save();
     QVariantList globalConfigTypes() const;
     QVariantList globalConfigOptions(const QString &type) const;
+    void restoreDefault(const QString &type);
     void requestConfig(bool sync);
 
 private Q_SLOTS:

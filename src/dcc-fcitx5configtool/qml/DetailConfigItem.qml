@@ -37,16 +37,13 @@ DccObject {
                 text: dccObj.displayName
             }
             D.IconButton {
+                Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
+                Layout.rightMargin: 0
+                Layout.topMargin: (parent.height - height) / 2 - 2
                 icon.width: 12
                 icon.height: 12
                 implicitWidth: 12
                 implicitHeight: 12
-                anchors {
-                    right: parent.right
-                    rightMargin: 0
-                    top: parent.top
-                    topMargin: (parent.height - height) / 2 - 2
-                }
                 icon.name: headerItem.expanded ? "go-down" : "go-next"
                 flat: true
                 onClicked: headerItem.expanded = !headerItem.expanded
@@ -129,12 +126,14 @@ DccObject {
 
                         Component {
                             id: keyComponent
-                            D.KeySequenceEdit {
+                            KeySequenceDisplay {
                                 placeholderText: qsTr("Please enter a new shortcut")
                                 keys: modelData.value
                                 background.visible: false
-                                onKeysChanged: {
-                                    dccData.fcitx5ConfigProxy.setValue(root.name + "/" + modelData.name + "/0", keys, true)
+                                onFocusChanged: {
+                                    if (!focus) {
+                                        dccData.fcitx5ConfigProxy.setValue(root.name + "/" + modelData.name + "/0", keys, true)
+                                    }
                                 }
                             }
                         }
