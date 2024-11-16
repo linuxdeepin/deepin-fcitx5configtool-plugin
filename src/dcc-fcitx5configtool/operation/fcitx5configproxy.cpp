@@ -28,6 +28,8 @@ QStringList Fcitx5ConfigProxyPrivate::formatKey(const QString &shortcut) {
     for (const auto &key : shortcut.split("+")) {
         if (key.trimmed().toLower() == "control")
             list << "Ctrl";
+        else if (key.trimmed().toLower() == "super")
+            list << "Meta";
         else if (key.trimmed().toLower() == "backspace")
             list << "Backspace";
         else if (key.trimmed().toLower() == "space")
@@ -43,6 +45,8 @@ QString Fcitx5ConfigProxyPrivate::formatKeys(const QStringList &keys) {
     for (const auto &key : keys) {
         if (key.trimmed().toLower() == "ctrl")
             list << "Control";
+        else if (key.trimmed().toLower() == "meta")
+            list << "Super";
         else if (key.trimmed().toLower() == "backspace")
             list << "BackSpace";
         else if (key.trimmed().toLower() == "space")
@@ -162,6 +166,20 @@ QVariantList Fcitx5ConfigProxy::globalConfigOptions(const QString &type) const
     return list;
 }
 
+void Fcitx5ConfigProxy::restoreDefault(const QString &type)
+{
+    QString currentType = type+"$"+type+"Config";
+    for (const auto &configType : d->configTypes) {
+        if (configType.name() != currentType)
+            continue;
+        for (const auto &option : configType.options()) {
+            auto defaultValue = option.defaultValue();
+            setValue(type+"/"+option.name(), d->readDBusValue(defaultValue.variant()));
+        }
+        break;
+    }
+}
+
 void Fcitx5ConfigProxy::requestConfig(bool sync)
 {
     if (!d->dbusprovider->controller()) {
@@ -206,8 +224,8 @@ void Fcitx5ConfigProxy::setValue(const QString &path, const QVariant &value, boo
     if (value == this->value(path))
         return;
     if (isKey) {
-        auto keys = d->formatKey(value.toString());
-        fcitx::kcm::writeVariant(d->configValue, path + "/0", keys);
+        auto keys = d->formatKeys(value.toStringList());
+        fcitx::kcm::writeVariant(d->configValue, path, keys);
     } else {
         fcitx::kcm::writeVariant(d->configValue, path, value);
     }
