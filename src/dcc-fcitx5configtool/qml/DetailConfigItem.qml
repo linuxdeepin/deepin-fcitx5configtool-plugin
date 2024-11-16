@@ -60,7 +60,7 @@ DccObject {
         dccData.fcitx5ConfigProxy.onRequestConfigFinished.connect(() => {
             configOptions = dccData.fcitx5ConfigProxy.globalConfigOptions(root.name)
         })
-        configOptions = dccData.fcitx5ConfigProxy.globalConfigOptions(root.name)
+        configOptions = dccData.fcitx5ConfigProxy.globalConfigOptions(root.name).reverse()
         loading = false
     }
 
@@ -100,7 +100,7 @@ DccObject {
                             D.Switch {
                                 checked: modelData.value === "True"
                                 onCheckedChanged: {
-                                    dccData.fcitx5ConfigProxy.setValue(root.name + "/" + modelData.name, checked.toString())
+                                    dccData.fcitx5ConfigProxy.setValue(root.name + "/" + modelData.name, checked ? "True" : "False")
                                 }
                             }
                         }
