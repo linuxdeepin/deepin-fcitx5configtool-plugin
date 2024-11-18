@@ -39,7 +39,12 @@ DccObject {
             D.IconButton {
                 Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                 Layout.rightMargin: 0
-                Layout.topMargin: (parent.height - height) / 2 - 2
+                Layout.topMargin: 0
+                Layout.bottomMargin: 0
+                topPadding: 0
+                bottomPadding: 0
+                leftPadding: 0
+                rightPadding: 0
                 icon.width: 12
                 icon.height: 12
                 implicitWidth: 12
