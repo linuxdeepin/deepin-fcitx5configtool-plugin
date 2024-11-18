@@ -113,7 +113,7 @@ QVariantList Fcitx5ConfigProxy::globalConfigTypes() const
     return list;
 }
 
-QVariantList Fcitx5ConfigProxy::globalConfigOptions(const QString &type) const
+QVariantList Fcitx5ConfigProxy::globalConfigOptions(const QString &type, bool all) const
 {
     QVariantList list;
     QString currentType = type+"$"+type+"Config";
@@ -121,6 +121,11 @@ QVariantList Fcitx5ConfigProxy::globalConfigOptions(const QString &type) const
         if (configType.name() != currentType)
             continue;
         for (const auto &option : configType.options()) {
+            // Don't display TriggerKeys and EnumerateForwardKeys
+            if (!all && (option.name() == "TriggerKeys" || option.name() == "EnumerateForwardKeys")) {
+                continue;
+            }
+
             QVariantMap item;
             item["name"] = option.name();
             item["type"] = option.type();
