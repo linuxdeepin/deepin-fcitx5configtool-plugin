@@ -36,6 +36,11 @@ DccObject {
                 }
                 InputMethodsChooser {
                     id: imsChooser
+                    viewModel: dccData.imProxyModel()
+                    onSelected: function (index) {
+                        console.log("selected im index", index)
+                        dccData.addIM(index)
+                    }
                 }
 
                 onClicked: {
