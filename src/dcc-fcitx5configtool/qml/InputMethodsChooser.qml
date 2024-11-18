@@ -4,6 +4,7 @@ import QtQuick.Window
 import QtQuick.Layouts 1.15
 
 import org.deepin.dtk 1.0 as D
+import org.deepin.dcc.fcitx5configtool 1.0
 
 Loader {
     id: loader
@@ -53,7 +54,7 @@ Loader {
                     id: langGroup
                 }
 
-                section.property: "section"
+                section.property: "languageCode"
                 section.criteria: ViewSection.FullString
                 section.delegate: Rectangle {
                     width: ListView.view.width
@@ -92,6 +93,7 @@ Loader {
 
                 onClicked: {
                     console.log("Find more in App Store button clicked")
+                    dccData.openDeepinAppStore()
                 }
             }
 
