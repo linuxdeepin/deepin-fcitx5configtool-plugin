@@ -47,6 +47,14 @@ void Fcitx5ConfigToolWorkerPrivate::init()
 
 void Fcitx5ConfigToolWorkerPrivate::initConnect()
 {
+    connect(dbusProvider, &fcitx::kcm::DBusProvider::availabilityChanged, this, [this](bool avail) {
+        qInfo() << "Availability changed:" << avail;
+        if (avail) {
+            configProxy->requestConfig(false);
+        } else {
+            configProxy->clear();
+        }
+    });
     connect(imConfig, &fcitx::kcm::IMConfig::imListChanged, this, [=]() {
         qInfo() << "list changed:" << imConfig->currentIMModel()->rowCount();
         imListModel->resetData(imConfig->currentIMModel());

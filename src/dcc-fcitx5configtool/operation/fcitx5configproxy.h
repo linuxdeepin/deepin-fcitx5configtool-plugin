@@ -28,6 +28,8 @@ public:
                          QObject *parent = nullptr);
     ~Fcitx5ConfigProxy();
 
+    void clear();
+
 Q_SIGNALS:
     void requestConfigFinished();
 

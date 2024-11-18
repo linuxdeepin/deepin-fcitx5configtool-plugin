@@ -89,6 +89,13 @@ Fcitx5ConfigProxy::Fcitx5ConfigProxy(fcitx::kcm::DBusProvider *dbus, const QStri
 
 Fcitx5ConfigProxy::~Fcitx5ConfigProxy() = default;
 
+void Fcitx5ConfigProxy::clear()
+{
+    d->configValue.clear();
+    d->configTypes.clear();
+    Q_EMIT requestConfigFinished();
+}
+
 QVariantList Fcitx5ConfigProxy::globalConfigTypes() const
 {
     QVariantList list;
