@@ -68,8 +68,8 @@ Control {
             MouseArea {
                 anchors.fill: parent
                 onClicked: {
-                    control.forceActiveFocus()
                     listener.clearKeys()
+                    control.forceActiveFocus()
                 }
             }
         }
