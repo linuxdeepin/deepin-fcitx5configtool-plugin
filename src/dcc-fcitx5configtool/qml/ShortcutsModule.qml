@@ -8,6 +8,21 @@ import org.deepin.dtk 1.0 as D
 import org.deepin.dcc 1.0
 
 DccObject {
+    readonly property var enumKeys: ["None", "CTRL_SHIFT", "ALT_SHIFT", "CTRL_SUPER", "ALT_SUPER"]
+    property var triggerKeys: dccData.fcitx5ConfigProxy.globalConfigOption("Hotkey", "TriggerKeys")
+    property int enumerateForwardKeys: calculateEnumerateForwardKeys(dccData.fcitx5ConfigProxy.globalConfigOption("Hotkey", "EnumerateForwardKeys").value)
+
+    function calculateEnumerateForwardKeys(value) {
+        for (let i = 0; i < value.length; i++) {
+            value[i] = String(value[i]).toUpperCase().replace("META", "SUPER")
+            if (value[i].endsWith("_L") || value[i].endsWith("_R")) {
+                value[i] = value[i].slice(0, -2)
+            }
+        }
+        let formattedValue = value.length > 0 ? value.join("_") : ""
+        return enumKeys.indexOf(formattedValue)
+    }
+
     // title
     DccObject {
         name: "ShortcutsTitle"
@@ -39,6 +54,35 @@ DccObject {
         }
     }
 
+    Component.onCompleted: {
+        dccData.fcitx5ConfigProxy.onRequestConfigFinished.connect(() => {
+            triggerKeys = dccData.fcitx5ConfigProxy.globalConfigOption("Hotkey", "TriggerKeys")
+            enumerateForwardKeys = calculateEnumerateForwardKeys(dccData.fcitx5ConfigProxy.globalConfigOption("Hotkey", "EnumerateForwardKeys").value)
+        })
+    }
+
+    function reverseEnumerateForwardKeys(index) {
+        if (index < 0 || index >= enumKeys.length) {
+            return ""
+        }
+        let value = enumKeys[index]
+        if (value === "None") {
+            return ""
+        }
+        let parts = value.split("_")
+        for (let i = 0; i < parts.length; i++) {
+            if (parts.length > 0) {
+                parts[i] = parts[i].charAt(0).toUpperCase() +   parts[i].slice(1).toLowerCase();
+            }
+            if (parts[i] === "Super") {
+                parts[i] = "Meta"
+            } else if (parts[i] === "Shift") {
+                parts[i] = "Shift_L"
+            }
+        }
+        return parts
+    }
+
     // Shortcut of scroll IM
     DccObject {
         name: "scrollIM"
@@ -50,12 +94,13 @@ DccObject {
         page: D.ComboBox {
             id: comboBox
             flat: true
-            model: ["None", "CTRL_SHIFT", "ALT_SHIFT", "CTRL_SUPER", "ALT_SUPER"]
-            currentIndex: 1 // TODO(zhangs): config
+            model: enumKeys
+            currentIndex: enumerateForwardKeys
 
             onCurrentIndexChanged: {
                 console.log("Current index changed to:", currentIndex,
                             "with text:", model[currentIndex])
+                dccData.fcitx5ConfigProxy.setValue("Hotkey/EnumerateForwardKeys/0", reverseEnumerateForwardKeys(currentIndex), true)
             }
         }
     }
@@ -75,9 +120,15 @@ DccObject {
             weight: 231
             pageType: DccObject.Editor
             page: D.KeySequenceEdit {
-                placeholderText: qsTr("Enter a new shortcut")
-                keys: ["CTRL", "SPACE"]
+                placeholderText: qsTr("Please enter a new shortcut")
+                keys: triggerKeys.value
                 background: null
+
+                onKeysChanged: {
+                    if (keys.length > 0) {
+                        dccData.fcitx5ConfigProxy.setValue("Hotkey/TriggerKeys/0", keys, true)
+                    }
+                }
             }
         }
 
