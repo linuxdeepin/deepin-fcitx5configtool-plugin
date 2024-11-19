@@ -1,7 +1,6 @@
-// SPDX-FileCopyrightText: 2022 UnionTech Software Technology Co., Ltd.
-//
-// SPDX-License-Identifier: LGPL-3.0-or-later
 
+// SPDX-FileCopyrightText: 2024 - 2027 UnionTech Software Technology Co., Ltd.
+// SPDX-License-Identifier: GPL-3.0-or-later
 import QtQuick 2.11
 import QtQuick.Controls
 import QtQuick.Layouts 1.11
@@ -74,8 +73,10 @@ Control {
             }
         }
     }
-    Keys.onReleased: function(event) {
-        if (!event.isAutoRepeat && !(event.modifiers & (Qt.ShiftModifier | Qt.ControlModifier | Qt.AltModifier | Qt.MetaModifier))) {
+    Keys.onReleased: function (event) {
+        if (!event.isAutoRepeat
+                && !(event.modifiers & (Qt.ShiftModifier | Qt.ControlModifier
+                                        | Qt.AltModifier | Qt.MetaModifier))) {
             control.focus = false
         }
     }
