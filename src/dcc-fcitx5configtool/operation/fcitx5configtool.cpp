@@ -20,6 +20,7 @@
 
 #include <DDBusSender>
 #include <DUtil>
+#include <QFileInfo>
 
 namespace deepin {
 namespace fcitx5configtool {
@@ -126,21 +127,28 @@ void Fcitx5ConfigToolWorker::showIMSettingsDialog(int index) const
         return;
     }
 
-    // TODO(zhangs): create dialog by a exec app
-    // QString title = item.data(Qt::DisplayRole).toString();
-    // QPointer<QDialog> dialog = fcitx::kcm::ConfigWidget::configDialog(
-    //         nullptr,
-    //         d->dbusProvider,
-    //         QString("fcitx://config/inputmethod/%1").arg(uniqueName),
-    //         title);
-    // dialog->exec();
-    // delete dialog;
+    launchConfigDialog(QString("fcitx://config/inputmethod/%1").arg(uniqueName),
+                       item.data(Qt::DisplayRole).toString());
 }
 
 void Fcitx5ConfigToolWorker::addIM(int index)
 {
     d->imConfig->addIM(index);
     d->imConfig->save();
+}
+
+void Fcitx5ConfigToolWorker::launchConfigDialog(const QString &uri, const QString &title) const
+{
+    QString execPath = QString::fromLocal8Bit(DCC_CONFIGTOOL_EXEC_PATH) + "/dcc-fcitx5configtool-exec";
+    QFileInfo fileInfo(execPath);
+    if (!fileInfo.exists())
+        execPath = "/usr/libexec/dcc-fcitx5configtool-exec";
+
+    QStringList args;
+    args << "-u" << uri
+         << "-t" << title;
+    qInfo() << "exec: " << execPath << "args:" << args;
+    QProcess::startDetached(execPath, args);
 }
 
 IMListModel *Fcitx5ConfigToolWorker::imlistModel() const

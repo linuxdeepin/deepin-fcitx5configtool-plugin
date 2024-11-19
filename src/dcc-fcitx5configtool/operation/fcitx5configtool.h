@@ -30,6 +30,7 @@ public:
     Q_INVOKABLE void openDeepinAppStore() const;
     Q_INVOKABLE void showIMSettingsDialog(int index) const;
     Q_INVOKABLE void addIM(int index);
+    Q_INVOKABLE void launchConfigDialog(const QString &uri, const QString &title) const;
 
 Q_SIGNALS:
     void requestConfigFinished();
