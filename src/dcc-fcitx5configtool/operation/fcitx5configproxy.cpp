@@ -37,6 +37,25 @@ QStringList Fcitx5ConfigProxyPrivate::formatKey(const QString &shortcut) {
         else
             list << key.trimmed();
     }
+    if (list.size() == 3 && list.contains("Ctrl") && list.contains("Meta")) {
+        if (list.contains("Control_L")) {
+            list.removeAll("Control_L");
+        } else {
+            list.removeAll("Control_R");
+        }
+    } else if (list.size() == 3 && list.contains("Shift") && list.contains("Meta")) {
+        if (list.contains("Shift_L")) {
+            list.removeAll("Shift_L");
+        } else {
+            list.removeAll("Shift_R");
+        }
+    } else if (list.size() == 3 && list.contains("Alt") && list.contains("Meta")) {
+        if (list.contains("Alt_L")) {
+            list.removeAll("Alt_L");
+        } else {
+            list.removeAll("Shift_R");
+        }
+    }
     return list;
 }
 
@@ -54,6 +73,14 @@ QString Fcitx5ConfigProxyPrivate::formatKeys(const QStringList &keys) {
         else
             list << key.trimmed();
     }
+    if (list.size() == 2 && list.contains("Shift") && list.contains("Super")) {
+        list.append("Shift_L");
+    } else if (list.size() == 2 && list.contains("Control") && list.contains("Super")) {
+        list.append("Control_L");
+    } else if (list.size() == 2 && list.contains("Alt") && list.contains("Super")) {
+        list.append("Alt_L");
+    }
+
     return list.join("+");
 }
 
@@ -89,6 +116,13 @@ Fcitx5ConfigProxy::Fcitx5ConfigProxy(fcitx::kcm::DBusProvider *dbus, const QStri
 
 Fcitx5ConfigProxy::~Fcitx5ConfigProxy() = default;
 
+void Fcitx5ConfigProxy::clear()
+{
+    d->configValue.clear();
+    d->configTypes.clear();
+    Q_EMIT requestConfigFinished();
+}
+
 QVariantList Fcitx5ConfigProxy::globalConfigTypes() const
 {
     QVariantList list;
@@ -106,7 +140,7 @@ QVariantList Fcitx5ConfigProxy::globalConfigTypes() const
     return list;
 }
 
-QVariantList Fcitx5ConfigProxy::globalConfigOptions(const QString &type) const
+QVariantList Fcitx5ConfigProxy::globalConfigOptions(const QString &type, bool all) const
 {
     QVariantList list;
     QString currentType = type+"$"+type+"Config";
@@ -114,6 +148,11 @@ QVariantList Fcitx5ConfigProxy::globalConfigOptions(const QString &type) const
         if (configType.name() != currentType)
             continue;
         for (const auto &option : configType.options()) {
+            // Don't display TriggerKeys and EnumerateForwardKeys
+            if (!all && (option.name() == "TriggerKeys" || option.name() == "EnumerateForwardKeys")) {
+                continue;
+            }
+
             QVariantMap item;
             item["name"] = option.name();
             item["type"] = option.type();
@@ -127,7 +166,7 @@ QVariantList Fcitx5ConfigProxy::globalConfigOptions(const QString &type) const
             } else {
                 item["value"] = variant;
             }
-            
+
             QVariantMap properties = option.properties();
             if (!properties.isEmpty()) {
                 auto iterator = properties.begin();
@@ -164,6 +203,70 @@ QVariantList Fcitx5ConfigProxy::globalConfigOptions(const QString &type) const
         break;
     }
     return list;
+}
+
+QVariant Fcitx5ConfigProxy::globalConfigOption(const QString &type, const QString &optionName) const
+{
+    QVariantMap item;
+    QString currentType = type+"$"+type+"Config";
+    for (const auto &configType : d->configTypes) {
+        if (configType.name() != currentType)
+            continue;
+        for (const auto &option : configType.options()) {
+            // Don't display TriggerKeys and EnumerateForwardKeys
+            if (option.name() != optionName) {
+                continue;
+            }
+
+            item["name"] = option.name();
+            item["type"] = option.type();
+            item["description"] = option.description();
+            auto variant = value(type+"/"+option.name());
+            if (variant.type() == QVariant::Map) {
+                QVariantMap map = variant.toMap();
+                if (map.contains("0")) {
+                    item["value"] = d->formatKey(map["0"].toString());
+                }
+            } else {
+                item["value"] = variant;
+            }
+
+            QVariantMap properties = option.properties();
+            if (!properties.isEmpty()) {
+                auto iterator = properties.begin();
+                while (iterator != properties.constEnd()) {
+                    if (iterator.key() == "Enum") {
+                        auto argument = qvariant_cast<QDBusArgument>(iterator.value());
+                        QVariantMap map;
+                        argument >> map;
+                        QVariantList enumStrings = map.values().toList();
+                        if (!enumStrings.isEmpty()) {
+                            item["properties"] = enumStrings;
+                        }
+                        break;
+                    }
+                    ++iterator;
+                }
+                iterator = properties.begin();
+                while (iterator != properties.constEnd()) {
+                    if (iterator.key() == "EnumI18n") {
+                        auto argument = qvariant_cast<QDBusArgument>(iterator.value());
+                        QVariantMap map;
+                        argument >> map;
+                        QVariantList enumStrings = map.values().toList();
+                        if (!enumStrings.isEmpty()) {
+                            item["propertiesI18n"] = enumStrings;
+                        }
+                        break;
+                    }
+                    ++iterator;
+                }
+            }
+            break;
+        }
+        break;
+    }
+    return item;
 }
 
 void Fcitx5ConfigProxy::restoreDefault(const QString &type)

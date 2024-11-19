@@ -10,6 +10,9 @@ import org.deepin.dcc 1.0
 
 DccObject {
     id: root
+    property var configOptions: []
+    property var keyName: ""
+
     DccObject {
         name: root.displayName
         parentName: "GlobalConfigPage"
@@ -39,7 +42,12 @@ DccObject {
             D.IconButton {
                 Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                 Layout.rightMargin: 0
-                Layout.topMargin: (parent.height - height) / 2 - 2
+                Layout.topMargin: 0
+                Layout.bottomMargin: 0
+                topPadding: 0
+                bottomPadding: 0
+                leftPadding: 0
+                rightPadding: 0
                 icon.width: 12
                 icon.height: 12
                 implicitWidth: 12
@@ -50,8 +58,6 @@ DccObject {
             }
         }
     }
-
-    property var configOptions: []
 
     Component.onCompleted: {
         dccData.fcitx5ConfigProxy.onRequestConfigFinished.connect(() => {
@@ -132,7 +138,23 @@ DccObject {
                                 background.visible: false
                                 onFocusChanged: {
                                     if (!focus) {
-                                        dccData.fcitx5ConfigProxy.setValue(root.name + "/" + modelData.name + "/0", keys, true)
+                                        if (keys.length > 0) {
+                                            dccData.fcitx5ConfigProxy.setValue(root.name + "/" + modelData.name + "/0", keys, true)
+                                        } else if (keyName != modelData.name) {
+                                            keys = modelData.value;
+                                        }
+                                    }
+                                }
+                                onKeysChanged: {
+                                    root.keyName = modelData.name
+                                }
+
+                                Connections {
+                                    target: root
+                                    function onKeyNameChanged() {
+                                        if (keyName != modelData.name) {
+                                            focus = false
+                                        }
                                     }
                                 }
                             }
