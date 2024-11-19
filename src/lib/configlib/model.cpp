@@ -380,6 +380,15 @@ bool IMProxyModel::filterIM(const QModelIndex &index) const
 bool IMProxyModel::lessThan(const QModelIndex &left,
                             const QModelIndex &right) const
 {
+    // 先获取左右两项的类型
+    bool isLeftKeyboard = left.data(FcitxIMUniqueNameRole).toString().startsWith("keyboard-");
+    bool isRightKeyboard = right.data(FcitxIMUniqueNameRole).toString().startsWith("keyboard-");
+
+    // 如果一个是键盘一个是输入法，输入法永远排在前面
+    if (isLeftKeyboard != isRightKeyboard)
+        return !isLeftKeyboard;   // 返回true表示left排在前面，所以非键盘(输入法)应该返回true
+
+    // 如果都是同类型（都是键盘或都是输入法），按原有逻辑排序
     if (left.data(FcitxRowTypeRole) == LanguageType) {
         int result = compareCategories(left, right);
         if (result < 0) {
@@ -396,6 +405,7 @@ bool IMProxyModel::lessThan(const QModelIndex &left,
         }
     }
 
+    // 最后按显示名称排序
     QString l = left.data(Qt::DisplayRole).toString();
     QString r = right.data(Qt::DisplayRole).toString();
     return QCollator().compare(l, r) < 0;
