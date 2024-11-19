@@ -7,6 +7,8 @@
 #include "fcitx5configproxy.h"
 #include "imlistmodel.h"
 
+#include <model.h>
+
 #include <QObject>
 #include <QVariant>
 #include <QVariantMap>
@@ -24,9 +26,10 @@ public:
 
     Fcitx5ConfigProxy *fcitx5ConfigProxy() const;
     Q_INVOKABLE IMListModel *imlistModel() const;
-
+    Q_INVOKABLE fcitx::kcm::IMProxyModel *imProxyModel() const;
     Q_INVOKABLE void openDeepinAppStore() const;
-    Q_INVOKABLE void showIMSettingsDialog(int index);
+    Q_INVOKABLE void showIMSettingsDialog(int index) const;
+    Q_INVOKABLE void addIM(int index);
 
 Q_SIGNALS:
     void requestConfigFinished();

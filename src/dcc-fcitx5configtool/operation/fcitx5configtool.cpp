@@ -7,7 +7,6 @@
 
 #include <dbusprovider.h>
 #include <imconfig.h>
-#include <model.h>
 #include <configwidget.h>
 
 #include <dde-control-center/dccfactory.h>
@@ -37,7 +36,7 @@ Fcitx5ConfigToolWorkerPrivate::Fcitx5ConfigToolWorkerPrivate(Fcitx5ConfigToolWor
 void Fcitx5ConfigToolWorkerPrivate::init()
 {
     dbusProvider = new fcitx::kcm::DBusProvider(this);
-    imConfig = new fcitx::kcm::IMConfig(dbusProvider, fcitx::kcm::IMConfig::Tree, this);
+    imConfig = new fcitx::kcm::IMConfig(dbusProvider, fcitx::kcm::IMConfig::Flatten, this);
     configProxy = new Fcitx5ConfigProxy(dbusProvider, kFcitxConfigGlobalPath, this);
     imListModel = new IMListModel(this);
     imListModel->resetData(imConfig->currentIMModel());
@@ -98,7 +97,7 @@ void Fcitx5ConfigToolWorker::openDeepinAppStore() const
             .call();
 }
 
-void Fcitx5ConfigToolWorker::showIMSettingsDialog(int index)
+void Fcitx5ConfigToolWorker::showIMSettingsDialog(int index) const
 {
     if (!d->imConfig)
         return;
@@ -130,10 +129,21 @@ void Fcitx5ConfigToolWorker::showIMSettingsDialog(int index)
     // delete dialog;
 }
 
+void Fcitx5ConfigToolWorker::addIM(int index)
+{
+    d->imConfig->addIM(index);
+    d->imConfig->save();
+}
+
 IMListModel *Fcitx5ConfigToolWorker::imlistModel() const
 {
     Q_ASSERT(d->imListModel);
     return d->imListModel;
+}
+
+fcitx::kcm::IMProxyModel *Fcitx5ConfigToolWorker::imProxyModel() const
+{
+    return d->imConfig->availIMModel();
 }
 
 DCC_FACTORY_CLASS(Fcitx5ConfigToolWorker)

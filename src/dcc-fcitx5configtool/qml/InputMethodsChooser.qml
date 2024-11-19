@@ -9,7 +9,7 @@ import org.deepin.dcc.fcitx5configtool 1.0
 Loader {
     id: loader
     active: false
-    //    required property var viewModel
+    required property var viewModel
     signal selected(string data)
 
     sourceComponent: D.DialogWindow {
@@ -34,55 +34,69 @@ Loader {
                 Layout.rightMargin: 10
                 placeholder: qsTr("Search")
                 onTextChanged: {
-
-                    //  viewModel.setFilterWildcard(text);
+                    console.log("search: ", text)
+                    viewModel.filterText = text
                 }
                 onEditingFinished: {
-
-                    // viewModel.setFilterWildcard(text);
+                    console.log("search: ", text)
+                    viewModel.filterText = text
                 }
             }
 
             ListView {
                 id: itemsView
                 property string checkedIM
+                property int checkedIndex: -1
                 Layout.fillWidth: true
                 height: 330
                 clip: true
-                // model: loader.viewModel
+                model: loader.viewModel
+                spacing: 10
                 ButtonGroup {
                     id: langGroup
                 }
 
-                section.property: "languageCode"
+                section.property: "language"
                 section.criteria: ViewSection.FullString
                 section.delegate: Rectangle {
                     width: ListView.view.width
-                    height: childrenRect.height
+                    height: childrenRect.height + 10
+                    color: D.DTK.palette.window
 
                     required property string section
 
                     Text {
                         text: parent.section
+                        x: 10
+                        y: 5
                     }
                 }
 
-                delegate: D.CheckDelegate {
-                    id: checkDelegate
-                    implicitWidth: itemsView.width
-                    text: model.display
-                    hoverEnabled: true
-                    ButtonGroup.group: langGroup
-                    onCheckedChanged: {
-                        if (checked) {
-                            itemsView.checkedIM = model.display
+                delegate: Rectangle {
+                    width: itemsView.width
+                    height: checkDelegate.height
+                    color: D.DTK.palette.base
+
+                    D.CheckDelegate {
+                        id: checkDelegate
+                        width: parent.width
+                        text: model.name
+                        hoverEnabled: true
+                        ButtonGroup.group: langGroup
+                        onCheckedChanged: {
+                            if (checked) {
+                                console.log("checked", model.name, model.index)
+                                itemsView.checkedIM = model.name
+                                itemsView.checkedIndex = model.index
+                            }
                         }
                     }
                 }
+                ScrollBar.vertical: ScrollBar {}
+                boundsBehavior: Flickable.StopAtBounds
             }
 
             D.Button {
-                id: addImBtn
                 text: qsTr("Find more in App Store")
                 Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                 Layout.rightMargin: 10
@@ -112,7 +126,9 @@ Loader {
                     text: qsTr("Add")
                     enabled: itemsView.checkedIM.length > 0
                     onClicked: {
-                        selected(itemsView.checkedIM)
+                        console.log("add im: ", itemsView.checkedIM,
+                                    itemsView.checkedIndex)
+                        selected(itemsView.checkedIndex)
                         imDialog.close()
                     }
                 }
@@ -120,7 +136,7 @@ Loader {
         }
         onClosing: {
             loader.active = false
-            // viewModel.setFilterWildcard("");
+            viewModel.filterText = ""
         }
     }
 
