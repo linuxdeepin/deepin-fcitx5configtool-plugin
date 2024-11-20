@@ -21,6 +21,7 @@ DccObject {
             DetailConfigItem {
                 name: modelData.name
                 displayName: modelData.description
+                weight: 50 + index*100
             }
         }
     }
