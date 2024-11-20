@@ -27,6 +27,7 @@ namespace deepin {
 namespace fcitx5configtool {
 
 static QString kFcitxConfigGlobalPath = "fcitx://config/global";
+static const QString kSogouAddonUniqueName = "com.sogou.ime.ng.fcitx5.deepin-addon";
 static const QString kSogouIMUniqueName = "com.sogou.ime.ng.fcitx5.deepin";
 static const QString kSogouConfigureAppId = "com.sogou.ime.ng.fcitx5.deepin.configurer";
 
@@ -103,6 +104,30 @@ Fcitx5ConfigProxy *Fcitx5ConfigToolWorker::fcitx5ConfigProxy() const
 Fcitx5AddonsProxy *Fcitx5ConfigToolWorker::fcitx5AddonsProxy() const
 {
     return d->addonsProxy;
+}
+
+void Fcitx5ConfigToolWorker::showAddonSettingsDialog(const QString &addonStr, const QString &title) const
+{
+    // If addonStr is empty or addonsProxy is null, don't show the dialog
+    if (addonStr.isEmpty() || !d->addonsProxy) {
+        return;
+    }
+
+    if (addonStr == kSogouAddonUniqueName) {
+        DDBusSender()
+                .service("org.desktopspec.ApplicationManager1")
+                .path(QStringLiteral("/org/desktopspec/ApplicationManager1/") + DUtil::escapeToObjectPath(kSogouConfigureAppId))
+                .interface("org.desktopspec.ApplicationManager1.Application")
+                .method("Launch")
+                .arg(QString(""))
+                .arg(QStringList())
+                .arg(QVariantMap())
+                .call();
+        return;
+    }
+
+    launchConfigDialog(QString("fcitx://config/addon/%1").arg(addonStr),
+                       title);
 }
 
 void Fcitx5ConfigToolWorker::openDeepinAppStore() const
