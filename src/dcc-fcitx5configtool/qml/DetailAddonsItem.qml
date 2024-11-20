@@ -29,7 +29,7 @@ DccObject {
                 DccObject {
                     property bool expanded: true
                     parentName: "AddonsPage"
-                    hasBackground: true
+                    backgroundType: DccObject.Normal
                     weight: 120 + index
                     pageType: DccObject.Item
                     page: RowLayout {

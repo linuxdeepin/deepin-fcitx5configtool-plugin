@@ -19,7 +19,6 @@ DccObject {
         parentName: "AddonsPage"
         displayName: qsTr("Add-ons")
         weight: 110
-        hasBackground: false
         pageType: DccObject.Item
         page: RowLayout {
             width: parent.width

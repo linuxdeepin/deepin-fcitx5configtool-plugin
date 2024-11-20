@@ -14,7 +14,6 @@ DccObject {
         parentName: "Fcitx5configtool"
         displayName: qsTr("Manage input methods")
         weight: 110
-        hasBackground: false
         pageType: DccObject.Item
         page: RowLayout {
             width: parent.width
@@ -56,6 +55,7 @@ DccObject {
         name: "currentIMList"
         parentName: "Fcitx5configtool"
         weight: 120
+        backgroundType: DccObject.Normal
         pageType: DccObject.Item
         page: IMList {}
     }

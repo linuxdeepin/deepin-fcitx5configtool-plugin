@@ -13,7 +13,6 @@ DccObject {
         parentName: "Fcitx5configtool"
         displayName: qsTr("Advanced Settings")
         weight: 310
-        hasBackground: false
         pageType: DccObject.Item
         page: ColumnLayout {
             Label {

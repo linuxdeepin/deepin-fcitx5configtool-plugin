@@ -82,7 +82,6 @@ Rectangle {
                 }
                 background: DccItemBackground {
                     separatorVisible: true
-                    highlightEnable: false
                 }
             }
         }
