@@ -10,7 +10,7 @@ import org.deepin.dcc 1.0
 DccObject {
     DccObject {
         name: "AdvancedSettingsTitle"
-        parentName: "Fcitx5configtool"
+        parentName: "Manage Input Methods"
         displayName: qsTr("Advanced Settings")
         weight: 310
         pageType: DccObject.Item
@@ -37,7 +37,7 @@ DccObject {
 
     DccObject {
         name: "GlobalConfigPage"
-        parentName: "Fcitx5configtool"
+        parentName: "Manage Input Methods"
         displayName: qsTr("Global Config")
         weight: 320
         page: DccRightView {
@@ -48,7 +48,7 @@ DccObject {
 
     DccObject {
         name: "AddonsPage"
-        parentName: "Fcitx5configtool"
+        parentName: "Manage Input Methods"
         displayName: qsTr("Add-ons")
         weight: 330
         page: DccRightView {

@@ -9,11 +9,15 @@ import org.deepin.dcc 1.0
 
 DccObject {
     readonly property var enumKeys: ["None", "CTRL_SHIFT", "ALT_SHIFT", "CTRL_SUPER", "ALT_SUPER"]
-    property var triggerKeys: dccData.fcitx5ConfigProxy.globalConfigOption("Hotkey", "TriggerKeys")
-    property int enumerateForwardKeys: calculateEnumerateForwardKeys(dccData.fcitx5ConfigProxy.globalConfigOption("Hotkey", "EnumerateForwardKeys").value)
+    property var triggerKeys: dccData.fcitx5ConfigProxy.globalConfigOption(
+                                  "Hotkey", "TriggerKeys")
+    property int enumerateForwardKeys: calculateEnumerateForwardKeys(
+                                           dccData.fcitx5ConfigProxy.globalConfigOption(
+                                               "Hotkey",
+                                               "EnumerateForwardKeys").value)
 
     function calculateEnumerateForwardKeys(value) {
-        for (let i = 0; i < value.length; i++) {
+        for (var i = 0; i < value.length; i++) {
             value[i] = String(value[i]).toUpperCase().replace("META", "SUPER")
             if (value[i].endsWith("_L") || value[i].endsWith("_R")) {
                 value[i] = value[i].slice(0, -2)
@@ -26,7 +30,7 @@ DccObject {
     // title
     DccObject {
         name: "ShortcutsTitle"
-        parentName: "Fcitx5configtool"
+        parentName: "Manage Input Methods"
         displayName: qsTr("Shortcuts")
         weight: 210
         pageType: DccObject.Item
@@ -55,9 +59,11 @@ DccObject {
 
     Component.onCompleted: {
         dccData.fcitx5ConfigProxy.onRequestConfigFinished.connect(() => {
-            triggerKeys = dccData.fcitx5ConfigProxy.globalConfigOption("Hotkey", "TriggerKeys")
-            enumerateForwardKeys = calculateEnumerateForwardKeys(dccData.fcitx5ConfigProxy.globalConfigOption("Hotkey", "EnumerateForwardKeys").value)
-        })
+                                                                      triggerKeys = dccData.fcitx5ConfigProxy.globalConfigOption(
+                                                                          "Hotkey",
+                                                                          "TriggerKeys")
+                                                                      enumerateForwardKeys = calculateEnumerateForwardKeys(dccData.fcitx5ConfigProxy.globalConfigOption("Hotkey", "EnumerateForwardKeys").value)
+                                                                  })
     }
 
     function reverseEnumerateForwardKeys(index) {
@@ -69,9 +75,10 @@ DccObject {
             return ""
         }
         let parts = value.split("_")
-        for (let i = 0; i < parts.length; i++) {
+        for (var i = 0; i < parts.length; i++) {
             if (parts.length > 0) {
-                parts[i] = parts[i].charAt(0).toUpperCase() +   parts[i].slice(1).toLowerCase();
+                parts[i] = parts[i].charAt(0).toUpperCase() + parts[i].slice(
+                            1).toLowerCase()
             }
             if (parts[i] === "Super") {
                 parts[i] = "Meta"
@@ -85,7 +92,7 @@ DccObject {
     // Shortcut of scroll IM
     DccObject {
         name: "scrollIM"
-        parentName: "Fcitx5configtool"
+        parentName: "Manage Input Methods"
         weight: 220
         displayName: qsTr("Scroll between input methods")
         backgroundType: DccObject.Normal
@@ -99,7 +106,9 @@ DccObject {
             onCurrentIndexChanged: {
                 console.log("Current index changed to:", currentIndex,
                             "with text:", model[currentIndex])
-                dccData.fcitx5ConfigProxy.setValue("Hotkey/EnumerateForwardKeys/0", reverseEnumerateForwardKeys(currentIndex), true)
+                dccData.fcitx5ConfigProxy.setValue(
+                            "Hotkey/EnumerateForwardKeys/0",
+                            reverseEnumerateForwardKeys(currentIndex), true)
             }
         }
     }
@@ -107,14 +116,14 @@ DccObject {
     // Shortcut of turn on or off
     DccObject {
         name: "turnGrouup"
-        parentName: "Fcitx5configtool"
+        parentName: "Manage Input Methods"
         weight: 230
         pageType: DccObject.Item
         page: DccGroupView {}
 
         DccObject {
             name: "shortcutSetting"
-            parentName: "Fcitx5configtool/turnGrouup"
+            parentName: "Manage Input Methods/turnGrouup"
             displayName: qsTr("Turn on or off input methods")
             weight: 231
             pageType: DccObject.Editor
@@ -125,7 +134,8 @@ DccObject {
 
                 onKeysChanged: {
                     if (keys.length > 0) {
-                        dccData.fcitx5ConfigProxy.setValue("Hotkey/TriggerKeys/0", keys, true)
+                        dccData.fcitx5ConfigProxy.setValue(
+                                    "Hotkey/TriggerKeys/0", keys, true)
                     }
                 }
             }
@@ -133,7 +143,7 @@ DccObject {
 
         DccObject {
             name: "shortcutSettingDesc"
-            parentName: "Fcitx5configtool/turnGrouup"
+            parentName: "Manage Input Methods/turnGrouup"
             weight: 232
             pageType: DccObject.Item
             page: Label {

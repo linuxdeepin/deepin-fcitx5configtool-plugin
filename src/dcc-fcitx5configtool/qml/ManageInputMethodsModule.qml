@@ -11,8 +11,8 @@ DccObject {
     // title
     DccObject {
         name: "ManageInputMethodsTitle"
-        parentName: "Fcitx5configtool"
-        displayName: qsTr("Manage input methods")
+        parentName: "Manage Input Methods"
+        displayName: qsTr("Manage Input Methods")
         weight: 110
         pageType: DccObject.Item
         page: RowLayout {
@@ -53,7 +53,7 @@ DccObject {
     // list
     DccObject {
         name: "currentIMList"
-        parentName: "Fcitx5configtool"
+        parentName: "Manage Input Methods"
         weight: 120
         backgroundType: DccObject.Normal
         pageType: DccObject.Item
