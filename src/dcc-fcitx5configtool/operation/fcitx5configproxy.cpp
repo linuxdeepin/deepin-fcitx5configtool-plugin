@@ -97,7 +97,11 @@ QVariant Fcitx5ConfigProxyPrivate::readDBusValue(const QVariant &value) {
         return resultMap;
     }
     
+#if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
+    if (value.typeId() == QMetaType::QVariantMap) {
+#else
     if (value.type() == QVariant::Map) {
+#endif
         QVariantMap resultMap;
         const auto map = value.toMap();
         for (auto iter = map.begin(); iter != map.end(); ++iter) {
@@ -158,7 +162,11 @@ QVariantList Fcitx5ConfigProxy::globalConfigOptions(const QString &type, bool al
             item["type"] = option.type();
             item["description"] = option.description();
             auto variant = value(type+"/"+option.name());
+#if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
+            if (variant.typeId() == QMetaType::QVariantMap) {
+#else
             if (variant.type() == QVariant::Map) {
+#endif
                 QVariantMap map = variant.toMap();
                 if (map.contains("0")) {
                     item["value"] = d->formatKey(map["0"].toString());
@@ -222,7 +230,11 @@ QVariant Fcitx5ConfigProxy::globalConfigOption(const QString &type, const QStrin
             item["type"] = option.type();
             item["description"] = option.description();
             auto variant = value(type+"/"+option.name());
+#if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
+            if (variant.typeId() == QMetaType::QVariantMap) {
+#else
             if (variant.type() == QVariant::Map) {
+#endif
                 QVariantMap map = variant.toMap();
                 if (map.contains("0")) {
                     item["value"] = d->formatKey(map["0"].toString());
