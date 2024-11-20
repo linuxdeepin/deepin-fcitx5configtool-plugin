@@ -4,6 +4,7 @@
 #include "fcitx5configtool.h"
 #include "private/fcitx5configtool_p.h"
 #include "fcitx5configproxy.h"
+#include "fcitx5addonsproxy.h"
 
 #include <dbusprovider.h>
 #include <imconfig.h>
@@ -39,6 +40,7 @@ void Fcitx5ConfigToolWorkerPrivate::init()
     dbusProvider = new fcitx::kcm::DBusProvider(this);
     imConfig = new fcitx::kcm::IMConfig(dbusProvider, fcitx::kcm::IMConfig::Flatten, this);
     configProxy = new Fcitx5ConfigProxy(dbusProvider, kFcitxConfigGlobalPath, this);
+    addonsProxy = new Fcitx5AddonsProxy(dbusProvider, this);
     imListModel = new IMListModel(this);
     imListModel->resetData(imConfig->currentIMModel());
 
@@ -51,8 +53,10 @@ void Fcitx5ConfigToolWorkerPrivate::initConnect()
         qInfo() << "Availability changed:" << avail;
         if (avail) {
             configProxy->requestConfig(false);
+            addonsProxy->load();
         } else {
             configProxy->clear();
+            addonsProxy->clear();
         }
     });
     connect(imConfig, &fcitx::kcm::IMConfig::imListChanged, this, [=]() {
@@ -73,13 +77,16 @@ void Fcitx5ConfigToolWorkerPrivate::initConnect()
     });
 
     connect(configProxy, &Fcitx5ConfigProxy::requestConfigFinished, q, &Fcitx5ConfigToolWorker::requestConfigFinished);
+    connect(addonsProxy, &Fcitx5AddonsProxy::requestAddonsFinished, q, &Fcitx5ConfigToolWorker::requestAddonsFinished);
     configProxy->requestConfig(false);
+    addonsProxy->load();
 }
 
 Fcitx5ConfigToolWorker::Fcitx5ConfigToolWorker(QObject *parent)
     : QObject(parent), d(new Fcitx5ConfigToolWorkerPrivate(this))
 {
     qmlRegisterType<Fcitx5ConfigProxy>("org.deepin.dcc.fcitx5configtool", 1, 0, "Fcitx5ConfigProxy");
+    qmlRegisterType<Fcitx5AddonsProxy>("org.deepin.dcc.fcitx5configtool", 1, 0, "Fcitx5AddonsProxy");
     QMetaObject::invokeMethod(this, "init", Qt::QueuedConnection);
 }
 
@@ -91,6 +98,11 @@ void Fcitx5ConfigToolWorker::init()
 Fcitx5ConfigProxy *Fcitx5ConfigToolWorker::fcitx5ConfigProxy() const
 {
     return d->configProxy;
+}
+
+Fcitx5AddonsProxy *Fcitx5ConfigToolWorker::fcitx5AddonsProxy() const
+{
+    return d->addonsProxy;
 }
 
 void Fcitx5ConfigToolWorker::openDeepinAppStore() const

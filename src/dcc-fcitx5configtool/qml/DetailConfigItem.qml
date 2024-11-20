@@ -39,21 +39,11 @@ DccObject {
                 font: D.DTK.fontManager.t4
                 text: dccObj.displayName
             }
-            D.IconButton {
-                Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
-                Layout.rightMargin: 0
-                Layout.topMargin: 0
-                Layout.bottomMargin: 0
-                topPadding: 0
-                bottomPadding: 0
-                leftPadding: 0
-                rightPadding: 0
+            D.ToolButton {
+                Layout.alignment: Qt.AlignRight
                 icon.width: 12
                 icon.height: 12
-                implicitWidth: 12
-                implicitHeight: 12
                 icon.name: headerItem.expanded ? "go-down" : "go-next"
-                flat: true
                 onClicked: headerItem.expanded = !headerItem.expanded
             }
         }
