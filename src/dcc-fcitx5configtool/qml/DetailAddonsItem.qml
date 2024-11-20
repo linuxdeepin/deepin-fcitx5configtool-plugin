@@ -64,6 +64,10 @@ DccObject {
                             Layout.alignment: Qt.AlignRight
                             icon.name: "dcc_input_method_configure"
                             visible: modelData.configurable
+                            enabled: modelData.enabled
+                            onClicked: {
+                                dccData.showAddonSettingsDialog(modelData.uniqueName, modelData.name);
+                            }
                         }
                     }
                 }

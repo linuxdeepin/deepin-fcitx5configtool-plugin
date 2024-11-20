@@ -28,6 +28,7 @@ public:
 
     Fcitx5ConfigProxy *fcitx5ConfigProxy() const;
     Fcitx5AddonsProxy *fcitx5AddonsProxy() const;
+    Q_INVOKABLE void showAddonSettingsDialog(const QString &addonStr, const QString &title) const;
     Q_INVOKABLE IMListModel *imlistModel() const;
     Q_INVOKABLE fcitx::kcm::IMProxyModel *imProxyModel() const;
     Q_INVOKABLE void openDeepinAppStore() const;
