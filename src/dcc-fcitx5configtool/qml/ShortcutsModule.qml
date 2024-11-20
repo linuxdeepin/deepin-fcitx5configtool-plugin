@@ -29,7 +29,6 @@ DccObject {
         parentName: "Fcitx5configtool"
         displayName: qsTr("Shortcuts")
         weight: 210
-        hasBackground: false
         pageType: DccObject.Item
         page: RowLayout {
             Label {
@@ -89,7 +88,7 @@ DccObject {
         parentName: "Fcitx5configtool"
         weight: 220
         displayName: qsTr("Scroll between input methods")
-        hasBackground: true
+        backgroundType: DccObject.Normal
         pageType: DccObject.Editor
         page: D.ComboBox {
             id: comboBox

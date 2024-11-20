@@ -17,7 +17,6 @@ DccObject {
         name: root.displayName
         parentName: "GlobalConfigPage"
         weight: 40
-        hasBackground: true
         pageType: DccObject.Item
         page: DccGroupView {
             spacing: 0
@@ -30,7 +29,6 @@ DccObject {
         property bool expanded: true
         parentName: root.displayName
         displayName: root.displayName
-        hasBackground: true
         weight: 10
         pageType: DccObject.Item
         page: RowLayout {
@@ -66,7 +64,6 @@ DccObject {
                 DccObject {
                     parentName: root.displayName
                     displayName: modelData.description
-                    hasBackground: true
                     weight: 10
                     pageType: DccObject.Editor
                     visible: headerItem.expanded
