@@ -49,7 +49,9 @@ DccObject {
 
     Component.onCompleted: {
         dccData.fcitx5ConfigProxy.onRequestConfigFinished.connect(() => {
+            configOptions = []
             configOptions = dccData.fcitx5ConfigProxy.globalConfigOptions(root.name)
+            keyName = ""
         })
         configOptions = dccData.fcitx5ConfigProxy.globalConfigOptions(root.name)
         loading = false
