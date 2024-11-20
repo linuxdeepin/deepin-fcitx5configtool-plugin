@@ -3,9 +3,9 @@
 import org.deepin.dcc 1.0
 
 DccObject {
-    name: "Fcitx5configtool"
-    parentName: "Keyboard"
-    displayName: qsTr("Input method")
+    name: "Manage Input Methods"
+    parentName: "keyboard"
+    displayName: qsTr("Input Methods")
     icon: "dcc_nav_input_method"
     weight: 200 // 101~299 for InputMethod in Keyboard-plguin
 }
