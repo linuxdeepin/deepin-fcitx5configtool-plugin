@@ -69,6 +69,7 @@ DccObject {
                     weight: root.weight + index + 1
                     pageType: DccObject.Editor
                     visible: headerItem.expanded
+                    backgroundType: DccObject.Normal | DccObject.Hover
                     page: Loader {
                         sourceComponent: {
                             switch(modelData.type) {
