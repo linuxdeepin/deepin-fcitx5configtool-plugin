@@ -21,8 +21,8 @@ DccObject {
                 text: dccObj.displayName
             }
             Label {
-                Layout.leftMargin: 10
-                Layout.rightMargin: 10
+                leftPadding: 10
+                rightPadding: 10
                 Layout.fillWidth: true
                 font: D.DTK.fontManager.t8
                 text: qsTr(
