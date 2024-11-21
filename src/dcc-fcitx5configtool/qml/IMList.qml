@@ -29,6 +29,7 @@ Rectangle {
                 cascadeSelected: true
                 checkable: false
                 contentFlow: true
+                hoverEnabled: true
                 corners: getCornersForBackground(index,
                                                  dccData.imlistModel().count())
 
@@ -82,6 +83,7 @@ Rectangle {
                 }
                 background: DccItemBackground {
                     separatorVisible: true
+                    backgroundType: DccObject.Normal | DccObject.Hover
                 }
             }
         }

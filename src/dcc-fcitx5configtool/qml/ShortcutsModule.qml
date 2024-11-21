@@ -147,8 +147,8 @@ DccObject {
             weight: 232
             pageType: DccObject.Item
             page: Label {
-                Layout.leftMargin: 10
-                Layout.rightMargin: 10
+                leftPadding: 10
+                rightPadding: 10
                 Layout.fillWidth: true
                 font: D.DTK.fontManager.t8
                 opacity: 0.5

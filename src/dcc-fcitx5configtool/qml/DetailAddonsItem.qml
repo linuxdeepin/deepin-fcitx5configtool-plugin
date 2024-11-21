@@ -29,9 +29,10 @@ DccObject {
                 DccObject {
                     property bool expanded: true
                     parentName: "AddonsPage"
-                    backgroundType: DccObject.Normal
+                    backgroundType: DccObject.Normal | DccObject.Hover
                     weight: 120 + index
                     pageType: DccObject.Item
+                    property bool isHovered: false
                     page: RowLayout {
                         CheckBox {
                             Layout.alignment: Qt.AlignLeft
@@ -63,11 +64,18 @@ DccObject {
                             id: imManageButton
                             Layout.alignment: Qt.AlignRight
                             icon.name: "dcc_input_method_configure"
-                            visible: modelData.configurable
+                            visible: modelData.configurable && isHovered
                             enabled: modelData.enabled
                             onClicked: {
                                 dccData.showAddonSettingsDialog(modelData.uniqueName, modelData.name);
                             }
+                        }
+                        MouseArea {
+                            anchors.fill: parent
+                            hoverEnabled: true
+                            onEntered: isHovered = true
+                            onExited: isHovered = false
+                            acceptedButtons: Qt.NoButton
                         }
                     }
                 }

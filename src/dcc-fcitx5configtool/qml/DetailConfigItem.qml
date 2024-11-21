@@ -26,10 +26,10 @@ DccObject {
     
     DccObject {
         id: headerItem
-        property bool expanded: true
+        property bool expanded: false
         parentName: root.displayName
         displayName: root.displayName
-        weight: 10
+        weight: root.weight
         pageType: DccObject.Item
         page: RowLayout {
             Label {
@@ -49,9 +49,11 @@ DccObject {
 
     Component.onCompleted: {
         dccData.fcitx5ConfigProxy.onRequestConfigFinished.connect(() => {
+            configOptions = []
             configOptions = dccData.fcitx5ConfigProxy.globalConfigOptions(root.name)
+            keyName = ""
         })
-        configOptions = dccData.fcitx5ConfigProxy.globalConfigOptions(root.name).reverse()
+        configOptions = dccData.fcitx5ConfigProxy.globalConfigOptions(root.name)
         loading = false
     }
 
@@ -64,9 +66,10 @@ DccObject {
                 DccObject {
                     parentName: root.displayName
                     displayName: modelData.description
-                    weight: 10
+                    weight: root.weight + index + 1
                     pageType: DccObject.Editor
                     visible: headerItem.expanded
+                    backgroundType: DccObject.Normal | DccObject.Hover
                     page: Loader {
                         sourceComponent: {
                             switch(modelData.type) {
