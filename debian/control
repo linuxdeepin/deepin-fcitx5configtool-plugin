@@ -4,7 +4,7 @@ Section: utils
 Maintainer: Deepin Packages Builder <packages@deepin.com>
 Build-Depends:
  cmake,
- dde-control-center-dev,
+ dde-control-center-dev (>= 6.0.76),
  debhelper-compat (= 13),
  extra-cmake-modules,
  gettext,
