@@ -26,7 +26,7 @@ DccObject {
     
     DccObject {
         id: headerItem
-        property bool expanded: true
+        property bool expanded: false
         parentName: root.displayName
         displayName: root.displayName
         weight: root.weight
