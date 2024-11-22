@@ -1,0 +1,7 @@
+<RCC>
+    <qresource prefix="/icons/deepin/builtin">
+        <file>icons/dcc_nav_input_method_24px.svg</file>
+        <file>icons/dcc_immanage_16px.svg</file>
+        <file>icons/dcc_input_method_configure_16px.svg</file>
+    </qresource>
+</RCC>

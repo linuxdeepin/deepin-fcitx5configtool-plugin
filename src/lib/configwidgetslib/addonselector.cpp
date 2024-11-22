@@ -47,7 +47,7 @@ Q_SIGNALS:
 
 protected:
     QList<QWidget *> createItemWidgets(const QModelIndex &index) const override;
-    void updateItemWidgets(const QList<QWidget *> widgets,
+    void updateItemWidgets(const QList<QWidget *> &widgets,
                            const QStyleOptionViewItem &option,
                            const QPersistentModelIndex &index) const override;
 
@@ -211,9 +211,9 @@ AddonDelegate::createItemWidgets(const QModelIndex &index) const {
     return widgetList;
 }
 
-void AddonDelegate::updateItemWidgets(
-    const QList<QWidget *> widgets, const QStyleOptionViewItem &option,
-    const QPersistentModelIndex &index) const {
+void AddonDelegate::updateItemWidgets(const QList<QWidget *> &widgets,
+                       const QStyleOptionViewItem &option,
+                       const QPersistentModelIndex &index) const {
     if (index.data(RowTypeRole).toInt() == CategoryType) {
         return;
     }

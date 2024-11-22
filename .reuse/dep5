@@ -39,7 +39,7 @@ Copyright: None
 License: CC0-1.0
 
 # png svg
-Files: *.png *.svg
+Files: *.png *.svg *.dci
 Copyright: Deepin Technology Co., Ltd.
 License: GPL-3.0-or-later
 

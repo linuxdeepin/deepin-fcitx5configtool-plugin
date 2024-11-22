@@ -28,8 +28,8 @@ QFont fcitx::kcm::parseFont(const QString &string) {
     }
 
     QFont::Style style = QFont::StyleNormal;
-    int weight = QFont::Normal;
-    const QMap<QString, int> strToWeight = {
+    QFont::Weight weight = QFont::Normal;
+    const QMap<QString, QFont::Weight> strToWeight = {
         {"Thin", QFont::Thin},
         {"Ultra-Light", QFont::Thin},
         {"Extra-Light", QFont::ExtraLight},
