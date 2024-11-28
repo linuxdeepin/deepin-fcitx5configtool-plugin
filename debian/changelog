@@ -1,3 +1,10 @@
+deepin-fcitx5configtool-plugin (6.0.1) unstable; urgency=medium
+
+  * update version
+  * add QML feature
+
+ -- Liu zheng <liuzheng@uniontech.com>  Thu, 28 Nov 2024 15:19:49 +0800
+
 deepin-fcitx5configtool-plugin (5.0.24) unstable; urgency=medium
 
   * feat: 输入法管理中应不允许删除所有输入法,至少需要保留一个输入法 (#45)
