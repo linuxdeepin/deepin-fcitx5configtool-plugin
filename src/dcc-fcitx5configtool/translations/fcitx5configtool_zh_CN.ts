@@ -144,5 +144,10 @@
         <source>Input Methods</source>
         <translation>输入法</translation>
     </message>
+    <message>
+        <location filename="../qml/fcitx5configtool.qml" line="9"/>
+        <source>Input method management, input method shortcuts, advanced settings</source>
+        <translation>输入法管理、输入法快捷键、高级设置</translation>
+    </message>
 </context>
 </TS>

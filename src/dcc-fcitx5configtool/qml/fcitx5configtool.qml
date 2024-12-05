@@ -6,6 +6,7 @@ DccObject {
     name: "Manage Input Methods"
     parentName: "keyboard"
     displayName: qsTr("Input Methods")
+    description: qsTr("Input method management, input method shortcuts, advanced settings")
     icon: "dcc_input_method"
     weight: 200 // 101~299 for InputMethod in Keyboard-plguin
 }
