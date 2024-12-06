@@ -34,10 +34,10 @@ mkdir -p ${TRANS_DIR}
 for lang in "${LANGUAGES[@]}"; do
     if [ -z "$lang" ]; then
         # 生成默认翻译文件
-        lupdate . -ts "${TRANS_DIR}/${PROJECT_NAME}.ts"
+        lupdate . -ts -no-obsolete "${TRANS_DIR}/${PROJECT_NAME}.ts"
     else
         # 生成特定语言的翻译文件
-        lupdate . -ts "${TRANS_DIR}/${PROJECT_NAME}_${lang}.ts"
+        lupdate . -ts -no-obsolete "${TRANS_DIR}/${PROJECT_NAME}_${lang}.ts"
     fi
 done
 
