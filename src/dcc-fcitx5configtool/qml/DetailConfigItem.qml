@@ -154,7 +154,6 @@ DccObject {
                             id: enumComponent
                             D.ComboBox {
                                 model: modelData.propertiesI18n
-                                width: 100
                                 flat: true
                                 currentIndex: modelData.properties.indexOf(modelData.value) ? modelData.properties.indexOf(modelData.value) : 0
                                 onCurrentIndexChanged: {

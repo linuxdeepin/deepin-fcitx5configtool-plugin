@@ -12,7 +12,7 @@ DccObject {
     DccObject {
         name: "ManageInputMethodsTitle"
         parentName: "Manage Input Methods"
-        displayName: qsTr("Manage Input Methods")
+        displayName: qsTr("Input method management")
         weight: 110
         pageType: DccObject.Item
         page: RowLayout {

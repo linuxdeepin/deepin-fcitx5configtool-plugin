@@ -78,7 +78,7 @@
     <message>
         <location filename="../qml/InputMethodsChooser.qml" line="102"/>
         <source>Find more in App Store</source>
-        <translation>前往商店下</translation>
+        <translation>前往商店下载</translation>
     </message>
     <message>
         <location filename="../qml/InputMethodsChooser.qml" line="121"/>
@@ -95,7 +95,7 @@
     <name>ManageInputMethodsModule</name>
     <message>
         <location filename="../qml/ManageInputMethodsModule.qml" line="15"/>
-        <source>Manage Input Methods</source>
+        <source>Input method management</source>
         <translation>输入法管理</translation>
     </message>
     <message>
