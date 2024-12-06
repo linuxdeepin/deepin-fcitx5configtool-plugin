@@ -78,7 +78,7 @@
     <message>
         <location filename="../qml/InputMethodsChooser.qml" line="102"/>
         <source>Find more in App Store</source>
-        <translation>前往商店下</translation>
+        <translation>前往商店下载</translation>
     </message>
     <message>
         <location filename="../qml/InputMethodsChooser.qml" line="121"/>
