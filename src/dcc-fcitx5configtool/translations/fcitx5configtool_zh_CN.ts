@@ -95,7 +95,7 @@
     <name>ManageInputMethodsModule</name>
     <message>
         <location filename="../qml/ManageInputMethodsModule.qml" line="15"/>
-        <source>Manage Input Methods</source>
+        <source>Input method management</source>
         <translation>输入法管理</translation>
     </message>
     <message>
