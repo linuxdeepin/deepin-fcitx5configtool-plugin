@@ -1,3 +1,11 @@
+deepin-fcitx5configtool-plugin (6.0.2) unstable; urgency=medium
+
+  * update version.
+  * feat: add description for input method settings and update translations
+  * fix: improve input method settings UI and translations
+
+ -- Wang Yu <wangyu@uniontch.com>  Sat, 07 Dec 2024 15:55:56 +0800
+
 deepin-fcitx5configtool-plugin (6.0.1) unstable; urgency=medium
 
   * update version
