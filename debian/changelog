@@ -1,3 +1,9 @@
+deepin-fcitx5configtool-plugin (6.0.3) unstable; urgency=medium
+
+  * fix bugs
+
+ -- Zhang Sheng <zhangsheng@uniontech.com>  Fri, 13 Dec 2024 17:28:23 +0800
+
 deepin-fcitx5configtool-plugin (6.0.2) unstable; urgency=medium
 
   * update version.
