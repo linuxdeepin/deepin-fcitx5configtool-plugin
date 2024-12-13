@@ -23,7 +23,7 @@ DccObject {
             height: implicitHeight + 30
         }
     }
-    
+
     DccObject {
         id: headerItem
         property bool expanded: false
@@ -31,7 +31,15 @@ DccObject {
         displayName: root.displayName
         weight: root.weight
         pageType: DccObject.Item
+        backgroundType: DccObject.Normal | DccObject.Hover
         page: RowLayout {
+            id: headerRow
+
+            MouseArea {
+                anchors.fill: parent
+                onClicked: headerItem.expanded = !headerItem.expanded
+            }
+
             Label {
                 Layout.leftMargin: 10
                 font: D.DTK.fontManager.t4
@@ -49,10 +57,11 @@ DccObject {
 
     Component.onCompleted: {
         dccData.fcitx5ConfigProxy.onRequestConfigFinished.connect(() => {
-            configOptions = []
-            configOptions = dccData.fcitx5ConfigProxy.globalConfigOptions(root.name)
-            keyName = ""
-        })
+                                                                      configOptions = []
+                                                                      configOptions = dccData.fcitx5ConfigProxy.globalConfigOptions(
+                                                                          root.name)
+                                                                      keyName = ""
+                                                                  })
         configOptions = dccData.fcitx5ConfigProxy.globalConfigOptions(root.name)
         loading = false
     }
@@ -72,19 +81,19 @@ DccObject {
                     backgroundType: DccObject.Normal | DccObject.Hover
                     page: Loader {
                         sourceComponent: {
-                            switch(modelData.type) {
-                                case "Boolean":
-                                    return booleanComponent
-                                case "Integer":
-                                    return integerComponent  
-                                case "String":
-                                    return stringComponent
-                                case "List|Key":
-                                    return keyComponent
-                                case "Enum":
-                                    return enumComponent
-                                default:
-                                    return null
+                            switch (modelData.type) {
+                            case "Boolean":
+                                return booleanComponent
+                            case "Integer":
+                                return integerComponent
+                            case "String":
+                                return stringComponent
+                            case "List|Key":
+                                return keyComponent
+                            case "Enum":
+                                return enumComponent
+                            default:
+                                return null
                             }
                         }
 
@@ -93,7 +102,9 @@ DccObject {
                             D.Switch {
                                 checked: modelData.value === "True"
                                 onCheckedChanged: {
-                                    dccData.fcitx5ConfigProxy.setValue(root.name + "/" + modelData.name, checked ? "True" : "False")
+                                    dccData.fcitx5ConfigProxy.setValue(
+                                                root.name + "/" + modelData.name,
+                                                checked ? "True" : "False")
                                 }
                             }
                         }
@@ -105,7 +116,9 @@ DccObject {
                                 implicitWidth: 55
                                 value: parseInt(modelData.value)
                                 onValueChanged: {
-                                    dccData.fcitx5ConfigProxy.setValue(root.name + "/" + modelData.name, value.toString())
+                                    dccData.fcitx5ConfigProxy.setValue(
+                                                root.name + "/" + modelData.name,
+                                                value.toString())
                                 }
                             }
                         }
@@ -115,7 +128,9 @@ DccObject {
                             D.TextField {
                                 text: modelData.value
                                 onTextChanged: {
-                                    dccData.fcitx5ConfigProxy.setValue(root.name + "/" + modelData.name, text)
+                                    dccData.fcitx5ConfigProxy.setValue(
+                                                root.name + "/" + modelData.name,
+                                                text)
                                 }
                             }
                         }
@@ -129,9 +144,11 @@ DccObject {
                                 onFocusChanged: {
                                     if (!focus) {
                                         if (keys.length > 0) {
-                                            dccData.fcitx5ConfigProxy.setValue(root.name + "/" + modelData.name + "/0", keys, true)
+                                            dccData.fcitx5ConfigProxy.setValue(
+                                                        root.name + "/" + modelData.name + "/0",
+                                                        keys, true)
                                         } else if (keyName != modelData.name) {
-                                            keys = modelData.value;
+                                            keys = modelData.value
                                         }
                                     }
                                 }
@@ -155,9 +172,13 @@ DccObject {
                             D.ComboBox {
                                 model: modelData.propertiesI18n
                                 flat: true
-                                currentIndex: modelData.properties.indexOf(modelData.value) ? modelData.properties.indexOf(modelData.value) : 0
+                                currentIndex: modelData.properties.indexOf(
+                                                  modelData.value) ? modelData.properties.indexOf(
+                                                                         modelData.value) : 0
                                 onCurrentIndexChanged: {
-                                    dccData.fcitx5ConfigProxy.setValue(root.name + "/" + modelData.name, modelData.properties[currentIndex])
+                                    dccData.fcitx5ConfigProxy.setValue(
+                                                root.name + "/" + modelData.name,
+                                                modelData.properties[currentIndex])
                                 }
                             }
                         }
