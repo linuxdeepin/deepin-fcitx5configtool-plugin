@@ -8,7 +8,7 @@ import org.deepin.dtk 1.0 as D
 import org.deepin.dcc 1.0
 
 DccObject {
-    readonly property var enumKeys: ["None", "CTRL_SHIFT", "ALT_SHIFT", "CTRL_SUPER", "ALT_SUPER"]
+    readonly property var enumKeys: ["None", "CTRL_SHIFT", "ALT_SHIFT"]
     property var triggerKeys: dccData.fcitx5ConfigProxy.globalConfigOption(
                                   "Hotkey", "TriggerKeys")
     property int enumerateForwardKeys: calculateEnumerateForwardKeys(
