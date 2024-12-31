@@ -14,8 +14,8 @@ DccObject {
 
     Component.onCompleted: {
         dccData.fcitx5AddonsProxy.onRequestAddonsFinished.connect(() => {
-            globalAddons = dccData.fcitx5AddonsProxy.globalAddons()
-        })
+                                                                      globalAddons = dccData.fcitx5AddonsProxy.globalAddons()
+                                                                  })
         globalAddons = dccData.fcitx5AddonsProxy.globalAddons()
         loading = false
     }
@@ -38,7 +38,8 @@ DccObject {
                             Layout.alignment: Qt.AlignLeft
                             checked: modelData.enabled
                             onClicked: {
-                                dccData.fcitx5AddonsProxy.setEnableAddon(modelData.uniqueName, checked);
+                                dccData.fcitx5AddonsProxy.setEnableAddon(
+                                            modelData.uniqueName, checked)
                             }
                         }
                         ColumnLayout {
@@ -55,6 +56,7 @@ DccObject {
                                 font: D.DTK.fontManager.t8
                                 text: modelData.comment
                                 opacity: 0.5
+                                visible: modelData.comment !== ""
                             }
                         }
                         Item {
@@ -67,7 +69,9 @@ DccObject {
                             visible: modelData.configurable && isHovered
                             enabled: modelData.enabled
                             onClicked: {
-                                dccData.showAddonSettingsDialog(modelData.uniqueName, modelData.name);
+                                dccData.showAddonSettingsDialog(
+                                            modelData.uniqueName,
+                                            modelData.name)
                             }
                         }
                         MouseArea {
