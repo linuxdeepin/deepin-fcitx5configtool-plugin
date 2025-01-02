@@ -1,3 +1,10 @@
+deepin-fcitx5configtool-plugin (6.0.4) unstable; urgency=medium
+
+  * feat: implement drag-and-drop reordering for input method list
+  * fix: [ui] Text not aligned with checkbox
+
+ -- Zhang Sheng <zhangsheng@uniontech.com>  Thu, 02 Jan 2025 19:50:00 +0800
+
 deepin-fcitx5configtool-plugin (6.0.3) unstable; urgency=medium
 
   * fix bugs
