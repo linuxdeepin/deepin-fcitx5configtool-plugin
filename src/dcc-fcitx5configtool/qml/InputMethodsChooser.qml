@@ -6,6 +6,7 @@ import QtQuick.Window
 import QtQuick.Layouts 1.15
 
 import org.deepin.dtk 1.0 as D
+import org.deepin.dtk.style 1.0 as DS
 import org.deepin.dcc.fcitx5configtool 1.0
 
 Loader {
@@ -78,6 +79,7 @@ Loader {
                     width: itemsView.width
                     height: checkDelegate.height
                     color: D.DTK.palette.base
+                    radius: DS.Style.control.radius
 
                     D.CheckDelegate {
                         id: checkDelegate
