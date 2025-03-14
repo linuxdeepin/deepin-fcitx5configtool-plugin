@@ -142,7 +142,7 @@ Rectangle {
 
                         D.ToolButton {
                             id: imManageButton
-                            icon.name: "dcc_immanage"
+                            icon.name: "dcc_input_option"
                             onClicked: imMenu.popup()
 
                             D.Menu {
