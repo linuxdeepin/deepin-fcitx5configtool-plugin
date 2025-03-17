@@ -10,14 +10,18 @@ import org.deepin.dcc 1.0
 DccObject {
     DccObject {
         name: "AdvancedSettingsTitle"
-        parentName: "Manage Input Methods"
+        parentName: "AdvancedSettings"
         displayName: qsTr("Advanced Settings")
         weight: 310
         pageType: DccObject.Item
         page: ColumnLayout {
             Label {
                 Layout.leftMargin: 10
-                font: D.DTK.fontManager.t4
+                font {
+                    family: D.DTK.fontManager.t4.family
+                    pixelSize: D.DTK.fontManager.t4.pixelSize
+                    weight: Font.Medium
+                }
                 text: dccObj.displayName
             }
             Label {
@@ -37,7 +41,7 @@ DccObject {
 
     DccObject {
         name: "GlobalConfigPage"
-        parentName: "Manage Input Methods"
+        parentName: "AdvancedSettings"
         displayName: qsTr("Global Config")
         weight: 320
         page: DccRightView {
@@ -48,7 +52,7 @@ DccObject {
 
     DccObject {
         name: "AddonsPage"
-        parentName: "Manage Input Methods"
+        parentName: "AdvancedSettings"
         displayName: qsTr("Add-ons")
         weight: 330
         page: DccRightView {

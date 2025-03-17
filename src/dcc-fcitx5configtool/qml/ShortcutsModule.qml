@@ -30,14 +30,18 @@ DccObject {
     // title
     DccObject {
         name: "ShortcutsTitle"
-        parentName: "Manage Input Methods"
+        parentName: "Shortcuts"
         displayName: qsTr("Shortcuts")
         weight: 210
         pageType: DccObject.Item
         page: RowLayout {
             Label {
                 Layout.leftMargin: 10
-                font: D.DTK.fontManager.t4
+                font {
+                    family: D.DTK.fontManager.t4.family
+                    pixelSize: D.DTK.fontManager.t4.pixelSize
+                    weight: Font.Medium
+                }
                 text: dccObj.displayName
             }
             D.Button {
@@ -92,7 +96,7 @@ DccObject {
     // Shortcut of scroll IM
     DccObject {
         name: "scrollIM"
-        parentName: "Manage Input Methods"
+        parentName: "Shortcuts"
         weight: 220
         displayName: qsTr("Scroll between input methods")
         backgroundType: DccObject.Normal
@@ -116,14 +120,14 @@ DccObject {
     // Shortcut of turn on or off
     DccObject {
         name: "turnGrouup"
-        parentName: "Manage Input Methods"
+        parentName: "Shortcuts"
         weight: 230
         pageType: DccObject.Item
         page: DccGroupView {}
 
         DccObject {
             name: "shortcutSetting"
-            parentName: "Manage Input Methods/turnGrouup"
+            parentName: "Shortcuts/turnGrouup"
             displayName: qsTr("Turn on or off input methods")
             weight: 231
             pageType: DccObject.Editor
@@ -143,10 +147,12 @@ DccObject {
 
         DccObject {
             name: "shortcutSettingDesc"
-            parentName: "Manage Input Methods/turnGrouup"
+            parentName: "Shortcuts/turnGrouup"
             weight: 232
             pageType: DccObject.Item
             page: Label {
+                topPadding: 5
+                bottomPadding: 5
                 leftPadding: 10
                 rightPadding: 10
                 Layout.fillWidth: true
