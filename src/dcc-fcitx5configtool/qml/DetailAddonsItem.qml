@@ -65,7 +65,7 @@ DccObject {
                         D.ToolButton {
                             id: imManageButton
                             Layout.alignment: Qt.AlignRight
-                            icon.name: "dcc_input_method_configure"
+                            icon.name: "dcc_input_method_settings"
                             visible: modelData.configurable && isHovered
                             enabled: modelData.enabled
                             onClicked: {
