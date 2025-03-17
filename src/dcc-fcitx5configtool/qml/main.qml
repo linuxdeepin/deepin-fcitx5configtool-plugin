@@ -11,8 +11,14 @@ DccObject {
     // Manage input methods
     DccObject {
         name: "ManageInputMethods"
+        parentName: "Manage Input Methods"
         weight: 100
         pageType: DccObject.Item
+        onParentItemChanged: {
+            if (parentItem) {
+                parentItem.bottomPadding = 0
+            }
+        }
         page: DccGroupView {
             spacing: 0
             isGroup: false
@@ -23,8 +29,15 @@ DccObject {
     // Shortcuts
     DccObject {
         name: "Shortcuts"
+        parentName: "Manage Input Methods"
         weight: 200
         pageType: DccObject.Item
+        onParentItemChanged: {
+            if (parentItem) {
+                parentItem.topPadding = 5
+                parentItem.bottomPadding = 0
+            }
+        }
         page: DccGroupView {
             spacing: 0
             isGroup: false
@@ -35,8 +48,14 @@ DccObject {
     // Advanced Settings
     DccObject {
         name: "AdvancedSettings"
+        parentName: "Manage Input Methods"
         weight: 300
         pageType: DccObject.Item
+        onParentItemChanged: {
+            if (parentItem) {
+                parentItem.topPadding = 5
+            }
+        }
         page: DccGroupView {
             spacing: 0
             isGroup: false
