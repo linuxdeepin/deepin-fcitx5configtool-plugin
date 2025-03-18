@@ -14,9 +14,16 @@ DccObject {
         displayName: qsTr("Advanced Settings")
         weight: 310
         pageType: DccObject.Item
+        onParentItemChanged: {
+            if (parentItem) {
+                parentItem.bottomPadding = 0
+            }
+        }
         page: ColumnLayout {
+            spacing: 0
             Label {
                 Layout.leftMargin: 10
+                Layout.bottomMargin: 0
                 font {
                     family: D.DTK.fontManager.t4.family
                     pixelSize: D.DTK.fontManager.t4.pixelSize
@@ -25,6 +32,7 @@ DccObject {
                 text: dccObj.displayName
             }
             Label {
+                Layout.topMargin: 0
                 leftPadding: 10
                 rightPadding: 10
                 Layout.fillWidth: true
@@ -44,6 +52,11 @@ DccObject {
         parentName: "AdvancedSettings"
         displayName: qsTr("Global Config")
         weight: 320
+        onParentItemChanged: {
+            if (parentItem) {
+                parentItem.topPadding = 6
+            }
+        }
         page: DccRightView {
             spacing: 5
         }
