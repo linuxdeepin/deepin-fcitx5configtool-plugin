@@ -1,3 +1,13 @@
+deepin-fcitx5configtool-plugin (6.0.5) unstable; urgency=medium
+
+  * fix: adjust spacing between labels in AdvancedSettingsModule
+  * fix: update input method settings icon name
+  * fix: update font styling and parent-child relationships in QML files
+  * fix: adapt input method icon for dark theme mode
+  * fix: add rounded corners to input method items
+
+ -- Wang Yu <wangyu@uniontch.com>  Thu, 20 Mar 2025 18:53:11 +0800
+
 deepin-fcitx5configtool-plugin (6.0.4) unstable; urgency=medium
 
   * feat: implement drag-and-drop reordering for input method list
