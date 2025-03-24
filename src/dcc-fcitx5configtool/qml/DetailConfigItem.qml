@@ -18,6 +18,12 @@ DccObject {
         parentName: "GlobalConfigPage"
         weight: 40
         pageType: DccObject.Item
+        onParentItemChanged: {
+            if (parentItem) {
+                parentItem.topPadding = 5
+                parentItem.bottomPadding = 0
+            }
+        }
         page: DccGroupView {
             spacing: 0
             height: implicitHeight + 30
@@ -34,6 +40,7 @@ DccObject {
         backgroundType: DccObject.Normal | DccObject.Hover
         page: RowLayout {
             id: headerRow
+            height: 40
 
             MouseArea {
                 anchors.fill: parent
@@ -42,11 +49,12 @@ DccObject {
 
             Label {
                 Layout.leftMargin: 10
-                font: D.DTK.fontManager.t4
+                Layout.alignment: Qt.AlignVCenter
+                font: D.DTK.fontManager.t6
                 text: dccObj.displayName
             }
             D.ToolButton {
-                Layout.alignment: Qt.AlignRight
+                Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                 icon.width: 12
                 icon.height: 12
                 icon.name: headerItem.expanded ? "go-down" : "go-next"
@@ -80,6 +88,7 @@ DccObject {
                     visible: headerItem.expanded
                     backgroundType: DccObject.Normal | DccObject.Hover
                     page: Loader {
+                        height: 40
                         sourceComponent: {
                             switch (modelData.type) {
                             case "Boolean":
