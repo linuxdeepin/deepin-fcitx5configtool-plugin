@@ -25,62 +25,66 @@ DccObject {
         asynchronous: true
         sourceComponent: DccRepeater {
             model: globalAddons
-            delegate: Component {
-                DccObject {
-                    property bool expanded: true
-                    parentName: "AddonsPage"
-                    backgroundType: DccObject.Normal | DccObject.Hover
-                    weight: 120 + index
-                    pageType: DccObject.Item
-                    property bool isHovered: false
-                    page: RowLayout {
-                        CheckBox {
-                            Layout.alignment: Qt.AlignLeft
-                            checked: modelData.enabled
-                            onClicked: {
-                                dccData.fcitx5AddonsProxy.setEnableAddon(
-                                            modelData.uniqueName, checked)
-                            }
+            delegate: DccObject {
+                property bool expanded: true
+                parentName: "AddonsPage"
+                backgroundType: DccObject.Normal | DccObject.Hover
+                weight: 120 + index
+                pageType: DccObject.Item
+                property bool isHovered: false
+                onParentItemChanged: {
+                    if (parentItem) {
+                        parentItem.leftPadding = 4
+                    }
+                }
+                page: RowLayout {
+                    height: 50
+                    spacing: 0
+                    CheckBox {
+                        Layout.alignment: Qt.AlignLeft
+                        checked: modelData.enabled
+                        onClicked: {
+                            dccData.fcitx5AddonsProxy.setEnableAddon(
+                                        modelData.uniqueName, checked)
                         }
-                        ColumnLayout {
-                            Layout.alignment: Qt.AlignLeft
-                            Layout.topMargin: 5
-                            Layout.bottomMargin: 5
-                            DccLabel {
-                                Layout.fillHeight: true
-                                font: D.DTK.fontManager.t6
-                                text: modelData.name
-                            }
-                            DccLabel {
-                                Layout.fillWidth: true
-                                font: D.DTK.fontManager.t8
-                                text: modelData.comment
-                                opacity: 0.5
-                                visible: modelData.comment !== ""
-                            }
+                    }
+                    ColumnLayout {
+                        Layout.alignment: Qt.AlignLeft
+                        spacing: 0
+                        DccLabel {
+                            Layout.fillHeight: false
+                            font: D.DTK.fontManager.t6
+                            text: modelData.name
                         }
-                        Item {
-                            Layout.fillWidth: true
+                        DccLabel {
+                            Layout.fillHeight: false
+                            font: D.DTK.fontManager.t8
+                            text: modelData.comment
+                            opacity: 0.5
+                            visible: modelData.comment !== ""
                         }
-                        D.ToolButton {
-                            id: imManageButton
-                            Layout.alignment: Qt.AlignRight
-                            icon.name: "dcc_input_method_settings"
-                            visible: modelData.configurable && isHovered
-                            enabled: modelData.enabled
-                            onClicked: {
-                                dccData.showAddonSettingsDialog(
-                                            modelData.uniqueName,
-                                            modelData.name)
-                            }
+                    }
+                    Item {
+                        Layout.fillWidth: true
+                    }
+                    D.ToolButton {
+                        id: imManageButton
+                        Layout.alignment: Qt.AlignRight
+                        icon.name: "dcc_input_method_settings"
+                        visible: modelData.configurable && isHovered
+                        enabled: modelData.enabled
+                        onClicked: {
+                            dccData.showAddonSettingsDialog(
+                                        modelData.uniqueName,
+                                        modelData.name)
                         }
-                        MouseArea {
-                            anchors.fill: parent
-                            hoverEnabled: true
-                            onEntered: isHovered = true
-                            onExited: isHovered = false
-                            acceptedButtons: Qt.NoButton
-                        }
+                    }
+                    MouseArea {
+                        anchors.fill: parent
+                        hoverEnabled: true
+                        onEntered: isHovered = true
+                        onExited: isHovered = false
+                        acceptedButtons: Qt.NoButton
                     }
                 }
             }
