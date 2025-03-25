@@ -50,7 +50,7 @@ DccObject {
                     }
                     ColumnLayout {
                         Layout.alignment: Qt.AlignLeft
-                        spacing: 0
+                        spacing: 1
                         DccLabel {
                             Layout.fillHeight: false
                             font: D.DTK.fontManager.t6
