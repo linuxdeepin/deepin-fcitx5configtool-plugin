@@ -9,10 +9,8 @@ set(CMAKE_CXX_FLAGS "-g -Wall")
 # 增加安全编译参数
 ADD_DEFINITIONS("-fstack-protector-strong -D_FORTITY_SOURCE=1 -z noexecstack -pie -fPIC -z lazy")
 
-set(QT_MAJOR_VERSION 6)
-
-find_package(Qt${QT_MAJOR_VERSION} COMPONENTS Core Gui DBus LinguistTools REQUIRED)
-find_package(Dtk${QT_MAJOR_VERSION} COMPONENTS Core Widget REQUIRED)
+find_package(Qt${QT_DESIRED_VERSION} COMPONENTS Core Gui DBus LinguistTools REQUIRED)
+find_package(Dtk${DTK_VERSION_MAJOR} COMPONENTS Core Widget REQUIRED)
 
 
 include(GNUInstallDirs)

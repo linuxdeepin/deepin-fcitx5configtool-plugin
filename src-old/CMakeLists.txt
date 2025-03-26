@@ -3,6 +3,8 @@ include(KDECMakeSettings)
 include(KDECompilerSettings)
 option(ENABLE_KCM "Enable KDE Config Module" On)
 
+set(QT_MIN_VERSION "5.12.0")
+
 find_package(Qt5 ${QT_MIN_VERSION} CONFIG REQUIRED COMPONENTS Core Gui Widgets X11Extras Concurrent)
 find_package(DtkCore REQUIRED)
 find_package(DtkWidget REQUIRED)
@@ -27,3 +29,6 @@ include_directories(${CMAKE_CURRENT_BINARY_DIR})
 add_subdirectory(po)
 add_subdirectory(src)
 add_subdirectory(layout)
+
+# 创建 usr/libexec 目录，规避打包时安装错误
+install(DIRECTORY DESTINATION ${CMAKE_INSTALL_PREFIX}/libexec)
