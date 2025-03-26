@@ -14,8 +14,8 @@ set(CMAKE_CXX_FLAGS "-g -Wall")
 ADD_DEFINITIONS("-fstack-protector-strong -D_FORTITY_SOURCE=1 -z noexecstack -pie -fPIC -z lazy")
 
 # 指定要用到的库
-find_package(Qt6 COMPONENTS Core Gui Widgets REQUIRED)
-find_package(Fcitx5Qt6DBusAddons REQUIRED)
+find_package(Qt${QT_DESIRED_VERSION} COMPONENTS Core Gui Widgets REQUIRED)
+find_package(Fcitx5Qt${QT_DESIRED_VERSION}DBusAddons REQUIRED)
 
 file(GLOB_RECURSE DccFcitx5configtool_SRCS
     "*.cpp"
@@ -27,16 +27,16 @@ add_executable(${BIN_NAME}
 )
 
 set(DccFcitx5configtool_Libraries
-        Qt${QT_MAJOR_VERSION}::Gui
-        Qt${QT_MAJOR_VERSION}::Widgets
-        Dtk${QT_MAJOR_VERSION}::Core
+        Qt${QT_DESIRED_VERSION}::Gui
+        Qt${QT_DESIRED_VERSION}::Widgets
+        Dtk${DTK_VERSION_MAJOR}::Core
 )
 
 target_link_libraries(${BIN_NAME} PRIVATE
         ${DccFcitx5configtool_Libraries}
-        configlib${QT_MAJOR_VERSION}
-        configwidgetslib${QT_MAJOR_VERSION}
-        Fcitx5Qt6::DBusAddons
+        configlib${QT_DESIRED_VERSION}
+        configwidgetslib${QT_DESIRED_VERSION}
+        Fcitx5Qt${QT_DESIRED_VERSION}::DBusAddons
 )
 
 target_include_directories(${BIN_NAME}

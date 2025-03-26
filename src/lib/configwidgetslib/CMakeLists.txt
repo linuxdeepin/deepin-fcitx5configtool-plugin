@@ -1,4 +1,4 @@
-set(PLUGIN_NAME "configwidgetslib${QT_MAJOR_VERSION}")
+set(PLUGIN_NAME "configwidgetslib${QT_DESIRED_VERSION}")
 
 add_library(${PLUGIN_NAME} STATIC
     configwidget.cpp
@@ -23,5 +23,13 @@ set_target_properties(${PLUGIN_NAME} PROPERTIES
 )
 
 target_include_directories(${PLUGIN_NAME} INTERFACE ${CMAKE_CURRENT_SOURCE_DIR} ${CMAKE_CURRENT_BINARY_DIR})
-target_link_libraries(${PLUGIN_NAME} Qt${QT_MAJOR_VERSION}::Core Qt${QT_MAJOR_VERSION}::Widgets KF${QT_MAJOR_VERSION}::WidgetsAddons
-    KF${QT_MAJOR_VERSION}::ItemViews Fcitx5::Utils Fcitx5Qt${QT_MAJOR_VERSION}::DBusAddons Fcitx5Qt${QT_MAJOR_VERSION}::WidgetsAddons configlib${QT_MAJOR_VERSION} layoutlib${QT_MAJOR_VERSION})
+target_link_libraries(${PLUGIN_NAME}
+    Qt${QT_DESIRED_VERSION}::Core
+    Qt${QT_DESIRED_VERSION}::Widgets
+    KF${KF_VERSION_MAJOR}::WidgetsAddons
+    KF${KF_VERSION_MAJOR}::ItemViews
+    Fcitx5::Utils
+    Fcitx5Qt${QT_DESIRED_VERSION}::DBusAddons
+    Fcitx5Qt${QT_DESIRED_VERSION}::WidgetsAddons
+    configlib${QT_DESIRED_VERSION}
+    layoutlib${QT_DESIRED_VERSION})
