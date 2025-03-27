@@ -1,3 +1,10 @@
+deepin-fcitx5configtool-plugin (6.0.6) unstable; urgency=medium
+
+  * bump version to 6.0.6
+  * Merge Qt5 and Qt6 build.
+
+ -- re2zero <yangwu@uniontech.com>  Thu, 27 Mar 2025 13:25:42 +0800
+
 deepin-fcitx5configtool-plugin (6.0.5) unstable; urgency=medium
 
   * fix: adjust spacing between labels in AdvancedSettingsModule
