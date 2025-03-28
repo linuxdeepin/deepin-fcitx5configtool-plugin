@@ -1,3 +1,10 @@
+deepin-fcitx5configtool-plugin (6.0.7) unstable; urgency=medium
+
+  * bump version to 6.0.7
+  * Fix translations for dde control center plugin.
+
+ -- re2zero <yangwu@uniontech.com>  Fri, 28 Mar 2025 14:18:19 +0800
+
 deepin-fcitx5configtool-plugin (6.0.6) unstable; urgency=medium
 
   * bump version to 6.0.6

@@ -54,4 +54,4 @@ target_link_libraries(${DccFcitx5configtool_Name} PRIVATE
 )
 
 dcc_install_plugin(NAME ${DccFcitx5configtool_Name} TARGET ${DccFcitx5configtool_Name})
-dcc_handle_plugin_translation(NAME ${DccFcitx5configtool_Name} )
+dcc_handle_plugin_translation(NAME ${DccFcitx5configtool_Name})
