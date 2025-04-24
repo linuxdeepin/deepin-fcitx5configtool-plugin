@@ -1,0 +1,18 @@
+[Desktop Entry]
+Categories=System;Utility;
+Exec=fcitx5-helper
+Icon=fcitx
+Name=fcitx5-helper.desktop
+NoDisplay=true
+StartupNotify=false
+Terminal=false
+Type=Application
+X-Deepin-Vendor=user-custom
+X-GNOME-AutoRestart=false
+X-GNOME-Autostart-Notify=false
+X-GNOME-Autostart-Phase=Applications
+X-KDE-StartupNotify=false
+X-KDE-autostart-after=panel
+_Comment=Start Input Method
+_GenericName=Input Method
+_Name=Fcitx5 helper
