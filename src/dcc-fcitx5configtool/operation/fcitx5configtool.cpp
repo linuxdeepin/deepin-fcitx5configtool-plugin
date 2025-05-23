@@ -86,14 +86,18 @@ void Fcitx5ConfigToolWorkerPrivate::initConnect()
 Fcitx5ConfigToolWorker::Fcitx5ConfigToolWorker(QObject *parent)
     : QObject(parent), d(new Fcitx5ConfigToolWorkerPrivate(this))
 {
+    qDebug() << "Creating Fcitx5ConfigToolWorker";
     qmlRegisterType<Fcitx5ConfigProxy>("org.deepin.dcc.fcitx5configtool", 1, 0, "Fcitx5ConfigProxy");
     qmlRegisterType<Fcitx5AddonsProxy>("org.deepin.dcc.fcitx5configtool", 1, 0, "Fcitx5AddonsProxy");
     QMetaObject::invokeMethod(this, "init", Qt::QueuedConnection);
+    qDebug() << "Fcitx5ConfigToolWorker created";
 }
 
 void Fcitx5ConfigToolWorker::init()
 {
+    qDebug() << "Initializing Fcitx5ConfigToolWorker";
     d->init();
+    qDebug() << "Fcitx5ConfigToolWorker initialized";
 }
 
 Fcitx5ConfigProxy *Fcitx5ConfigToolWorker::fcitx5ConfigProxy() const
@@ -108,8 +112,10 @@ Fcitx5AddonsProxy *Fcitx5ConfigToolWorker::fcitx5AddonsProxy() const
 
 void Fcitx5ConfigToolWorker::showAddonSettingsDialog(const QString &addonStr, const QString &title) const
 {
+    qDebug() << "Showing addon settings dialog for:" << addonStr << "title:" << title;
     // If addonStr is empty or addonsProxy is null, don't show the dialog
     if (addonStr.isEmpty() || !d->addonsProxy) {
+        qWarning() << "Invalid addon settings dialog request";
         return;
     }
 
@@ -145,8 +151,11 @@ void Fcitx5ConfigToolWorker::openDeepinAppStore() const
 
 void Fcitx5ConfigToolWorker::showIMSettingsDialog(int index) const
 {
-    if (!d->imConfig)
+    qDebug() << "Showing IM settings dialog for index:" << index;
+    if (!d->imConfig) {
+        qWarning() << "IM config not available";
         return;
+    }
 
     auto item = d->imConfig->currentIMModel()->index(index);
     QString uniqueName = item.data(fcitx::kcm::FcitxIMUniqueNameRole).toString();
@@ -170,16 +179,21 @@ void Fcitx5ConfigToolWorker::showIMSettingsDialog(int index) const
 
 void Fcitx5ConfigToolWorker::addIM(int index)
 {
+    qDebug() << "Adding IM at index:" << index;
     d->imConfig->addIM(index);
     d->imConfig->save();
+    qDebug() << "IM added successfully";
 }
 
 void Fcitx5ConfigToolWorker::launchConfigDialog(const QString &uri, const QString &title) const
 {
+    qDebug() << "Launching config dialog for uri:" << uri << "title:" << title;
     QString execPath = QString::fromLocal8Bit(DCC_CONFIGTOOL_EXEC_PATH) + "/dcc-fcitx5configtool-exec";
     QFileInfo fileInfo(execPath);
-    if (!fileInfo.exists())
+    if (!fileInfo.exists()) {
+        qDebug() << "Using fallback exec path";
         execPath = "/usr/libexec/dcc-fcitx5configtool-exec";
+    }
 
     QStringList args;
     args << "-u" << uri

@@ -7,6 +7,7 @@
 #include "model.h"
 
 #include "xkbrules.h"
+#include "logging.h"
 
 #include <DStyleOption>
 
@@ -22,7 +23,9 @@ namespace fcitx {
 namespace kcm {
 
 CategorizedItemModel::CategorizedItemModel(QObject *parent)
-    : QAbstractItemModel(parent) { }
+    : QAbstractItemModel(parent) {
+    qCDebug(KCM_FCITX5) << "Initializing CategorizedItemModel";
+}
 
 int CategorizedItemModel::rowCount(const QModelIndex &parent) const
 {
@@ -163,7 +166,9 @@ static QString getEnglishLanguageName(const QString &uniqueName, const QString &
 }
 
 AvailIMModel::AvailIMModel(QObject *parent)
-    : CategorizedItemModel(parent) { }
+    : CategorizedItemModel(parent) {
+    qCDebug(KCM_FCITX5) << "Initializing AvailIMModel";
+}
 
 QVariant AvailIMModel::dataForCategory(const QModelIndex &index,
                                        int role) const
@@ -252,6 +257,7 @@ void AvailIMModel::filterIMEntryList(
         const FcitxQtInputMethodEntryList &imEntryList,
         const FcitxQtStringKeyValueList &enabledIMList)
 {
+    qCDebug(KCM_FCITX5) << "Filtering IM entry list with" << imEntryList.size() << "entries";
     beginResetModel();
 
     QMap<QString, int> languageMap;
@@ -283,6 +289,7 @@ void AvailIMModel::filterIMEntryList(
 IMProxyModel::IMProxyModel(QObject *parent)
     : QSortFilterProxyModel(parent)
 {
+    qCDebug(KCM_FCITX5) << "Initializing IMProxyModel";
     setDynamicSortFilter(true);
     sort(0);
 }
@@ -505,7 +512,9 @@ int IMProxyModel::compareItems(const QModelIndex &left,
 }
 
 FilteredIMModel::FilteredIMModel(Mode mode, QObject *parent)
-    : QAbstractListModel(parent), mode_(mode) { }
+    : QAbstractListModel(parent), mode_(mode) {
+    qCDebug(KCM_FCITX5) << "Initializing FilteredIMModel with mode:" << mode;
+}
 
 QVariant FilteredIMModel::data(const QModelIndex &index, int role) const
 {
@@ -578,6 +587,8 @@ void FilteredIMModel::filterIMEntryList(
         const FcitxQtInputMethodEntryList &imEntryList,
         const FcitxQtStringKeyValueList &enabledIMList)
 {
+    qCDebug(KCM_FCITX5) << "Filtering IM entry list with mode:" << mode_
+             << "and" << imEntryList.size() << "entries";
     beginResetModel();
 
     filteredIMEntryList_.clear();
@@ -617,7 +628,9 @@ void FilteredIMModel::filterIMEntryList(
 
 void FilteredIMModel::move(int from, int to)
 {
+    qCDebug(KCM_FCITX5) << "Moving IM from" << from << "to" << to;
     if (from < 0 || from >= filteredIMEntryList_.size() || to < 0 || to >= filteredIMEntryList_.size()) {
+        qCWarning(KCM_FCITX5) << "Invalid move positions:" << from << "->" << to;
         return;
     }
     beginMoveRows(QModelIndex(), from, from, QModelIndex(),
@@ -629,7 +642,9 @@ void FilteredIMModel::move(int from, int to)
 
 void FilteredIMModel::remove(int idx)
 {
+    qCDebug(KCM_FCITX5) << "Removing IM at index:" << idx;
     if (idx < 0 || idx >= filteredIMEntryList_.size()) {
+        qCWarning(KCM_FCITX5) << "Invalid remove index:" << idx;
         return;
     }
     beginRemoveRows(QModelIndex(), idx, idx);

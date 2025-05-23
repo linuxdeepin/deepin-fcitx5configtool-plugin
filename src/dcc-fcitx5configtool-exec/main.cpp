@@ -2,7 +2,10 @@
 //
 // SPDX-License-Identifier: GPL-3.0-or-later
 
+#include <QLoggingCategory>
 #include <QApplication>
+
+Q_LOGGING_CATEGORY(fcitx5Exec, "fcitx5.configtool.exec")
 #include <QCommandLineParser>
 #include <QCommandLineOption>
 #include <QDebug>
@@ -30,7 +33,7 @@ int main(int argc, char *argv[])
         QTranslator *translator = new QTranslator;
         const QString filename = trans + QLocale::system().name();
         bool ret = translator->load(filename);
-        qInfo() << "Loading translator" << filename;
+        qCInfo(fcitx5Exec) << "Loading translator file:" << filename;
 
         if (!ret) {
             delete translator;
@@ -59,20 +62,23 @@ int main(int argc, char *argv[])
     // 获取参数值
     QString uri = parser.value(uriOption);
     QString title = parser.value(titleOption);
-    qInfo() << "Received uri:" << uri << "title:" << title;
+    qCInfo(fcitx5Exec) << "Parsed command line arguments - uri:" << uri
+                      << "title:" << title;
     if (uri.isEmpty()) {
-        qWarning() << "Uri is required!";
+        qCWarning(fcitx5Exec) << "URI parameter is required but not provided";
         parser.showHelp(1);
     }
 
+    qCDebug(fcitx5Exec) << "Initializing DBusProvider";
     DBusProvider *dbusProvider = new DBusProvider(&app);
 
+    qCInfo(fcitx5Exec) << "Creating config dialog for uri:" << uri;
     QPointer<QDialog> dialog = ConfigWidget::configDialog(nullptr,
                                                           dbusProvider,
                                                           uri,
                                                           title);
     if (!dialog) {
-        qWarning() << "Failed to create config dialog!";
+        qCCritical(fcitx5Exec) << "Failed to create config dialog for uri:" << uri;
         return 1;
     }
 

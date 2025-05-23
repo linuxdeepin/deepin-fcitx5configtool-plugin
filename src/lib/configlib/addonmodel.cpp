@@ -5,6 +5,8 @@
  *
  */
 #include "addonmodel.h"
+#include "logging.h"
+
 #include <QCollator>
 #include <QDebug>
 #include <fcitx-utils/i18n.h>
@@ -27,9 +29,12 @@ QString categoryName(int category) {
 
 } // namespace
 
-AddonModel::AddonModel(QObject *parent) : CategorizedItemModel(parent) {}
+AddonModel::AddonModel(QObject *parent) : CategorizedItemModel(parent) {
+    qCDebug(KCM_FCITX5) << "AddonModel constructor";
+}
 
 QVariant AddonModel::dataForCategory(const QModelIndex &index, int role) const {
+    qCDebug(KCM_FCITX5) << "AddonModel::dataForCategory - index:" << index << "role:" << role;
     switch (role) {
 
     case Qt::DisplayRole:
@@ -47,6 +52,7 @@ QVariant AddonModel::dataForCategory(const QModelIndex &index, int role) const {
 }
 
 QVariant AddonModel::dataForItem(const QModelIndex &index, int role) const {
+    qCDebug(KCM_FCITX5) << "AddonModel::dataForItem - index:" << index << "role:" << role;
     const auto &addonList = addonEntryList_[index.parent().row()].second;
     const auto &addon = addonList[index.row()];
 
@@ -83,6 +89,8 @@ QVariant AddonModel::dataForItem(const QModelIndex &index, int role) const {
 
 bool AddonModel::setData(const QModelIndex &index, const QVariant &value,
                          int role) {
+    qCDebug(KCM_FCITX5) << "AddonModel::setData - index:" << index << "value:" << value << "role:" << role;
+
     if (!index.isValid() || !index.parent().isValid() ||
         index.parent().row() >= addonEntryList_.size() ||
         index.parent().column() > 0 || index.column() > 0) {
@@ -123,6 +131,7 @@ bool AddonModel::setData(const QModelIndex &index, const QVariant &value,
     return ret;
 }
 QModelIndex AddonModel::findAddon(const QString &addon) const {
+    qCDebug(KCM_FCITX5) << "AddonModel::findAddon - addon:" << addon;
     for (int i = 0; i < addonEntryList_.size(); i++) {
         for (int j = 0; j < addonEntryList_[i].second.size(); j++) {
             const auto &addonList = addonEntryList_[i].second;
@@ -134,7 +143,9 @@ QModelIndex AddonModel::findAddon(const QString &addon) const {
     return QModelIndex();
 }
 
-FlatAddonModel::FlatAddonModel(QObject *parent) : QAbstractListModel(parent) {}
+FlatAddonModel::FlatAddonModel(QObject *parent) : QAbstractListModel(parent) {
+    qCDebug(KCM_FCITX5) << "FlatAddonModel constructor";
+}
 
 bool FlatAddonModel::setData(const QModelIndex &index, const QVariant &value,
                              int role) {
@@ -172,6 +183,7 @@ bool FlatAddonModel::setData(const QModelIndex &index, const QVariant &value,
 }
 
 QVariant FlatAddonModel::data(const QModelIndex &index, int role) const {
+    qCDebug(KCM_FCITX5) << "FlatAddonModel::data - index:" << index << "role:" << role;
     if (!index.isValid() || index.row() >= addonEntryList_.size()) {
         return QVariant();
     }
@@ -220,6 +232,7 @@ QVariant FlatAddonModel::data(const QModelIndex &index, int role) const {
 }
 
 int FlatAddonModel::rowCount(const QModelIndex &parent) const {
+    qCDebug(KCM_FCITX5) << "FlatAddonModel::rowCount - parent:" << parent;
     if (parent.isValid()) {
         return 0;
     }
@@ -240,6 +253,7 @@ QHash<int, QByteArray> FlatAddonModel::roleNames() const {
 }
 
 void FlatAddonModel::setAddons(const fcitx::FcitxQtAddonInfoV2List &list) {
+    qCDebug(KCM_FCITX5) << "FlatAddonModel::setAddons - list size:" << list.size();
     beginResetModel();
     addonEntryList_ = list;
     nameToAddonMap_.clear();
@@ -268,6 +282,7 @@ void FlatAddonModel::setAddons(const fcitx::FcitxQtAddonInfoV2List &list) {
 }
 
 void FlatAddonModel::enable(const QString &addon) {
+    qCDebug(KCM_FCITX5) << "FlatAddonModel::enable - addon:" << addon;
     for (int i = 0; i < addonEntryList_.size(); i++) {
         if (addonEntryList_[i].uniqueName() == addon) {
             setData(index(i, 0), true, Qt::CheckStateRole);
@@ -279,6 +294,8 @@ void FlatAddonModel::enable(const QString &addon) {
 bool AddonProxyModel::filterAcceptsRow(int sourceRow,
                                        const QModelIndex &sourceParent) const {
     Q_UNUSED(sourceParent)
+    qCDebug(KCM_FCITX5) << "AddonProxyModel::filterAcceptsRow - sourceRow:" << sourceRow << "sourceParent:" << sourceParent;
+
     const QModelIndex index = sourceModel()->index(sourceRow, 0, sourceParent);
 
     if (index.data(RowTypeRole) == CategoryType) {
@@ -347,6 +364,7 @@ bool AddonProxyModel::lessThan(const QModelIndex &left,
 }
 
 void AddonProxyModel::setFilterText(const QString &text) {
+    qCDebug(KCM_FCITX5) << "AddonProxyModel::setFilterText - text:" << text;
     if (filterText_ != text) {
         filterText_ = text;
         invalidate();

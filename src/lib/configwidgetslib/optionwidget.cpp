@@ -45,6 +45,7 @@ public:
                         QWidget *parent)
         : OptionWidget(path, parent), spinBox_(new QSpinBox),
           defaultValue_(option.defaultValue().variant().toString().toInt()) {
+        qCDebug(KCM_FCITX5) << "Create IntegerOptionWidget";
         QVBoxLayout *layout = new QVBoxLayout;
         layout->setContentsMargins(0,0,0,0);
 
@@ -72,16 +73,23 @@ public:
     void readValueFrom(const QVariantMap &map) override {
         auto value = readString(map, path());
         if (value.isNull()) {
+            qCDebug(KCM_FCITX5) << "Read default value for IntegerOptionWidget:" << defaultValue_;
             spinBox_->setValue(defaultValue_);
+        } else {
+            spinBox_->setValue(value.toInt());
         }
-        spinBox_->setValue(value.toInt());
     }
 
     void writeValueTo(QVariantMap &map) override {
-        writeVariant(map, path(), QString::number(spinBox_->value()));
+        int value = spinBox_->value();
+        qCDebug(KCM_FCITX5) << "Write value for IntegerOptionWidget:" << value;
+        writeVariant(map, path(), QString::number(value));
     }
 
-    void restoreToDefault() override { spinBox_->setValue(defaultValue_); }
+    void restoreToDefault() override {
+        qCDebug(KCM_FCITX5) << "Restore IntegerOptionWidget to default:" << defaultValue_;
+        spinBox_->setValue(defaultValue_);
+    }
 
 private:
     QSpinBox *spinBox_;
@@ -95,6 +103,7 @@ public:
                        QWidget *parent)
         : OptionWidget(path, parent), lineEdit_(new QLineEdit),
           defaultValue_(option.defaultValue().variant().toString()) {
+        qCDebug(KCM_FCITX5) << "Create StringOptionWidget";
         QVBoxLayout *layout = new QVBoxLayout;
         layout->setContentsMargins(0,0,0,0);
 
@@ -107,14 +116,20 @@ public:
 
     void readValueFrom(const QVariantMap &map) override {
         auto value = readString(map, path());
+        qCDebug(KCM_FCITX5) << "Read value for StringOptionWidget:" << value;
         lineEdit_->setText(value);
     }
 
     void writeValueTo(QVariantMap &map) override {
-        writeVariant(map, path(), lineEdit_->text());
+        QString value = lineEdit_->text();
+        qCDebug(KCM_FCITX5) << "Write value for StringOptionWidget:" << value;
+        writeVariant(map, path(), value);
     }
 
-    void restoreToDefault() override { lineEdit_->setText(defaultValue_); }
+    void restoreToDefault() override {
+        qCDebug(KCM_FCITX5) << "Restore StringOptionWidget to default:" << defaultValue_;
+        lineEdit_->setText(defaultValue_);
+    }
 
 private:
     QLineEdit *lineEdit_;
@@ -128,6 +143,7 @@ public:
                      QWidget *parent)
         : OptionWidget(path, parent), fontButton_(new FontButton),
           defaultValue_(option.defaultValue().variant().toString()) {
+        qCDebug(KCM_FCITX5) << "Create FontOptionWidget";
         QVBoxLayout *layout = new QVBoxLayout;
         layout->setContentsMargins(0,0,0,0);
 
@@ -139,14 +155,18 @@ public:
 
     void readValueFrom(const QVariantMap &map) override {
         auto value = readString(map, path());
+        qCDebug(KCM_FCITX5) << "Read font value for FontOptionWidget:" << value;
         fontButton_->setFont(parseFont(value));
     }
 
     void writeValueTo(QVariantMap &map) override {
-        writeVariant(map, path(), fontButton_->fontName());
+        QString fontName = fontButton_->fontName();
+        qCDebug(KCM_FCITX5) << "Write font value for FontOptionWidget:" << fontName;
+        writeVariant(map, path(), fontName);
     }
 
     void restoreToDefault() override {
+        qCDebug(KCM_FCITX5) << "Restore FontOptionWidget to default:" << defaultValue_;
         fontButton_->setFont(parseFont(defaultValue_));
     }
 
@@ -162,6 +182,7 @@ public:
                         QWidget *parent)
         : OptionWidget(path, parent), checkBox_(new QCheckBox),
           defaultValue_(option.defaultValue().variant().toString() == "True") {
+        qCDebug(KCM_FCITX5) << "Create BooleanOptionWidget";
         QVBoxLayout *layout = new QVBoxLayout;
         layout->setContentsMargins(0,0,0,0);
 
@@ -173,15 +194,22 @@ public:
     }
 
     void readValueFrom(const QVariantMap &map) override {
-        checkBox_->setChecked(readBool(map, path()));
+        bool value = readBool(map, path());
+        qCDebug(KCM_FCITX5) << "Read value for BooleanOptionWidget:" << value;
+        checkBox_->setChecked(value);
     }
 
     void writeValueTo(QVariantMap &map) override {
-        QString value = checkBox_->isChecked() ? "True" : "False";
+        bool isChecked = checkBox_->isChecked();
+        QString value = isChecked ? "True" : "False";
+        qCDebug(KCM_FCITX5) << "Write value for BooleanOptionWidget:" << isChecked;
         writeVariant(map, path(), value);
     }
 
-    void restoreToDefault() override { checkBox_->setChecked(defaultValue_); }
+    void restoreToDefault() override {
+        qCDebug(KCM_FCITX5) << "Restore BooleanOptionWidget to default:" << defaultValue_;
+        checkBox_->setChecked(defaultValue_);
+    }
 
 private:
     QCheckBox *checkBox_;
@@ -194,6 +222,7 @@ public:
     KeyListOptionWidget(const FcitxQtConfigOption &option, const QString &path,
                         QWidget *parent)
         : OptionWidget(path, parent), keyListWidget_(new KeyListWidget) {
+        qCDebug(KCM_FCITX5) << "Create KeyListOptionWidget";
         QVBoxLayout *layout = new QVBoxLayout;
         layout->setContentsMargins(0,0,0,0);
 
@@ -220,11 +249,14 @@ public:
     }
 
     void readValueFrom(const QVariantMap &map) override {
-        keyListWidget_->setKeys(readValue(map, path()));
+        auto keys = readValue(map, path());
+        qCDebug(KCM_FCITX5) << "Read keys for KeyListOptionWidget, count:" << keys.size();
+        keyListWidget_->setKeys(keys);
     }
 
     void writeValueTo(QVariantMap &map) override {
         auto keys = keyListWidget_->keys();
+        qCDebug(KCM_FCITX5) << "Write keys for KeyListOptionWidget, count:" << keys.size();
         int i = 0;
         for (auto &key : keys) {
             auto value = QString::fromUtf8(key.toString().data());
@@ -236,7 +268,10 @@ public:
         }
     }
 
-    void restoreToDefault() override { keyListWidget_->setKeys(defaultValue_); }
+    void restoreToDefault() override {
+        qCDebug(KCM_FCITX5) << "Restore KeyListOptionWidget to default, count:" << defaultValue_.size();
+        keyListWidget_->setKeys(defaultValue_);
+    }
 
 private:
     QList<fcitx::Key> readValue(const QVariantMap &map, const QString &path) {
@@ -269,6 +304,7 @@ public:
           keyWidget_(new FcitxQtKeySequenceWidget(this)),
           defaultValue_(
               option.defaultValue().variant().toString().toUtf8().constData()) {
+        qCDebug(KCM_FCITX5) << "Create KeyOptionWidget";
         QVBoxLayout *layout = new QVBoxLayout;
         layout->setContentsMargins(0,0,0,0);
 
@@ -287,6 +323,7 @@ public:
         Key key;
         auto value = readString(map, path());
         key = Key(value.toUtf8().constData());
+        qCDebug(KCM_FCITX5) << "Read key for KeyOptionWidget:" << value;
         keyWidget_->setKeySequence({key});
     }
 
@@ -297,10 +334,12 @@ public:
             key = keys[0];
         }
         auto value = QString::fromUtf8(key.toString().data());
+        qCDebug(KCM_FCITX5) << "Write key for KeyOptionWidget:" << value;
         writeVariant(map, path(), value);
     }
 
     void restoreToDefault() override {
+        qCDebug(KCM_FCITX5) << "Restore KeyOptionWidget";
         keyWidget_->setKeySequence({defaultValue_});
     }
 
@@ -316,6 +355,7 @@ public:
                      QWidget *parent)
         : OptionWidget(path, parent), comboBox_(new QComboBox),
           toolButton_(new QToolButton) {
+        qCDebug(KCM_FCITX5) << "Create EnumOptionWidget";
         auto *layout = new QHBoxLayout;
         toolButton_->setIcon(QIcon::fromTheme("preferences-system-symbolic"));
         layout->setContentsMargins(0,0,0,0);
@@ -375,17 +415,22 @@ public:
         if (idx < 0) {
             idx = comboBox_->findData(defaultValue_);
         }
+        qCDebug(KCM_FCITX5) << "Read value for EnumOptionWidget:" << value
+                           << ", selected index:" << idx;
         comboBox_->setCurrentIndex(idx);
         toolButton_->setVisible(
             !comboBox_->currentData(subConfigPathRole).toString().isEmpty());
     }
 
     void writeValueTo(QVariantMap &map) override {
-        writeVariant(map, path(), comboBox_->currentData().toString());
+        QString value = comboBox_->currentData().toString();
+        qCDebug(KCM_FCITX5) << "Write value for EnumOptionWidget:" << value;
+        writeVariant(map, path(), value);
     }
 
     void restoreToDefault() override {
         auto idx = comboBox_->findData(defaultValue_);
+        qCDebug(KCM_FCITX5) << "Restore EnumOptionWidget to default, index:" << idx;
         comboBox_->setCurrentIndex(idx);
     }
 
@@ -400,8 +445,9 @@ class ColorOptionWidget : public OptionWidget {
     Q_OBJECT
 public:
     ColorOptionWidget(const FcitxQtConfigOption &option, const QString &path,
-                      QWidget *parent)
+                       QWidget *parent)
         : OptionWidget(path, parent), colorButton_(new KColorButton) {
+        qCDebug(KCM_FCITX5) << "Create ColorOptionWidget";
         QVBoxLayout *layout = new QVBoxLayout;
         layout->setContentsMargins(0,0,0,0);
         layout->addWidget(colorButton_);
@@ -422,8 +468,10 @@ public:
         Color color;
         try {
             color.setFromString(value.toStdString());
+            qCDebug(KCM_FCITX5) << "Read color for ColorOptionWidget:" << value;
         } catch (...) {
             color = defaultValue_;
+            qCDebug(KCM_FCITX5) << "Using default color for ColorOptionWidget";
         }
         QColor qcolor;
         qcolor.setRedF(color.redF());
@@ -450,6 +498,7 @@ public:
         qcolor.setGreenF(defaultValue_.greenF());
         qcolor.setBlueF(defaultValue_.blueF());
         qcolor.setAlphaF(defaultValue_.alphaF());
+        qCDebug(KCM_FCITX5) << "Restore ColorOptionWidget to default color";
         colorButton_->setColor(qcolor);
     }
 
@@ -462,10 +511,13 @@ class ExternalOptionWidget : public OptionWidget {
     Q_OBJECT
 public:
     ExternalOptionWidget(const FcitxQtConfigOption &option, const QString &path,
-                         QWidget *parent)
+                          QWidget *parent)
         : OptionWidget(path, parent),
           uri_(readString(option.properties(), "External")),
           launchSubConfig_(readBool(option.properties(), "LaunchSubConfig")) {
+        qCDebug(KCM_FCITX5) << "Create ExternalOptionWidget for path:" << path
+                           << "URI:" << uri_
+                           << "launchSubConfig:" << launchSubConfig_;
         QVBoxLayout *layout = new QVBoxLayout;
         layout->setContentsMargins(0,0,0,0);
 

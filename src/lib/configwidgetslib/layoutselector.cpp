@@ -3,7 +3,7 @@
  *
  * SPDX-License-Identifier: GPL-2.0-or-later
  */
-
+#include <logging.h>
 #include "layoutselector.h"
 #include "dbusprovider.h"
 #include "keyboardlayoutwidget.h"
@@ -24,6 +24,7 @@ namespace kcm {
 LayoutSelector::LayoutSelector(DBusProvider *dbus, QWidget *parent)
     : QWidget(parent), ui_(std::make_unique<Ui::LayoutSelector>()), dbus_(dbus),
       layoutProvider_(new LayoutProvider(dbus, this)) {
+    qCDebug(KCM_FCITX5) << "LayoutSelector created with dbus";
     ui_->setupUi(this);
 
     ui_->languageComboBox->setModel(layoutProvider_->languageModel());
@@ -54,12 +55,15 @@ LayoutSelector::LayoutSelector(DBusProvider *dbus, QWidget *parent)
     }
 }
 
-LayoutSelector::~LayoutSelector() {}
+LayoutSelector::~LayoutSelector() {
+    qCDebug(KCM_FCITX5) << "LayoutSelector destroyed";
+}
 
 QPair<QString, QString>
 LayoutSelector::selectLayout(QWidget *parent, DBusProvider *dbus,
                              const QString &title, const QString &layout,
                              const QString &variant, bool *ok) {
+    qCDebug(KCM_FCITX5) << "Selecting layout dialog";
     QPointer<QDialog> dialog(new QDialog(parent));
     auto mainLayout = new QVBoxLayout(dialog);
     dialog->setLayout(mainLayout);
@@ -90,6 +94,9 @@ LayoutSelector::selectLayout(QWidget *parent, DBusProvider *dbus,
 
 void LayoutSelector::setLayout(const QString &layout, const QString &variant) {
     if (!layoutProvider_->loaded()) {
+        qCDebug(KCM_FCITX5) << "Layout provider not loaded yet, caching selection:"
+                           << "layout:" << preSelectLayout_
+                           << "variant:" << preSelectVariant_;
         preSelectLayout_ = layout;
         preSelectVariant_ = variant;
         return;
@@ -119,6 +126,8 @@ void LayoutSelector::languageComboBoxChanged() {
 void LayoutSelector::layoutComboBoxChanged() {
     ui_->variantComboBox->clear();
     if (ui_->layoutComboBox->currentIndex() < 0) {
+        qCWarning(KCM_FCITX5) << "Invalid layout index:"
+                             << ui_->layoutComboBox->currentIndex();
         return;
     }
 

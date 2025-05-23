@@ -17,6 +17,7 @@ Fcitx5ConfigProxyPrivate::Fcitx5ConfigProxyPrivate(Fcitx5ConfigProxy *parent,
                                                  const QString &path)
     : q(parent), dbusprovider(dbus), path(path)
 {
+    qDebug() << "Initializing Fcitx5ConfigProxy for path:" << path;
     timer = new QTimer(q);
     timer->setInterval(1000);
     timer->setSingleShot(true);
@@ -116,6 +117,7 @@ QVariant Fcitx5ConfigProxyPrivate::readDBusValue(const QVariant &value) {
 Fcitx5ConfigProxy::Fcitx5ConfigProxy(fcitx::kcm::DBusProvider *dbus, const QString &path, QObject *parent)
     : QObject(parent), d(new Fcitx5ConfigProxyPrivate(this, dbus, path))
 {
+    qDebug() << "Fcitx5ConfigProxy created for path:" << path;
 }
 
 Fcitx5ConfigProxy::~Fcitx5ConfigProxy() = default;
@@ -297,7 +299,9 @@ void Fcitx5ConfigProxy::restoreDefault(const QString &type)
 
 void Fcitx5ConfigProxy::requestConfig(bool sync)
 {
+    qDebug() << "Requesting config for path:" << d->path << "sync:" << sync;
     if (!d->dbusprovider->controller()) {
+        qWarning() << "DBus controller not available";
         return;
     }
     auto call = d->dbusprovider->controller()->GetConfig(d->path);
@@ -313,12 +317,14 @@ void Fcitx5ConfigProxy::requestConfig(bool sync)
  
 void Fcitx5ConfigProxy::onRequestConfigFinished(QDBusPendingCallWatcher *watcher)
 {
+    qDebug() << "Processing config response for path:" << d->path;
     watcher->deleteLater();
     QDBusPendingReply<QDBusVariant, fcitx::FcitxQtConfigTypeList> reply = *watcher;
     if (reply.isError()) {
-        qWarning() << reply.error();
+        qWarning() << "Failed to get config:" << reply.error();
         return;
     }
+    qDebug() << "Successfully received config for path:" << d->path;
     d->configTypes = reply.argumentAt<1>(); 
 
     auto value = reply.argumentAt<0>().variant();
@@ -331,13 +337,17 @@ void Fcitx5ConfigProxy::onRequestConfigFinished(QDBusPendingCallWatcher *watcher
 
 QVariant Fcitx5ConfigProxy::value(const QString &path) const
 {
+    qDebug() << "Getting value for config path:" << path;
     return fcitx::kcm::readVariant(d->configValue, path);
 }
 
 void Fcitx5ConfigProxy::setValue(const QString &path, const QVariant &value, bool isKey)
 {
-    if (value == this->value(path))
+    qDebug() << "Setting value for config path:" << path << "isKey:" << isKey;
+    if (value == this->value(path)) {
+        qDebug() << "Value unchanged, skipping update";
         return;
+    }
     if (isKey) {
         auto keys = d->formatKeys(value.toStringList());
         fcitx::kcm::writeVariant(d->configValue, path, keys);
@@ -349,7 +359,9 @@ void Fcitx5ConfigProxy::setValue(const QString &path, const QVariant &value, boo
 
 void Fcitx5ConfigProxy::save()
 {
+    qDebug() << "Saving config changes for path:" << d->path;
     if (!d->dbusprovider->controller()) {
+        qWarning() << "DBus controller not available";
         return;
     }
 
