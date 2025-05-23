@@ -3,6 +3,7 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 
 #include "xkbrules.h"
+#include "logging.h"
 
 #include <QFile>
 #include <QDir>
@@ -15,26 +16,36 @@ XkbRules &XkbRules::instance() {
     static XkbRules rules;
     static bool initialied = false;
     if (!initialied) {
+        qCDebug(KCM_FCITX5) << "Initializing XkbRules instance";
         initialied = true;
         QString dir = QDir::cleanPath(QStringLiteral(XKEYBOARDCONFIG_XKBBASE) + QDir::separator() + "rules");
+        qCDebug(KCM_FCITX5) << "Loading XKB rules from directory:" << dir;
         
-        rules.open(QString("%1/%2.xml").arg(dir).arg(DEFAULT_XKB_RULES));
-        rules.open(QString("%1/%2.extras.xml").arg(dir).arg(DEFAULT_XKB_RULES));
+        bool mainLoaded = rules.open(QString("%1/%2.xml").arg(dir).arg(DEFAULT_XKB_RULES));
+        bool extrasLoaded = rules.open(QString("%1/%2.extras.xml").arg(dir).arg(DEFAULT_XKB_RULES));
+        
+        qCDebug(KCM_FCITX5) << "XKB rules loaded - main:" << mainLoaded
+               << "extras:" << extrasLoaded;
     }
     return rules;
 }
 
 bool XkbRules::open(const QString &filename) {
+    qCDebug(KCM_FCITX5) << "Opening XKB rules file:" << filename;
     QFile xmlFile(filename);
     if (!xmlFile.open(QIODevice::ReadOnly | QIODevice::Text)) {
+        qCWarning(KCM_FCITX5) << "Failed to open XKB rules file:" << filename
+                  << "error:" << xmlFile.errorString();
         return false;
     }
 
     QDomDocument xmlReader;
     xmlReader.setContent(&xmlFile);
     auto layoutList = xmlReader.documentElement().firstChildElement("layoutList");
+    int layoutCount = 0;
     for (auto layout = layoutList.firstChildElement("layout"); !layout.isNull();
          layout = layout.nextSiblingElement("layout")) {
+        layoutCount++;
         auto layoutConfigItem = layout.firstChildElement("configItem");
         auto variantList = layout.firstChildElement("variantList");
 
@@ -60,6 +71,7 @@ bool XkbRules::open(const QString &filename) {
         }
     }
 
+    qCDebug(KCM_FCITX5) << "Loaded" << layoutCount << "layouts from" << filename;
     return true;
 }
 

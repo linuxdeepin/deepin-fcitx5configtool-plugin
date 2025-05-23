@@ -21,9 +21,11 @@ Fcitx5AddonsProxyPrivate::Fcitx5AddonsProxyPrivate(Fcitx5AddonsProxy *parent, fc
 
 void Fcitx5AddonsProxyPrivate::fetchAddonsFinished(QDBusPendingCallWatcher *watcher)
 {
+    qDebug() << "Entering fetchAddonsFinished";
     watcher->deleteLater();
 
     if (watcher->isError()) {
+        qWarning() << "Failed to fetch addons:" << watcher->error().message();
         return;
     }
     QDBusPendingReply<fcitx::FcitxQtAddonInfoV2List> reply(*watcher);
@@ -63,6 +65,7 @@ void Fcitx5AddonsProxyPrivate::fetchAddonsFinished(QDBusPendingCallWatcher *watc
     }
 
     Q_EMIT q->requestAddonsFinished();
+    qDebug() << "Finished processing addons data";
 }
 
 Fcitx5AddonsProxy::Fcitx5AddonsProxy(fcitx::kcm::DBusProvider *dbus, QObject *parent)
@@ -82,7 +85,9 @@ void Fcitx5AddonsProxy::clear()
 
 void Fcitx5AddonsProxy::load()
 {
+    qDebug() << "Loading fcitx5 addons";
     if (!d->dbusprovider->controller()) {
+        qWarning() << "DBus controller not available";
         return;
     }
 
@@ -110,13 +115,16 @@ QVariantList Fcitx5AddonsProxy::globalAddons() const
             addonMap["optionalDependencies"] = addon.optionalDependencies();
             ret.append(QVariant::fromValue(addonMap));
         }
+        qDebug() << "Addon state changed successfully";
     }
     return ret;
 }
 
 void Fcitx5AddonsProxy::setEnableAddon(const QString &addonStr, bool enable)
 {
+    qDebug() << "Setting addon" << addonStr << "enable state to" << enable;
     if (!d->nameToAddonMap.contains(addonStr)) {
+        qWarning() << "Addon not found:" << addonStr;
         return;
     }
     

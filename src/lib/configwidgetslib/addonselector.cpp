@@ -4,7 +4,7 @@
  * SPDX-License-Identifier: GPL-2.0-or-later
  *
  */
-
+#include "logging.h"
 #include "addonselector.h"
 #include "addonmodel.h"
 #include "categoryhelper.h"
@@ -83,18 +83,22 @@ QFont AddonDelegate::titleFont(const QFont &baseFont) const {
 AddonDelegate::AddonDelegate(QAbstractItemView *listView, AddonSelector *parent)
     : KWidgetItemDelegate(listView, parent), checkBox_(new QCheckBox),
       pushButton_(new QToolButton), parent_(parent) {
+    qCDebug(KCM_FCITX5) << "AddonDelegate constructor called";
     pushButton_->setIcon(QIcon::fromTheme(
         "preferences-system-symbolic")); // only for getting size matters
 }
 
 AddonDelegate::~AddonDelegate() {
+    qCDebug(KCM_FCITX5) << "AddonDelegate destructor called";
     delete checkBox_;
     delete pushButton_;
 }
 
 void AddonDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option,
                           const QModelIndex &index) const {
+    qCDebug(KCM_FCITX5) << "AddonDelegate::paint called for index:" << index;
     if (!index.isValid()) {
+        qCWarning(KCM_FCITX5) << "Invalid index in AddonDelegate::paint";
         return;
     }
 
@@ -248,8 +252,11 @@ void AddonDelegate::updateItemWidgets(const QList<QWidget *> &widgets,
 }
 
 void AddonDelegate::checkBoxClicked(bool state) {
-    if (!focusedIndex().isValid())
+    qCDebug(KCM_FCITX5) << "AddonDelegate::checkBoxClicked";
+    if (!focusedIndex().isValid()) {
+        qCWarning(KCM_FCITX5) << "Invalid focused index in checkBoxClicked";
         return;
+    }
     const QModelIndex index = focusedIndex();
 
     const_cast<QAbstractItemModel *>(index.model())
@@ -259,7 +266,9 @@ void AddonDelegate::checkBoxClicked(bool state) {
 void AddonDelegate::configureClicked() {
     const QModelIndex index = focusedIndex();
     auto name = index.data(AddonNameRole).toString();
+    qCDebug(KCM_FCITX5) << "AddonDelegate::configureClicked called for addon:" << name;
     if (name.isEmpty()) {
+        qCWarning(KCM_FCITX5) << "Empty addon name in configureClicked";
         return;
     }
     auto addonName = index.data(Qt::DisplayRole).toString();
@@ -275,6 +284,7 @@ AddonSelector::AddonSelector(QWidget *parent, DBusProvider *dbus)
       proxyModel_(new AddonProxyModel(this)),
 
       ui_(std::make_unique<Ui::AddonSelector>()) {
+    qCDebug(KCM_FCITX5) << "AddonSelector constructor called";
     ui_->setupUi(this);
 
     connect(dbus_, &DBusProvider::availabilityChanged, this,
@@ -318,12 +328,21 @@ AddonSelector::AddonSelector(QWidget *parent, DBusProvider *dbus)
             [this]() { proxyModel_->invalidate(); });
 }
 
-AddonSelector::~AddonSelector() { delete delegate_; }
+AddonSelector::~AddonSelector() {
+    qCDebug(KCM_FCITX5) << "AddonSelector destructor called";
+    delete delegate_;
+}
 
-void AddonSelector::load() { availabilityChanged(); }
+void AddonSelector::load() {
+    qCDebug(KCM_FCITX5) << "AddonSelector::load called";
+    availabilityChanged();
+}
 
 void AddonSelector::save() {
+    qCDebug(KCM_FCITX5) << "AddonSelector::save called";
+
     if (!dbus_->controller()) {
+        qCWarning(KCM_FCITX5) << "DBus controller not available in save";
         return;
     }
     FcitxQtAddonStateList list;
@@ -346,7 +365,9 @@ void AddonSelector::save() {
 }
 
 void AddonSelector::availabilityChanged() {
+    qCDebug(KCM_FCITX5) << "AddonSelector::availabilityChanged called";
     if (!dbus_->controller()) {
+        qCWarning(KCM_FCITX5) << "DBus controller not available in availabilityChanged";
         return;
     }
 
@@ -357,8 +378,11 @@ void AddonSelector::availabilityChanged() {
 }
 
 void AddonSelector::fetchAddonFinished(QDBusPendingCallWatcher *watcher) {
+    qCDebug(KCM_FCITX5) << "AddonSelector::fetchAddonFinished called";
+
     watcher->deleteLater();
     if (watcher->isError()) {
+        qCWarning(KCM_FCITX5) << "Error fetching addons:" << watcher->error().message();
         return;
     }
     QDBusPendingReply<FcitxQtAddonInfoV2List> reply(*watcher);
@@ -390,7 +414,10 @@ void AddonSelector::fetchAddonFinished(QDBusPendingCallWatcher *watcher) {
 }
 
 void AddonSelector::warnAddonDisable(const QString &addon) {
+    qCDebug(KCM_FCITX5) << "AddonSelector::warnAddonDisable called for addon:" << addon;
+
     if (!nameToAddonMap_.contains(addon)) {
+        qCWarning(KCM_FCITX5) << "Addon not found in nameToAddonMap:" << addon;
         return;
     }
 

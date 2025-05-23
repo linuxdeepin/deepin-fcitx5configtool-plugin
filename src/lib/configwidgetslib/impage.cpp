@@ -4,7 +4,7 @@
  * SPDX-License-Identifier: GPL-2.0-or-later
  *
  */
-
+#include "logging.h"
 #include "impage.h"
 #include "categoryhelper.h"
 #include "configwidget.h"
@@ -65,6 +65,7 @@ QSize IMDelegate::sizeHint(const QStyleOptionViewItem &option,
 IMPage::IMPage(DBusProvider *dbus, QWidget *parent)
     : QWidget(parent), ui_(std::make_unique<Ui::IMPage>()), dbus_(dbus),
       config_(new IMConfig(dbus, IMConfig::Tree, this)) {
+    qCDebug(KCM_FCITX5) << "IMPage created with DBus";
     ui_->setupUi(this);
     ui_->availIMView->header()->setSortIndicator(0, Qt::AscendingOrder);
     ui_->addIMButton->setIcon(QIcon::fromTheme(
@@ -173,20 +174,28 @@ IMPage::IMPage(DBusProvider *dbus, QWidget *parent)
     availIMSelectionChanged();
 }
 
-IMPage::~IMPage() {}
+IMPage::~IMPage() {
+    qCDebug(KCM_FCITX5) << "IMPage destroyed";
+}
 
 void IMPage::save() {
+    qCDebug(KCM_FCITX5) << "Saving input method";
     checkDefaultLayout();
     config_->save();
 }
 
-void IMPage::load() { config_->load(); }
+void IMPage::load() {
+    qCDebug(KCM_FCITX5) << "Loading input method configuration";
+    config_->load();
+}
 
 void IMPage::defaults() {}
 
 void IMPage::selectedGroupChanged() {
+    qCDebug(KCM_FCITX5) << "Selected group";
     if (config_->currentGroup() ==
         ui_->inputMethodGroupComboBox->currentText()) {
+        qDebug() << "Group unchanged";
         return;
     }
     if (!config_->currentGroup().isEmpty() && config_->needSave()) {
@@ -368,13 +377,20 @@ void IMPage::checkDefaultLayout() {
     }
 }
 
-void IMPage::addIM(const QModelIndex &index) { config_->addIM(index); }
+void IMPage::addIM(const QModelIndex &index) {
+    qCDebug(KCM_FCITX5) << "Adding input method";
+    config_->addIM(index);
+}
 
-void IMPage::removeIM(const QModelIndex &index) { config_->removeIM(index); }
+void IMPage::removeIM(const QModelIndex &index) {
+    qCDebug(KCM_FCITX5) << "Removing input method";
+    config_->removeIM(index);
+}
 
 void IMPage::configureIM() {
     QModelIndex curIndex = ui_->currentIMView->currentIndex();
     if (!curIndex.isValid()) {
+        qWarning() << "No valid input method selected for configuration";
         return;
     }
     const QString uniqueName = curIndex.data(FcitxIMUniqueNameRole).toString();
@@ -414,16 +430,24 @@ void IMPage::moveDownIM() {
 }
 
 void IMPage::addGroup() {
+    qCDebug(KCM_FCITX5) << "Adding new input method group";
     bool ok;
     QString name = QInputDialog::getText(this, _("New Group"), _("Group Name:"),
                                          QLineEdit::Normal, "", &ok);
     if (ok && !name.isEmpty()) {
+        qCDebug(KCM_FCITX5) << "Adding new group:" << name
+                           << "current groups:" << config_->groups();
         config_->addGroup(name);
+    } else {
+        qCDebug(KCM_FCITX5) << "Group creation canceled";
     }
 }
 
 void IMPage::deleteGroup() {
-    config_->deleteGroup(ui_->inputMethodGroupComboBox->currentText());
+    QString group = ui_->inputMethodGroupComboBox->currentText();
+    qCDebug(KCM_FCITX5) << "Deleting group:" << group
+                       << "remaining groups:" << config_->groups();
+    config_->deleteGroup(group);
 }
 
 } // namespace kcm

@@ -5,11 +5,13 @@
  *
  */
 #include "layoutmodel.h"
+#include "logging.h"
 
 namespace fcitx {
 namespace kcm {
 
 LanguageModel::LanguageModel(QObject *parent) : QStandardItemModel(parent) {
+    qCDebug(KCM_FCITX5) << "Initializing LanguageModel";
     setItemRoleNames({{Qt::DisplayRole, "name"}, {Qt::UserRole, "language"}});
 }
 
@@ -22,6 +24,7 @@ QString LanguageModel::language(int row) const {
 }
 
 void LanguageModel::append(const QString &name, const QString &language) {
+    qCDebug(KCM_FCITX5) << "Adding language:" << name << "code:" << language;
     QStandardItem *item = new QStandardItem(name);
     item->setData(language, Qt::UserRole);
     appendRow(item);
@@ -29,6 +32,7 @@ void LanguageModel::append(const QString &name, const QString &language) {
 
 void LanguageFilterModel::setLanguage(const QString &language) {
     if (language_ != language) {
+        qCDebug(KCM_FCITX5) << "Setting filter language to:" << language;
         language_ = language;
         invalidateFilter();
     }
@@ -69,6 +73,7 @@ QHash<int, QByteArray> LayoutInfoModel::roleNames() const {
 }
 
 void LayoutInfoModel::setLayoutInfo(FcitxQtLayoutInfoList info) {
+    qCDebug(KCM_FCITX5) << "Setting layout info with" << info.size() << "layouts";
     beginResetModel();
     layoutInfo_ = std::move(info);
     endResetModel();
@@ -116,6 +121,7 @@ QHash<int, QByteArray> VariantInfoModel::roleNames() const {
 }
 
 void VariantInfoModel::setVariantInfo(const FcitxQtLayoutInfo &info) {
+    qCDebug(KCM_FCITX5) << "Setting variant info for layout:" << info.layout();
     beginResetModel();
     variantInfo_.clear();
     FcitxQtVariantInfo defaultVariant;
@@ -124,6 +130,7 @@ void VariantInfoModel::setVariantInfo(const FcitxQtLayoutInfo &info) {
     defaultVariant.setLanguages(info.languages());
     variantInfo_ << defaultVariant;
     variantInfo_ << info.variants();
+    qCDebug(KCM_FCITX5) << "Loaded" << variantInfo_.size() << "variants";
     endResetModel();
 }
 

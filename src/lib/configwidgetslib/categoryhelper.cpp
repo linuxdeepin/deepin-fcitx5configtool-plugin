@@ -4,6 +4,7 @@
  * SPDX-License-Identifier: GPL-2.0-or-later
  *
  */
+#include "logging.h"
 #include "categoryhelper.h"
 #include <QApplication>
 
@@ -14,12 +15,14 @@ static constexpr int SPACING = 4;
 
 void paintCategoryHeader(QPainter *painter, const QStyleOptionViewItem &option,
                          const QModelIndex &index) {
+    qCDebug(KCM_FCITX5) << "Painting category header for:" << index.data(Qt::DisplayRole).toString();
 
     painter->save();
     painter->setRenderHint(QPainter::Antialiasing);
 
-    const QString category =
-        index.model()->data(index, Qt::DisplayRole).toString();
+    const QString category = index.model()->data(index, Qt::DisplayRole).toString();
+    qCDebug(KCM_FCITX5) << "Category header text:" << category
+                       << "rect:" << option.rect;
     QRect optRect = option.rect;
     optRect.translate(SPACING, SPACING);
     optRect.setWidth(optRect.width() - SPACING * 2);
@@ -78,6 +81,7 @@ void paintCategoryHeader(QPainter *painter, const QStyleOptionViewItem &option,
         arc.translate(0.5, 0.5);
         painter->drawArc(arc, 0, 1440);
         painter->restore();
+        qCDebug(KCM_FCITX5) << "Finished painting category header:" << index.data(Qt::DisplayRole).toString();
     }
     // END: top right corner
 
@@ -117,12 +121,16 @@ void paintCategoryHeader(QPainter *painter, const QStyleOptionViewItem &option,
 }
 
 QSize categoryHeaderSizeHint() {
+    qCDebug(KCM_FCITX5) << "Calculating category header size hint";
     QFont font(QApplication::font());
     font.setBold(true);
     QFontMetrics fontMetrics(font);
     const int height = fontMetrics.height() + 1 /* 1 pixel-width gradient */
                        + 11 /* top and bottom separation */ + SPACING;
-    return QSize(0, height);
+    QSize size(0, height);
+    qCDebug(KCM_FCITX5) << "Category header size hint calculated:" << size
+                       << "font height:" << fontMetrics.height();
+    return size;
 }
 
 } // namespace kcm

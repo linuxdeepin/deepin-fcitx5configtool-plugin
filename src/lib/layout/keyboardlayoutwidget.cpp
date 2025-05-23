@@ -87,6 +87,7 @@ static inline void FcitxXkbClearVarDefsRec(XkbRF_VarDefsRec *vdp) {
 }
 
 static QString FcitxXkbGetRulesName() {
+    qDebug() << "Getting XKB rules name";
     XkbRF_VarDefsRec vd;
     char *tmp = nullptr;
 
@@ -102,6 +103,7 @@ static QString FcitxXkbGetRulesName() {
     return result;
 }
 static QString FcitxXkbFindXkbRulesFile() {
+    qDebug() << "Finding XKB rules file";
     QString rulesFile;
     QString rulesName = FcitxXkbGetRulesName();
 
@@ -119,6 +121,7 @@ static QString FcitxXkbFindXkbRulesFile() {
 
 KeyboardLayoutWidget::KeyboardLayoutWidget(QWidget *parent)
     : QWidget(parent), groupLevels(pGroupsLevels) {
+    qDebug() << "KeyboardLayoutWidget constructor called";
     for (unsigned int i = 0; i < FCITX_ARRAY_SIZE(deadMapData); i++) {
         deadMap[deadMapData[i].dead] = deadMapData[i].nondead;
     }
@@ -132,6 +135,7 @@ KeyboardLayoutWidget::KeyboardLayoutWidget(QWidget *parent)
     }
 
     if (!xkb) {
+        qWarning() << "Failed to get XKB keyboard description";
         return;
     }
 
@@ -143,11 +147,13 @@ KeyboardLayoutWidget::KeyboardLayoutWidget(QWidget *parent)
     initColors();
 
     setFocusPolicy(Qt::StrongFocus);
+    qDebug() << "KeyboardLayoutWidget initialized successfully";
 }
 
 void FreeXkbRF(XkbRF_RulesPtr rule) { XkbRF_Free(rule, true); }
 
 void KeyboardLayoutWidget::setGroup(int group) {
+    qDebug() << "Setting keyboard group to" << group;
     XkbRF_VarDefsRec rdefs;
     XkbComponentNamesRec rnames;
     QString rulesPath = "./rules/evdev";
@@ -162,6 +168,7 @@ void KeyboardLayoutWidget::setGroup(int group) {
         rules.reset(XkbRF_Load(rulesPath.toLocal8Bit().data(), c, True, True));
     }
     if (!rules) {
+        qWarning() << "Failed to load XKB rules for group" << group;
         return;
     }
     memset(&rdefs, 0, sizeof(XkbRF_VarDefsRec));
@@ -297,6 +304,7 @@ void KeyboardLayoutWidget::setKeyboardLayout(const QString &layout,
 }
 
 void KeyboardLayoutWidget::setKeyboard(XkbComponentNamesPtr names) {
+    qDebug() << "Setting keyboard layout with component names";
     release();
     if (xkb) {
         XkbFreeKeyboard(xkb, 0, true);
@@ -322,8 +330,10 @@ void KeyboardLayoutWidget::setKeyboard(XkbComponentNamesPtr names) {
         XkbGetNames(getXDisplay(), XkbAllNamesMask, xkb);
     }
 
-    if (xkb == NULL)
+    if (xkb == NULL) {
+        qCritical() << "Failed to get XKB keyboard description";
         return;
+    }
 
     alloc();
     init();
@@ -333,6 +343,7 @@ void KeyboardLayoutWidget::setKeyboard(XkbComponentNamesPtr names) {
 }
 
 void KeyboardLayoutWidget::alloc() {
+    qDebug() << "Allocating keyboard layout resources";
     physicalIndicators.clear();
     int physicalIndicatorsSize = xkb->indicators->phys_indicators + 1;
     physicalIndicators.reserve(physicalIndicatorsSize);
@@ -362,6 +373,8 @@ void KeyboardLayoutWidget::release() {
 }
 
 void KeyboardLayoutWidget::init() {
+    qDebug() << "Initializing keyboard layout with"
+             << xkb->geom->num_sections << "sections";
     int i, j, k;
     int x, y;
 
@@ -477,6 +490,8 @@ void KeyboardLayoutWidget::init() {
 }
 
 void KeyboardLayoutWidget::initColors() {
+    qDebug() << "Initializing keyboard color scheme with"
+             << xkb->geom->num_colors << "colors";
     bool result;
     int i;
 
@@ -659,6 +674,7 @@ void KeyboardLayoutWidget::initInicatorDoodad(XkbDoodadRec *xkbdoodad,
 }
 
 void KeyboardLayoutWidget::generatePixmap(bool force) {
+    qDebug() << "Generating keyboard pixmap (force:" << force << ")";
     if (!xkb) {
         return;
     }
@@ -1379,6 +1395,7 @@ void KeyboardLayoutWidget::drawIndicatorDoodad(
 }
 
 void KeyboardLayoutWidget::paintEvent(QPaintEvent *event) {
+    qDebug() << "Painting keyboard widget";
     QWidget::paintEvent(event);
     QPainter p(this);
     p.setClipRect(event->rect());
@@ -1391,6 +1408,7 @@ void KeyboardLayoutWidget::paintEvent(QPaintEvent *event) {
 }
 
 void KeyboardLayoutWidget::resizeEvent(QResizeEvent *event) {
+    qDebug() << "Resizing keyboard widget to" << event->size();
     generatePixmap();
     update();
     QWidget::resizeEvent(event);
@@ -1405,6 +1423,9 @@ void KeyboardLayoutWidget::keyReleaseEvent(QKeyEvent *event) {
 }
 
 void KeyboardLayoutWidget::keyEvent(QKeyEvent *event) {
+    qDebug() << "Processing key event, type:" << event->type()
+             << "key:" << event->key()
+             << "native scancode:" << event->nativeScanCode();
     do {
         if (!xkb)
             break;
@@ -1424,6 +1445,7 @@ void KeyboardLayoutWidget::keyEvent(QKeyEvent *event) {
         key->pressed = (event->type() == QEvent::KeyPress);
         generatePixmap(true);
         repaint();
+        qDebug() << "Key state updated, repainting widget";
     } while (0);
 }
 

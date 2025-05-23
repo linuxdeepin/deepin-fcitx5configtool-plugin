@@ -6,6 +6,7 @@
  */
 #include "layoutprovider.h"
 #include "dbusprovider.h"
+#include "logging.h"
 
 namespace fcitx {
 namespace kcm {
@@ -16,6 +17,7 @@ LayoutProvider::LayoutProvider(DBusProvider *dbus, QObject *parent)
       variantModel_(new VariantInfoModel(this)),
       layoutFilterModel_(new LanguageFilterModel(this)),
       variantFilterModel_(new LanguageFilterModel(this)) {
+    qCDebug(KCM_FCITX5) << "Initializing LayoutProvider";
     layoutFilterModel_->setSourceModel(layoutModel_);
     variantFilterModel_->setSourceModel(variantModel_);
 
@@ -24,11 +26,15 @@ LayoutProvider::LayoutProvider(DBusProvider *dbus, QObject *parent)
     availabilityChanged();
 }
 
-LayoutProvider::~LayoutProvider() {}
+LayoutProvider::~LayoutProvider() {
+    qCDebug(KCM_FCITX5) << "Destroying LayoutProvider";
+}
 
 void LayoutProvider::availabilityChanged() {
+    qCDebug(KCM_FCITX5) << "DBus availability changed, loading layouts";
     setLoaded(false);
     if (!dbus_->controller()) {
+        qCWarning(KCM_FCITX5) << "DBus controller not available, cannot load layouts";
         return;
     }
 
@@ -42,6 +48,7 @@ void LayoutProvider::fetchLayoutFinished(QDBusPendingCallWatcher *watcher) {
     watcher->deleteLater();
     QDBusPendingReply<FcitxQtLayoutInfoList> reply = *watcher;
     if (reply.isError()) {
+        qCWarning(KCM_FCITX5) << "Failed to fetch keyboard layouts:" << reply.error().message();
         return;
     }
     QSet<QString> languages;
@@ -75,11 +82,14 @@ void LayoutProvider::fetchLayoutFinished(QDBusPendingCallWatcher *watcher) {
         }
         languageModel_->append(languageName, language);
     }
+    qCDebug(KCM_FCITX5) << "Loaded" << layoutInfo.size() << "keyboard layouts";
     layoutModel_->setLayoutInfo(std::move(layoutInfo));
     setLoaded(true);
+    qCDebug(KCM_FCITX5) << "Layout loading completed";
 }
 
 int LayoutProvider::layoutIndex(const QString &layoutString) {
+    qCDebug(KCM_FCITX5) << "Looking up layout index for:" << layoutString;
     auto dashPos = layoutString.indexOf("-");
     QString layout;
     if (dashPos >= 0) {
@@ -101,6 +111,7 @@ int LayoutProvider::layoutIndex(const QString &layoutString) {
 }
 
 int LayoutProvider::variantIndex(const QString &layoutString) {
+    qCDebug(KCM_FCITX5) << "Looking up variant index for:" << layoutString;
     auto dashPos = layoutString.indexOf("-");
     QString variant;
     if (dashPos >= 0) {

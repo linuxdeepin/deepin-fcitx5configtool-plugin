@@ -162,6 +162,7 @@ ListOptionWidget::ListOptionWidget(const FcitxQtConfigOption &option,
             [this]() { updateButton(); });
     connect(addButton, &QAbstractButton::clicked, this, [this]() {
         QVariant result;
+        qDebug() << "Adding new item to list";
         auto ok = OptionWidget::execOptionDialog(this, subOption_, result);
         if (ok) {
             model_->addItem(result);
@@ -169,17 +170,27 @@ ListOptionWidget::ListOptionWidget(const FcitxQtConfigOption &option,
     });
     connect(editButton, &QAbstractButton::clicked, this, [this]() {
         QVariant result = model_->data(listView->currentIndex(), Qt::UserRole);
+        qDebug() << "Editing item at row:" << listView->currentIndex().row();
         auto ok = OptionWidget::execOptionDialog(this, subOption_, result);
         if (ok) {
             model_->editItem(listView->currentIndex(), result);
         }
     });
     connect(removeButton, &QAbstractButton::clicked, this,
-            [this]() { model_->removeItem(listView->currentIndex()); });
+            [this]() {
+                qDebug() << "Removing item at row:" << listView->currentIndex().row();
+                model_->removeItem(listView->currentIndex());
+            });
     connect(moveUpButton, &QAbstractButton::clicked, this,
-            [this]() { model_->moveUpItem(listView->currentIndex()); });
+            [this]() {
+                qDebug() << "Moving item up at row:" << listView->currentIndex().row();
+                model_->moveUpItem(listView->currentIndex());
+            });
     connect(moveDownButton, &QAbstractButton::clicked, this,
-            [this]() { model_->moveDownItem(listView->currentIndex()); });
+            [this]() {
+                qDebug() << "Moving item down at row:" << listView->currentIndex().row();
+                model_->moveDownItem(listView->currentIndex());
+            });
 
     auto variant = option.defaultValue().variant();
     if (variant.canConvert<QDBusArgument>()) {
@@ -201,14 +212,17 @@ void ListOptionWidget::updateButton() {
 }
 
 void ListOptionWidget::readValueFrom(const QVariantMap &map) {
+    qDebug() << "Reading list values from configuration for path:" << path();
     model_->readValueFrom(map, path());
 }
 
 void ListOptionWidget::writeValueTo(QVariantMap &map) {
+    qDebug() << "Writing list values to configuration for path:" << path();
     model_->writeValueTo(map, path());
 }
 
 void ListOptionWidget::restoreToDefault() {
+    qDebug() << "Restoring list to default values";
     model_->readValueFrom(defaultValue_, "");
 }
 

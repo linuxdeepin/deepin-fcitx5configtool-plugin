@@ -3,7 +3,7 @@
  *
  * SPDX-License-Identifier: GPL-2.0-or-later
  */
-
+#include "logging.h"
 #include "erroroverlay.h"
 #include "dbusprovider.h"
 #include "ui_erroroverlay.h"
@@ -17,6 +17,7 @@ namespace kcm {
 ErrorOverlay::ErrorOverlay(DBusProvider *dbus, QWidget *parent)
     : QWidget(parent), ui_(std::make_unique<Ui::ErrorOverlay>()),
       baseWidget_(parent) {
+    qCDebug(KCM_FCITX5) << "ErrorOverlay created for widget:" << parent;
     ui_->setupUi(this);
     setVisible(false);
 
@@ -33,9 +34,13 @@ ErrorOverlay::ErrorOverlay(DBusProvider *dbus, QWidget *parent)
     availabilityChanged(dbus->available());
 }
 
-ErrorOverlay::~ErrorOverlay() {}
+ErrorOverlay::~ErrorOverlay() {
+    qCDebug(KCM_FCITX5) << "ErrorOverlay destroyed for widget:" << baseWidget_;
+}
 
 void ErrorOverlay::availabilityChanged(bool avail) {
+    qCDebug(KCM_FCITX5) << "DBus availability changed:" << avail
+                       << "current enabled:" << enabled_;
     const bool newEnabled = !avail;
     if (enabled_ != newEnabled) {
         enabled_ = newEnabled;
@@ -47,13 +52,17 @@ void ErrorOverlay::availabilityChanged(bool avail) {
 }
 
 void ErrorOverlay::runFcitx5() {
+    qCDebug(KCM_FCITX5) << "Attempting to start Fcitx5 from path:"
+                       << QString::fromStdString(StandardPath::fcitxPath("bindir", "fcitx5"));
     QProcess::startDetached(
         QString::fromStdString(StandardPath::fcitxPath("bindir", "fcitx5")),
         QStringList());
 }
 
 void ErrorOverlay::reposition() {
+    qCDebug(KCM_FCITX5) << "Repositioning";
     if (!baseWidget_) {
+        qCWarning(KCM_FCITX5) << "Base widget is null, cannot reposition overlay";
         return;
     }
 

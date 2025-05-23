@@ -4,8 +4,9 @@
  * SPDX-License-Identifier: GPL-2.0-or-later
  *
  */
-
 #include "keylistwidget.h"
+#include "logging.h"
+
 #include <QHBoxLayout>
 #include <QStyle>
 #include <QToolButton>
@@ -17,6 +18,7 @@ namespace fcitx {
 namespace kcm {
 
 KeyListWidget::KeyListWidget(QWidget *parent) : QWidget(parent) {
+    qCDebug(KCM_FCITX5) << "KeyListWidget created";
     auto layout = new QHBoxLayout;
     layout->setContentsMargins(0,0,0,0);
     keysLayout_ = new QVBoxLayout;
@@ -47,6 +49,7 @@ KeyListWidget::KeyListWidget(QWidget *parent) : QWidget(parent) {
 }
 
 void KeyListWidget::addKey(fcitx::Key key) {
+    qCDebug(KCM_FCITX5) << "Adding key";
     auto keyWidget = new FcitxQtKeySequenceWidget;
     keyWidget->setClearButtonShown(false);
     keyWidget->setKeySequence({key});
@@ -80,6 +83,8 @@ void KeyListWidget::addKey(fcitx::Key key) {
 }
 
 void KeyListWidget::setKeys(const QList<fcitx::Key> &keys) {
+    qCDebug(KCM_FCITX5) << "Setting keys, count:" << keys.size()
+                       << "current keys count:" << keysLayout_->count();
     while (keysLayout_->count() > 1) {
         removeKeyAt(0);
     }
@@ -119,7 +124,10 @@ QList<fcitx::Key> KeyListWidget::keys() const {
 }
 
 void KeyListWidget::setAllowModifierLess(bool value) {
+    qCDebug(KCM_FCITX5) << "Setting allow modifier less from:" << modifierLess_
+                       << "to:" << value;
     if (value == modifierLess_) {
+        qCDebug(KCM_FCITX5) << "Modifier less value unchanged";
         return;
     }
 
@@ -135,7 +143,10 @@ void KeyListWidget::setAllowModifierLess(bool value) {
 }
 
 void KeyListWidget::setAllowModifierOnly(bool value) {
+    qCDebug(KCM_FCITX5) << "Setting allow modifier only from:" << modifierOnly_
+                       << "to:" << value;
     if (value == modifierOnly_) {
+        qCDebug(KCM_FCITX5) << "Modifier only value unchanged";
         return;
     }
 
@@ -151,7 +162,11 @@ void KeyListWidget::setAllowModifierOnly(bool value) {
 }
 
 bool KeyListWidget::removeKeyAt(int idx) {
+    qCDebug(KCM_FCITX5) << "Removing key at index:" << idx
+                       << "total keys:" << keysLayout_->count();
     if (idx < 0 || idx > keysLayout_->count()) {
+        qCWarning(KCM_FCITX5) << "Invalid index for key removal:" << idx
+                             << "valid range: 0-" << keysLayout_->count();
         return false;
     }
     auto widget = keysLayout_->itemAt(idx)->widget();

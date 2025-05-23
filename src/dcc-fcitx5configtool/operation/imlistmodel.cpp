@@ -10,6 +10,7 @@ namespace fcitx5configtool {
 IMListModel::IMListModel(QObject *parent)
     : QAbstractListModel(parent), m_imModel(nullptr)
 {
+    qDebug() << "IMListModel created";
 }
 
 IMListModel::~IMListModel()
@@ -18,6 +19,7 @@ IMListModel::~IMListModel()
 
 void IMListModel::resetData(fcitx::kcm::FilteredIMModel *model)
 {
+    qDebug() << "Resetting IM list data";
     beginResetModel();
     m_items.clear();
     m_imModel = model;
@@ -32,6 +34,7 @@ void IMListModel::resetData(fcitx::kcm::FilteredIMModel *model)
     }
 
     endResetModel();
+    qDebug() << "IM list data reset complete, item count:" << m_items.count();
 }
 
 int IMListModel::rowCount(const QModelIndex &parent) const
@@ -84,8 +87,11 @@ bool IMListModel::canMoveDown(int index) const
 
 void IMListModel::removeItem(int index)
 {
-    if (index < 0 || index >= m_items.count())
+    qDebug() << "Removing IM item at index:" << index;
+    if (index < 0 || index >= m_items.count()) {
+        qWarning() << "Invalid remove index:" << index;
         return;
+    }
 
     beginRemoveRows(QModelIndex(), index, index);
     m_items.removeAt(index);
@@ -96,8 +102,11 @@ void IMListModel::removeItem(int index)
 
 void IMListModel::moveItem(int from, int to)
 {
-    if (from < 0 || from >= m_items.count() || to < 0 || to >= m_items.count())
+    qDebug() << "Moving IM item from" << from << "to" << to;
+    if (from < 0 || from >= m_items.count() || to < 0 || to >= m_items.count()) {
+        qWarning() << "Invalid move positions:" << from << "->" << to;
         return;
+    }
 
     if (!beginMoveRows(QModelIndex(), from, from, QModelIndex(), to > from ? to + 1 : to))
         return;

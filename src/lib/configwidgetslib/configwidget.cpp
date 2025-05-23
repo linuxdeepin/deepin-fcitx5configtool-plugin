@@ -37,6 +37,7 @@ QString joinPath(const QString &path, const QString &option) {
 ConfigWidget::ConfigWidget(const QString &uri, DBusProvider *dbus,
                            QWidget *parent)
     : QWidget(parent), uri_(uri), dbus_(dbus), mainWidget_(new QWidget(this)) {
+    qCDebug(KCM_FCITX5) << "ConfigWidget created with uri:" << uri;
     setSizePolicy(QSizePolicy::MinimumExpanding, QSizePolicy::Preferred);
     QVBoxLayout *layout = new QVBoxLayout;
     layout->addWidget(mainWidget_);
@@ -58,7 +59,9 @@ ConfigWidget::ConfigWidget(const QMap<QString, FcitxQtConfigOptionList> &desc,
 }
 
 void ConfigWidget::requestConfig(bool sync) {
+    qCDebug(KCM_FCITX5) << "Requesting config for uri:" << uri_ << "sync:" << sync;
     if (!dbus_->controller()) {
+        qCWarning(KCM_FCITX5) << "DBus controller not available";
         return;
     }
     auto call = dbus_->controller()->GetConfig(uri_);
@@ -71,10 +74,11 @@ void ConfigWidget::requestConfig(bool sync) {
 }
 
 void ConfigWidget::requestConfigFinished(QDBusPendingCallWatcher *watcher) {
+    qCDebug(KCM_FCITX5) << "Config request finished";
     watcher->deleteLater();
     QDBusPendingReply<QDBusVariant, FcitxQtConfigTypeList> reply = *watcher;
     if (reply.isError()) {
-        qCWarning(KCM_FCITX5) << reply.error();
+        qCWarning(KCM_FCITX5) << "Config request error:" << reply.error();
         return;
     }
 
@@ -109,7 +113,10 @@ void ConfigWidget::load() {
 }
 
 void ConfigWidget::save() {
+    qCDebug(KCM_FCITX5) << "Saving config";
     if (!dbus_->controller() || uri_.isEmpty()) {
+        qCWarning(KCM_FCITX5) << "Cannot save config - controller:" << dbus_->controller()
+                  << "uri:" << uri_;
         return;
     }
     QDBusVariant var(value());
@@ -117,7 +124,9 @@ void ConfigWidget::save() {
 }
 
 void ConfigWidget::setValue(const QVariant &value) {
+    qCDebug(KCM_FCITX5) << "Setting config values";
     if (!initialized_) {
+        qCWarning(KCM_FCITX5) << "Cannot set value - widget not initialized";
         return;
     }
 
@@ -158,6 +167,7 @@ void ConfigWidget::buttonClicked(QDialogButtonBox::StandardButton button) {
 
 void ConfigWidget::setupWidget(QWidget *widget, const QString &type,
                                const QString &path) {
+    qCDebug(KCM_FCITX5) << "Setting up widget";
     if (!desc_.contains(type)) {
         qCCritical(KCM_FCITX5) << type << " type does not exists.";
     }
@@ -188,7 +198,8 @@ void ConfigWidget::addOptionWidget(QFormLayout *layout,
         box->setLayout(innerLayout);
         layout->addRow(box);
     } else {
-        qCDebug(KCM_FCITX5) << "Unknown type: " << option.type();
+        qCDebug(KCM_FCITX5) << "Unknown option type:" << option.type()
+                           << "for path:" << path;
     }
 }
 

@@ -3,7 +3,7 @@
  *
  * SPDX-License-Identifier: GPL-2.0-or-later
  */
-
+#include "logging.h"
 #include <KFontChooser>
 #include <QDialog>
 #include <QDialogButtonBox>
@@ -16,20 +16,27 @@ namespace fcitx {
 namespace kcm {
 
 FontButton::FontButton(QWidget *parent) : QWidget(parent) {
+    qCDebug(KCM_FCITX5) << "FontButton created with parent:" << parent;
     setupUi(this);
     connect(fontSelectButton, &QPushButton::clicked, this,
             &FontButton::selectFont);
 }
 
-FontButton::~FontButton() {}
+FontButton::~FontButton() {
+    qCDebug(KCM_FCITX5) << "FontButton destroyed, current font:" << font_.toString();
+}
 
 const QFont &FontButton::font() { return font_; }
 
 QString FontButton::fontName() { return fontPreviewLabel->text(); }
 
 void FontButton::setFont(const QFont &font) {
+    qCDebug(KCM_FCITX5) << "Setting font:" << font.toString()
+                       << "previous font:" << font_.toString();
     font_ = font;
     if (font.family() != font_.family()) {
+        qCDebug(KCM_FCITX5) << "Font family changed from:" << font.family()
+                           << "to:" << font_.family();
         Q_EMIT fontChanged(font_);
     }
     fontPreviewLabel->setText(fontToString(font_));
@@ -37,6 +44,8 @@ void FontButton::setFont(const QFont &font) {
 }
 
 void FontButton::selectFont() {
+    qCDebug(KCM_FCITX5) << "Opening font selection dialog with current font:"
+                       << font_.toString();
     QDialog dialog(NULL);
     KFontChooser *chooser = new KFontChooser(&dialog);
     chooser->setFont(font_);
@@ -52,7 +61,12 @@ void FontButton::selectFont() {
     connect(buttonBox, &QDialogButtonBox::rejected, &dialog, &QDialog::reject);
 
     if (dialog.exec() == QDialog::Accepted) {
+        qCDebug(KCM_FCITX5) << "Font selected:" << chooser->font().toString()
+                           << "previous font:" << font_.toString();
         setFont(chooser->font());
+    } else {
+        qCDebug(KCM_FCITX5) << "Font selection canceled, keeping current font:"
+                           << font_.toString();
     }
 }
 
