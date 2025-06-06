@@ -68,8 +68,9 @@ Loader {
 
                     required property string section
 
-                    Text {
+                    Label {
                         text: parent.section
+                        font.bold: true
                         x: 10
                         y: 5
                     }
