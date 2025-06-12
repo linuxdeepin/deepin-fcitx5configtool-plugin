@@ -1,3 +1,11 @@
+deepin-fcitx5configtool-plugin (6.0.9) unstable; urgency=medium
+
+  * bump version to 6.0.9.
+  * chore: [log]More logs.
+  * fix: update InputMethodsChooser UI for better readability.
+
+ -- Wang Yu <wangyu@uniontch.com>  Thu, 12 Jun 2025 20:22:27 +0800
+
 deepin-fcitx5configtool-plugin (6.0.8) unstable; urgency=medium
 
   * bump version to 6.0.8.
