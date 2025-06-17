@@ -17,7 +17,7 @@ Loader {
 
     sourceComponent: D.DialogWindow {
         id: imDialog
-        width: 420
+        width: 520
         height: 550
         icon: "preferences-system"
         modality: Qt.WindowModal
@@ -51,6 +51,7 @@ Loader {
                 property string checkedIM
                 property int checkedIndex: -1
                 Layout.fillWidth: true
+                Layout.fillHeight: true
                 height: 330
                 clip: true
                 model: loader.viewModel
@@ -88,6 +89,13 @@ Loader {
                         text: model.name
                         hoverEnabled: true
                         ButtonGroup.group: langGroup
+                        
+                        // 添加tooltip支持
+                        ToolTip.visible: hovered
+                        ToolTip.text: model.description || (model.language ? model.language + " - " + model.name : model.name)
+                        ToolTip.delay: 1000
+                        ToolTip.timeout: 5000
+                        
                         onCheckedChanged: {
                             if (checked) {
                                 console.log("checked", model.name, model.index)
