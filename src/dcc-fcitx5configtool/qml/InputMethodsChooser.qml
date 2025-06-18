@@ -15,15 +15,20 @@ Loader {
     required property var viewModel
     signal selected(string data)
 
-    sourceComponent: D.DialogWindow {
+    sourceComponent: ResizableDialogWindow {
         id: imDialog
-        width: 420
+        width: 520
         height: 550
+        minimumWidth: 420
+        minimumHeight: 400
         icon: "preferences-system"
         modality: Qt.WindowModal
+        
         ColumnLayout {
+            anchors.fill: parent
+            anchors.margins: 10
             spacing: 10
-            width: parent.width
+            
             Label {
                 Layout.alignment: Qt.AlignHCenter
                 font.bold: true
@@ -33,8 +38,6 @@ Loader {
             D.SearchEdit {
                 id: searchEdit
                 Layout.fillWidth: true
-                Layout.leftMargin: 10
-                Layout.rightMargin: 10
                 placeholder: qsTr("Search")
                 onTextChanged: {
                     console.log("search: ", text)
@@ -51,7 +54,7 @@ Loader {
                 property string checkedIM
                 property int checkedIndex: -1
                 Layout.fillWidth: true
-                height: 330
+                Layout.fillHeight: true
                 clip: true
                 model: loader.viewModel
                 spacing: 10
@@ -88,6 +91,7 @@ Loader {
                         text: model.name
                         hoverEnabled: true
                         ButtonGroup.group: langGroup
+                        
                         onCheckedChanged: {
                             if (checked) {
                                 console.log("checked", model.name, model.index)
@@ -119,14 +123,15 @@ Loader {
             RowLayout {
                 Layout.alignment: Qt.AlignHCenter
                 spacing: 10
-                Button {
+                
+                D.Button {
                     Layout.bottomMargin: 10
                     text: qsTr("Cancel")
                     onClicked: {
                         imDialog.close()
                     }
                 }
-                Button {
+                D.Button {
                     Layout.bottomMargin: 10
                     text: qsTr("Add")
                     enabled: itemsView.checkedIM.length > 0
