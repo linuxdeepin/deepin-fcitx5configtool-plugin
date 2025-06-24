@@ -132,7 +132,7 @@
     <message>
         <location filename="../qml/ShortcutsModule.qml" line="156"/>
         <source>It turns on or off the currently used input method.If no input method is being used or the first input method is not the keyboard, it switches between the first input method and the currently used keyboard/input method.</source>
-        <translation>Activa o desactiva el mètode d&apos;entrada actual. Si no s&apos;utilitza cap mètode d&apos;entrada o el primer mètode d&apos;entrada no és el teclat, passa del primer mètode d&apos;entrada al teclat/mètode d&apos;entrada actual.</translation>
+        <translation>Activa o desactiva el mètode d&apos;entrada que s&apos;usa actualment. Si no se n&apos;usa cap o el primer no és el teclat, canvia entre el primer mètode d&apos;entrada i el teclat o mètode d&apos;entrada actual.</translation>
     </message>
 </context>
 <context>
@@ -145,7 +145,7 @@
     <message>
         <location filename="../qml/fcitx5configtool.qml" line="9"/>
         <source>Input method management, input method shortcuts, advanced settings</source>
-        <translation>Gestió del mètode d&apos;entrada, atalls del mètode d&apos;entrada, configuració avançada</translation>
+        <translation>Gestió del mètode d&apos;entrada, dreceres dels mètodes d&apos;entrada, configuració avançada</translation>
     </message>
 </context>
 </TS>
