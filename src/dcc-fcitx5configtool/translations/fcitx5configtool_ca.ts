@@ -12,17 +12,17 @@
     <message>
         <location filename="../qml/AdvancedSettingsModule.qml" line="14"/>
         <source>Advanced Settings</source>
-        <translation>Configuración avanzada</translation>
+        <translation>Configuració avançada</translation>
     </message>
     <message>
         <location filename="../qml/AdvancedSettingsModule.qml" line="28"/>
         <source>&quot;Advanced Settings&quot; is only valid for the input method that uses the system settings, if the input method has its own settings, its own settings shall prevail.</source>
-        <translation>&quot;Configuración avanzada&quot; solo es válida para el método de entrada que utiliza la configuración del sistema, si el método de entrada tiene su propia configuración, esta prevalecerá.</translation>
+        <translation>La Configuració avançada només és vàlida per al mètode d&apos;entrada que usa la configuració del sistema, si el mètode d&apos;entrada té una configuració pròpia, prevaldrà la seva.</translation>
     </message>
     <message>
         <location filename="../qml/AdvancedSettingsModule.qml" line="41"/>
         <source>Global Config</source>
-        <translation>Configuración global</translation>
+        <translation>Configuració global</translation>
     </message>
     <message>
         <location filename="../qml/AdvancedSettingsModule.qml" line="52"/>
@@ -35,7 +35,7 @@
     <message>
         <location filename="../qml/DetailConfigItem.qml" line="126"/>
         <source>Please enter a new shortcut</source>
-        <translation>Introduïu un atall nou</translation>
+        <translation>Introduïu una drecera nova</translation>
     </message>
 </context>
 <context>
@@ -43,12 +43,12 @@
     <message>
         <location filename="../qml/IMList.qml" line="54"/>
         <source>Move Up</source>
-        <translation>Moure cap amunt</translation>
+        <translation>Mou amunt</translation>
     </message>
     <message>
         <location filename="../qml/IMList.qml" line="61"/>
         <source>Move Down</source>
-        <translation>Moure cap avall</translation>
+        <translation>Mou avall</translation>
     </message>
     <message>
         <location filename="../qml/IMList.qml" line="69"/>
@@ -58,7 +58,7 @@
     <message>
         <location filename="../qml/IMList.qml" line="76"/>
         <source>Remove</source>
-        <translation>Eliminar</translation>
+        <translation>Elimina</translation>
     </message>
 </context>
 <context>
@@ -66,7 +66,7 @@
     <message>
         <location filename="../qml/InputMethodsChooser.qml" line="29"/>
         <source>Add input method</source>
-        <translation>Afegir un mètode d&apos;entrada</translation>
+        <translation>Afegeix-hi un mètode d&apos;entrada</translation>
     </message>
     <message>
         <location filename="../qml/InputMethodsChooser.qml" line="37"/>
@@ -76,17 +76,17 @@
     <message>
         <location filename="../qml/InputMethodsChooser.qml" line="102"/>
         <source>Find more in App Store</source>
-        <translation>Troba més a la Botiga d&apos;Aplicacions</translation>
+        <translation>Trobeu-ne més a la Botiga d&apos;aplicacions</translation>
     </message>
     <message>
         <location filename="../qml/InputMethodsChooser.qml" line="121"/>
         <source>Cancel</source>
-        <translation>Cancel·lar</translation>
+        <translation>Cancel·la</translation>
     </message>
     <message>
         <location filename="../qml/InputMethodsChooser.qml" line="128"/>
         <source>Add</source>
-        <translation>Afegir</translation>
+        <translation>Afegeix</translation>
     </message>
 </context>
 <context>
@@ -99,7 +99,7 @@
     <message>
         <location filename="../qml/ManageInputMethodsModule.qml" line="29"/>
         <source>Add input method</source>
-        <translation>Afegir un mètode d&apos;entrada</translation>
+        <translation>Afegeix-hi un mètode d&apos;entrada</translation>
     </message>
 </context>
 <context>
@@ -107,27 +107,27 @@
     <message>
         <location filename="../qml/ShortcutsModule.qml" line="34"/>
         <source>Shortcuts</source>
-        <translation>Atalls</translation>
+        <translation>Dreceres</translation>
     </message>
     <message>
         <location filename="../qml/ShortcutsModule.qml" line="45"/>
         <source>Restore Defaults</source>
-        <translation>Restaurar valors predeterminats</translation>
+        <translation>Restaura els valors per defecte</translation>
     </message>
     <message>
         <location filename="../qml/ShortcutsModule.qml" line="97"/>
         <source>Scroll between input methods</source>
-        <translation>Desplaçar-se entre mètodes d&apos;entrada</translation>
+        <translation>Desplaceu-vos pels mètodes d&apos;entrada</translation>
     </message>
     <message>
         <location filename="../qml/ShortcutsModule.qml" line="127"/>
         <source>Turn on or off input methods</source>
-        <translation>Activa o desactiva mètodes d&apos;entrada</translation>
+        <translation>Activa o desactiva els mètodes d&apos;entrada</translation>
     </message>
     <message>
         <location filename="../qml/ShortcutsModule.qml" line="131"/>
         <source>Please enter a new shortcut</source>
-        <translation>Introduïu un atall nou</translation>
+        <translation>Introduïu una drecera nova</translation>
     </message>
     <message>
         <location filename="../qml/ShortcutsModule.qml" line="156"/>
