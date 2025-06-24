@@ -1,0 +1,8 @@
+filters:
+- filter_type: file
+  source_file: src/dcc-fcitx5configtool/translations/fcitx5configtool_en.ts
+  file_format: QT
+  source_language: en
+  translation_files_expression: src/dcc-fcitx5configtool/translations/fcitx5configtool_<lang>.ts
+settings:
+  pr_branch_name: transifex_update_<br_unique_id>
