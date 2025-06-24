@@ -94,7 +94,7 @@
     <message>
         <location filename="../qml/ManageInputMethodsModule.qml" line="15"/>
         <source>Input method management</source>
-        <translation>Configuración del método de entrada</translation>
+        <translation>Gestión del método de entrada</translation>
     </message>
     <message>
         <location filename="../qml/ManageInputMethodsModule.qml" line="29"/>
@@ -132,7 +132,7 @@
     <message>
         <location filename="../qml/ShortcutsModule.qml" line="156"/>
         <source>It turns on or off the currently used input method.If no input method is being used or the first input method is not the keyboard, it switches between the first input method and the currently used keyboard/input method.</source>
-        <translation type="unfinished"/>
+        <translation>Activa o desactiva el método de entrada utilizado actualmente. Si no se utiliza ningún método de entrada o el primer método de entrada no es el teclado, cambia entre el primer método de entrada y el teclado/método de entrada utilizado actualmente.</translation>
     </message>
 </context>
 <context>
@@ -140,12 +140,12 @@
     <message>
         <location filename="../qml/fcitx5configtool.qml" line="8"/>
         <source>Input Methods</source>
-        <translation type="unfinished"/>
+        <translation>Método de entrada</translation>
     </message>
     <message>
         <location filename="../qml/fcitx5configtool.qml" line="9"/>
         <source>Input method management, input method shortcuts, advanced settings</source>
-        <translation type="unfinished"/>
+        <translation>Gestión del método de entrada, atajos del método de entrada, configuraciones avanzadas</translation>
     </message>
 </context>
 </TS>
