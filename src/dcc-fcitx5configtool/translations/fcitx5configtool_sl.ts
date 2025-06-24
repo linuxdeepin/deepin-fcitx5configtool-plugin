@@ -1,6 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE TS>
-<TS version="2.1">
+<?xml version="1.0" ?><!DOCTYPE TS><TS version="2.1" language="sl">
 <context>
     <name>AddonsPage</name>
     <message>
@@ -17,17 +15,17 @@
         <translation>Napredne nastavitve</translation>
     </message>
     <message>
-        <location filename="../qml/AdvancedSettingsModule.qml" line="40"/>
-        <source>"Advanced Settings" is only valid for the input method that uses the system settings, if the input method has its own settings, its own settings shall prevail.</source>
-        <translation>"Napredne nastavitve" veljajo le za vnosno metodo, ki uporablja sistemske nastavitve, če ima vnosna metoda lastne nastavitve, bodo lastne nastavitve prevzeli.</translation>
+        <location filename="../qml/AdvancedSettingsModule.qml" line="28"/>
+        <source>&quot;Advanced Settings&quot; is only valid for the input method that uses the system settings, if the input method has its own settings, its own settings shall prevail.</source>
+        <translation>&quot;Napredne nastavitve&quot; veljajo le za vnosno metodo, ki uporablja sistemske nastavitve, če ima vnosna metoda lastne nastavitve, bodo lastne nastavitve prevzeli.</translation>
     </message>
     <message>
-        <location filename="../qml/AdvancedSettingsModule.qml" line="53"/>
+        <location filename="../qml/AdvancedSettingsModule.qml" line="41"/>
         <source>Global Config</source>
         <translation>Globalna konfiguracija</translation>
     </message>
     <message>
-        <location filename="../qml/AdvancedSettingsModule.qml" line="69"/>
+        <location filename="../qml/AdvancedSettingsModule.qml" line="52"/>
         <source>Add-ons</source>
         <translation>Додатки</translation>
     </message>
@@ -35,7 +33,7 @@
 <context>
     <name>DetailConfigItem</name>
     <message>
-        <location filename="../qml/DetailConfigItem.qml" line="150"/>
+        <location filename="../qml/DetailConfigItem.qml" line="126"/>
         <source>Please enter a new shortcut</source>
         <translation>Prosim, vnesite nov sklenec</translation>
     </message>
@@ -43,22 +41,22 @@
 <context>
     <name>IMList</name>
     <message>
-        <location filename="../qml/IMList.qml" line="152"/>
+        <location filename="../qml/IMList.qml" line="54"/>
         <source>Move Up</source>
         <translation>Premikaj gor</translation>
     </message>
     <message>
-        <location filename="../qml/IMList.qml" line="160"/>
+        <location filename="../qml/IMList.qml" line="61"/>
         <source>Move Down</source>
         <translation>Premikaj dol</translation>
     </message>
     <message>
-        <location filename="../qml/IMList.qml" line="168"/>
+        <location filename="../qml/IMList.qml" line="69"/>
         <source>Settings</source>
         <translation>Nastavitve</translation>
     </message>
     <message>
-        <location filename="../qml/IMList.qml" line="176"/>
+        <location filename="../qml/IMList.qml" line="76"/>
         <source>Remove</source>
         <translation>Odstrani</translation>
     </message>
@@ -66,27 +64,27 @@
 <context>
     <name>InputMethodsChooser</name>
     <message>
-        <location filename="../qml/InputMethodsChooser.qml" line="35"/>
+        <location filename="../qml/InputMethodsChooser.qml" line="29"/>
         <source>Add input method</source>
         <translation>Dodaj vnosno metodo</translation>
     </message>
     <message>
-        <location filename="../qml/InputMethodsChooser.qml" line="41"/>
+        <location filename="../qml/InputMethodsChooser.qml" line="37"/>
         <source>Search</source>
         <translation>Iskanje</translation>
     </message>
     <message>
-        <location filename="../qml/InputMethodsChooser.qml" line="109"/>
+        <location filename="../qml/InputMethodsChooser.qml" line="102"/>
         <source>Find more in App Store</source>
         <translation>Poiščite več v trgovini za aplikacije</translation>
     </message>
     <message>
-        <location filename="../qml/InputMethodsChooser.qml" line="129"/>
+        <location filename="../qml/InputMethodsChooser.qml" line="121"/>
         <source>Cancel</source>
         <translation>Prekliči</translation>
     </message>
     <message>
-        <location filename="../qml/InputMethodsChooser.qml" line="136"/>
+        <location filename="../qml/InputMethodsChooser.qml" line="128"/>
         <source>Add</source>
         <translation>Dodaj</translation>
     </message>
@@ -99,7 +97,7 @@
         <translation>Upravljanje vnosnih metod</translation>
     </message>
     <message>
-        <location filename="../qml/ManageInputMethodsModule.qml" line="33"/>
+        <location filename="../qml/ManageInputMethodsModule.qml" line="29"/>
         <source>Add input method</source>
         <translation>Dodaj vnosno metodo</translation>
     </message>
@@ -112,27 +110,27 @@
         <translation>Skladniki</translation>
     </message>
     <message>
-        <location filename="../qml/ShortcutsModule.qml" line="49"/>
+        <location filename="../qml/ShortcutsModule.qml" line="45"/>
         <source>Restore Defaults</source>
         <translation>Obnovite podrazumevane vrednosti</translation>
     </message>
     <message>
-        <location filename="../qml/ShortcutsModule.qml" line="101"/>
+        <location filename="../qml/ShortcutsModule.qml" line="97"/>
         <source>Scroll between input methods</source>
         <translation>Premikajte med vnosnimi metodami</translation>
     </message>
     <message>
-        <location filename="../qml/ShortcutsModule.qml" line="131"/>
+        <location filename="../qml/ShortcutsModule.qml" line="127"/>
         <source>Turn on or off input methods</source>
         <translation>Omogočite ali onemogočite vnosne metode</translation>
     </message>
     <message>
-        <location filename="../qml/ShortcutsModule.qml" line="135"/>
+        <location filename="../qml/ShortcutsModule.qml" line="131"/>
         <source>Please enter a new shortcut</source>
         <translation>Prosim, vnesite nov sklenec</translation>
     </message>
     <message>
-        <location filename="../qml/ShortcutsModule.qml" line="162"/>
+        <location filename="../qml/ShortcutsModule.qml" line="156"/>
         <source>It turns on or off the currently used input method.If no input method is being used or the first input method is not the keyboard, it switches between the first input method and the currently used keyboard/input method.</source>
         <translation>Omogoča ali onemogoča trenutno uporabljeni vnosno metodo. Če ni uporabljenih vnosnih metod ali je prva vnosna metoda različna od tipkovnice, se preklopi med prvo vnosno metodo in trenutno uporabljeni tipkovnico/vnosno metodo.</translation>
     </message>
