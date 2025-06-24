@@ -1,6 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE TS>
-<TS version="2.1">
+<?xml version="1.0" ?><!DOCTYPE TS><TS version="2.1" language="en_US">
 <context>
     <name>AddonsPage</name>
     <message>
@@ -18,8 +16,8 @@
     </message>
     <message>
         <location filename="../qml/AdvancedSettingsModule.qml" line="28"/>
-        <source>"Advanced Settings" is only valid for the input method that uses the system settings, if the input method has its own settings, its own settings shall prevail.</source>
-        <translation>"Advanced Settings" is only valid for the input method that uses the system settings. If the input method has its own settings, its own settings shall prevail.</translation>
+        <source>&quot;Advanced Settings&quot; is only valid for the input method that uses the system settings, if the input method has its own settings, its own settings shall prevail.</source>
+        <translation>&quot;Advanced Settings&quot; is only valid for the input method that uses the system settings. If the input method has its own settings, its own settings shall prevail.</translation>
     </message>
     <message>
         <location filename="../qml/AdvancedSettingsModule.qml" line="41"/>

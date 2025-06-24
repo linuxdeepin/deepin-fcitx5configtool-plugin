@@ -1,12 +1,10 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE TS>
-<TS version="2.1" language="uk_UA">
+<?xml version="1.0" ?><!DOCTYPE TS><TS version="2.1" language="uk">
 <context>
     <name>AddonsPage</name>
     <message>
         <location filename="../qml/AddonsPage.qml" line="20"/>
         <source>Add-ons</source>
-        <translation type="unfinished"></translation>
+        <translation>Додатки</translation>
     </message>
 </context>
 <context>
@@ -14,81 +12,81 @@
     <message>
         <location filename="../qml/AdvancedSettingsModule.qml" line="14"/>
         <source>Advanced Settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Додаткові параметри</translation>
     </message>
     <message>
-        <location filename="../qml/AdvancedSettingsModule.qml" line="40"/>
+        <location filename="../qml/AdvancedSettingsModule.qml" line="28"/>
         <source>&quot;Advanced Settings&quot; is only valid for the input method that uses the system settings, if the input method has its own settings, its own settings shall prevail.</source>
-        <translation type="unfinished"></translation>
+        <translation>«Додаткові параметри» є чинними лише для способу введення, який використовує загальносистемні параметри. Якщо у способу введення є власні параметри, вони мають пріоритет.</translation>
     </message>
     <message>
-        <location filename="../qml/AdvancedSettingsModule.qml" line="53"/>
+        <location filename="../qml/AdvancedSettingsModule.qml" line="41"/>
         <source>Global Config</source>
-        <translation type="unfinished"></translation>
+        <translation>Загальні налаштування</translation>
     </message>
     <message>
-        <location filename="../qml/AdvancedSettingsModule.qml" line="69"/>
+        <location filename="../qml/AdvancedSettingsModule.qml" line="52"/>
         <source>Add-ons</source>
-        <translation type="unfinished"></translation>
+        <translation>Додатки</translation>
     </message>
 </context>
 <context>
     <name>DetailConfigItem</name>
     <message>
-        <location filename="../qml/DetailConfigItem.qml" line="150"/>
+        <location filename="../qml/DetailConfigItem.qml" line="126"/>
         <source>Please enter a new shortcut</source>
-        <translation type="unfinished"></translation>
+        <translation>Будь ласка, введіть нове скорочення</translation>
     </message>
 </context>
 <context>
     <name>IMList</name>
     <message>
-        <location filename="../qml/IMList.qml" line="152"/>
+        <location filename="../qml/IMList.qml" line="54"/>
         <source>Move Up</source>
-        <translation type="unfinished"></translation>
+        <translation>Пересунути вище</translation>
     </message>
     <message>
-        <location filename="../qml/IMList.qml" line="160"/>
+        <location filename="../qml/IMList.qml" line="61"/>
         <source>Move Down</source>
-        <translation type="unfinished"></translation>
+        <translation>Пересунути нижче</translation>
     </message>
     <message>
-        <location filename="../qml/IMList.qml" line="168"/>
+        <location filename="../qml/IMList.qml" line="69"/>
         <source>Settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Параметри</translation>
     </message>
     <message>
-        <location filename="../qml/IMList.qml" line="176"/>
+        <location filename="../qml/IMList.qml" line="76"/>
         <source>Remove</source>
-        <translation type="unfinished"></translation>
+        <translation>Вилучити</translation>
     </message>
 </context>
 <context>
     <name>InputMethodsChooser</name>
     <message>
-        <location filename="../qml/InputMethodsChooser.qml" line="35"/>
+        <location filename="../qml/InputMethodsChooser.qml" line="29"/>
         <source>Add input method</source>
-        <translation type="unfinished"></translation>
+        <translation>Додати спосіб введення</translation>
     </message>
     <message>
-        <location filename="../qml/InputMethodsChooser.qml" line="41"/>
+        <location filename="../qml/InputMethodsChooser.qml" line="37"/>
         <source>Search</source>
-        <translation type="unfinished"></translation>
+        <translation>Шукати</translation>
     </message>
     <message>
-        <location filename="../qml/InputMethodsChooser.qml" line="109"/>
+        <location filename="../qml/InputMethodsChooser.qml" line="102"/>
         <source>Find more in App Store</source>
-        <translation type="unfinished"></translation>
+        <translation>Знайти у крамниці програм</translation>
     </message>
     <message>
-        <location filename="../qml/InputMethodsChooser.qml" line="129"/>
+        <location filename="../qml/InputMethodsChooser.qml" line="121"/>
         <source>Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation>Скасувати</translation>
     </message>
     <message>
-        <location filename="../qml/InputMethodsChooser.qml" line="136"/>
+        <location filename="../qml/InputMethodsChooser.qml" line="128"/>
         <source>Add</source>
-        <translation type="unfinished"></translation>
+        <translation>Додати</translation>
     </message>
 </context>
 <context>
@@ -96,12 +94,12 @@
     <message>
         <location filename="../qml/ManageInputMethodsModule.qml" line="15"/>
         <source>Input method management</source>
-        <translation type="unfinished"></translation>
+        <translation>Керування способом введення</translation>
     </message>
     <message>
-        <location filename="../qml/ManageInputMethodsModule.qml" line="33"/>
+        <location filename="../qml/ManageInputMethodsModule.qml" line="29"/>
         <source>Add input method</source>
-        <translation type="unfinished"></translation>
+        <translation>Додати спосіб введення</translation>
     </message>
 </context>
 <context>
@@ -109,32 +107,32 @@
     <message>
         <location filename="../qml/ShortcutsModule.qml" line="34"/>
         <source>Shortcuts</source>
-        <translation type="unfinished"></translation>
+        <translation>Скорочення</translation>
     </message>
     <message>
-        <location filename="../qml/ShortcutsModule.qml" line="49"/>
+        <location filename="../qml/ShortcutsModule.qml" line="45"/>
         <source>Restore Defaults</source>
-        <translation type="unfinished"></translation>
+        <translation>Відновити типові параметри</translation>
     </message>
     <message>
-        <location filename="../qml/ShortcutsModule.qml" line="101"/>
+        <location filename="../qml/ShortcutsModule.qml" line="97"/>
         <source>Scroll between input methods</source>
-        <translation type="unfinished"></translation>
+        <translation>Гортання між способами введення</translation>
+    </message>
+    <message>
+        <location filename="../qml/ShortcutsModule.qml" line="127"/>
+        <source>Turn on or off input methods</source>
+        <translation>Увімкнути або вимкнути способи введення</translation>
     </message>
     <message>
         <location filename="../qml/ShortcutsModule.qml" line="131"/>
-        <source>Turn on or off input methods</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../qml/ShortcutsModule.qml" line="135"/>
         <source>Please enter a new shortcut</source>
-        <translation type="unfinished"></translation>
+        <translation>Будь ласка, введіть нове скорочення</translation>
     </message>
     <message>
-        <location filename="../qml/ShortcutsModule.qml" line="162"/>
+        <location filename="../qml/ShortcutsModule.qml" line="156"/>
         <source>It turns on or off the currently used input method.If no input method is being used or the first input method is not the keyboard, it switches between the first input method and the currently used keyboard/input method.</source>
-        <translation type="unfinished"></translation>
+        <translation>Вмикає або вимикає поточний використаний спосіб введення. Якщо не використано жоден спосіб введення або першим способом введення не є клавіатурний, перемикає між першим способом введення і поточним використаним способом введення з клавіатури.</translation>
     </message>
 </context>
 <context>
@@ -142,12 +140,12 @@
     <message>
         <location filename="../qml/fcitx5configtool.qml" line="8"/>
         <source>Input Methods</source>
-        <translation type="unfinished"></translation>
+        <translation>Способи введення</translation>
     </message>
     <message>
         <location filename="../qml/fcitx5configtool.qml" line="9"/>
         <source>Input method management, input method shortcuts, advanced settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Керування способом введення, скорочення способів введення, додаткові параметри</translation>
     </message>
 </context>
 </TS>

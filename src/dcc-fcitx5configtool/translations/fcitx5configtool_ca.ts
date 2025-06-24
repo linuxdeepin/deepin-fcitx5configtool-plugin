@@ -1,6 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE TS>
-<TS version="2.1" language="ca_ES">
+<?xml version="1.0" ?><!DOCTYPE TS><TS version="2.1" language="ca">
 <context>
     <name>AddonsPage</name>
     <message>
@@ -14,20 +12,20 @@
     <message>
         <location filename="../qml/AdvancedSettingsModule.qml" line="14"/>
         <source>Advanced Settings</source>
-        <translation>Configuración avanzada</translation>
+        <translation>Configuració avançada</translation>
     </message>
     <message>
-        <location filename="../qml/AdvancedSettingsModule.qml" line="40"/>
-        <source>"Advanced Settings" is only valid for the input method that uses the system settings, if the input method has its own settings, its own settings shall prevail.</source>
-        <translation>"Configuración avanzada" solo es válida para el método de entrada que utiliza la configuración del sistema, si el método de entrada tiene su propia configuración, esta prevalecerá.</translation>
+        <location filename="../qml/AdvancedSettingsModule.qml" line="28"/>
+        <source>&quot;Advanced Settings&quot; is only valid for the input method that uses the system settings, if the input method has its own settings, its own settings shall prevail.</source>
+        <translation>La Configuració avançada només és vàlida per al mètode d&apos;entrada que usa la configuració del sistema, si el mètode d&apos;entrada té una configuració pròpia, prevaldrà la seva.</translation>
     </message>
     <message>
-        <location filename="../qml/AdvancedSettingsModule.qml" line="53"/>
+        <location filename="../qml/AdvancedSettingsModule.qml" line="41"/>
         <source>Global Config</source>
-        <translation>Configuración global</translation>
+        <translation>Configuració global</translation>
     </message>
     <message>
-        <location filename="../qml/AdvancedSettingsModule.qml" line="69"/>
+        <location filename="../qml/AdvancedSettingsModule.qml" line="52"/>
         <source>Add-ons</source>
         <translation>Extensions</translation>
     </message>
@@ -35,60 +33,60 @@
 <context>
     <name>DetailConfigItem</name>
     <message>
-        <location filename="../qml/DetailConfigItem.qml" line="150"/>
+        <location filename="../qml/DetailConfigItem.qml" line="126"/>
         <source>Please enter a new shortcut</source>
-        <translation>Introduïu un atall nou</translation>
+        <translation>Introduïu una drecera nova</translation>
     </message>
 </context>
 <context>
     <name>IMList</name>
     <message>
-        <location filename="../qml/IMList.qml" line="152"/>
+        <location filename="../qml/IMList.qml" line="54"/>
         <source>Move Up</source>
-        <translation>Moure cap amunt</translation>
+        <translation>Mou amunt</translation>
     </message>
     <message>
-        <location filename="../qml/IMList.qml" line="160"/>
+        <location filename="../qml/IMList.qml" line="61"/>
         <source>Move Down</source>
-        <translation>Moure cap avall</translation>
+        <translation>Mou avall</translation>
     </message>
     <message>
-        <location filename="../qml/IMList.qml" line="168"/>
+        <location filename="../qml/IMList.qml" line="69"/>
         <source>Settings</source>
         <translation>Configuració</translation>
     </message>
     <message>
-        <location filename="../qml/IMList.qml" line="176"/>
+        <location filename="../qml/IMList.qml" line="76"/>
         <source>Remove</source>
-        <translation>Eliminar</translation>
+        <translation>Elimina</translation>
     </message>
 </context>
 <context>
     <name>InputMethodsChooser</name>
     <message>
-        <location filename="../qml/InputMethodsChooser.qml" line="35"/>
+        <location filename="../qml/InputMethodsChooser.qml" line="29"/>
         <source>Add input method</source>
-        <translation>Afegir un mètode d'entrada</translation>
+        <translation>Afegeix-hi un mètode d&apos;entrada</translation>
     </message>
     <message>
-        <location filename="../qml/InputMethodsChooser.qml" line="41"/>
+        <location filename="../qml/InputMethodsChooser.qml" line="37"/>
         <source>Search</source>
         <translation>Cerca</translation>
     </message>
     <message>
-        <location filename="../qml/InputMethodsChooser.qml" line="109"/>
+        <location filename="../qml/InputMethodsChooser.qml" line="102"/>
         <source>Find more in App Store</source>
-        <translation>Troba més a la Botiga d'Aplicacions</translation>
+        <translation>Trobeu-ne més a la Botiga d&apos;aplicacions</translation>
     </message>
     <message>
-        <location filename="../qml/InputMethodsChooser.qml" line="129"/>
+        <location filename="../qml/InputMethodsChooser.qml" line="121"/>
         <source>Cancel</source>
-        <translation>Cancel·lar</translation>
+        <translation>Cancel·la</translation>
     </message>
     <message>
-        <location filename="../qml/InputMethodsChooser.qml" line="136"/>
+        <location filename="../qml/InputMethodsChooser.qml" line="128"/>
         <source>Add</source>
-        <translation>Afegir</translation>
+        <translation>Afegeix</translation>
     </message>
 </context>
 <context>
@@ -96,12 +94,12 @@
     <message>
         <location filename="../qml/ManageInputMethodsModule.qml" line="15"/>
         <source>Input method management</source>
-        <translation>Gestió del mètode d'entrada</translation>
+        <translation>Gestió del mètode d&apos;entrada</translation>
     </message>
     <message>
-        <location filename="../qml/ManageInputMethodsModule.qml" line="33"/>
+        <location filename="../qml/ManageInputMethodsModule.qml" line="29"/>
         <source>Add input method</source>
-        <translation>Afegir un mètode d'entrada</translation>
+        <translation>Afegeix-hi un mètode d&apos;entrada</translation>
     </message>
 </context>
 <context>
@@ -109,32 +107,32 @@
     <message>
         <location filename="../qml/ShortcutsModule.qml" line="34"/>
         <source>Shortcuts</source>
-        <translation>Atalls</translation>
+        <translation>Dreceres</translation>
     </message>
     <message>
-        <location filename="../qml/ShortcutsModule.qml" line="49"/>
+        <location filename="../qml/ShortcutsModule.qml" line="45"/>
         <source>Restore Defaults</source>
-        <translation>Restaurar valors predeterminats</translation>
+        <translation>Restaura els valors per defecte</translation>
     </message>
     <message>
-        <location filename="../qml/ShortcutsModule.qml" line="101"/>
+        <location filename="../qml/ShortcutsModule.qml" line="97"/>
         <source>Scroll between input methods</source>
-        <translation>Desplaçar-se entre mètodes d'entrada</translation>
+        <translation>Desplaceu-vos pels mètodes d&apos;entrada</translation>
+    </message>
+    <message>
+        <location filename="../qml/ShortcutsModule.qml" line="127"/>
+        <source>Turn on or off input methods</source>
+        <translation>Activa o desactiva els mètodes d&apos;entrada</translation>
     </message>
     <message>
         <location filename="../qml/ShortcutsModule.qml" line="131"/>
-        <source>Turn on or off input methods</source>
-        <translation>Activa o desactiva mètodes d'entrada</translation>
-    </message>
-    <message>
-        <location filename="../qml/ShortcutsModule.qml" line="135"/>
         <source>Please enter a new shortcut</source>
-        <translation>Introduïu un atall nou</translation>
+        <translation>Introduïu una drecera nova</translation>
     </message>
     <message>
-        <location filename="../qml/ShortcutsModule.qml" line="162"/>
+        <location filename="../qml/ShortcutsModule.qml" line="156"/>
         <source>It turns on or off the currently used input method.If no input method is being used or the first input method is not the keyboard, it switches between the first input method and the currently used keyboard/input method.</source>
-        <translation>Activa o desactiva el mètode d'entrada actual. Si no s'utilitza cap mètode d'entrada o el primer mètode d'entrada no és el teclat, passa del primer mètode d'entrada al teclat/mètode d'entrada actual.</translation>
+        <translation>Activa o desactiva el mètode d&apos;entrada que s&apos;usa actualment. Si no se n&apos;usa cap o el primer no és el teclat, canvia entre el primer mètode d&apos;entrada i el teclat o mètode d&apos;entrada actual.</translation>
     </message>
 </context>
 <context>
@@ -142,12 +140,12 @@
     <message>
         <location filename="../qml/fcitx5configtool.qml" line="8"/>
         <source>Input Methods</source>
-        <translation>Mètodes d'entrada</translation>
+        <translation>Mètodes d&apos;entrada</translation>
     </message>
     <message>
         <location filename="../qml/fcitx5configtool.qml" line="9"/>
         <source>Input method management, input method shortcuts, advanced settings</source>
-        <translation>Gestió del mètode d'entrada, atalls del mètode d'entrada, configuració avançada</translation>
+        <translation>Gestió del mètode d&apos;entrada, dreceres dels mètodes d&apos;entrada, configuració avançada</translation>
     </message>
 </context>
 </TS>
