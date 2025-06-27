@@ -57,7 +57,7 @@ DccObject {
                 Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                 icon.width: 12
                 icon.height: 12
-                icon.name: headerItem.expanded ? "go-down" : "go-next"
+                icon.name: headerItem.expanded ? "arrow_ordinary_down" : "arrow_ordinary_right"
                 onClicked: headerItem.expanded = !headerItem.expanded
             }
         }
