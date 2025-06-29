@@ -35,7 +35,7 @@
     <message>
         <location filename="../qml/DetailConfigItem.qml" line="126"/>
         <source>Please enter a new shortcut</source>
-        <translation type="unfinished"/>
+        <translation>Insira um novo atalho</translation>
     </message>
 </context>
 <context>
@@ -43,12 +43,12 @@
     <message>
         <location filename="../qml/IMList.qml" line="54"/>
         <source>Move Up</source>
-        <translation type="unfinished"/>
+        <translation>Mover para cima</translation>
     </message>
     <message>
         <location filename="../qml/IMList.qml" line="61"/>
         <source>Move Down</source>
-        <translation type="unfinished"/>
+        <translation>Mover para baixo</translation>
     </message>
     <message>
         <location filename="../qml/IMList.qml" line="69"/>
@@ -66,7 +66,7 @@
     <message>
         <location filename="../qml/InputMethodsChooser.qml" line="29"/>
         <source>Add input method</source>
-        <translation type="unfinished"/>
+        <translation>Adicionar método de entrada</translation>
     </message>
     <message>
         <location filename="../qml/InputMethodsChooser.qml" line="37"/>
@@ -127,7 +127,7 @@
     <message>
         <location filename="../qml/ShortcutsModule.qml" line="131"/>
         <source>Please enter a new shortcut</source>
-        <translation type="unfinished"/>
+        <translation>Insira um novo atalho</translation>
     </message>
     <message>
         <location filename="../qml/ShortcutsModule.qml" line="156"/>
