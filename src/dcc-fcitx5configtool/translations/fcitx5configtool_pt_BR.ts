@@ -17,7 +17,7 @@
     <message>
         <location filename="../qml/AdvancedSettingsModule.qml" line="28"/>
         <source>&quot;Advanced Settings&quot; is only valid for the input method that uses the system settings, if the input method has its own settings, its own settings shall prevail.</source>
-        <translation type="unfinished"/>
+        <translation>As &quot;Configurações Avançadas&quot; só se aplicam aos métodos de entrada que utilizam as configurações do sistema. Se o método de entrada tiver configurações próprias, estas terão prioridade.</translation>
     </message>
     <message>
         <location filename="../qml/AdvancedSettingsModule.qml" line="41"/>
