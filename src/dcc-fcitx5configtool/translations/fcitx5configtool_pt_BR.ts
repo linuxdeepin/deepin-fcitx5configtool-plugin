@@ -76,7 +76,7 @@
     <message>
         <location filename="../qml/InputMethodsChooser.qml" line="102"/>
         <source>Find more in App Store</source>
-        <translation type="unfinished"/>
+        <translation>Mais apps na loja de aplicativos</translation>
     </message>
     <message>
         <location filename="../qml/InputMethodsChooser.qml" line="121"/>
@@ -94,12 +94,12 @@
     <message>
         <location filename="../qml/ManageInputMethodsModule.qml" line="15"/>
         <source>Input method management</source>
-        <translation type="unfinished"/>
+        <translation>Gerenciar de métodos de entrada</translation>
     </message>
     <message>
         <location filename="../qml/ManageInputMethodsModule.qml" line="29"/>
         <source>Add input method</source>
-        <translation type="unfinished"/>
+        <translation>Adicionar método de entrada</translation>
     </message>
 </context>
 <context>
@@ -117,7 +117,7 @@
     <message>
         <location filename="../qml/ShortcutsModule.qml" line="97"/>
         <source>Scroll between input methods</source>
-        <translation type="unfinished"/>
+        <translation>Alternar entre métodos de entrada com o scroll</translation>
     </message>
     <message>
         <location filename="../qml/ShortcutsModule.qml" line="127"/>
