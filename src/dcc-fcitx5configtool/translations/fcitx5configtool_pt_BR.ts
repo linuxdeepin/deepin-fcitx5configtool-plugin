@@ -17,7 +17,7 @@
     <message>
         <location filename="../qml/AdvancedSettingsModule.qml" line="28"/>
         <source>&quot;Advanced Settings&quot; is only valid for the input method that uses the system settings, if the input method has its own settings, its own settings shall prevail.</source>
-        <translation type="unfinished"/>
+        <translation>As &quot;Configurações Avançadas&quot; só se aplicam aos métodos de entrada que utilizam as configurações do sistema. Se o método de entrada tiver configurações próprias, estas terão prioridade.</translation>
     </message>
     <message>
         <location filename="../qml/AdvancedSettingsModule.qml" line="41"/>
@@ -35,7 +35,7 @@
     <message>
         <location filename="../qml/DetailConfigItem.qml" line="126"/>
         <source>Please enter a new shortcut</source>
-        <translation type="unfinished"/>
+        <translation>Insira um novo atalho</translation>
     </message>
 </context>
 <context>
@@ -43,12 +43,12 @@
     <message>
         <location filename="../qml/IMList.qml" line="54"/>
         <source>Move Up</source>
-        <translation type="unfinished"/>
+        <translation>Mover para cima</translation>
     </message>
     <message>
         <location filename="../qml/IMList.qml" line="61"/>
         <source>Move Down</source>
-        <translation type="unfinished"/>
+        <translation>Mover para baixo</translation>
     </message>
     <message>
         <location filename="../qml/IMList.qml" line="69"/>
@@ -66,7 +66,7 @@
     <message>
         <location filename="../qml/InputMethodsChooser.qml" line="29"/>
         <source>Add input method</source>
-        <translation type="unfinished"/>
+        <translation>Adicionar método de entrada</translation>
     </message>
     <message>
         <location filename="../qml/InputMethodsChooser.qml" line="37"/>
@@ -76,7 +76,7 @@
     <message>
         <location filename="../qml/InputMethodsChooser.qml" line="102"/>
         <source>Find more in App Store</source>
-        <translation type="unfinished"/>
+        <translation>Mais apps na loja de aplicativos</translation>
     </message>
     <message>
         <location filename="../qml/InputMethodsChooser.qml" line="121"/>
@@ -94,12 +94,12 @@
     <message>
         <location filename="../qml/ManageInputMethodsModule.qml" line="15"/>
         <source>Input method management</source>
-        <translation type="unfinished"/>
+        <translation>Gerenciar de métodos de entrada</translation>
     </message>
     <message>
         <location filename="../qml/ManageInputMethodsModule.qml" line="29"/>
         <source>Add input method</source>
-        <translation type="unfinished"/>
+        <translation>Adicionar método de entrada</translation>
     </message>
 </context>
 <context>
@@ -117,22 +117,22 @@
     <message>
         <location filename="../qml/ShortcutsModule.qml" line="97"/>
         <source>Scroll between input methods</source>
-        <translation type="unfinished"/>
+        <translation>Alternar entre métodos de entrada com o scroll</translation>
     </message>
     <message>
         <location filename="../qml/ShortcutsModule.qml" line="127"/>
         <source>Turn on or off input methods</source>
-        <translation type="unfinished"/>
+        <translation>Ativar ou desativar métodos de entrada</translation>
     </message>
     <message>
         <location filename="../qml/ShortcutsModule.qml" line="131"/>
         <source>Please enter a new shortcut</source>
-        <translation type="unfinished"/>
+        <translation>Insira um novo atalho</translation>
     </message>
     <message>
         <location filename="../qml/ShortcutsModule.qml" line="156"/>
         <source>It turns on or off the currently used input method.If no input method is being used or the first input method is not the keyboard, it switches between the first input method and the currently used keyboard/input method.</source>
-        <translation type="unfinished"/>
+        <translation>Ativa ou desativa o método de entrada atualmente em uso. Se nenhum método de entrada estiver ativo, ou se o primeiro método não for o teclado, a função alterna entre o primeiro método de entrada e o teclado / método de entrada em uso.</translation>
     </message>
 </context>
 <context>
@@ -145,7 +145,7 @@
     <message>
         <location filename="../qml/fcitx5configtool.qml" line="9"/>
         <source>Input method management, input method shortcuts, advanced settings</source>
-        <translation type="unfinished"/>
+        <translation>Gerenciar métodos de entrada, atalhos dos métodos de entrada, configurações avançadas</translation>
     </message>
 </context>
 </TS>
