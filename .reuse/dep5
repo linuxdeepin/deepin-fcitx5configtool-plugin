@@ -34,7 +34,7 @@ Copyright: Deepin Technology Co., Ltd.
 License: GPL-3.0-or-later
 
 # xml yaml toml json conf policy
-Files: *.ui *.qrc *.json *.conf **/config
+Files: *.ui *.qrc *.json *.conf **/config .tx/*.yaml
 Copyright: None
 License: CC0-1.0
 
