@@ -1,3 +1,9 @@
+deepin-fcitx5configtool-plugin (6.0.14) unstable; urgency=medium
+
+  * add single instance lock mechanism for fcitx5-helper
+
+ -- Wang Yu <wangyu@uniontch.com>  Thu, 31 Jul 2025 16:36:51 +0800
+
 deepin-fcitx5configtool-plugin (6.0.13) unstable; urgency=medium
 
   * update translations.
