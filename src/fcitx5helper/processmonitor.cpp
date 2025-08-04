@@ -19,7 +19,7 @@ static QString getCurrentUserName() {
 
 
 bool ProcessMonitor::exeCommand(const QString &cmd, const QStringList &args, QString &output, QString &err) {
-    qDebug() << "Executing command:" << cmd << args;
+    qDebug() << "Executing command:" << cmd << args.join(" ");
     QProcess process;
     process.setProgram(cmd);
     process.setArguments(args);
@@ -31,7 +31,7 @@ bool ProcessMonitor::exeCommand(const QString &cmd, const QStringList &args, QSt
 
     bool success = (process.exitStatus() == QProcess::NormalExit && process.exitCode() == 0);
     if (!success) {
-        qWarning() << "Command failed:" << cmd << args << "Error:" << err;
+        qWarning() << "Command failed:" << cmd << args.join(" ") << "Error:" << err;
     }
     qDebug() << "Command execution result:" << success;
     return success;
