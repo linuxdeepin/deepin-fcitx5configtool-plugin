@@ -11,6 +11,7 @@ import org.deepin.dcc 1.0
 DccObject {
     id: root
     property var globalAddons: []
+    property bool loading: true
 
     Component.onCompleted: {
         dccData.fcitx5AddonsProxy.onRequestAddonsFinished.connect(() => {
