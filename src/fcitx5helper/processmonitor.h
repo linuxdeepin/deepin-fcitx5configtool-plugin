@@ -17,11 +17,12 @@ public:
 
     static bool exeCommand(const QString &cmd, const QStringList &args, QString &output, QString &err);
 
+private Q_SLOTS:
+    void checkFcitx5Process();
+
 private:
     QTimer m_timer;
     QString m_previousProcessID;
-
-    void checkFcitx5Process();
 };
 
 #endif // PROCESSMONITOR_H
