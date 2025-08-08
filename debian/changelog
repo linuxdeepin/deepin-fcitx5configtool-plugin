@@ -1,3 +1,9 @@
+deepin-fcitx5configtool-plugin (6.0.16) unstable; urgency=medium
+
+  * fix: resolve naming conflicts and add loading state in QML components.
+
+ -- Wang Yu <wangyu@uniontch.com>  Fri, 08 Aug 2025 15:37:25 +0800
+
 deepin-fcitx5configtool-plugin (6.0.15) unstable; urgency=medium
 
   * chore: Add new Lao translation file
