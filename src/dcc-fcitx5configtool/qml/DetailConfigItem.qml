@@ -12,9 +12,10 @@ DccObject {
     id: root
     property var configOptions: []
     property var keyName: ""
+    property bool loading: true
 
     DccObject {
-        name: root.displayName
+        name: root.displayName + "_Container"  // Add suffix to avoid conflict with root.name
         parentName: "GlobalConfigPage"
         weight: 40
         pageType: DccObject.Item
@@ -33,7 +34,7 @@ DccObject {
     DccObject {
         id: headerItem
         property bool expanded: false
-        parentName: root.displayName
+        parentName: root.displayName + "_Container"  // Update to match the new name above
         displayName: root.displayName
         weight: root.weight
         pageType: DccObject.Item
@@ -81,7 +82,7 @@ DccObject {
             model: configOptions
             delegate: Component {
                 DccObject {
-                    parentName: root.displayName
+                    parentName: root.displayName + "_Container"  // Update to match the new name above
                     displayName: modelData.description
                     weight: root.weight + index + 1
                     pageType: DccObject.Editor
