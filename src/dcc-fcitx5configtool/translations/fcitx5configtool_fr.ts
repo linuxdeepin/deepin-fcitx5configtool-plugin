@@ -4,7 +4,7 @@
     <message>
         <location filename="../qml/AddonsPage.qml" line="20"/>
         <source>Add-ons</source>
-        <translation>الإضافات</translation>
+        <translation>Extensions</translation>
     </message>
 </context>
 <context>
@@ -12,22 +12,22 @@
     <message>
         <location filename="../qml/AdvancedSettingsModule.qml" line="14"/>
         <source>Advanced Settings</source>
-        <translation>الإعدادات المتقدمة</translation>
+        <translation>Configuration avancée</translation>
     </message>
     <message>
         <location filename="../qml/AdvancedSettingsModule.qml" line="28"/>
         <source>&quot;Advanced Settings&quot; is only valid for the input method that uses the system settings, if the input method has its own settings, its own settings shall prevail.</source>
-        <translation>&quot;الإعدادات المتقدمة&quot; صالحة فقط للطريقة المدخلة التي تعتمد على إعدادات النظام، وإذا كانت الطريقة المدخلة تحتوي على إعدادات خاصة، فإن هذه الإعدادات الخاصة ستكون السائدة.</translation>
+        <translation>La « Configuration avancée » ne s'applique qu'aux méthodes de saisie utilisant les paramètres système. Si une méthode de saisie possède ses propres paramètres, ceux-ci seront prioritaires.</translation>
     </message>
     <message>
         <location filename="../qml/AdvancedSettingsModule.qml" line="41"/>
         <source>Global Config</source>
-        <translation>الإعدادات العالمية</translation>
+        <translation>Configuration générale</translation>
     </message>
     <message>
         <location filename="../qml/AdvancedSettingsModule.qml" line="52"/>
         <source>Add-ons</source>
-        <translation>الإضافات</translation>
+        <translation>Extensions</translation>
     </message>
 </context>
 <context>
@@ -35,7 +35,7 @@
     <message>
         <location filename="../qml/DetailConfigItem.qml" line="126"/>
         <source>Please enter a new shortcut</source>
-        <translation>الرجاء إدخال خ Pendat baru</translation>
+        <translation>Veuillez définir un nouveau raccourci</translation>
     </message>
 </context>
 <context>
@@ -43,22 +43,22 @@
     <message>
         <location filename="../qml/IMList.qml" line="54"/>
         <source>Move Up</source>
-        <translation>التحرك للأعلى</translation>
+        <translation>Monter</translation>
     </message>
     <message>
         <location filename="../qml/IMList.qml" line="61"/>
         <source>Move Down</source>
-        <translation>التحرك للأسفل</translation>
+        <translation>Descendre</translation>
     </message>
     <message>
         <location filename="../qml/IMList.qml" line="69"/>
         <source>Settings</source>
-        <translation>الإعدادات</translation>
+        <translation>Paramètres</translation>
     </message>
     <message>
         <location filename="../qml/IMList.qml" line="76"/>
         <source>Remove</source>
-        <translation>إزالة</translation>
+        <translation>Retirer</translation>
     </message>
 </context>
 <context>
@@ -66,27 +66,27 @@
     <message>
         <location filename="../qml/InputMethodsChooser.qml" line="29"/>
         <source>Add input method</source>
-        <translation>إضافة طريقة مدخلة</translation>
+        <translation>Ajouter une méthode de saisie</translation>
     </message>
     <message>
         <location filename="../qml/InputMethodsChooser.qml" line="37"/>
         <source>Search</source>
-        <translation>البحث</translation>
+        <translation>Rechercher</translation>
     </message>
     <message>
         <location filename="../qml/InputMethodsChooser.qml" line="102"/>
         <source>Find more in App Store</source>
-        <translation>ابحث عن المزيد في متجر التطبيقات</translation>
+        <translation>Plus d'options dans la logithèque</translation>
     </message>
     <message>
         <location filename="../qml/InputMethodsChooser.qml" line="121"/>
         <source>Cancel</source>
-        <translation>إلغاء</translation>
+        <translation>Annuler</translation>
     </message>
     <message>
         <location filename="../qml/InputMethodsChooser.qml" line="128"/>
         <source>Add</source>
-        <translation>إضافة</translation>
+        <translation>Ajouter</translation>
     </message>
 </context>
 <context>
@@ -94,12 +94,12 @@
     <message>
         <location filename="../qml/ManageInputMethodsModule.qml" line="15"/>
         <source>Input method management</source>
-        <translation>إدارة طريقة المدخلة</translation>
+        <translation>Gestion des méthodes de saisie</translation>
     </message>
     <message>
         <location filename="../qml/ManageInputMethodsModule.qml" line="29"/>
         <source>Add input method</source>
-        <translation>إضافة طريقة مدخلة</translation>
+        <translation>Ajouter une méthode de saisie</translation>
     </message>
 </context>
 <context>
@@ -107,32 +107,32 @@
     <message>
         <location filename="../qml/ShortcutsModule.qml" line="34"/>
         <source>Shortcuts</source>
-        <translation>الإجراءات السريعة</translation>
+        <translation>Raccourcis clavier</translation>
     </message>
     <message>
         <location filename="../qml/ShortcutsModule.qml" line="45"/>
         <source>Restore Defaults</source>
-        <translation>استعادة القيم الافتراضية</translation>
+        <translation>Rétablir les paramètres par défaut</translation>
     </message>
     <message>
         <location filename="../qml/ShortcutsModule.qml" line="97"/>
         <source>Scroll between input methods</source>
-        <translation>التنقل بين طرق المدخلة</translation>
+        <translation>Parcourir les méthodes de saisie</translation>
     </message>
     <message>
         <location filename="../qml/ShortcutsModule.qml" line="127"/>
         <source>Turn on or off input methods</source>
-        <translation>تشغيل أو إيقاف طرق المدخلة</translation>
+        <translation>Activer ou désactiver les méthodes de saisie</translation>
     </message>
     <message>
         <location filename="../qml/ShortcutsModule.qml" line="131"/>
         <source>Please enter a new shortcut</source>
-        <translation>الرجاء إدخال إجراء مدخلة جديد</translation>
+        <translation>Veuillez définir un nouveau raccourci</translation>
     </message>
     <message>
         <location filename="../qml/ShortcutsModule.qml" line="156"/>
         <source>It turns on or off the currently used input method.If no input method is being used or the first input method is not the keyboard, it switches between the first input method and the currently used keyboard/input method.</source>
-        <translation>يُ Turning on or off the currently used input method. If no input method is being used or the first input method is not the keyboard, it switches between the first input method and the currently used keyboard/input method.</translation>
+        <translation>Active ou désactive la méthode de saisie en cours d'utilisation. Si aucune méthode n'est utilisée ou si la première méthode n'est pas le clavier, cela permet de basculer entre la première méthode de saisie et le clavier/la méthode actuellement utilisé.</translation>
     </message>
 </context>
 <context>
@@ -140,12 +140,12 @@
     <message>
         <location filename="../qml/fcitx5configtool.qml" line="8"/>
         <source>Input Methods</source>
-        <translation>طرق المدخلة</translation>
+        <translation>Méthodes de saisie</translation>
     </message>
     <message>
         <location filename="../qml/fcitx5configtool.qml" line="9"/>
         <source>Input method management, input method shortcuts, advanced settings</source>
-        <translation>إدارة طريقة المدخلة، إجراءات المدخلة السريعة، الإعدادات المتقدمة</translation>
+        <translation>Gestion des méthodes de saisie, raccourcis clavier et configuration avancée</translation>
     </message>
 </context>
 </TS>
