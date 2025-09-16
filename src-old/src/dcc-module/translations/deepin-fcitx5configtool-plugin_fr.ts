@@ -3,26 +3,26 @@
     <name>AddIMPage</name>
     <message>
         <source>Select your language and add input methods</source>
-        <translation type="unfinished"/>
+        <translation>Sélectionnez votre langue et ajoutez des méthodes de saisie</translation>
     </message>
     <message>
         <source>Find more in App Store</source>
-        <translation type="unfinished"/>
+        <translation>Trouvez plus dans l'App Store</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished"/>
+        <translation>Annuler</translation>
     </message>
     <message>
         <source>Add</source>
-        <translation type="unfinished"/>
+        <translation>Ajouter</translation>
     </message>
 </context>
 <context>
     <name>Fcitx5ConfigPlugin</name>
     <message>
         <source>deepin-fcitx5configtool-plugin</source>
-        <translation type="unfinished"/>
+        <translation>deepin-fcitx5configtool-plugin</translation>
     </message>
     <message>
         <source>Input Method</source>
@@ -60,11 +60,11 @@
     <name>LayoutWidget</name>
     <message>
         <source>The current input method has no keyboard layout</source>
-        <translation type="unfinished"/>
+        <translation>La méthode de saisie actuelle n'a pas de disposition de clavier</translation>
     </message>
     <message>
         <source>Multiple input methods have been selected</source>
-        <translation type="unfinished"/>
+        <translation>Plusieurs méthodes de saisie ont été sélectionnées</translation>
     </message>
 </context>
 <context>
