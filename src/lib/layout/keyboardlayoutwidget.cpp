@@ -5,6 +5,7 @@
  *
  */
 #include <QApplication>
+#include <QLoggingCategory>
 #include <QDebug>
 #include <QDir>
 #include <QPaintEvent>
@@ -33,6 +34,8 @@
 
 #include "deadmapdata.h"
 #include "keyboardlayoutwidget.h"
+
+Q_LOGGING_CATEGORY(FCITX5_LAYOUT, "fcitx5.layout")
 
 constexpr unsigned int INVALID_KEYCODE = (unsigned int)(-1);
 
@@ -64,6 +67,7 @@ auto *getXDisplay() {
 
 struct DrawingItemCompare {
     bool operator()(const DrawingItem *a, const DrawingItem *b) {
+        // qCDebug(FCITX5_LAYOUT) << "Comparing drawing items";
         return a->priority < b->priority;
     }
 };
@@ -80,34 +84,40 @@ static bool FcitxXkbInitDefaultLayout(QStringList &layout,
 static bool FcitxXkbInitDefaultOption(QString &model, QString &option);
 
 static inline void FcitxXkbClearVarDefsRec(XkbRF_VarDefsRec *vdp) {
+    qCDebug(FCITX5_LAYOUT) << "Entering FcitxXkbClearVarDefsRec";
     free(vdp->model);
     free(vdp->layout);
     free(vdp->variant);
     free(vdp->options);
+    qCDebug(FCITX5_LAYOUT) << "Exiting FcitxXkbClearVarDefsRec";
 }
 
 static QString FcitxXkbGetRulesName() {
-    qDebug() << "Getting XKB rules name";
+    qCDebug(FCITX5_LAYOUT) << "Getting XKB rules name";
     XkbRF_VarDefsRec vd;
     char *tmp = nullptr;
 
     if (!isPlatformX11()) {
+        qCDebug(FCITX5_LAYOUT) << "Exiting FcitxXkbGetRulesName: not on X11.";
         return {};
     }
     if (!XkbRF_GetNamesProp(getXDisplay(), &tmp, &vd)) {
+        qCDebug(FCITX5_LAYOUT) << "Exiting FcitxXkbGetRulesName: XkbRF_GetNamesProp failed.";
         return QString();
     }
     FcitxXkbClearVarDefsRec(&vd);
     auto result = QString::fromUtf8(tmp);
     free(tmp);
+    qCDebug(FCITX5_LAYOUT) << "Exiting FcitxXkbGetRulesName, result:" << result;
     return result;
 }
 static QString FcitxXkbFindXkbRulesFile() {
-    qDebug() << "Finding XKB rules file";
+    qCDebug(FCITX5_LAYOUT) << "Finding XKB rules file";
     QString rulesFile;
     QString rulesName = FcitxXkbGetRulesName();
 
     if (!rulesName.isEmpty()) {
+        // qCDebug(FCITX5_LAYOUT) << "rulesName is not empty";
         rulesFile = QString("%1/rules/%2.xml")
                         .arg(XKEYBOARDCONFIG_XKBBASE)
                         .arg(rulesName);
@@ -116,17 +126,19 @@ static QString FcitxXkbFindXkbRulesFile() {
     if (rulesFile.isNull())
         rulesFile = XKB_RULES_XML_FILE;
 
+    qCDebug(FCITX5_LAYOUT) << "Exiting FcitxXkbFindXkbRulesFile, result:" << rulesFile;
     return rulesFile;
 }
 
 KeyboardLayoutWidget::KeyboardLayoutWidget(QWidget *parent)
     : QWidget(parent), groupLevels(pGroupsLevels) {
-    qDebug() << "KeyboardLayoutWidget constructor called";
+    qCDebug(FCITX5_LAYOUT) << "KeyboardLayoutWidget constructor called";
     for (unsigned int i = 0; i < FCITX_ARRAY_SIZE(deadMapData); i++) {
         deadMap[deadMapData[i].dead] = deadMapData[i].nondead;
     }
 
     if (isPlatformX11()) {
+        // qCDebug(FCITX5_LAYOUT) << "isPlatformX11";
         xkb = XkbGetKeyboard(getXDisplay(),
                              XkbGBN_GeometryMask | XkbGBN_KeyNamesMask |
                                  XkbGBN_OtherNamesMask | XkbGBN_SymbolsMask |
@@ -135,7 +147,7 @@ KeyboardLayoutWidget::KeyboardLayoutWidget(QWidget *parent)
     }
 
     if (!xkb) {
-        qWarning() << "Failed to get XKB keyboard description";
+        qCWarning(FCITX5_LAYOUT) << "Failed to get XKB keyboard description";
         return;
     }
 
@@ -147,13 +159,17 @@ KeyboardLayoutWidget::KeyboardLayoutWidget(QWidget *parent)
     initColors();
 
     setFocusPolicy(Qt::StrongFocus);
-    qDebug() << "KeyboardLayoutWidget initialized successfully";
+    qCDebug(FCITX5_LAYOUT) << "KeyboardLayoutWidget initialized successfully";
 }
 
-void FreeXkbRF(XkbRF_RulesPtr rule) { XkbRF_Free(rule, true); }
+void FreeXkbRF(XkbRF_RulesPtr rule) {
+    // qCDebug(FCITX5_LAYOUT) << "Entering FreeXkbRF";
+    XkbRF_Free(rule, true);
+    // qCDebug(FCITX5_LAYOUT) << "Exiting FreeXkbRF";
+}
 
 void KeyboardLayoutWidget::setGroup(int group) {
-    qDebug() << "Setting keyboard group to" << group;
+    qCDebug(FCITX5_LAYOUT) << "Setting keyboard group to" << group;
     XkbRF_VarDefsRec rdefs;
     XkbComponentNamesRec rnames;
     QString rulesPath = "./rules/evdev";
@@ -161,25 +177,31 @@ void KeyboardLayoutWidget::setGroup(int group) {
     UniqueCPtr<XkbRF_RulesRec, FreeXkbRF> rules{
         XkbRF_Load(rulesPath.toLocal8Bit().data(), c, True, True)};
     if (!rules) {
+        // qCDebug(FCITX5_LAYOUT) << "rules is null";
         rulesPath = FcitxXkbFindXkbRulesFile();
         if (rulesPath.endsWith(".xml")) {
+            // qCDebug(FCITX5_LAYOUT) << "rulesPath ends with .xml";
             rulesPath.chop(4);
         }
         rules.reset(XkbRF_Load(rulesPath.toLocal8Bit().data(), c, True, True));
     }
     if (!rules) {
-        qWarning() << "Failed to load XKB rules for group" << group;
+        qCWarning(FCITX5_LAYOUT) << "Failed to load XKB rules for group" << group;
         return;
     }
     memset(&rdefs, 0, sizeof(XkbRF_VarDefsRec));
     memset(&rnames, 0, sizeof(XkbComponentNamesRec));
     QString model, option;
     QStringList layouts, variants;
-    if (!FcitxXkbInitDefaultOption(model, option))
+    if (!FcitxXkbInitDefaultOption(model, option)) {
+        qCDebug(FCITX5_LAYOUT) << "Exiting KeyboardLayoutWidget::setGroup early: FcitxXkbInitDefaultOption failed.";
         return;
+    }
 
-    if (!FcitxXkbInitDefaultLayout(layouts, variants))
+    if (!FcitxXkbInitDefaultLayout(layouts, variants)) {
+        qCDebug(FCITX5_LAYOUT) << "Exiting KeyboardLayoutWidget::setGroup early: FcitxXkbInitDefaultLayout failed.";
         return;
+    }
 
     rdefs.model = !model.isNull() ? strdup(model.toUtf8().constData()) : NULL;
     rdefs.layout = layouts.count() > group
@@ -201,10 +223,13 @@ void KeyboardLayoutWidget::setGroup(int group) {
     free(rnames.compat);
     free(rnames.symbols);
     free(rnames.geometry);
+    qCDebug(FCITX5_LAYOUT) << "Exiting KeyboardLayoutWidget::setGroup.";
 }
 
 static bool FcitxXkbInitDefaultOption(QString &model, QString &option) {
+    qCDebug(FCITX5_LAYOUT) << "Entering FcitxXkbInitDefaultOption";
     if (!isPlatformX11()) {
+        qCDebug(FCITX5_LAYOUT) << "Exiting FcitxXkbInitDefaultOption: not on X11.";
         return false;
     }
 
@@ -213,28 +238,36 @@ static bool FcitxXkbInitDefaultOption(QString &model, QString &option) {
     char *tmp = nullptr;
 
     if (!XkbRF_GetNamesProp(dpy, &tmp, &vd)) {
+        qCDebug(FCITX5_LAYOUT) << "Exiting FcitxXkbInitDefaultOption: XkbRF_GetNamesProp failed.";
         return false;
     }
 
     if (vd.model) {
+        // qCDebug(FCITX5_LAYOUT) << "vd.model is not null";
         model = vd.model;
     } else {
+        // qCDebug(FCITX5_LAYOUT) << "vd.model is null";
         model = QString();
     }
     if (vd.options) {
+        // qCDebug(FCITX5_LAYOUT) << "vd.options is not null";
         option = vd.options;
     } else {
+        // qCDebug(FCITX5_LAYOUT) << "vd.options is null";
         option = QString();
     }
 
     free(tmp);
     FcitxXkbClearVarDefsRec(&vd);
+    qCDebug(FCITX5_LAYOUT) << "Exiting FcitxXkbInitDefaultOption successfully. model:" << model << "option:" << option;
     return true;
 }
 
 static bool FcitxXkbInitDefaultLayout(QStringList &layout,
                                       QStringList &variant) {
+    qCDebug(FCITX5_LAYOUT) << "Entering FcitxXkbInitDefaultLayout";
     if (!isPlatformX11()) {
+        qCDebug(FCITX5_LAYOUT) << "Exiting FcitxXkbInitDefaultLayout: not on X11.";
         return false;
     }
     Display *dpy = getXDisplay();
@@ -242,20 +275,27 @@ static bool FcitxXkbInitDefaultLayout(QStringList &layout,
     char *tmp = NULL;
 
     if (!XkbRF_GetNamesProp(dpy, &tmp, &vd)) {
+        qCDebug(FCITX5_LAYOUT) << "Exiting FcitxXkbInitDefaultLayout: XkbRF_GetNamesProp failed.";
         return false;
     }
-    if (!vd.model || !vd.layout)
+    if (!vd.model || !vd.layout) {
+        qCDebug(FCITX5_LAYOUT) << "Exiting FcitxXkbInitDefaultLayout: model or layout is null.";
         return false;
+    }
 
     QString variantString, layoutString;
     if (vd.layout) {
+        // qCDebug(FCITX5_LAYOUT) << "vd.layout is not null";
         layoutString = vd.layout;
     } else {
+        // qCDebug(FCITX5_LAYOUT) << "vd.layout is null";
         layoutString = QString();
     }
     if (vd.variant) {
+        // qCDebug(FCITX5_LAYOUT) << "vd.variant is not null";
         variantString = vd.variant;
     } else {
+        // qCDebug(FCITX5_LAYOUT) << "vd.variant is null";
         variantString = QString();
     }
     layout = layoutString.split(',');
@@ -263,11 +303,13 @@ static bool FcitxXkbInitDefaultLayout(QStringList &layout,
 
     free(tmp);
     FcitxXkbClearVarDefsRec(&vd);
+    qCDebug(FCITX5_LAYOUT) << "Exiting FcitxXkbInitDefaultLayout successfully. layout:" << layout << "variant:" << variant;
     return true;
 }
 
 void KeyboardLayoutWidget::setKeyboardLayout(const QString &layout,
                                              const QString &variant) {
+    qCDebug(FCITX5_LAYOUT) << "Entering KeyboardLayoutWidget::setKeyboardLayout, layout:" << layout << "variant:" << variant;
     XkbRF_VarDefsRec rdefs;
     XkbComponentNamesRec rnames;
     QString rulesPath = "./rules/evdev";
@@ -275,13 +317,16 @@ void KeyboardLayoutWidget::setKeyboardLayout(const QString &layout,
     XkbRF_RulesPtr rules =
         XkbRF_Load(rulesPath.toLocal8Bit().data(), c, True, True);
     if (rules == NULL) {
+        // qCDebug(FCITX5_LAYOUT) << "rules is null";
         rulesPath = FcitxXkbFindXkbRulesFile();
         if (rulesPath.endsWith(".xml")) {
+            // qCDebug(FCITX5_LAYOUT) << "rulesPath ends with .xml";
             rulesPath.chop(4);
         }
         rules = XkbRF_Load(rulesPath.toLocal8Bit().data(), c, True, True);
     }
     if (rules == NULL) {
+        qCDebug(FCITX5_LAYOUT) << "Exiting KeyboardLayoutWidget::setKeyboardLayout: rules are null.";
         return;
     }
     memset(&rdefs, 0, sizeof(XkbRF_VarDefsRec));
@@ -301,27 +346,32 @@ void KeyboardLayoutWidget::setKeyboardLayout(const QString &layout,
     FcitxXkbClearVarDefsRec(&rdefs);
 
     setKeyboard(&rnames);
+    qCDebug(FCITX5_LAYOUT) << "Exiting KeyboardLayoutWidget::setKeyboardLayout.";
 }
 
 void KeyboardLayoutWidget::setKeyboard(XkbComponentNamesPtr names) {
-    qDebug() << "Setting keyboard layout with component names";
+    qCDebug(FCITX5_LAYOUT) << "Setting keyboard layout with component names";
     release();
     if (xkb) {
+        // qCDebug(FCITX5_LAYOUT) << "xkb is not null";
         XkbFreeKeyboard(xkb, 0, true);
         xkb = nullptr;
     }
 
     if (!isPlatformX11()) {
+        qCDebug(FCITX5_LAYOUT) << "Exiting KeyboardLayoutWidget::setKeyboard: not on X11.";
         return;
     }
 
     if (names) {
+        // qCDebug(FCITX5_LAYOUT) << "names is not null";
         xkb = XkbGetKeyboardByName(
             getXDisplay(), XkbUseCoreKbd, names, 0,
             XkbGBN_GeometryMask | XkbGBN_KeyNamesMask | XkbGBN_OtherNamesMask |
                 XkbGBN_ClientSymbolsMask | XkbGBN_IndicatorMapMask,
             false);
     } else {
+        // qCDebug(FCITX5_LAYOUT) << "names is null";
         xkb = XkbGetKeyboard(getXDisplay(),
                              XkbGBN_GeometryMask | XkbGBN_KeyNamesMask |
                                  XkbGBN_OtherNamesMask | XkbGBN_SymbolsMask |
@@ -331,7 +381,7 @@ void KeyboardLayoutWidget::setKeyboard(XkbComponentNamesPtr names) {
     }
 
     if (xkb == NULL) {
-        qCritical() << "Failed to get XKB keyboard description";
+        qCDebug(FCITX5_LAYOUT) << "Exiting KeyboardLayoutWidget::setKeyboard: xkb is null.";
         return;
     }
 
@@ -340,10 +390,11 @@ void KeyboardLayoutWidget::setKeyboard(XkbComponentNamesPtr names) {
     initColors();
     generatePixmap(true);
     repaint();
+    qCDebug(FCITX5_LAYOUT) << "Exiting KeyboardLayoutWidget::setKeyboard.";
 }
 
 void KeyboardLayoutWidget::alloc() {
-    qDebug() << "Allocating keyboard layout resources";
+    qCDebug(FCITX5_LAYOUT) << "Allocating keyboard layout resources";
     physicalIndicators.clear();
     int physicalIndicatorsSize = xkb->indicators->phys_indicators + 1;
     physicalIndicators.reserve(physicalIndicatorsSize);
@@ -351,9 +402,11 @@ void KeyboardLayoutWidget::alloc() {
         physicalIndicators << NULL;
 
     keys.resize(xkb->max_key_code + 1);
+    qCDebug(FCITX5_LAYOUT) << "Exiting KeyboardLayoutWidget::alloc.";
 }
 
 void KeyboardLayoutWidget::release() {
+    qCDebug(FCITX5_LAYOUT) << "Entering KeyboardLayoutWidget::release";
     physicalIndicators.clear();
     keys.clear();
     colors.clear();
@@ -370,16 +423,19 @@ void KeyboardLayoutWidget::release() {
         }
     }
     keyboardItems.clear();
+    qCDebug(FCITX5_LAYOUT) << "Exiting KeyboardLayoutWidget::release";
 }
 
 void KeyboardLayoutWidget::init() {
-    qDebug() << "Initializing keyboard layout with"
+    qCDebug(FCITX5_LAYOUT) << "Initializing keyboard layout with"
              << xkb->geom->num_sections << "sections";
     int i, j, k;
     int x, y;
 
-    if (!xkb)
+    if (!xkb) {
+        qCDebug(FCITX5_LAYOUT) << "Exiting KeyboardLayoutWidget::init: xkb is null.";
         return;
+    }
 
     for (i = 0; i < xkb->geom->num_doodads; i++) {
         XkbDoodadRec *xkbdoodad = xkb->geom->doodads + i;
@@ -401,7 +457,7 @@ void KeyboardLayoutWidget::init() {
         XkbSectionRec *section = xkb->geom->sections + i;
         unsigned int priority;
 
-        // qDebug() << "initing section " << i << " containing " <<
+        // qCDebug(FCITX5_LAYOUT) << "initing section " << i << " containing " <<
         // section->num_rows << " rows\n";
 
         x = section->left;
@@ -411,7 +467,7 @@ void KeyboardLayoutWidget::init() {
         for (j = 0; j < section->num_rows; j++) {
             XkbRowRec *row = section->rows + j;
 
-            // qDebug() << "  initing row " << j;
+            // qCDebug(FCITX5_LAYOUT) << "  initing row " << j;
 
             x = section->left + row->left;
             y = section->top + row->top;
@@ -425,7 +481,7 @@ void KeyboardLayoutWidget::init() {
                 if (keycode == INVALID_KEYCODE)
                     continue;
 
-                // qDebug() << "    initing key " << k << ", shape: "
+                // qCDebug(FCITX5_LAYOUT) << "    initing key " << k << ", shape: "
                 //         << shape << "(" << xkb->geom->shapes <<" + " <<
                 //         xkbkey->shape_ndx << "), code: " << keycode;
 
@@ -487,15 +543,17 @@ void KeyboardLayoutWidget::init() {
     }
 
     std::sort(keyboardItems.begin(), keyboardItems.end(), DrawingItemCompare());
+    qCDebug(FCITX5_LAYOUT) << "Exiting KeyboardLayoutWidget::init.";
 }
 
 void KeyboardLayoutWidget::initColors() {
-    qDebug() << "Initializing keyboard color scheme with"
+    qCDebug(FCITX5_LAYOUT) << "Initializing keyboard color scheme with"
              << xkb->geom->num_colors << "colors";
     bool result;
     int i;
 
     if (!xkb) {
+        qCDebug(FCITX5_LAYOUT) << "Exiting KeyboardLayoutWidget::initColors: xkb is null.";
         return;
     }
 
@@ -504,14 +562,17 @@ void KeyboardLayoutWidget::initColors() {
     for (i = 0; i < xkb->geom->num_colors; i++) {
         result = parseXkbColorSpec(xkb->geom->colors[i].spec, colors[i]);
         if (!result)
-            qWarning() << "init_colors: unable to parse color "
+            qCWarning(FCITX5_LAYOUT) << "init_colors: unable to parse color "
                        << xkb->geom->colors[i].spec;
     }
+    qCDebug(FCITX5_LAYOUT) << "Exiting KeyboardLayoutWidget::initColors.";
 }
 
 void KeyboardLayoutWidget::focusOutEvent(QFocusEvent *event) {
+    // qCDebug(FCITX5_LAYOUT) << "Entering KeyboardLayoutWidget::focusOutEvent";
     if (!xkb) {
         QWidget::focusOutEvent(event);
+        // qCDebug(FCITX5_LAYOUT) << "Exiting KeyboardLayoutWidget::focusOutEvent: xkb is null.";
         return;
     }
 
@@ -528,43 +589,54 @@ void KeyboardLayoutWidget::focusOutEvent(QFocusEvent *event) {
         repaint();
     }
     QWidget::focusOutEvent(event);
+    // qCDebug(FCITX5_LAYOUT) << "Exiting KeyboardLayoutWidget::focusOutEvent.";
 }
 
 /* see PSColorDef in xkbprint */
 bool KeyboardLayoutWidget::parseXkbColorSpec(char *colorspec, QColor &color) {
+    qCDebug(FCITX5_LAYOUT) << "Entering KeyboardLayoutWidget::parseXkbColorSpec with colorspec:" << colorspec;
     long level;
 
     color.setAlphaF(1);
     if (strcasecmp(colorspec, "black") == 0) {
+        // qCDebug(FCITX5_LAYOUT) << "colorspec is black";
         color = Qt::black;
     } else if (strcasecmp(colorspec, "white") == 0) {
+        // qCDebug(FCITX5_LAYOUT) << "colorspec is white";
         color = Qt::white;
     } else if (strncasecmp(colorspec, "grey", 4) == 0 ||
                strncasecmp(colorspec, "gray", 4) == 0) {
+        // qCDebug(FCITX5_LAYOUT) << "colorspec is grey or gray";
         level = strtol(colorspec + 4, NULL, 10);
 
         color.setRedF(1.0 - level / 100.0);
         color.setGreenF(1.0 - level / 100.0);
         color.setBlueF(1.0 - level / 100.0);
     } else if (strcasecmp(colorspec, "red") == 0) {
+        // qCDebug(FCITX5_LAYOUT) << "colorspec is red";
         color = Qt::red;
     } else if (strcasecmp(colorspec, "green") == 0) {
+        // qCDebug(FCITX5_LAYOUT) << "colorspec is green";
         color = Qt::green;
     } else if (strcasecmp(colorspec, "blue") == 0) {
+        // qCDebug(FCITX5_LAYOUT) << "colorspec is blue";
         color = Qt::blue;
     } else if (strncasecmp(colorspec, "red", 3) == 0) {
+        // qCDebug(FCITX5_LAYOUT) << "colorspec is red";
         level = strtol(colorspec + 3, NULL, 10);
 
         color.setRedF(level / 100.0);
         color.setGreenF(0);
         color.setBlueF(0);
     } else if (strncasecmp(colorspec, "green", 5) == 0) {
+        // qCDebug(FCITX5_LAYOUT) << "colorspec is green";
         level = strtol(colorspec + 5, NULL, 10);
 
         color.setRedF(0);
         color.setGreenF(level / 100.0);
         color.setBlueF(0);
     } else if (strncasecmp(colorspec, "blue", 4) == 0) {
+        // qCDebug(FCITX5_LAYOUT) << "colorspec is blue";
         level = strtol(colorspec + 4, NULL, 10);
 
         color.setRedF(0);
@@ -573,10 +645,12 @@ bool KeyboardLayoutWidget::parseXkbColorSpec(char *colorspec, QColor &color) {
     } else
         return false;
 
+    qCDebug(FCITX5_LAYOUT) << "Exiting KeyboardLayoutWidget::parseXkbColorSpec successfully.";
     return true;
 }
 
 unsigned int KeyboardLayoutWidget::findKeycode(const char *keyName) {
+    qCDebug(FCITX5_LAYOUT) << "Entering KeyboardLayoutWidget::findKeycode for keyName:" << keyName;
 #define KEYSYM_NAME_MAX_LENGTH 4
     unsigned int keycode;
     int i, j;
@@ -586,6 +660,7 @@ unsigned int KeyboardLayoutWidget::findKeycode(const char *keyName) {
     const char *src, *dst;
 
     if (!xkb) {
+        qCDebug(FCITX5_LAYOUT) << "Exiting KeyboardLayoutWidget::findKeycode: xkb is null.";
         return INVALID_KEYCODE;
     }
 
@@ -603,6 +678,7 @@ unsigned int KeyboardLayoutWidget::findKeycode(const char *keyName) {
             }
         }
         if (is_name_matched) {
+            qCDebug(FCITX5_LAYOUT) << "Exiting KeyboardLayoutWidget::findKeycode, found keycode:" << keycode;
             return keycode;
         }
         pkey++;
@@ -624,29 +700,37 @@ unsigned int KeyboardLayoutWidget::findKeycode(const char *keyName) {
 
         if (is_name_matched) {
             keycode = findKeycode(palias->real);
+            qCDebug(FCITX5_LAYOUT) << "Exiting KeyboardLayoutWidget::findKeycode, found alias keycode:" << keycode;
             return keycode;
         }
         palias++;
     }
 
+    qCDebug(FCITX5_LAYOUT) << "Exiting KeyboardLayoutWidget::findKeycode: keycode not found.";
     return INVALID_KEYCODE;
 }
 
 void KeyboardLayoutWidget::rotateRectangle(int origin_x, int origin_y, int x,
                                            int y, int angle, int &rotated_x,
                                            int &rotated_y) {
+    qCDebug(FCITX5_LAYOUT) << "Entering KeyboardLayoutWidget::rotateRectangle";
     rotated_x = origin_x + (x - origin_x) * cos(M_PI * angle / 1800.0) -
                 (y - origin_y) * sin(M_PI * angle / 1800.0);
     rotated_y = origin_y + (x - origin_x) * sin(M_PI * angle / 1800.0) +
                 (y - origin_y) * cos(M_PI * angle / 1800.0);
+    qCDebug(FCITX5_LAYOUT) << "Exiting KeyboardLayoutWidget::rotateRectangle";
 }
 
 void KeyboardLayoutWidget::initInicatorDoodad(XkbDoodadRec *xkbdoodad,
                                               Doodad &doodad) {
-    if (!xkb)
+    qCDebug(FCITX5_LAYOUT) << "Entering KeyboardLayoutWidget::initInicatorDoodad";
+    if (!xkb) {
+        qCDebug(FCITX5_LAYOUT) << "Exiting KeyboardLayoutWidget::initInicatorDoodad: xkb is null.";
         return;
+    }
 
     if (xkbdoodad->any.type != XkbIndicatorDoodad) {
+        qCDebug(FCITX5_LAYOUT) << "Exiting KeyboardLayoutWidget::initInicatorDoodad: not an indicator doodad.";
         return;
     }
     int index;
@@ -664,6 +748,7 @@ void KeyboardLayoutWidget::initInicatorDoodad(XkbDoodadRec *xkbdoodad,
             break;
     }
     if (iname == 0) {
+        qCDebug(FCITX5_LAYOUT) << "Exiting KeyboardLayoutWidget::initInicatorDoodad: indicator name not found.";
         return;
     }
     physicalIndicators[index] = &doodad;
@@ -671,11 +756,13 @@ void KeyboardLayoutWidget::initInicatorDoodad(XkbDoodadRec *xkbdoodad,
     if (isPlatformX11() && !XkbGetNamedIndicator(getXDisplay(), sname, NULL, &doodad.on,
                               NULL, NULL))
         doodad.on = 0;
+    qCDebug(FCITX5_LAYOUT) << "Exiting KeyboardLayoutWidget::initInicatorDoodad.";
 }
 
 void KeyboardLayoutWidget::generatePixmap(bool force) {
-    qDebug() << "Generating keyboard pixmap (force:" << force << ")";
+    qCDebug(FCITX5_LAYOUT) << "Generating keyboard pixmap (force:" << force << ")";
     if (!xkb) {
+        qCDebug(FCITX5_LAYOUT) << "Exiting KeyboardLayoutWidget::generatePixmap: xkb is null.";
         return;
     }
 
@@ -686,8 +773,10 @@ void KeyboardLayoutWidget::generatePixmap(bool force) {
 
     int w = xkb->geom->width_mm * ratio;
     int h = xkb->geom->height_mm * ratio;
-    if (w == image.width() && h == image.height() && !force)
+    if (w == image.width() && h == image.height() && !force) {
+        qCDebug(FCITX5_LAYOUT) << "Exiting KeyboardLayoutWidget::generatePixmap: pixmap is already up to date.";
         return;
+    }
 
     image = QPixmap(QSize(w, h) * devicePixelRatio());
     image.setDevicePixelRatio(devicePixelRatio());
@@ -698,8 +787,10 @@ void KeyboardLayoutWidget::generatePixmap(bool force) {
     painter.fillRect(image.rect(), Qt::transparent);
 
     for (const auto *item : keyboardItems) {
-        if (!xkb)
+        if (!xkb) {
+            qCDebug(FCITX5_LAYOUT) << "Exiting KeyboardLayoutWidget::generatePixmap during item loop: xkb became null.";
             return;
+        }
 
         switch (item->type) {
         case KEYBOARD_DRAWING_ITEM_TYPE_INVALID:
@@ -718,14 +809,17 @@ void KeyboardLayoutWidget::generatePixmap(bool force) {
 }
 
 void KeyboardLayoutWidget::drawKey(QPainter *painter, DrawingKey *key) {
+    // qCDebug(FCITX5_LAYOUT) << "Entering KeyboardLayoutWidget::drawKey for keycode:" << key->keycode;
     XkbShapeRec *shape;
     QColor color;
     XkbOutlineRec *outline;
     int origin_offset_x;
     /* gint i; */
 
-    if (!xkb)
+    if (!xkb) {
+        // qCDebug(FCITX5_LAYOUT) << "Exiting KeyboardLayoutWidget::drawKey: xkb is null.";
         return;
+    }
 
     shape = xkb->geom->shapes + key->xkbkey->shape_ndx;
 
@@ -754,9 +848,11 @@ void KeyboardLayoutWidget::drawKey(QPainter *painter, DrawingKey *key) {
     drawKeyLabel(painter, key->keycode, key->angle,
                  key->originX + origin_offset_x, key->originY, shape->bounds.x2,
                  shape->bounds.y2, key->pressed);
+    // qCDebug(FCITX5_LAYOUT) << "Exiting KeyboardLayoutWidget::drawKey for keycode:" << key->keycode;
 }
 
 int KeyboardLayoutWidget::calcShapeOriginOffsetX(XkbOutlineRec *outline) {
+    qCDebug(FCITX5_LAYOUT) << "Entering KeyboardLayoutWidget::calcShapeOriginOffsetX";
     int rv = 0;
     int i;
     XkbPointPtr point = outline->points;
@@ -773,12 +869,14 @@ int KeyboardLayoutWidget::calcShapeOriginOffsetX(XkbOutlineRec *outline) {
             rv = x1;
         }
     }
+    qCDebug(FCITX5_LAYOUT) << "Exiting KeyboardLayoutWidget::calcShapeOriginOffsetX with rv:" << rv;
     return rv;
 }
 
 void KeyboardLayoutWidget::drawOutline(QPainter *painter, XkbOutlinePtr outline,
                                        QColor color, int angle, int originX,
                                        int originY) {
+    // qCDebug(FCITX5_LAYOUT) << "Entering KeyboardLayoutWidget::drawOutline";
     if (outline->num_points == 1) {
         if (color.isValid())
             drawRectangle(painter, color, angle, originX, originY,
@@ -791,7 +889,7 @@ void KeyboardLayoutWidget::drawOutline(QPainter *painter, XkbOutlinePtr outline,
     } else if (outline->num_points == 2) {
         int rotated_x0, rotated_y0;
 
-        // qDebug() << "angle" << angle ;
+        // qCDebug(FCITX5_LAYOUT) << "angle" << angle ;
         rotateCoordinate(originX, originY, originX + outline->points[0].x,
                          originY + outline->points[0].y, angle, &rotated_x0,
                          &rotated_y0);
@@ -809,11 +907,13 @@ void KeyboardLayoutWidget::drawOutline(QPainter *painter, XkbOutlinePtr outline,
         drawPolygon(painter, QColor(), originX, originY, outline->points,
                     outline->num_points, outline->corner_radius);
     }
+    // qCDebug(FCITX5_LAYOUT) << "Exiting KeyboardLayoutWidget::drawOutline";
 }
 
 void KeyboardLayoutWidget::rotateCoordinate(int originX, int originY, int x,
                                             int y, int angle, int *rotated_x,
                                             int *rotated_y) {
+    qCDebug(FCITX5_LAYOUT) << "Entering KeyboardLayoutWidget::rotateCoordinate";
     QTransform translate;
     QTransform rotate;
     QTransform translate2;
@@ -823,6 +923,7 @@ void KeyboardLayoutWidget::rotateCoordinate(int originX, int originY, int x,
     rotate.rotate(angle / 10);
     trans = translate * rotate * translate2;
     trans.map(x, y, rotated_x, rotated_y);
+    qCDebug(FCITX5_LAYOUT) << "Exiting KeyboardLayoutWidget::rotateCoordinate";
 }
 
 int KeyboardLayoutWidget::xkbToPixmapCoord(int n) { return n * ratio; }
@@ -834,13 +935,16 @@ void KeyboardLayoutWidget::drawPolygon(QPainter *painter, QColor fill_color,
                                        XkbPointPtr xkb_points,
                                        unsigned int num_points,
                                        unsigned int radius) {
+    // qCDebug(FCITX5_LAYOUT) << "Entering KeyboardLayoutWidget::drawPolygon";
     std::vector<QPointF> points;
     bool filled;
     unsigned int i;
 
     if (fill_color.isValid()) {
+        // qCDebug(FCITX5_LAYOUT) << "fill_color is valid";
         filled = true;
     } else {
+        // qCDebug(FCITX5_LAYOUT) << "fill_color is not valid";
         fill_color = Qt::gray;
         filled = false;
     }
@@ -858,6 +962,7 @@ void KeyboardLayoutWidget::drawPolygon(QPainter *painter, QColor fill_color,
 
     roundedPolygon(painter, filled, xkbToPixmapDouble(radius), points);
     painter->restore();
+    // qCDebug(FCITX5_LAYOUT) << "Exiting KeyboardLayoutWidget::drawPolygon";
 }
 
 double distance(double x, double y) { return qSqrt((x * x) + (y * y)); }
@@ -880,6 +985,7 @@ double angle(const QVector2D &norm) {
  */
 void KeyboardLayoutWidget::roundedCorner(QPainterPath &path, QPointF b,
                                          QPointF c, double radius) {
+    qCDebug(FCITX5_LAYOUT) << "Entering KeyboardLayoutWidget::roundedCorner";
     /* we may have 5 point here
      * a is the current point
      * c is the end point
@@ -892,13 +998,13 @@ void KeyboardLayoutWidget::roundedCorner(QPainterPath &path, QPointF b,
 
     QPointF a = path.currentPosition();
 
-    // qDebug() << "current" << a << b << c;
+    // qCDebug(FCITX5_LAYOUT) << "current" << a << b << c;
 
     /* make sure radius is not too large */
     double dist1 = distance(a, b);
     double dist2 = distance(b, c);
 
-    // qDebug() << "dist" << dist1 << dist2 << radius;
+    // qCDebug(FCITX5_LAYOUT) << "dist" << dist1 << dist2 << radius;
 
     radius = qMin(radius, qMin(dist1, dist2));
 
@@ -922,7 +1028,7 @@ void KeyboardLayoutWidget::roundedCorner(QPainterPath &path, QPointF b,
     QRectF arcRect(ctr.x() - radius, ctr.y() - radius, 2 * radius, 2 * radius);
 
     qreal phiA, phiC;
-    // qDebug() << c1 << ctr << a1;
+    // qCDebug(FCITX5_LAYOUT) << c1 << ctr << a1;
     QVector2D ctra = QVector2D(a1 - ctr);
     QVector2D ctrc = QVector2D(c1 - ctr);
     ctra.normalize();
@@ -940,17 +1046,19 @@ void KeyboardLayoutWidget::roundedCorner(QPainterPath &path, QPointF b,
     if (delta < -180)
         delta += 360;
 
-    // qDebug() << arcRect << ctra << ctrc << ctr << "degree" << phiA << phiC;
+    // qCDebug(FCITX5_LAYOUT) << arcRect << ctra << ctrc << ctr << "degree" << phiA << phiC;
 
     path.lineTo(a1);
     path.arcTo(arcRect, phiA, delta);
     path.lineTo(c1);
     path.lineTo(c);
+    qCDebug(FCITX5_LAYOUT) << "Exiting KeyboardLayoutWidget::roundedCorner";
 }
 
 void KeyboardLayoutWidget::roundedPolygon(QPainter *painter, bool filled,
                                           double radius,
                                           const std::vector<QPointF> &points) {
+    // qCDebug(FCITX5_LAYOUT) << "Entering KeyboardLayoutWidget::roundedPolygon";
     size_t i, j;
 
     QPainterPath path;
@@ -960,7 +1068,7 @@ void KeyboardLayoutWidget::roundedPolygon(QPainter *painter, bool filled,
     for (i = 0; i < points.size(); i++) {
         j = (i + 1) % points.size();
         roundedCorner(path, points[i], (points[i] + points[j]) / 2, radius);
-        // qDebug() << "corner " << points[i] << points[j];
+        // qCDebug(FCITX5_LAYOUT) << "corner " << points[i] << points[j];
     };
     path.closeSubpath();
 
@@ -969,19 +1077,24 @@ void KeyboardLayoutWidget::roundedPolygon(QPainter *painter, bool filled,
     } else {
         painter->drawPath(path);
     }
+    // qCDebug(FCITX5_LAYOUT) << "Exiting KeyboardLayoutWidget::roundedPolygon";
 }
 
 void KeyboardLayoutWidget::drawRectangle(QPainter *painter, QColor color,
                                          int angle, int xkb_x, int xkb_y,
                                          int xkb_width, int xkb_height,
                                          unsigned int radius) {
+    // qCDebug(FCITX5_LAYOUT) << "Entering KeyboardLayoutWidget::drawRectangle";
     if (angle == 0) {
+        // qCDebug(FCITX5_LAYOUT) << "angle is 0";
         int x, y, width, height;
         bool filled;
 
         if (color.isValid()) {
+            // qCDebug(FCITX5_LAYOUT) << "color is valid";
             filled = true;
         } else {
+            // qCDebug(FCITX5_LAYOUT) << "color is not valid";
             color = Qt::gray;
             filled = false;
         }
@@ -994,6 +1107,7 @@ void KeyboardLayoutWidget::drawRectangle(QPainter *painter, QColor color,
         drawCurveRectangle(painter, filled, color, x, y, width, height,
                            xkbToPixmapDouble(radius));
     } else {
+        // qCDebug(FCITX5_LAYOUT) << "angle is not 0";
         XkbPointRec points[4];
         int x, y;
 
@@ -1014,16 +1128,20 @@ void KeyboardLayoutWidget::drawRectangle(QPainter *painter, QColor color,
         /* the points we've calculated are relative to 0,0 */
         drawPolygon(painter, color, 0, 0, points, 4, radius);
     }
+    qCDebug(FCITX5_LAYOUT) << "Exiting KeyboardLayoutWidget::drawRectangle";
 }
 
 void KeyboardLayoutWidget::drawCurveRectangle(QPainter *painter, bool filled,
                                               QColor color, int x, int y,
                                               int width, int height,
                                               double radius) {
+    // qCDebug(FCITX5_LAYOUT) << "Entering KeyboardLayoutWidget::drawCurveRectangle";
     double x1, y1;
 
-    if (!width || !height)
+    if (!width || !height) {
+        // qCDebug(FCITX5_LAYOUT) << "Exiting KeyboardLayoutWidget::drawCurveRectangle: zero width or height.";
         return;
+    }
 
     x1 = x + width;
     y1 = y + height;
@@ -1045,13 +1163,16 @@ void KeyboardLayoutWidget::drawCurveRectangle(QPainter *painter, bool filled,
 
     painter->save();
     if (filled) {
+        // qCDebug(FCITX5_LAYOUT) << "filled is true";
         QBrush brush(color);
         painter->fillPath(path, brush);
     } else {
+        // qCDebug(FCITX5_LAYOUT) << "filled is false";
         painter->setPen(color);
         painter->drawPath(path);
     }
     painter->restore();
+    // qCDebug(FCITX5_LAYOUT) << "Exiting KeyboardLayoutWidget::drawCurveRectangle";
 }
 
 KeyboardLayoutWidget::~KeyboardLayoutWidget() { release(); }
@@ -1060,8 +1181,11 @@ void KeyboardLayoutWidget::drawKeyLabel(QPainter *painter, unsigned int keycode,
                                         int angle, int xkb_origin_x,
                                         int xkb_origin_y, int xkb_width,
                                         int xkb_height, bool is_pressed) {
-    if (!xkb)
+    // qCDebug(FCITX5_LAYOUT) << "Entering KeyboardLayoutWidget::drawKeyLabel for keycode:" << keycode;
+    if (!xkb) {
+        // qCDebug(FCITX5_LAYOUT) << "Exiting KeyboardLayoutWidget::drawKeyLabel: xkb is null.";
         return;
+    }
 
     int padding = 23 * ratio; /* 2.3mm */
 
@@ -1118,12 +1242,14 @@ void KeyboardLayoutWidget::drawKeyLabel(QPainter *painter, unsigned int keycode,
     end[BOTTOMRIGHT] = BOTTOMRIGHT;
 
     if (syms[BOTTOMLEFT] == syms[BOTTOMRIGHT] || syms[BOTTOMRIGHT].isNull()) {
+        // qCDebug(FCITX5_LAYOUT) << "syms[BOTTOMLEFT] == syms[BOTTOMRIGHT] || syms[BOTTOMRIGHT].isNull()";
         syms[BOTTOMRIGHT] = QString();
         end[BOTTOMLEFT] = BOTTOMRIGHT;
         end[BOTTOMRIGHT] = -1;
     }
 
     if (syms[TOPLEFT] == syms[TOPRIGHT] || syms[TOPRIGHT].isNull()) {
+        // qCDebug(FCITX5_LAYOUT) << "syms[TOPLEFT] == syms[TOPRIGHT] || syms[TOPRIGHT].isNull()";
         syms[TOPRIGHT] = QString();
         end[TOPLEFT] = TOPRIGHT;
         end[TOPRIGHT] = -1;
@@ -1132,6 +1258,7 @@ void KeyboardLayoutWidget::drawKeyLabel(QPainter *painter, unsigned int keycode,
     if ((syms[BOTTOMLEFT] == syms[TOPLEFT] || syms[TOPLEFT].isNull()) &&
         ((end[BOTTOMLEFT] == BOTTOMLEFT && end[TOPLEFT] == TOPLEFT) ||
          (end[BOTTOMLEFT] == BOTTOMRIGHT && end[TOPLEFT] == TOPRIGHT))) {
+        // qCDebug(FCITX5_LAYOUT) << "syms[BOTTOMLEFT] == syms[TOPLEFT] || syms[TOPLEFT].isNull()";
         syms[TOPLEFT] = QString();
         end[BOTTOMLEFT] = end[TOPLEFT];
         end[TOPLEFT] = -1;
@@ -1140,6 +1267,7 @@ void KeyboardLayoutWidget::drawKeyLabel(QPainter *painter, unsigned int keycode,
     if (!syms[BOTTOMRIGHT].isNull() &&
         (syms[BOTTOMRIGHT] == syms[TOPRIGHT] ||
          (syms[TOPRIGHT].isNull() && end[TOPRIGHT] != -1))) {
+        // qCDebug(FCITX5_LAYOUT) << "!syms[BOTTOMRIGHT].isNull() && (syms[BOTTOMRIGHT] == syms[TOPRIGHT] || (syms[TOPRIGHT].isNull() && end[TOPRIGHT] != -1))";
         syms[TOPRIGHT] = QString();
         end[BOTTOMRIGHT] = TOPRIGHT;
     }
@@ -1147,11 +1275,13 @@ void KeyboardLayoutWidget::drawKeyLabel(QPainter *painter, unsigned int keycode,
     for (int glp = KEYBOARD_DRAWING_POS_TOPLEFT;
          glp < KEYBOARD_DRAWING_POS_TOTAL; glp++) {
         if (!syms[glp].isEmpty()) {
+            // qCDebug(FCITX5_LAYOUT) << "syms[glp] is not empty";
             drawKeyLabelHelper(painter, syms[glp], angle, glp, end[glp], x, y,
                                width, height, padding, is_pressed);
             /* reverse y order */
         }
     }
+    // qCDebug(FCITX5_LAYOUT) << "Exiting KeyboardLayoutWidget::drawKeyLabel for keycode:" << keycode;
 }
 
 void KeyboardLayoutWidget::drawKeyLabelHelper(QPainter *painter,
@@ -1159,6 +1289,7 @@ void KeyboardLayoutWidget::drawKeyLabelHelper(QPainter *painter,
                                               int glp, int end_glp, int x,
                                               int y, int width, int height,
                                               int padding, bool) {
+    // qCDebug(FCITX5_LAYOUT) << "Entering KeyboardLayoutWidget::drawKeyLabelHelper for text:" << text_;
     QString text = text_;
     if (padding >= height / 2)
         padding = 0;
@@ -1175,17 +1306,21 @@ void KeyboardLayoutWidget::drawKeyLabelHelper(QPainter *painter,
     //  BOTTOMLEFT  BOTTOMRIGHT
     switch (glp) {
     case KEYBOARD_DRAWING_POS_TOPLEFT:
+        // qCDebug(FCITX5_LAYOUT) << "glp is KEYBOARD_DRAWING_POS_TOPLEFT";
         align = Qt::AlignTop | Qt::AlignLeft;
         margin.setBottom(rect.height() / 2);
         break;
     case KEYBOARD_DRAWING_POS_BOTTOMLEFT:
+        // qCDebug(FCITX5_LAYOUT) << "glp is KEYBOARD_DRAWING_POS_BOTTOMLEFT";
         align = Qt::AlignBottom | Qt::AlignLeft;
         break;
     case KEYBOARD_DRAWING_POS_TOPRIGHT:
+        // qCDebug(FCITX5_LAYOUT) << "glp is KEYBOARD_DRAWING_POS_TOPRIGHT";
         align = Qt::AlignTop | Qt::AlignRight;
         margin.setBottom(rect.height() / 2);
         break;
     case KEYBOARD_DRAWING_POS_BOTTOMRIGHT:
+        // qCDebug(FCITX5_LAYOUT) << "glp is KEYBOARD_DRAWING_POS_BOTTOMRIGHT";
         align = Qt::AlignBottom | Qt::AlignRight;
         margin.setLeft(rect.width() / 2);
         break;
@@ -1194,15 +1329,19 @@ void KeyboardLayoutWidget::drawKeyLabelHelper(QPainter *painter,
     }
     switch (end_glp) {
     case KEYBOARD_DRAWING_POS_TOPLEFT:
+        // qCDebug(FCITX5_LAYOUT) << "end_glp is KEYBOARD_DRAWING_POS_TOPLEFT";
         margin.setRight(rect.width() / 2);
         break;
     case KEYBOARD_DRAWING_POS_BOTTOMLEFT:
+        // qCDebug(FCITX5_LAYOUT) << "end_glp is KEYBOARD_DRAWING_POS_BOTTOMLEFT";
         margin.setRight(rect.width() / 2);
         margin.setTop(rect.height() / 2);
         break;
     case KEYBOARD_DRAWING_POS_TOPRIGHT:
+        // qCDebug(FCITX5_LAYOUT) << "end_glp is KEYBOARD_DRAWING_POS_TOPRIGHT";
         break;
     case KEYBOARD_DRAWING_POS_BOTTOMRIGHT:
+        // qCDebug(FCITX5_LAYOUT) << "end_glp is KEYBOARD_DRAWING_POS_BOTTOMRIGHT";
         margin.setTop(rect.height() / 2);
         break;
     default:
@@ -1212,6 +1351,7 @@ void KeyboardLayoutWidget::drawKeyLabelHelper(QPainter *painter,
     // which means we have longer width
     if (textRect.width() == rect.width() &&
         textRect.height() != rect.height()) {
+        // qCDebug(FCITX5_LAYOUT) << "textRect.width() == rect.width() && textRect.height() != rect.height()";
         text.replace('\n', ' ');
     }
 
@@ -1275,22 +1415,27 @@ void KeyboardLayoutWidget::drawKeyLabelHelper(QPainter *painter,
     name[KEYBOARD_DRAWING_POS_TOPRIGHT] = "TOPRIGHT";
     name[KEYBOARD_DRAWING_POS_BOTTOMLEFT] = "BOTTOMLEFT";
     name[KEYBOARD_DRAWING_POS_BOTTOMRIGHT] = "BOTTOMRIGHT";
-    qDebug() << "KEY" << text << name[glp] << name[end_glp] << rect << textRect;
+    // qCDebug(FCITX5_LAYOUT) << "KEY" << text << name[glp] << name[end_glp] << rect << textRect;
 #endif
+    // qCDebug(FCITX5_LAYOUT) << "Exiting KeyboardLayoutWidget::drawKeyLabelHelper for text:" << text_;
 }
 
 void KeyboardLayoutWidget::drawDoodad(QPainter *painter, Doodad *doodad) {
+    // qCDebug(FCITX5_LAYOUT) << "Entering KeyboardLayoutWidget::drawDoodad";
     switch (doodad->doodad->any.type) {
     case XkbOutlineDoodad:
     case XkbSolidDoodad:
+        // qCDebug(FCITX5_LAYOUT) << "doodad->doodad->any.type is XkbOutlineDoodad or XkbSolidDoodad";
         drawShapeDoodad(painter, doodad, &doodad->doodad->shape);
         break;
 
     case XkbTextDoodad:
+        // qCDebug(FCITX5_LAYOUT) << "doodad->doodad->any.type is XkbTextDoodad";
         drawTextDoodad(painter, doodad, &doodad->doodad->text);
         break;
 
     case XkbIndicatorDoodad:
+        // qCDebug(FCITX5_LAYOUT) << "doodad->doodad->any.type is XkbIndicatorDoodad";
         drawIndicatorDoodad(painter, doodad, &doodad->doodad->indicator);
         break;
 
@@ -1298,19 +1443,24 @@ void KeyboardLayoutWidget::drawDoodad(QPainter *painter, Doodad *doodad) {
         /* g_print ("draw_doodad: logo: %s\n", doodad->doodad->logo.logo_name);
          */
         /* XkbLogoDoodadRec is essentially a subclass of XkbShapeDoodadRec */
+        // qCDebug(FCITX5_LAYOUT) << "doodad->doodad->any.type is XkbLogoDoodad";
         drawShapeDoodad(painter, doodad, &doodad->doodad->shape);
         break;
     }
+    // qCDebug(FCITX5_LAYOUT) << "Exiting KeyboardLayoutWidget::drawDoodad";
 }
 
 void KeyboardLayoutWidget::drawShapeDoodad(QPainter *painter, Doodad *doodad,
                                            XkbShapeDoodadPtr shapeDoodad) {
+    // qCDebug(FCITX5_LAYOUT) << "Entering KeyboardLayoutWidget::drawShapeDoodad";
     XkbShapeRec *shape;
     QColor color;
     int i;
 
-    if (!xkb)
+    if (!xkb) {
+        // qCDebug(FCITX5_LAYOUT) << "Exiting KeyboardLayoutWidget::drawShapeDoodad: xkb is null.";
         return;
+    }
 
     shape = xkb->geom->shapes + shapeDoodad->shape_ndx;
     color = colors[shapeDoodad->color_ndx];
@@ -1329,13 +1479,17 @@ void KeyboardLayoutWidget::drawShapeDoodad(QPainter *painter, Doodad *doodad,
                     doodad->originX + shapeDoodad->left,
                     doodad->originY + shapeDoodad->top);
     }
+    // qCDebug(FCITX5_LAYOUT) << "Exiting KeyboardLayoutWidget::drawShapeDoodad";
 }
 
 void KeyboardLayoutWidget::drawTextDoodad(QPainter *painter, Doodad *doodad,
                                           XkbTextDoodadPtr textDoodad) {
+    // qCDebug(FCITX5_LAYOUT) << "Entering KeyboardLayoutWidget::drawTextDoodad";
     int x, y;
-    if (!xkb)
+    if (!xkb) {
+        // qCDebug(FCITX5_LAYOUT) << "Exiting KeyboardLayoutWidget::drawTextDoodad: xkb is null.";
         return;
+    }
 
     x = xkbToPixmapCoord(doodad->originX + textDoodad->left);
     y = xkbToPixmapCoord(doodad->originY + textDoodad->top);
@@ -1370,16 +1524,20 @@ void KeyboardLayoutWidget::drawTextDoodad(QPainter *painter, Doodad *doodad,
     painter->setTransform(trans);
     painter->drawText(rect, Qt::AlignLeft, textDoodad->text);
     painter->restore();
+    // qCDebug(FCITX5_LAYOUT) << "Exiting KeyboardLayoutWidget::drawTextDoodad";
 }
 
 void KeyboardLayoutWidget::drawIndicatorDoodad(
     QPainter *painter, Doodad *doodad, XkbIndicatorDoodadPtr indicatorDoodad) {
+    // qCDebug(FCITX5_LAYOUT) << "Entering KeyboardLayoutWidget::drawIndicatorDoodad";
     QColor color;
     XkbShapeRec *shape;
     int i;
 
-    if (!xkb)
+    if (!xkb) {
+        // qCDebug(FCITX5_LAYOUT) << "Exiting KeyboardLayoutWidget::drawIndicatorDoodad: xkb is null.";
         return;
+    }
 
     initInicatorDoodad(doodad->doodad, *doodad);
 
@@ -1392,10 +1550,11 @@ void KeyboardLayoutWidget::drawIndicatorDoodad(
         drawOutline(painter, shape->outlines + i, color, doodad->angle,
                     doodad->originX + indicatorDoodad->left,
                     doodad->originY + indicatorDoodad->top);
+    // qCDebug(FCITX5_LAYOUT) << "Exiting KeyboardLayoutWidget::drawIndicatorDoodad";
 }
 
 void KeyboardLayoutWidget::paintEvent(QPaintEvent *event) {
-    qDebug() << "Painting keyboard widget";
+    // qCDebug(FCITX5_LAYOUT) << "Painting keyboard widget";
     QWidget::paintEvent(event);
     QPainter p(this);
     p.setClipRect(event->rect());
@@ -1408,24 +1567,26 @@ void KeyboardLayoutWidget::paintEvent(QPaintEvent *event) {
 }
 
 void KeyboardLayoutWidget::resizeEvent(QResizeEvent *event) {
-    qDebug() << "Resizing keyboard widget to" << event->size();
+    // qCDebug(FCITX5_LAYOUT) << "Resizing keyboard widget to" << event->size();
     generatePixmap();
     update();
     QWidget::resizeEvent(event);
 }
 
 void KeyboardLayoutWidget::keyPressEvent(QKeyEvent *event) {
+    // qCDebug(FCITX5_LAYOUT) << "Key press event";
     return keyEvent(event);
 }
 
 void KeyboardLayoutWidget::keyReleaseEvent(QKeyEvent *event) {
+    // qCDebug(FCITX5_LAYOUT) << "Key release event";
     return keyEvent(event);
 }
 
 void KeyboardLayoutWidget::keyEvent(QKeyEvent *event) {
-    qDebug() << "Processing key event, type:" << event->type()
-             << "key:" << event->key()
-             << "native scancode:" << event->nativeScanCode();
+    // qCDebug(FCITX5_LAYOUT) << "Processing key event, type:" << event->type()
+    //          << "key:" << event->key()
+    //          << "native scancode:" << event->nativeScanCode();
     do {
         if (!xkb)
             break;
@@ -1445,11 +1606,12 @@ void KeyboardLayoutWidget::keyEvent(QKeyEvent *event) {
         key->pressed = (event->type() == QEvent::KeyPress);
         generatePixmap(true);
         repaint();
-        qDebug() << "Key state updated, repainting widget";
+        // qCDebug(FCITX5_LAYOUT) << "Key state updated, repainting widget";
     } while (0);
 }
 
 QString KeyboardLayoutWidget::keySymToString(unsigned long keysym) {
+    // qCDebug(FCITX5_LAYOUT) << "Entering KeyboardLayoutWidget::keySymToString for keysym:" << keysym;
     if (keysym == 0 || keysym == XK_VoidSymbol)
         return {};
 
@@ -1457,28 +1619,35 @@ QString KeyboardLayoutWidget::keySymToString(unsigned long keysym) {
         fcitx::Key(static_cast<fcitx::KeySym>(keysym)).normalize().sym());
 
     if (deadMap.contains(keysym)) {
+        // qCDebug(FCITX5_LAYOUT) << "Using dead key map for keysym:" << keysym;
         unicode = deadMap[keysym];
     }
     QString text;
     if (unicode && QChar::category(unicode) != QChar::Other_Control &&
         !QChar::isSpace(unicode)) {
+        // qCDebug(FCITX5_LAYOUT) << "Using unicode for keysym:" << keysym << "unicode:" << unicode;
         text = QString::fromUcs4(&unicode, 1);
     } else {
         if (keysym == XK_Prior) {
+            // qCDebug(FCITX5_LAYOUT) << "Using PgUp for keysym:" << keysym;
             text = "PgUp";
         } else if (keysym == XK_Next) {
+            // qCDebug(FCITX5_LAYOUT) << "Using PgDn for keysym:" << keysym;
             text = "PgDn";
         } else {
+            // qCDebug(FCITX5_LAYOUT) << "Using XKeysymToString for keysym:" << keysym;
             text = QString(XKeysymToString(keysym));
         }
     }
     if (text != "_") {
+        // qCDebug(FCITX5_LAYOUT) << "Replacing _ for keysym:" << keysym << "text:" << text;
         if (text.endsWith("_L") || text.endsWith("_R"))
             text = text.replace('_', ' ');
         else
             text = text.replace('_', '\n');
     }
 
+    // qCDebug(FCITX5_LAYOUT) << "Exiting KeyboardLayoutWidget::keySymToString for keysym:" << keysym << "text:" << text;
     return text;
 }
 

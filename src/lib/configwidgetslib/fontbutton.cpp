@@ -23,24 +23,33 @@ FontButton::FontButton(QWidget *parent) : QWidget(parent) {
 }
 
 FontButton::~FontButton() {
-    qCDebug(KCM_FCITX5) << "FontButton destroyed, current font:" << font_.toString();
+    // qCDebug(KCM_FCITX5) << "FontButton destroyed, current font:" << font_.toString();
 }
 
-const QFont &FontButton::font() { return font_; }
+const QFont &FontButton::font()
+{
+    // qCDebug(KCM_FCITX5) << "Returning font:" << font_.toString();
+    return font_;
+}
 
-QString FontButton::fontName() { return fontPreviewLabel->text(); }
+QString FontButton::fontName()
+{
+    // qCDebug(KCM_FCITX5) << "Returning font name:" << fontPreviewLabel->text();
+    return fontPreviewLabel->text();
+}
 
 void FontButton::setFont(const QFont &font) {
-    qCDebug(KCM_FCITX5) << "Setting font:" << font.toString()
-                       << "previous font:" << font_.toString();
+    // qCDebug(KCM_FCITX5) << "Setting font:" << font.toString()
+    //                    << "previous font:" << font_.toString();
     font_ = font;
     if (font.family() != font_.family()) {
-        qCDebug(KCM_FCITX5) << "Font family changed from:" << font.family()
-                           << "to:" << font_.family();
+        // qCDebug(KCM_FCITX5) << "Font family changed from:" << font.family()
+        //                    << "to:" << font_.family();
         Q_EMIT fontChanged(font_);
     }
     fontPreviewLabel->setText(fontToString(font_));
     fontPreviewLabel->setFont(font_);
+    // qCDebug(KCM_FCITX5) << "Exiting FontButton::setFont.";
 }
 
 void FontButton::selectFont() {

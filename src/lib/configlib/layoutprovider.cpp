@@ -17,21 +17,22 @@ LayoutProvider::LayoutProvider(DBusProvider *dbus, QObject *parent)
       variantModel_(new VariantInfoModel(this)),
       layoutFilterModel_(new LanguageFilterModel(this)),
       variantFilterModel_(new LanguageFilterModel(this)) {
-    qCDebug(KCM_FCITX5) << "Initializing LayoutProvider";
+    // qCDebug(KCM_FCITX5) << "Initializing LayoutProvider";
     layoutFilterModel_->setSourceModel(layoutModel_);
     variantFilterModel_->setSourceModel(variantModel_);
 
     connect(dbus, &DBusProvider::availabilityChanged, this,
             &LayoutProvider::availabilityChanged);
     availabilityChanged();
+    // qCDebug(KCM_FCITX5) << "Exiting LayoutProvider constructor";
 }
 
 LayoutProvider::~LayoutProvider() {
-    qCDebug(KCM_FCITX5) << "Destroying LayoutProvider";
+    // qCDebug(KCM_FCITX5) << "Destroying LayoutProvider";
 }
 
 void LayoutProvider::availabilityChanged() {
-    qCDebug(KCM_FCITX5) << "DBus availability changed, loading layouts";
+    // qCDebug(KCM_FCITX5) << "DBus availability changed, loading layouts";
     setLoaded(false);
     if (!dbus_->controller()) {
         qCWarning(KCM_FCITX5) << "DBus controller not available, cannot load layouts";
@@ -45,6 +46,7 @@ void LayoutProvider::availabilityChanged() {
 }
 
 void LayoutProvider::fetchLayoutFinished(QDBusPendingCallWatcher *watcher) {
+    // qCDebug(KCM_FCITX5) << "Entering fetchLayoutFinished";
     watcher->deleteLater();
     QDBusPendingReply<FcitxQtLayoutInfoList> reply = *watcher;
     if (reply.isError()) {
@@ -82,14 +84,14 @@ void LayoutProvider::fetchLayoutFinished(QDBusPendingCallWatcher *watcher) {
         }
         languageModel_->append(languageName, language);
     }
-    qCDebug(KCM_FCITX5) << "Loaded" << layoutInfo.size() << "keyboard layouts";
+    // qCDebug(KCM_FCITX5) << "Loaded" << layoutInfo.size() << "keyboard layouts";
     layoutModel_->setLayoutInfo(std::move(layoutInfo));
     setLoaded(true);
-    qCDebug(KCM_FCITX5) << "Layout loading completed";
+    // qCDebug(KCM_FCITX5) << "Layout loading completed";
 }
 
 int LayoutProvider::layoutIndex(const QString &layoutString) {
-    qCDebug(KCM_FCITX5) << "Looking up layout index for:" << layoutString;
+    // qCDebug(KCM_FCITX5) << "Looking up layout index for:" << layoutString;
     auto dashPos = layoutString.indexOf("-");
     QString layout;
     if (dashPos >= 0) {
@@ -103,15 +105,17 @@ int LayoutProvider::layoutIndex(const QString &layoutString) {
                                  return info.layout() == layout;
                              });
     if (iter != info.end()) {
+        // qCDebug(KCM_FCITX5) << "Found layout at source row" << row;
         auto row = std::distance(info.begin(), iter);
         return layoutFilterModel_->mapFromSource(layoutModel_->index(row))
             .row();
     }
+    // qCWarning(KCM_FCITX5) << "Layout" << layoutString << "not found, returning index 0.";
     return 0;
 }
 
 int LayoutProvider::variantIndex(const QString &layoutString) {
-    qCDebug(KCM_FCITX5) << "Looking up variant index for:" << layoutString;
+    // qCDebug(KCM_FCITX5) << "Looking up variant index for:" << layoutString;
     auto dashPos = layoutString.indexOf("-");
     QString variant;
     if (dashPos >= 0) {
@@ -123,21 +127,26 @@ int LayoutProvider::variantIndex(const QString &layoutString) {
                                  return info.variant() == variant;
                              });
     if (iter != vinfo.end()) {
+        // qCDebug(KCM_FCITX5) << "Found variant at source row" << row;
         auto row = std::distance(vinfo.begin(), iter);
         return variantFilterModel_->mapFromSource(variantModel_->index(row))
             .row();
     }
+    // qCWarning(KCM_FCITX5) << "Variant" << layoutString << "not found, returning index 0.";
     return 0;
 }
 
 QString LayoutProvider::layoutDescription(const QString &layoutString) {
+    // qCDebug(KCM_FCITX5) << "Entering layoutDescription for:" << layoutString;
     auto dashPos = layoutString.indexOf("-");
     QString layout;
     QString variant;
     if (dashPos >= 0) {
+        // qCDebug(KCM_FCITX5) << "Layout string contains variant";
         layout = layoutString.left(dashPos);
         variant = layoutString.mid(dashPos + 1);
     } else {
+        // qCDebug(KCM_FCITX5) << "Layout string does not contain variant";
         layout = layoutString;
     }
     auto &info = layoutModel_->layoutInfo();
@@ -146,10 +155,12 @@ QString LayoutProvider::layoutDescription(const QString &layoutString) {
                                  return info.layout() == layout;
                              });
     if (iter == info.end()) {
+        // qCWarning(KCM_FCITX5) << "Layout description not found for:" << layoutString;
         return QString();
     }
 
     if (variant.isEmpty()) {
+        // qCDebug(KCM_FCITX5) << "Layout string does not contain variant";
         return iter->description();
     }
 
@@ -159,8 +170,10 @@ QString LayoutProvider::layoutDescription(const QString &layoutString) {
                          return info.variant() == variant;
                      });
     if (variantIter == iter->variants().end()) {
+        // qCWarning(KCM_FCITX5) << "Variant description not found for:" << variant;
         return iter->description();
     }
+    // qCDebug(KCM_FCITX5) << "Found layout description, final return";
     return QString(_("%1 - %2"))
         .arg(iter->description(), variantIter->description());
 }

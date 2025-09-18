@@ -66,14 +66,18 @@ private:
 
 int AddonDelegate::dependantLayoutValue(int value, int width,
                                         int totalWidth) const {
+    // qCDebug(KCM_FCITX5) << "dependantLayoutValue called with value:" << value << "width:" << width << "totalWidth:" << totalWidth;
     if (itemView()->layoutDirection() == Qt::LeftToRight) {
+        // qCDebug(KCM_FCITX5) << "itemView()->layoutDirection() == Qt::LeftToRight";
         return value;
     }
 
+    // qCDebug(KCM_FCITX5) << "itemView()->layoutDirection() == Qt::RightToLeft";
     return totalWidth - width - value;
 }
 
 QFont AddonDelegate::titleFont(const QFont &baseFont) const {
+    // qCDebug(KCM_FCITX5) << "titleFont called with baseFont:" << baseFont;
     QFont retFont(baseFont);
     retFont.setBold(true);
 
@@ -83,27 +87,28 @@ QFont AddonDelegate::titleFont(const QFont &baseFont) const {
 AddonDelegate::AddonDelegate(QAbstractItemView *listView, AddonSelector *parent)
     : KWidgetItemDelegate(listView, parent), checkBox_(new QCheckBox),
       pushButton_(new QToolButton), parent_(parent) {
-    qCDebug(KCM_FCITX5) << "AddonDelegate constructor called";
+    // qCDebug(KCM_FCITX5) << "AddonDelegate constructor called";
     pushButton_->setIcon(QIcon::fromTheme(
         "preferences-system-symbolic")); // only for getting size matters
 }
 
 AddonDelegate::~AddonDelegate() {
-    qCDebug(KCM_FCITX5) << "AddonDelegate destructor called";
+    // qCDebug(KCM_FCITX5) << "AddonDelegate destructor called";
     delete checkBox_;
     delete pushButton_;
 }
 
 void AddonDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option,
                           const QModelIndex &index) const {
-    qCDebug(KCM_FCITX5) << "AddonDelegate::paint called for index:" << index;
+    // qCDebug(KCM_FCITX5) << "AddonDelegate::paint called for index:" << index;
     if (!index.isValid()) {
-        qCWarning(KCM_FCITX5) << "Invalid index in AddonDelegate::paint";
+        // qCWarning(KCM_FCITX5) << "Invalid index in AddonDelegate::paint";
         return;
     }
 
     if (index.data(RowTypeRole).toInt() == CategoryType) {
         paintCategoryHeader(painter, option, index);
+        // qCDebug(KCM_FCITX5) << "Exiting AddonDelegate::paint (category header)";
         return;
     }
 
@@ -150,12 +155,14 @@ void AddonDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option,
                           index.model()->data(index, CommentRole).toString(),
                           Qt::ElideRight, contentsRect.width()));
     painter->restore();
+    // qCDebug(KCM_FCITX5) << "Exiting AddonDelegate::paint";
 }
 
 QSize AddonDelegate::sizeHint(const QStyleOptionViewItem &option,
                               const QModelIndex &index) const {
-
+    // qCDebug(KCM_FCITX5) << "Entering AddonDelegate::sizeHint for index" << index.row();
     if (index.data(RowTypeRole).toInt() == CategoryType) {
+        // qCDebug(KCM_FCITX5) << "Exiting AddonDelegate::sizeHint (category header)";
         return categoryHeaderSizeHint();
     }
     int i = 4;
@@ -180,7 +187,9 @@ QSize AddonDelegate::sizeHint(const QStyleOptionViewItem &option,
 
 QList<QWidget *>
 AddonDelegate::createItemWidgets(const QModelIndex &index) const {
+    // qCDebug(KCM_FCITX5) << "Entering AddonDelegate::createItemWidgets for index" << index.row();
     if (index.data(RowTypeRole).toInt() == CategoryType) {
+        // qCDebug(KCM_FCITX5) << "Exiting AddonDelegate::createItemWidgets (category header)";
         return {};
     }
     QList<QWidget *> widgetList;
@@ -212,13 +221,16 @@ AddonDelegate::createItemWidgets(const QModelIndex &index) const {
 
     widgetList << enabledCheckBox << configurePushButton;
 
+    // qCDebug(KCM_FCITX5) << "Exiting AddonDelegate::createItemWidgets";
     return widgetList;
 }
 
 void AddonDelegate::updateItemWidgets(const QList<QWidget *> &widgets,
                        const QStyleOptionViewItem &option,
                        const QPersistentModelIndex &index) const {
+    // qCDebug(KCM_FCITX5) << "Entering AddonDelegate::updateItemWidgets for index" << index.row();
     if (index.data(RowTypeRole).toInt() == CategoryType) {
+        // qCDebug(KCM_FCITX5) << "Exiting AddonDelegate::updateItemWidgets (category header)";
         return;
     }
     QCheckBox *checkBox = static_cast<QCheckBox *>(widgets[0]);
@@ -239,9 +251,11 @@ void AddonDelegate::updateItemWidgets(const QList<QWidget *> &widgets,
         option.rect.height() / 2 - configurePushButtonSizeHint.height() / 2);
 
     if (!index.isValid() || !index.internalPointer()) {
+        // qCDebug(KCM_FCITX5) << "Invalid index or internal pointer, hiding widgets.";
         checkBox->setVisible(false);
         configurePushButton->setVisible(false);
     } else {
+        // qCDebug(KCM_FCITX5) << "Valid index and internal pointer, showing widgets.";
         checkBox->setChecked(
             index.model()->data(index, Qt::CheckStateRole).toBool());
         configurePushButton->setEnabled(
@@ -249,6 +263,7 @@ void AddonDelegate::updateItemWidgets(const QList<QWidget *> &widgets,
         configurePushButton->setVisible(
             index.model()->data(index, ConfigurableRole).toBool());
     }
+    // qCDebug(KCM_FCITX5) << "Exiting AddonDelegate::updateItemWidgets";
 }
 
 void AddonDelegate::checkBoxClicked(bool state) {
@@ -261,12 +276,14 @@ void AddonDelegate::checkBoxClicked(bool state) {
 
     const_cast<QAbstractItemModel *>(index.model())
         ->setData(index, state, Qt::CheckStateRole);
+    qCDebug(KCM_FCITX5) << "Exiting AddonDelegate::checkBoxClicked";
 }
 
 void AddonDelegate::configureClicked() {
+    qCDebug(KCM_FCITX5) << "Entering AddonDelegate::configureClicked";
     const QModelIndex index = focusedIndex();
     auto name = index.data(AddonNameRole).toString();
-    qCDebug(KCM_FCITX5) << "AddonDelegate::configureClicked called for addon:" << name;
+    // qCDebug(KCM_FCITX5) << "AddonDelegate::configureClicked called for addon:" << name;
     if (name.isEmpty()) {
         qCWarning(KCM_FCITX5) << "Empty addon name in configureClicked";
         return;
@@ -277,6 +294,7 @@ void AddonDelegate::configureClicked() {
         addonName);
     dialog->exec();
     delete dialog;
+    qCDebug(KCM_FCITX5) << "Exiting AddonDelegate::configureClicked";
 }
 
 AddonSelector::AddonSelector(QWidget *parent, DBusProvider *dbus)
@@ -326,20 +344,21 @@ AddonSelector::AddonSelector(QWidget *parent, DBusProvider *dbus)
     });
     connect(addonModel_, &AddonProxyModel::dataChanged, this,
             [this]() { proxyModel_->invalidate(); });
+    qCDebug(KCM_FCITX5) << "Exiting AddonSelector::AddonSelector";
 }
 
 AddonSelector::~AddonSelector() {
-    qCDebug(KCM_FCITX5) << "AddonSelector destructor called";
+    // qCDebug(KCM_FCITX5) << "AddonSelector destructor called";
     delete delegate_;
 }
 
 void AddonSelector::load() {
-    qCDebug(KCM_FCITX5) << "AddonSelector::load called";
+    // qCDebug(KCM_FCITX5) << "AddonSelector::load called";
     availabilityChanged();
 }
 
 void AddonSelector::save() {
-    qCDebug(KCM_FCITX5) << "AddonSelector::save called";
+    // qCDebug(KCM_FCITX5) << "AddonSelector::save called";
 
     if (!dbus_->controller()) {
         qCWarning(KCM_FCITX5) << "DBus controller not available in save";
@@ -359,9 +378,11 @@ void AddonSelector::save() {
         list.append(state);
     }
     if (list.size()) {
+        // qCInfo(KCM_FCITX5) << "Saving" << list.size() << "addon state changes.";
         dbus_->controller()->SetAddonsState(list);
         load();
     }
+    // qCDebug(KCM_FCITX5) << "Exiting AddonSelector::save";
 }
 
 void AddonSelector::availabilityChanged() {
@@ -375,6 +396,7 @@ void AddonSelector::availabilityChanged() {
     auto watcher = new QDBusPendingCallWatcher(call, this);
     connect(watcher, &QDBusPendingCallWatcher::finished, this,
             &AddonSelector::fetchAddonFinished);
+    qCDebug(KCM_FCITX5) << "Exiting AddonSelector::availabilityChanged";
 }
 
 void AddonSelector::fetchAddonFinished(QDBusPendingCallWatcher *watcher) {
@@ -411,6 +433,7 @@ void AddonSelector::fetchAddonFinished(QDBusPendingCallWatcher *watcher) {
     proxyModel_->sort(0);
 
     ui_->listView->expandAll();
+    qCDebug(KCM_FCITX5) << "Exiting AddonSelector::fetchAddonFinished";
 }
 
 void AddonSelector::warnAddonDisable(const QString &addon) {
@@ -425,6 +448,7 @@ void AddonSelector::warnAddonDisable(const QString &addon) {
     QString depWarning, optDepWarning;
     QString sep{C_("Separator of a comma list", ", ")};
     if (auto deps = reverseDependencies_.value(addon); !deps.empty()) {
+        // qCDebug(KCM_FCITX5) << "Addon has dependencies.";
         QStringList addonNames;
         for (const auto &dep : deps) {
             auto iter = nameToAddonMap_.find(dep);
@@ -436,6 +460,7 @@ void AddonSelector::warnAddonDisable(const QString &addon) {
         depWarning = QString(_("- Disable %1\n")).arg(addonNames.join(sep));
     }
     if (auto deps = reverseOptionalDependencies_.value(addon); !deps.empty()) {
+        // qCDebug(KCM_FCITX5) << "Addon has optional dependencies.";
         QStringList addonNames;
         for (const auto &dep : deps) {
             auto iter = nameToAddonMap_.find(dep);
@@ -453,14 +478,17 @@ void AddonSelector::warnAddonDisable(const QString &addon) {
     if (QMessageBox::No ==
         QMessageBox::question(
             this, QString(_("Disable %1")).arg(addonInfo.name()), warning)) {
+        qCDebug(KCM_FCITX5) << "User confirmed disabling addon:" << addon;
         addonModel_->setData(addonModel_->findAddon(addonInfo.uniqueName()),
                              true, Qt::CheckStateRole);
     }
+    qCDebug(KCM_FCITX5) << "Exiting AddonSelector::warnAddonDisable";
 }
 
 QString AddonSelector::searchText() const { return ui_->lineEdit->text(); }
 
 bool AddonSelector::showAdvanced() const {
+    // qCDebug(KCM_FCITX5) << "AddonSelector::showAdvanced called";
     return ui_->advancedCheckbox->isChecked();
 }
 

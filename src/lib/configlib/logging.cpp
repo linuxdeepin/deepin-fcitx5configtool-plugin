@@ -6,4 +6,4 @@
 
 #include "logging.h"
 
-Q_LOGGING_CATEGORY(KCM_FCITX5, "fcitx5-config")
+Q_LOGGING_CATEGORY(KCM_FCITX5, "fcitx5.config")

@@ -53,14 +53,18 @@ public:
         spinBox_->setMaximum(INT_MAX);
         spinBox_->setMinimum(INT_MIN);
         if (option.properties().contains("IntMax")) {
+            // qCDebug(KCM_FCITX5) << "option contains IntMax";
             auto max = option.properties().value("IntMax");
             if (max.type() == QVariant::String) {
+                // qCDebug(KCM_FCITX5) << "type is String";
                 spinBox_->setMaximum(max.toInt());
             }
         }
         if (option.properties().contains("IntMin")) {
+            // qCDebug(KCM_FCITX5) << "option contains IntMin";
             auto min = option.properties().value("IntMin");
             if (min.type() == QVariant::String) {
+                // qCDebug(KCM_FCITX5) << "type is String";
                 spinBox_->setMinimum(min.toInt());
             }
         }
@@ -68,26 +72,32 @@ public:
                 &OptionWidget::valueChanged);
         layout->addWidget(spinBox_);
         setLayout(layout);
+        qCDebug(KCM_FCITX5) << "IntegerOptionWidget for path" << path << "created.";
     }
 
     void readValueFrom(const QVariantMap &map) override {
+        // qCDebug(KCM_FCITX5) << "Entering IntegerOptionWidget::readValueFrom for path:" << path();
         auto value = readString(map, path());
         if (value.isNull()) {
-            qCDebug(KCM_FCITX5) << "Read default value for IntegerOptionWidget:" << defaultValue_;
+            // qCDebug(KCM_FCITX5) << "Read default value for IntegerOptionWidget:" << defaultValue_;
             spinBox_->setValue(defaultValue_);
         } else {
+            // qCDebug(KCM_FCITX5) << "Read value for IntegerOptionWidget:" << value;
             spinBox_->setValue(value.toInt());
         }
+        // qCDebug(KCM_FCITX5) << "Exiting IntegerOptionWidget::readValueFrom for path:" << path();
     }
 
     void writeValueTo(QVariantMap &map) override {
+        // qCDebug(KCM_FCITX5) << "Entering IntegerOptionWidget::writeValueTo for path:" << path();
         int value = spinBox_->value();
-        qCDebug(KCM_FCITX5) << "Write value for IntegerOptionWidget:" << value;
+
         writeVariant(map, path(), QString::number(value));
+        // qCDebug(KCM_FCITX5) << "Exiting IntegerOptionWidget::writeValueTo for path:" << path();
     }
 
     void restoreToDefault() override {
-        qCDebug(KCM_FCITX5) << "Restore IntegerOptionWidget to default:" << defaultValue_;
+        // qCDebug(KCM_FCITX5) << "Restore IntegerOptionWidget to default:" << defaultValue_;
         spinBox_->setValue(defaultValue_);
     }
 
@@ -112,22 +122,27 @@ public:
                 &OptionWidget::valueChanged);
         layout->addWidget(lineEdit_);
         setLayout(layout);
+        qCDebug(KCM_FCITX5) << "StringOptionWidget for path" << path << "created.";
     }
 
     void readValueFrom(const QVariantMap &map) override {
+        // qCDebug(KCM_FCITX5) << "Entering StringOptionWidget::readValueFrom for path:" << path();
         auto value = readString(map, path());
-        qCDebug(KCM_FCITX5) << "Read value for StringOptionWidget:" << value;
+
         lineEdit_->setText(value);
+        // qCDebug(KCM_FCITX5) << "Exiting StringOptionWidget::readValueFrom for path:" << path();
     }
 
     void writeValueTo(QVariantMap &map) override {
+        // qCDebug(KCM_FCITX5) << "Entering StringOptionWidget::writeValueTo for path:" << path();
         QString value = lineEdit_->text();
-        qCDebug(KCM_FCITX5) << "Write value for StringOptionWidget:" << value;
+
         writeVariant(map, path(), value);
+        // qCDebug(KCM_FCITX5) << "Exiting StringOptionWidget::writeValueTo for path:" << path();
     }
 
     void restoreToDefault() override {
-        qCDebug(KCM_FCITX5) << "Restore StringOptionWidget to default:" << defaultValue_;
+        // qCDebug(KCM_FCITX5) << "Restore StringOptionWidget to default:" << defaultValue_;
         lineEdit_->setText(defaultValue_);
     }
 
@@ -151,22 +166,27 @@ public:
                 &OptionWidget::valueChanged);
         layout->addWidget(fontButton_);
         setLayout(layout);
+        qCDebug(KCM_FCITX5) << "FontOptionWidget for path" << path << "created.";
     }
 
     void readValueFrom(const QVariantMap &map) override {
+        // qCDebug(KCM_FCITX5) << "Entering FontOptionWidget::readValueFrom for path:" << path();
         auto value = readString(map, path());
-        qCDebug(KCM_FCITX5) << "Read font value for FontOptionWidget:" << value;
+
         fontButton_->setFont(parseFont(value));
+        // qCDebug(KCM_FCITX5) << "Exiting FontOptionWidget::readValueFrom for path:" << path();
     }
 
     void writeValueTo(QVariantMap &map) override {
+        // qCDebug(KCM_FCITX5) << "Entering FontOptionWidget::writeValueTo for path:" << path();
         QString fontName = fontButton_->fontName();
-        qCDebug(KCM_FCITX5) << "Write font value for FontOptionWidget:" << fontName;
+
         writeVariant(map, path(), fontName);
+        // qCDebug(KCM_FCITX5) << "Exiting FontOptionWidget::writeValueTo for path:" << path();
     }
 
     void restoreToDefault() override {
-        qCDebug(KCM_FCITX5) << "Restore FontOptionWidget to default:" << defaultValue_;
+        // qCDebug(KCM_FCITX5) << "Restore FontOptionWidget to default for path" << path() << "with value" << defaultValue_;
         fontButton_->setFont(parseFont(defaultValue_));
     }
 
@@ -191,23 +211,28 @@ public:
         checkBox_->setText(option.description());
         layout->addWidget(checkBox_);
         setLayout(layout);
+        qCDebug(KCM_FCITX5) << "BooleanOptionWidget for path" << path << "created.";
     }
 
     void readValueFrom(const QVariantMap &map) override {
+        // qCDebug(KCM_FCITX5) << "Entering BooleanOptionWidget::readValueFrom for path:" << path();
         bool value = readBool(map, path());
-        qCDebug(KCM_FCITX5) << "Read value for BooleanOptionWidget:" << value;
+
         checkBox_->setChecked(value);
+        // qCDebug(KCM_FCITX5) << "Exiting BooleanOptionWidget::readValueFrom for path:" << path();
     }
 
     void writeValueTo(QVariantMap &map) override {
+        // qCDebug(KCM_FCITX5) << "Entering BooleanOptionWidget::writeValueTo for path:" << path();
         bool isChecked = checkBox_->isChecked();
         QString value = isChecked ? "True" : "False";
-        qCDebug(KCM_FCITX5) << "Write value for BooleanOptionWidget:" << isChecked;
+
         writeVariant(map, path(), value);
+        // qCDebug(KCM_FCITX5) << "Exiting BooleanOptionWidget::writeValueTo for path:" << path();
     }
 
     void restoreToDefault() override {
-        qCDebug(KCM_FCITX5) << "Restore BooleanOptionWidget to default:" << defaultValue_;
+        // qCDebug(KCM_FCITX5) << "Restore BooleanOptionWidget to default for path" << path() << "with value" << defaultValue_;
         checkBox_->setChecked(defaultValue_);
     }
 
@@ -241,22 +266,24 @@ public:
         auto variant = option.defaultValue().variant();
         QVariantMap map;
         if (variant.canConvert<QDBusArgument>()) {
+            // qCDebug(KCM_FCITX5) << "variant can convert to QDBusArgument";
             auto argument = qvariant_cast<QDBusArgument>(variant);
             argument >> map;
         }
         defaultValue_ = readValue(map, "");
         setLayout(layout);
+        qCDebug(KCM_FCITX5) << "KeyListOptionWidget for path" << path << "created.";
     }
 
     void readValueFrom(const QVariantMap &map) override {
         auto keys = readValue(map, path());
-        qCDebug(KCM_FCITX5) << "Read keys for KeyListOptionWidget, count:" << keys.size();
+        // qCDebug(KCM_FCITX5) << "Read keys for KeyListOptionWidget, count:" << keys.size();
         keyListWidget_->setKeys(keys);
     }
 
     void writeValueTo(QVariantMap &map) override {
         auto keys = keyListWidget_->keys();
-        qCDebug(KCM_FCITX5) << "Write keys for KeyListOptionWidget, count:" << keys.size();
+        // qCDebug(KCM_FCITX5) << "Write keys for KeyListOptionWidget, count:" << keys.size();
         int i = 0;
         for (auto &key : keys) {
             auto value = QString::fromUtf8(key.toString().data());
@@ -264,17 +291,19 @@ public:
             i++;
         }
         if (keys.empty()) {
+            // qCDebug(KCM_FCITX5) << "Write empty keys for KeyListOptionWidget";
             writeVariant(map, path(), QVariantMap());
         }
     }
 
     void restoreToDefault() override {
-        qCDebug(KCM_FCITX5) << "Restore KeyListOptionWidget to default, count:" << defaultValue_.size();
+        // qCDebug(KCM_FCITX5) << "Restore KeyListOptionWidget to default, count:" << defaultValue_.size();
         keyListWidget_->setKeys(defaultValue_);
     }
 
 private:
     QList<fcitx::Key> readValue(const QVariantMap &map, const QString &path) {
+        // qCDebug(KCM_FCITX5) << "Read keys for KeyListOptionWidget, path:" << path;
         int i = 0;
         QList<Key> keys;
         while (true) {
@@ -283,11 +312,13 @@ private:
                                              .arg(path.isEmpty() ? "" : "/")
                                              .arg(i));
             if (value.isNull()) {
+                // qCDebug(KCM_FCITX5) << "Read empty key for KeyListOptionWidget";
                 break;
             }
             keys << Key(value.toUtf8().constData());
             i++;
         }
+        // qCDebug(KCM_FCITX5) << "Read keys for KeyListOptionWidget, count:" << keys.size();
         return keys;
     }
 
@@ -317,29 +348,34 @@ public:
                 &OptionWidget::valueChanged);
         layout->addWidget(keyWidget_);
         setLayout(layout);
+        qCDebug(KCM_FCITX5) << "KeyOptionWidget for path" << path << "created.";
     }
 
     void readValueFrom(const QVariantMap &map) override {
+        // qCDebug(KCM_FCITX5) << "Entering KeyOptionWidget::readValueFrom for path:" << path();
         Key key;
         auto value = readString(map, path());
         key = Key(value.toUtf8().constData());
-        qCDebug(KCM_FCITX5) << "Read key for KeyOptionWidget:" << value;
+        // qCDebug(KCM_FCITX5) << "Read key for KeyOptionWidget:" << value;
         keyWidget_->setKeySequence({key});
+        // qCDebug(KCM_FCITX5) << "Exiting KeyOptionWidget::readValueFrom for path:" << path();
     }
 
     void writeValueTo(QVariantMap &map) override {
+        // qCDebug(KCM_FCITX5) << "Entering KeyOptionWidget::writeValueTo for path:" << path();
         auto keys = keyWidget_->keySequence();
         Key key;
         if (keys.size()) {
             key = keys[0];
         }
         auto value = QString::fromUtf8(key.toString().data());
-        qCDebug(KCM_FCITX5) << "Write key for KeyOptionWidget:" << value;
+        // qCDebug(KCM_FCITX5) << "Write key for KeyOptionWidget:" << value;
         writeVariant(map, path(), value);
+        // qCDebug(KCM_FCITX5) << "Exiting KeyOptionWidget::writeValueTo for path:" << path();
     }
 
     void restoreToDefault() override {
-        qCDebug(KCM_FCITX5) << "Restore KeyOptionWidget";
+        // qCDebug(KCM_FCITX5) << "Restore KeyOptionWidget";
         keyWidget_->setKeySequence({defaultValue_});
     }
 
@@ -394,8 +430,10 @@ public:
                 });
 
         connect(toolButton_, &QToolButton::clicked, this, [this]() {
+            qCDebug(KCM_FCITX5) << "EnumOptionWidget tool button clicked for path:" << this->path();
             ConfigWidget *configWidget = getConfigWidget(this);
             if (!configWidget) {
+                qCWarning(KCM_FCITX5) << "ConfigWidget not found for EnumOptionWidget at path:" << this->path();
                 return;
             }
             QPointer<QDialog> dialog = ConfigWidget::configDialog(
@@ -407,31 +445,39 @@ public:
         });
 
         defaultValue_ = option.defaultValue().variant().toString();
+        qCDebug(KCM_FCITX5) << "EnumOptionWidget for path" << path << "created.";
     }
 
     void readValueFrom(const QVariantMap &map) override {
+        // qCDebug(KCM_FCITX5) << "Entering EnumOptionWidget::readValueFrom for path:" << path();
         auto value = readString(map, path());
         auto idx = comboBox_->findData(value);
         if (idx < 0) {
+            // qCDebug(KCM_FCITX5) << "Read value for EnumOptionWidget not found, using default value:" << defaultValue_;
             idx = comboBox_->findData(defaultValue_);
         }
-        qCDebug(KCM_FCITX5) << "Read value for EnumOptionWidget:" << value
-                           << ", selected index:" << idx;
+        // qCDebug(KCM_FCITX5) << "Read value for EnumOptionWidget:" << value
+        //                    << ", selected index:" << idx;
         comboBox_->setCurrentIndex(idx);
         toolButton_->setVisible(
             !comboBox_->currentData(subConfigPathRole).toString().isEmpty());
+        // qCDebug(KCM_FCITX5) << "Exiting EnumOptionWidget::readValueFrom for path:" << path();
     }
 
     void writeValueTo(QVariantMap &map) override {
+        // qCDebug(KCM_FCITX5) << "Entering EnumOptionWidget::writeValueTo for path:" << path();
         QString value = comboBox_->currentData().toString();
-        qCDebug(KCM_FCITX5) << "Write value for EnumOptionWidget:" << value;
+        // qCDebug(KCM_FCITX5) << "Write value for EnumOptionWidget:" << value;
         writeVariant(map, path(), value);
+        // qCDebug(KCM_FCITX5) << "Exiting EnumOptionWidget::writeValueTo for path:" << path();
     }
 
     void restoreToDefault() override {
+        // qCDebug(KCM_FCITX5) << "Entering EnumOptionWidget::restoreToDefault for path:" << path();
         auto idx = comboBox_->findData(defaultValue_);
-        qCDebug(KCM_FCITX5) << "Restore EnumOptionWidget to default, index:" << idx;
+        // qCDebug(KCM_FCITX5) << "Restore EnumOptionWidget to default, index:" << idx;
         comboBox_->setCurrentIndex(idx);
+        // qCDebug(KCM_FCITX5) << "Exiting EnumOptionWidget::restoreToDefault for path:" << path();
     }
 
 private:
@@ -461,17 +507,19 @@ public:
                 option.defaultValue().variant().toString().toStdString());
         } catch (...) {
         }
+        qCDebug(KCM_FCITX5) << "ColorOptionWidget for path" << path << "created.";
     }
 
     void readValueFrom(const QVariantMap &map) override {
+        // qCDebug(KCM_FCITX5) << "Entering ColorOptionWidget::readValueFrom for path:" << path();
         auto value = readString(map, path());
         Color color;
         try {
             color.setFromString(value.toStdString());
-            qCDebug(KCM_FCITX5) << "Read color for ColorOptionWidget:" << value;
+            // qCDebug(KCM_FCITX5) << "Read color for ColorOptionWidget:" << value;
         } catch (...) {
             color = defaultValue_;
-            qCDebug(KCM_FCITX5) << "Using default color for ColorOptionWidget";
+            // qCDebug(KCM_FCITX5) << "Using default color for ColorOptionWidget";
         }
         QColor qcolor;
         qcolor.setRedF(color.redF());
@@ -479,9 +527,11 @@ public:
         qcolor.setBlueF(color.blueF());
         qcolor.setAlphaF(color.alphaF());
         colorButton_->setColor(qcolor);
+        // qCDebug(KCM_FCITX5) << "Exiting ColorOptionWidget::readValueFrom for path:" << path();
     }
 
     void writeValueTo(QVariantMap &map) override {
+        // qCDebug(KCM_FCITX5) << "Entering ColorOptionWidget::writeValueTo for path:" << path();
         auto color = colorButton_->color();
         Color fcitxColor;
         fcitxColor.setRedF(color.redF());
@@ -490,15 +540,16 @@ public:
         fcitxColor.setAlphaF(color.alphaF());
         writeVariant(map, path(),
                      QString::fromStdString(fcitxColor.toString()));
+        // qCDebug(KCM_FCITX5) << "Exiting ColorOptionWidget::writeValueTo for path:" << path();
     }
 
     void restoreToDefault() override {
+        // qCDebug(KCM_FCITX5) << "Restore ColorOptionWidget to default for path:" << path();
         QColor qcolor;
         qcolor.setRedF(defaultValue_.redF());
         qcolor.setGreenF(defaultValue_.greenF());
         qcolor.setBlueF(defaultValue_.blueF());
         qcolor.setAlphaF(defaultValue_.alphaF());
-        qCDebug(KCM_FCITX5) << "Restore ColorOptionWidget to default color";
         colorButton_->setColor(qcolor);
     }
 
@@ -585,14 +636,18 @@ private:
 OptionWidget *OptionWidget::addWidget(QFormLayout *layout,
                                       const fcitx::FcitxQtConfigOption &option,
                                       const QString &path, QWidget *parent) {
+    qCDebug(KCM_FCITX5) << "Adding widget for option" << option.name() << "with type" << option.type() << "and path" << path;
     OptionWidget *widget = nullptr;
     if (option.type() == "Integer") {
+        // qCDebug(KCM_FCITX5) << "option type is Integer";
         widget = new IntegerOptionWidget(option, path, parent);
         layout->addRow(QString(_("%1:")).arg(option.description()), widget);
     } else if (option.type() == "String") {
+        // qCDebug(KCM_FCITX5) << "option type is String";
         const auto isFont = readBool(option.properties(), "Font");
         const auto isEnum = readBool(option.properties(), "IsEnum");
         if (isFont) {
+            // qCDebug(KCM_FCITX5) << "option type is Font";
             widget = new FontOptionWidget(option, path, parent);
         } else if (isEnum) {
             widget = new EnumOptionWidget(option, path, parent);
@@ -601,29 +656,38 @@ OptionWidget *OptionWidget::addWidget(QFormLayout *layout,
         }
         layout->addRow(QString(_("%1:")).arg(option.description()), widget);
     } else if (option.type() == "Boolean") {
+        // qCDebug(KCM_FCITX5) << "option type is Boolean";
         widget = new BooleanOptionWidget(option, path, parent);
         layout->addRow("", widget);
     } else if (option.type() == "Key") {
+        // qCDebug(KCM_FCITX5) << "option type is Key";
         widget = new KeyOptionWidget(option, path, parent);
         layout->addRow(QString(_("%1:")).arg(option.description()), widget);
     } else if (option.type() == "List|Key") {
+        // qCDebug(KCM_FCITX5) << "option type is List|Key";
         widget = new KeyListOptionWidget(option, path, parent);
         layout->addRow(QString(_("%1:")).arg(option.description()), widget);
     } else if (option.type() == "Enum") {
+        // qCDebug(KCM_FCITX5) << "option type is Enum";
         widget = new EnumOptionWidget(option, path, parent);
         layout->addRow(QString(_("%1:")).arg(option.description()), widget);
     } else if (option.type() == "Color") {
+        // qCDebug(KCM_FCITX5) << "option type is Color";
         widget = new ColorOptionWidget(option, path, parent);
         layout->addRow(QString(_("%1:")).arg(option.description()), widget);
     } else if (option.type().startsWith("List|")) {
+        // qCDebug(KCM_FCITX5) << "option type is List|";
         widget = new ListOptionWidget(option, path, parent);
         layout->addRow(QString(_("%1:")).arg(option.description()), widget);
     } else if (option.type() == "External") {
+        // qCDebug(KCM_FCITX5) << "option type is External";
         widget = new ExternalOptionWidget(option, path, parent);
         layout->addRow(QString(_("%1:")).arg(option.description()), widget);
     }
     if (widget) {
+        // qCDebug(KCM_FCITX5) << "Adding widget for option" << option.name() << "with path" << path;
         if (option.properties().contains("Tooltip")) {
+            // qCDebug(KCM_FCITX5) << "option contains Tooltip";
             widget->setToolTip(option.properties().value("Tooltip").toString());
         }
     }
@@ -633,6 +697,7 @@ OptionWidget *OptionWidget::addWidget(QFormLayout *layout,
 bool OptionWidget::execOptionDialog(QWidget *parent,
                                     const fcitx::FcitxQtConfigOption &option,
                                     QVariant &result) {
+    qCDebug(KCM_FCITX5) << "Executing option dialog for" << option.name();
     QPointer<QDialog> dialog = new QDialog(parent);
     dialog->setWindowIcon(QIcon::fromTheme("fcitx"));
     dialog->setWindowTitle(option.description());
@@ -643,17 +708,20 @@ bool OptionWidget::execOptionDialog(QWidget *parent,
     OptionWidget *optionWidget = nullptr;
     ConfigWidget *configWidget = nullptr;
     if (parentConfigWidget->description().contains(option.type())) {
+        // qCDebug(KCM_FCITX5) << "parentConfigWidget contains option type";
         configWidget =
             new ConfigWidget(parentConfigWidget->description(), option.type(),
                              parentConfigWidget->dbus());
         configWidget->setValue(result);
         dialogLayout->addWidget(configWidget);
     } else {
+        // qCDebug(KCM_FCITX5) << "parentConfigWidget does not contain option type";
         QFormLayout *subLayout = new QFormLayout;
         dialogLayout->addLayout(subLayout);
         optionWidget =
             addWidget(subLayout, option, QString("Value"), dialog.data());
         if (!optionWidget) {
+            // qCDebug(KCM_FCITX5) << "OptionWidget not found for option" << option.name();
             return false;
         }
         QVariantMap origin;
@@ -673,7 +741,9 @@ bool OptionWidget::execOptionDialog(QWidget *parent,
     auto ret = dialog->exec();
     bool dialogResult = false;
     if (ret && dialog) {
+        qCDebug(KCM_FCITX5) << "Option dialog for" << option.name() << "finished with result" << ret;
         if (optionWidget) {
+            // qCDebug(KCM_FCITX5) << "OptionWidget is valid";
             if (optionWidget->isValid()) {
                 QVariantMap map;
                 optionWidget->writeValueTo(map);
@@ -681,25 +751,34 @@ bool OptionWidget::execOptionDialog(QWidget *parent,
                 dialogResult = true;
             }
         } else {
+            // qCDebug(KCM_FCITX5) << "configWidget is valid";
             result = configWidget->value();
             dialogResult = true;
         }
     }
+    qCDebug(KCM_FCITX5) << "Option dialog for" << option.name() << "finished with result" << dialogResult;
+
     delete dialog;
     return dialogResult;
 }
 
 QString OptionWidget::prettify(const fcitx::FcitxQtConfigOption &option,
                                const QVariant &value) {
+    qCDebug(KCM_FCITX5) << "Prettifying option" << option.name() << "with value" << value;
     if (option.type() == "Integer") {
+        // qCDebug(KCM_FCITX5) << "option type is Integer";
         return value.toString();
     } else if (option.type() == "String") {
+        // qCDebug(KCM_FCITX5) << "option type is String";
         return value.toString();
     } else if (option.type() == "Boolean") {
+        // qCDebug(KCM_FCITX5) << "option type is Boolean";
         return value.toString() == "True" ? _("Yes") : _("No");
     } else if (option.type() == "Key") {
+        // qCDebug(KCM_FCITX5) << "option type is Key";
         return value.toString();
     } else if (option.type() == "Enum") {
+        // qCDebug(KCM_FCITX5) << "option type is Enum";
         QMap<QString, QString> enumMap;
         int i = 0;
         while (true) {
@@ -718,7 +797,7 @@ QString OptionWidget::prettify(const fcitx::FcitxQtConfigOption &option,
         }
         return enumMap.value(value.toString());
     } else if (option.type().startsWith("List|")) {
-
+        // qCDebug(KCM_FCITX5) << "option type is List|";
         int i = 0;
         QStringList strs;
         strs.clear();
@@ -731,6 +810,7 @@ QString OptionWidget::prettify(const fcitx::FcitxQtConfigOption &option,
         }
         return QString(_("[%1]")).arg(strs.join(" "));
     } else {
+        // qCDebug(KCM_FCITX5) << "option type is other";
         auto *configWidget = getConfigWidget(this);
         if (configWidget &&
             configWidget->description().contains(option.type())) {
@@ -747,6 +827,7 @@ QString OptionWidget::prettify(const fcitx::FcitxQtConfigOption &option,
             }
         }
     }
+    qCWarning(KCM_FCITX5) << "Could not prettify option" << option.name();
     return QString();
 }
 

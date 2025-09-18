@@ -42,6 +42,7 @@ ConfigWidget::ConfigWidget(const QString &uri, DBusProvider *dbus,
     QVBoxLayout *layout = new QVBoxLayout;
     layout->addWidget(mainWidget_);
     setLayout(layout);
+    qCDebug(KCM_FCITX5) << "Exiting ConfigWidget constructor";
 }
 
 ConfigWidget::ConfigWidget(const QMap<QString, FcitxQtConfigOptionList> &desc,
@@ -49,6 +50,7 @@ ConfigWidget::ConfigWidget(const QMap<QString, FcitxQtConfigOptionList> &desc,
                            QWidget *parent)
     : QWidget(parent), desc_(desc), mainType_(mainType), dbus_(dbus),
       mainWidget_(new QWidget(this)) {
+    qCDebug(KCM_FCITX5) << "Entering ConfigWidget constructor with description for main type:" << mainType;
     setSizePolicy(QSizePolicy::MinimumExpanding, QSizePolicy::Preferred);
     QVBoxLayout *layout = new QVBoxLayout;
     layout->addWidget(mainWidget_);
@@ -56,6 +58,7 @@ ConfigWidget::ConfigWidget(const QMap<QString, FcitxQtConfigOptionList> &desc,
 
     setupWidget(mainWidget_, mainType_, QString());
     initialized_ = true;
+    qCDebug(KCM_FCITX5) << "Exiting ConfigWidget constructor";
 }
 
 void ConfigWidget::requestConfig(bool sync) {
@@ -69,8 +72,10 @@ void ConfigWidget::requestConfig(bool sync) {
     connect(watcher, &QDBusPendingCallWatcher::finished, this,
             &ConfigWidget::requestConfigFinished);
     if (sync) {
+        qCDebug(KCM_FCITX5) << "Waiting for config request to finish";
         watcher->waitForFinished();
     }
+    qCDebug(KCM_FCITX5) << "Exiting requestConfig";
 }
 
 void ConfigWidget::requestConfigFinished(QDBusPendingCallWatcher *watcher) {
@@ -85,8 +90,10 @@ void ConfigWidget::requestConfigFinished(QDBusPendingCallWatcher *watcher) {
     // qCDebug(KCM_FCITX5) << reply.argumentAt<0>().variant();
 
     if (!initialized_) {
+        qCInfo(KCM_FCITX5) << "Widget not initialized, setting up from received description.";
         auto desc = reply.argumentAt<1>();
         if (!desc.size()) {
+            qCWarning(KCM_FCITX5) << "Received empty description, aborting setup.";
             return;
         }
 
@@ -99,17 +106,22 @@ void ConfigWidget::requestConfigFinished(QDBusPendingCallWatcher *watcher) {
     }
 
     if (initialized_) {
+        qCDebug(KCM_FCITX5) << "Setting value from received config";
         setValue(reply.argumentAt<0>().variant());
     }
 
     adjustSize();
+    qCDebug(KCM_FCITX5) << "Exiting requestConfigFinished";
 }
 
 void ConfigWidget::load() {
+    qCDebug(KCM_FCITX5) << "Entering load";
     if (uri_.isEmpty()) {
+        qCWarning(KCM_FCITX5) << "Cannot load config: URI is empty.";
         return;
     }
     requestConfig();
+    qCDebug(KCM_FCITX5) << "Exiting load";
 }
 
 void ConfigWidget::save() {
@@ -121,6 +133,7 @@ void ConfigWidget::save() {
     }
     QDBusVariant var(value());
     dbus_->controller()->SetConfig(uri_, var);
+    qCDebug(KCM_FCITX5) << "Exiting save";
 }
 
 void ConfigWidget::setValue(const QVariant &value) {
@@ -143,26 +156,33 @@ void ConfigWidget::setValue(const QVariant &value) {
         optionWidget->readValueFrom(map);
     }
     dontEmitChanged_ = false;
+    qCDebug(KCM_FCITX5) << "Exiting setValue";
 }
 
 QVariant ConfigWidget::value() const {
+    // qCDebug(KCM_FCITX5) << "Entering value";
     QVariantMap map;
     auto optionWidgets = findChildren<OptionWidget *>();
     for (auto optionWidget : optionWidgets) {
         optionWidget->writeValueTo(map);
     }
+    // qCDebug(KCM_FCITX5) << "Exiting value";
     return map;
 }
 
 void ConfigWidget::buttonClicked(QDialogButtonBox::StandardButton button) {
+    qCDebug(KCM_FCITX5) << "Entering buttonClicked with button:" << button;
     if (button == QDialogButtonBox::RestoreDefaults) {
+        qCInfo(KCM_FCITX5) << "RestoreDefaults button clicked.";
         auto optionWidgets = findChildren<OptionWidget *>();
         for (auto optionWidget : optionWidgets) {
             optionWidget->restoreToDefault();
         }
     } else if (button == QDialogButtonBox::Ok) {
+        qCInfo(KCM_FCITX5) << "Ok button clicked, saving.";
         save();
     }
+    qCDebug(KCM_FCITX5) << "Exiting buttonClicked";
 }
 
 void ConfigWidget::setupWidget(QWidget *widget, const QString &type,
@@ -179,16 +199,19 @@ void ConfigWidget::setupWidget(QWidget *widget, const QString &type,
     }
 
     widget->setLayout(layout);
+    qCDebug(KCM_FCITX5) << "Exiting setupWidget";
 }
 
 void ConfigWidget::addOptionWidget(QFormLayout *layout,
                                    const FcitxQtConfigOption &option,
                                    const QString &path) {
+    qCDebug(KCM_FCITX5) << "Entering addOptionWidget for path:" << path;
     if (auto optionWidget =
             OptionWidget::addWidget(layout, option, path, this)) {
         connect(optionWidget, &OptionWidget::valueChanged, this,
                 &ConfigWidget::doChanged);
     } else if (desc_.contains(option.type())) {
+        qCDebug(KCM_FCITX5) << "Adding group box for option:" << option.description();
         QGroupBox *box = new QGroupBox;
         box->setTitle(option.description());
         QVBoxLayout *innerLayout = new QVBoxLayout;
@@ -201,10 +224,12 @@ void ConfigWidget::addOptionWidget(QFormLayout *layout,
         qCDebug(KCM_FCITX5) << "Unknown option type:" << option.type()
                            << "for path:" << path;
     }
+    qCDebug(KCM_FCITX5) << "Exiting addOptionWidget";
 }
 
 QDialog *ConfigWidget::configDialog(QWidget *parent, DBusProvider *dbus,
                                     const QString &uri, const QString &title) {
+    qCDebug(KCM_FCITX5) << "Entering configDialog for URI:" << uri;
     auto configPage = new ConfigWidget(uri, dbus);
     configPage->requestConfig(true);
     QVBoxLayout *dialogLayout = new QVBoxLayout;
@@ -234,17 +259,22 @@ QDialog *ConfigWidget::configDialog(QWidget *parent, DBusProvider *dbus,
     connect(buttonBox, &QDialogButtonBox::accepted, dialog, &QDialog::accept);
     connect(buttonBox, &QDialogButtonBox::rejected, dialog, &QDialog::reject);
 
+    qCDebug(KCM_FCITX5) << "Exiting configDialog";
     return dialog;
 }
 
 void ConfigWidget::doChanged() {
+    qCDebug(KCM_FCITX5) << "Entering doChanged";
     if (dontEmitChanged_) {
+        qCDebug(KCM_FCITX5) << "Change emission is disabled, exiting.";
         return;
     }
     Q_EMIT changed();
+    qCDebug(KCM_FCITX5) << "Exiting doChanged";
 }
 
 ConfigWidget *getConfigWidget(QWidget *widget) {
+    qCDebug(KCM_FCITX5) << "Entering getConfigWidget";
     widget = widget->parentWidget();
     ConfigWidget *configWidget;
     while (widget) {
@@ -254,6 +284,7 @@ ConfigWidget *getConfigWidget(QWidget *widget) {
         }
         widget = widget->parentWidget();
     }
+    qCDebug(KCM_FCITX5) << "Exiting getConfigWidget, found config widget";
     return configWidget;
 }
 

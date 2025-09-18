@@ -9,6 +9,9 @@
 #include <varianthelper.h>
 
 #include <QDBusPendingCallWatcher>
+#include <QLoggingCategory>
+
+Q_LOGGING_CATEGORY(proxy, "fcitx5.configtool.proxy")
 
 using namespace deepin::fcitx5configtool;
 
@@ -17,14 +20,16 @@ Fcitx5ConfigProxyPrivate::Fcitx5ConfigProxyPrivate(Fcitx5ConfigProxy *parent,
                                                  const QString &path)
     : q(parent), dbusprovider(dbus), path(path)
 {
-    qDebug() << "Initializing Fcitx5ConfigProxy for path:" << path;
+    qCDebug(proxy) << "Entering Fcitx5ConfigProxyPrivate constructor for path:" << path;
     timer = new QTimer(q);
     timer->setInterval(1000);
     timer->setSingleShot(true);
     connect(timer, &QTimer::timeout, q, &Fcitx5ConfigProxy::save);
+    qCDebug(proxy) << "Exiting Fcitx5ConfigProxyPrivate constructor";
 }
 
 QStringList Fcitx5ConfigProxyPrivate::formatKey(const QString &shortcut) {
+    qCDebug(proxy) << "Formatting key from shortcut:" << shortcut;
     QStringList list;
     for (const auto &key : shortcut.split("+")) {
         if (key.trimmed().toLower() == "control")
@@ -57,10 +62,12 @@ QStringList Fcitx5ConfigProxyPrivate::formatKey(const QString &shortcut) {
             list.removeAll("Shift_R");
         }
     }
+    qCDebug(proxy) << "Formatted key list:" << list;
     return list;
 }
 
 QString Fcitx5ConfigProxyPrivate::formatKeys(const QStringList &keys) {
+    qCDebug(proxy) << "Formatting keys from list:" << keys;
     QStringList list;   
     for (const auto &key : keys) {
         if (key.trimmed().toLower() == "ctrl")
@@ -117,20 +124,23 @@ QVariant Fcitx5ConfigProxyPrivate::readDBusValue(const QVariant &value) {
 Fcitx5ConfigProxy::Fcitx5ConfigProxy(fcitx::kcm::DBusProvider *dbus, const QString &path, QObject *parent)
     : QObject(parent), d(new Fcitx5ConfigProxyPrivate(this, dbus, path))
 {
-    qDebug() << "Fcitx5ConfigProxy created for path:" << path;
+    qCDebug(proxy) << "Entering Fcitx5ConfigProxy constructor for path:" << path;
 }
 
 Fcitx5ConfigProxy::~Fcitx5ConfigProxy() = default;
 
 void Fcitx5ConfigProxy::clear()
 {
+    qCDebug(proxy) << "Entering clear";
     d->configValue.clear();
     d->configTypes.clear();
     Q_EMIT requestConfigFinished();
+    qCDebug(proxy) << "Exiting clear";
 }
 
 QVariantList Fcitx5ConfigProxy::globalConfigTypes() const
 {
+    qCDebug(proxy) << "Entering globalConfigTypes";
     QVariantList list;
     for (const auto &type : d->configTypes) {
         if (type.name() == "GlobalConfig") {
@@ -143,11 +153,13 @@ QVariantList Fcitx5ConfigProxy::globalConfigTypes() const
             break;
         }
     }
+    qCDebug(proxy) << "Exiting globalConfigTypes with" << list.size() << "items";
     return list;
 }
 
 QVariantList Fcitx5ConfigProxy::globalConfigOptions(const QString &type, bool all) const
 {
+    qCDebug(proxy) << "Entering globalConfigOptions for type" << type << "all:" << all;
     QVariantList list;
     QString currentType = type+"$"+type+"Config";
     for (const auto &configType : d->configTypes) {
@@ -212,11 +224,13 @@ QVariantList Fcitx5ConfigProxy::globalConfigOptions(const QString &type, bool al
         }
         break;
     }
+    qCDebug(proxy) << "Exiting globalConfigOptions with" << list.size() << "items";
     return list;
 }
 
 QVariant Fcitx5ConfigProxy::globalConfigOption(const QString &type, const QString &optionName) const
 {
+    qCDebug(proxy) << "Entering globalConfigOption for type" << type << "option:" << optionName;
     QVariantMap item;
     QString currentType = type+"$"+type+"Config";
     for (const auto &configType : d->configTypes) {
@@ -280,11 +294,13 @@ QVariant Fcitx5ConfigProxy::globalConfigOption(const QString &type, const QStrin
         }
         break;
     }
+    qCDebug(proxy) << "Exiting globalConfigOption with item" << item;
     return item;
 }
 
 void Fcitx5ConfigProxy::restoreDefault(const QString &type)
 {
+    qCDebug(proxy) << "Entering restoreDefault for type" << type;
     QString currentType = type+"$"+type+"Config";
     for (const auto &configType : d->configTypes) {
         if (configType.name() != currentType)
@@ -295,13 +311,14 @@ void Fcitx5ConfigProxy::restoreDefault(const QString &type)
         }
         break;
     }
+    qCDebug(proxy) << "Exiting restoreDefault";
 }
 
 void Fcitx5ConfigProxy::requestConfig(bool sync)
 {
-    qDebug() << "Requesting config for path:" << d->path << "sync:" << sync;
+    qCDebug(proxy) << "Entering requestConfig for path" << d->path << "with sync" << sync;
     if (!d->dbusprovider->controller()) {
-        qWarning() << "DBus controller not available";
+        qCWarning(proxy) << "DBus controller not available for requestConfig";
         return;
     }
     auto call = d->dbusprovider->controller()->GetConfig(d->path);
@@ -311,20 +328,22 @@ void Fcitx5ConfigProxy::requestConfig(bool sync)
             this,
             &Fcitx5ConfigProxy::onRequestConfigFinished);
     if (sync) {
+        qCDebug(proxy) << "Waiting for requestConfig to finish";
         watcher->waitForFinished();
     }
+    qCDebug(proxy) << "Exiting requestConfig";
 }
  
 void Fcitx5ConfigProxy::onRequestConfigFinished(QDBusPendingCallWatcher *watcher)
 {
-    qDebug() << "Processing config response for path:" << d->path;
+    qCDebug(proxy) << "Entering onRequestConfigFinished for path" << d->path;
     watcher->deleteLater();
     QDBusPendingReply<QDBusVariant, fcitx::FcitxQtConfigTypeList> reply = *watcher;
     if (reply.isError()) {
-        qWarning() << "Failed to get config:" << reply.error();
+        qCWarning(proxy) << "Failed to get config for path" << d->path << "Error:" << reply.error();
         return;
     }
-    qDebug() << "Successfully received config for path:" << d->path;
+    qCInfo(proxy) << "Successfully received config for path:" << d->path;
     d->configTypes = reply.argumentAt<1>(); 
 
     auto value = reply.argumentAt<0>().variant();
@@ -333,39 +352,44 @@ void Fcitx5ConfigProxy::onRequestConfigFinished(QDBusPendingCallWatcher *watcher
     std::swap(d->configValue, allMap);
 
     Q_EMIT requestConfigFinished();
+    qCDebug(proxy) << "Exiting onRequestConfigFinished";
 }
 
 QVariant Fcitx5ConfigProxy::value(const QString &path) const
 {
-    qDebug() << "Getting value for config path:" << path;
+    qCDebug(proxy) << "Entering value for path:" << path;
     return fcitx::kcm::readVariant(d->configValue, path);
 }
 
 void Fcitx5ConfigProxy::setValue(const QString &path, const QVariant &value, bool isKey)
 {
-    qDebug() << "Setting value for config path:" << path << "isKey:" << isKey;
+    qCDebug(proxy) << "Setting value for config path:" << path << "isKey:" << isKey;
     if (value == this->value(path)) {
-        qDebug() << "Value unchanged, skipping update";
+        qCDebug(proxy) << "Value unchanged, skipping update for path:" << path;
         return;
     }
     if (isKey) {
+        qCDebug(proxy) << "Formatting keys for path:" << path;
         auto keys = d->formatKeys(value.toStringList());
         fcitx::kcm::writeVariant(d->configValue, path, keys);
     } else {
+        qCDebug(proxy) << "Writing value for path:" << path;
         fcitx::kcm::writeVariant(d->configValue, path, value);
     }
     d->timer->start();
+    qCDebug(proxy) << "Exiting setValue";
 }
 
 void Fcitx5ConfigProxy::save()
 {
-    qDebug() << "Saving config changes for path:" << d->path;
+    qCDebug(proxy) << "Entering save for path:" << d->path;
     if (!d->dbusprovider->controller()) {
-        qWarning() << "DBus controller not available";
+        qCWarning(proxy) << "DBus controller not available for save";
         return;
     }
 
     QDBusVariant var(d->configValue);
     d->dbusprovider->controller()->SetConfig(d->path, var);
     requestConfig(false);
+    qCDebug(proxy) << "Exiting save";
 }

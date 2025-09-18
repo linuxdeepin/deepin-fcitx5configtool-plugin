@@ -45,7 +45,9 @@ IMDelegate::~IMDelegate() {}
 
 void IMDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option,
                        const QModelIndex &index) const {
+    // qCDebug(KCM_FCITX5) << "Painting IMDelegate";
     if (index.data(FcitxRowTypeRole).toInt() == IMType) {
+        // qCDebug(KCM_FCITX5) << "Painting IMDelegate for IMType";
         QStyledItemDelegate::paint(painter, option, index);
         return;
     }
@@ -55,9 +57,12 @@ void IMDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option,
 
 QSize IMDelegate::sizeHint(const QStyleOptionViewItem &option,
                            const QModelIndex &index) const {
+    // qCDebug(KCM_FCITX5) << "Size hint for IMDelegate";
     if (index.data(FcitxRowTypeRole).toInt() == IMType) {
+        // qCDebug(KCM_FCITX5) << "Size hint for IMDelegate for IMType";
         return QStyledItemDelegate::sizeHint(option, index);
     } else {
+        // qCDebug(KCM_FCITX5) << "Size hint for IMDelegate for category header";
         return categoryHeaderSizeHint();
     }
 }
@@ -108,10 +113,12 @@ IMPage::IMPage(DBusProvider *dbus, QWidget *parent)
             &QWidget::setVisible);
 
     if (isInFlatpak()) {
+        // qCDebug(KCM_FCITX5) << "In Flatpak, showing update message";
         ui_->checkUpdateMessage->setText(
             _("Found updates to fcitx installation. Do you want to restart "
               "Fcitx?"));
     } else {
+        // qCDebug(KCM_FCITX5) << "Not in Flatpak, showing update message";
         auto refreshAction = new QAction(_("Update"));
         connect(refreshAction, &QAction::triggered, this,
                 [this]() { config_->refresh(); });
@@ -172,20 +179,21 @@ IMPage::IMPage(DBusProvider *dbus, QWidget *parent)
 
     currentIMCurrentChanged();
     availIMSelectionChanged();
+    qCDebug(KCM_FCITX5) << "Exiting IMPage constructor";
 }
 
 IMPage::~IMPage() {
-    qCDebug(KCM_FCITX5) << "IMPage destroyed";
+    // qCDebug(KCM_FCITX5) << "IMPage destroyed";
 }
 
 void IMPage::save() {
-    qCDebug(KCM_FCITX5) << "Saving input method";
+    // qCDebug(KCM_FCITX5) << "Saving input method";
     checkDefaultLayout();
     config_->save();
 }
 
 void IMPage::load() {
-    qCDebug(KCM_FCITX5) << "Loading input method configuration";
+    // qCDebug(KCM_FCITX5) << "Loading input method configuration";
     config_->load();
 }
 
@@ -199,12 +207,14 @@ void IMPage::selectedGroupChanged() {
         return;
     }
     if (!config_->currentGroup().isEmpty() && config_->needSave()) {
+        // qCDebug(KCM_FCITX5) << "Current group changed and need save.";
         if (QMessageBox::No ==
             QMessageBox::question(this, _("Current group changed"),
                                   _("Do you want to change group? Changes to "
                                     "current group will be lost!"))) {
             ui_->inputMethodGroupComboBox->setCurrentText(
                 config_->currentGroup());
+            qCDebug(KCM_FCITX5) << "User cancelled group change.";
             return;
         }
     }
@@ -213,20 +223,25 @@ void IMPage::selectedGroupChanged() {
 }
 
 void IMPage::availIMSelectionChanged() {
+    // qCDebug(KCM_FCITX5) << "Entering availIMSelectionChanged";
     if (!ui_->availIMView->currentIndex().isValid())
         ui_->addIMButton->setEnabled(false);
     else
         ui_->addIMButton->setEnabled(true);
+    // qCDebug(KCM_FCITX5) << "Exiting availIMSelectionChanged, addIMButton enabled:" << ui_->addIMButton->isEnabled();
 }
 
 void IMPage::currentIMCurrentChanged() {
+    qCDebug(KCM_FCITX5) << "Entering currentIMCurrentChanged";
     if (!ui_->currentIMView->currentIndex().isValid()) {
+        qCDebug(KCM_FCITX5) << "No current IM selected, disabling buttons.";
         ui_->removeIMButton->setEnabled(false);
         ui_->moveUpButton->setEnabled(false);
         ui_->moveDownButton->setEnabled(false);
         ui_->configureButton->setEnabled(false);
         ui_->layoutButton->setEnabled(false);
     } else {
+        qCDebug(KCM_FCITX5) << "Current IM selection changed, updating button states.";
         if (ui_->currentIMView->currentIndex().row() == 0)
             ui_->moveUpButton->setEnabled(false);
         else
@@ -250,9 +265,11 @@ void IMPage::currentIMCurrentChanged() {
                  .toString()
                  .startsWith("keyboard-"));
     }
+    qCDebug(KCM_FCITX5) << "Exiting currentIMCurrentChanged";
 }
 
 void IMPage::selectCurrentIM(const QModelIndex &index) {
+    qCDebug(KCM_FCITX5) << "Selecting current IM at index" << index;
     ui_->currentIMView->selectionModel()->setCurrentIndex(
         index, QItemSelectionModel::ClearAndSelect);
 }
@@ -262,24 +279,30 @@ void IMPage::doubleClickCurrentIM(const QModelIndex &index) { removeIM(index); }
 void IMPage::doubleClickAvailIM(const QModelIndex &index) { addIM(index); }
 
 void IMPage::selectDefaultLayout() {
+    qCDebug(KCM_FCITX5) << "Selecting default layout.";
     auto defaultLayout = config_->defaultLayout();
     auto dashPos = defaultLayout.indexOf("-");
     QString layout, variant;
     if (dashPos >= 0) {
+        // qCDebug(KCM_FCITX5) << "Default layout has variant.";
         variant = defaultLayout.mid(dashPos + 1);
         layout = defaultLayout.left(dashPos);
     } else {
+        // qCDebug(KCM_FCITX5) << "Default layout has no variant.";
         layout = defaultLayout;
     }
     bool ok = false;
     auto result = LayoutSelector::selectLayout(
         this, dbus_, _("Select default layout"), layout, variant, &ok);
     if (!ok) {
+        // qCDebug(KCM_FCITX5) << "Layout selection cancelled.";
         return;
     }
     if (result.second.isEmpty()) {
+        // qCDebug(KCM_FCITX5) << "Setting default layout to:" << result.first;
         config_->setDefaultLayout(result.first);
     } else {
+        // qCDebug(KCM_FCITX5) << "Setting default layout to:" << result.first << "-" << result.second;
         config_->setDefaultLayout(
             QString("%0-%1").arg(result.first, result.second));
     }
@@ -287,6 +310,7 @@ void IMPage::selectDefaultLayout() {
     auto imname = QString("keyboard-%0").arg(config_->defaultLayout());
     if (config_->imEntries().empty() ||
         config_->imEntries().front().key() != imname) {
+        // qCDebug(KCM_FCITX5) << "Default layout and first IM do not match, prompting user.";
         auto result = QMessageBox::question(
             this, _("Change Input method to match layout selection."),
             _("Your currently configured input method does not match your "
@@ -295,6 +319,7 @@ void IMPage::selectDefaultLayout() {
             QMessageBox::StandardButtons(QMessageBox::Yes | QMessageBox::No),
             QMessageBox::Yes);
         if (result == QMessageBox::Yes) {
+            // qCDebug(KCM_FCITX5) << "User chose to add matching keyboard layout.";
             FcitxQtStringKeyValue imEntry;
             int i = 0;
             auto imEntries = config_->imEntries();
@@ -315,39 +340,48 @@ void IMPage::selectDefaultLayout() {
 }
 
 void IMPage::selectLayout() {
+    qCDebug(KCM_FCITX5) << "Selecting layout for current IM.";
     QModelIndex curIndex = ui_->currentIMView->currentIndex();
     if (!curIndex.isValid()) {
+        qCWarning(KCM_FCITX5) << "No current IM selected to set layout for.";
         return;
     }
     QString imName = curIndex.data(FcitxIMUniqueNameRole).toString();
     QString layoutString = curIndex.data(FcitxIMLayoutRole).toString();
     if (layoutString.isEmpty()) {
+        // qCDebug(KCM_FCITX5) << "Layout string is empty, setting to default layout.";
         layoutString = config_->defaultLayout();
     }
     auto dashPos = layoutString.indexOf("-");
     QString layout, variant;
     if (dashPos >= 0) {
+        // qCDebug(KCM_FCITX5) << "Layout string has variant.";
         variant = layoutString.mid(dashPos + 1);
         layout = layoutString.left(dashPos);
     } else {
+        // qCDebug(KCM_FCITX5) << "Layout string has no variant.";
         layout = layoutString;
     }
     bool ok = false;
     auto result = LayoutSelector::selectLayout(this, dbus_, _("Select Layout"),
                                                layout, variant, &ok);
     if (!ok) {
+        qCDebug(KCM_FCITX5) << "Layout selection cancelled, clearing layout for IM:" << imName;
         config_->setLayout(imName, "");
         return;
     }
     if (result.second.isEmpty()) {
+        qCDebug(KCM_FCITX5) << "Setting layout for IM" << imName << "to:" << result.first;
         config_->setLayout(imName, result.first);
     } else {
+        qCDebug(KCM_FCITX5) << "Setting layout for IM" << imName << "to:" << result.first << "-" << result.second;
         config_->setLayout(imName,
                            QString("%0-%1").arg(result.first, result.second));
     }
 }
 
 void IMPage::selectAvailIM(const QModelIndex &index) {
+    qCDebug(KCM_FCITX5) << "Selecting available IM at index" << index;
     ui_->availIMView->selectionModel()->setCurrentIndex(
         config_->availIMModel()->mapFromSource(index),
         QItemSelectionModel::ClearAndSelect);
@@ -358,11 +392,13 @@ void IMPage::clickAddIM() { addIM(ui_->availIMView->currentIndex()); }
 void IMPage::clickRemoveIM() { removeIM(ui_->currentIMView->currentIndex()); }
 
 void IMPage::checkDefaultLayout() {
+    qCDebug(KCM_FCITX5) << "Entering checkDefaultLayout";
     const auto &imEntries = config_->imEntries();
     if (imEntries.size() > 0 &&
         imEntries[0].key() !=
             QString("keyboard-%0").arg(config_->defaultLayout()) &&
         imEntries[0].key().startsWith("keyboard-")) {
+        qCDebug(KCM_FCITX5) << "First IM is a keyboard layout but does not match default system layout, prompting user.";
         // Remove "keyboard-".
         auto layoutString = imEntries[0].key().mid(9);
         auto result = QMessageBox::question(
@@ -372,9 +408,11 @@ void IMPage::checkDefaultLayout() {
             QMessageBox::StandardButtons(QMessageBox::Yes | QMessageBox::No),
             QMessageBox::Yes);
         if (result == QMessageBox::Yes) {
+            qCDebug(KCM_FCITX5) << "User chose to change system layout to" << layoutString;
             config_->setDefaultLayout(layoutString);
         }
     }
+    qCDebug(KCM_FCITX5) << "Exiting checkDefaultLayout";
 }
 
 void IMPage::addIM(const QModelIndex &index) {
@@ -388,9 +426,10 @@ void IMPage::removeIM(const QModelIndex &index) {
 }
 
 void IMPage::configureIM() {
+    qCDebug(KCM_FCITX5) << "Configure IM button clicked.";
     QModelIndex curIndex = ui_->currentIMView->currentIndex();
     if (!curIndex.isValid()) {
-        qWarning() << "No valid input method selected for configuration";
+        qCWarning(KCM_FCITX5) << "No valid input method selected for configuration";
         return;
     }
     const QString uniqueName = curIndex.data(FcitxIMUniqueNameRole).toString();
@@ -399,16 +438,20 @@ void IMPage::configureIM() {
         curIndex.data(Qt::DisplayRole).toString());
     dialog->exec();
     delete dialog;
+    qCDebug(KCM_FCITX5) << "Config dialog for" << uniqueName << "closed.";
 }
 
 void IMPage::moveUpIM() {
+    qCDebug(KCM_FCITX5) << "Move up IM button clicked.";
     QModelIndex curIndex = ui_->currentIMView->currentIndex();
     if (!curIndex.isValid() || curIndex.row() == 0) {
+        qCWarning(KCM_FCITX5) << "Cannot move up, index invalid or already at top.";
         return;
     }
     QModelIndex nextIndex =
         config_->currentIMModel()->index(curIndex.row() - 1, 0);
     if (!nextIndex.isValid()) {
+        qCWarning(KCM_FCITX5) << "Cannot move up, next index is invalid.";
         return;
     }
     config_->move(curIndex.row(), curIndex.row() - 1);
@@ -416,13 +459,16 @@ void IMPage::moveUpIM() {
 }
 
 void IMPage::moveDownIM() {
+    qCDebug(KCM_FCITX5) << "Move down IM button clicked.";
     QModelIndex curIndex = ui_->currentIMView->currentIndex();
     if (!curIndex.isValid()) {
+        qCWarning(KCM_FCITX5) << "Cannot move down, index invalid.";
         return;
     }
     QModelIndex nextIndex =
         config_->currentIMModel()->index(curIndex.row() + 1, 0);
     if (!nextIndex.isValid()) {
+        qCWarning(KCM_FCITX5) << "Cannot move down, already at bottom.";
         return;
     }
     config_->move(curIndex.row(), curIndex.row() + 1);
