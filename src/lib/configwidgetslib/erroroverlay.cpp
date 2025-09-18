@@ -32,6 +32,7 @@ ErrorOverlay::ErrorOverlay(DBusProvider *dbus, QWidget *parent)
     connect(ui_->runFcitxButton, &QAbstractButton::pressed, this,
             &ErrorOverlay::runFcitx5);
     availabilityChanged(dbus->available());
+    qCDebug(KCM_FCITX5) << "Exiting ErrorOverlay constructor";
 }
 
 ErrorOverlay::~ErrorOverlay() {
@@ -49,6 +50,7 @@ void ErrorOverlay::availabilityChanged(bool avail) {
             reposition();
         }
     }
+    qCDebug(KCM_FCITX5) << "Exiting availabilityChanged";
 }
 
 void ErrorOverlay::runFcitx5() {
@@ -69,6 +71,7 @@ void ErrorOverlay::reposition() {
     // follow base widget visibility
     // needed eg. in tab widgets
     if (!baseWidget_->isVisible()) {
+        qCDebug(KCM_FCITX5) << "Base widget is not visible, hiding overlay.";
         hide();
         return;
     }
@@ -84,13 +87,16 @@ void ErrorOverlay::reposition() {
     // TODO: hide/scale icon if we don't have enough space
     resize(baseWidget_->size());
     raise();
+    qCDebug(KCM_FCITX5) << "Exiting reposition";
 }
 
 bool ErrorOverlay::eventFilter(QObject *object, QEvent *event) {
+    // qCDebug(KCM_FCITX5) << "Event filtered";
     if (enabled_ && object == baseWidget_ &&
         (event->type() == QEvent::Move || event->type() == QEvent::Resize ||
          event->type() == QEvent::Show || event->type() == QEvent::Hide ||
          event->type() == QEvent::ParentChange)) {
+        // qCDebug(KCM_FCITX5) << "Filtered event" << event->type() << "for base widget, repositioning overlay.";
         reposition();
     }
     return QWidget::eventFilter(object, event);

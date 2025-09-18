@@ -30,11 +30,11 @@ QString categoryName(int category) {
 } // namespace
 
 AddonModel::AddonModel(QObject *parent) : CategorizedItemModel(parent) {
-    qCDebug(KCM_FCITX5) << "AddonModel constructor";
+    // qCDebug(KCM_FCITX5) << "Entering AddonModel constructor";
 }
 
 QVariant AddonModel::dataForCategory(const QModelIndex &index, int role) const {
-    qCDebug(KCM_FCITX5) << "AddonModel::dataForCategory - index:" << index << "role:" << role;
+    // qCDebug(KCM_FCITX5) << "AddonModel::dataForCategory - index:" << index << "role:" << role;
     switch (role) {
 
     case Qt::DisplayRole:
@@ -52,7 +52,7 @@ QVariant AddonModel::dataForCategory(const QModelIndex &index, int role) const {
 }
 
 QVariant AddonModel::dataForItem(const QModelIndex &index, int role) const {
-    qCDebug(KCM_FCITX5) << "AddonModel::dataForItem - index:" << index << "role:" << role;
+    // qCDebug(KCM_FCITX5) << "AddonModel::dataForItem - index:" << index << "role:" << role;
     const auto &addonList = addonEntryList_[index.parent().row()].second;
     const auto &addon = addonList[index.row()];
 
@@ -89,17 +89,19 @@ QVariant AddonModel::dataForItem(const QModelIndex &index, int role) const {
 
 bool AddonModel::setData(const QModelIndex &index, const QVariant &value,
                          int role) {
-    qCDebug(KCM_FCITX5) << "AddonModel::setData - index:" << index << "value:" << value << "role:" << role;
+    // qCDebug(KCM_FCITX5) << "AddonModel::setData - index:" << index << "value:" << value << "role:" << role;
 
     if (!index.isValid() || !index.parent().isValid() ||
         index.parent().row() >= addonEntryList_.size() ||
         index.parent().column() > 0 || index.column() > 0) {
+        // qCWarning(KCM_FCITX5) << "Invalid index for setData";
         return false;
     }
 
     const auto &addonList = addonEntryList_[index.parent().row()].second;
 
     if (index.row() >= addonList.size()) {
+        // qCWarning(KCM_FCITX5) << "Row index out of bounds for setData";
         return false;
     }
 
@@ -123,15 +125,17 @@ bool AddonModel::setData(const QModelIndex &index, const QVariant &value,
         ret = oldData != newData;
 
         if (ret) {
+            // qCInfo(KCM_FCITX5) << "Addon" << item.uniqueName() << "check state changed to" << newData;
             Q_EMIT dataChanged(index, index);
             Q_EMIT changed(item.uniqueName(), newData);
         }
     }
 
+    qCDebug(KCM_FCITX5) << "Exiting AddonModel::setData, changed:" << ret;
     return ret;
 }
 QModelIndex AddonModel::findAddon(const QString &addon) const {
-    qCDebug(KCM_FCITX5) << "AddonModel::findAddon - addon:" << addon;
+    // qCDebug(KCM_FCITX5) << "AddonModel::findAddon - addon:" << addon;
     for (int i = 0; i < addonEntryList_.size(); i++) {
         for (int j = 0; j < addonEntryList_[i].second.size(); j++) {
             const auto &addonList = addonEntryList_[i].second;
@@ -140,23 +144,27 @@ QModelIndex AddonModel::findAddon(const QString &addon) const {
             }
         }
     }
+    // qCDebug(KCM_FCITX5) << "Addon not found";
     return QModelIndex();
 }
 
 FlatAddonModel::FlatAddonModel(QObject *parent) : QAbstractListModel(parent) {
-    qCDebug(KCM_FCITX5) << "FlatAddonModel constructor";
+    // qCDebug(KCM_FCITX5) << "FlatAddonModel constructor";
 }
 
 bool FlatAddonModel::setData(const QModelIndex &index, const QVariant &value,
                              int role) {
+    // qCDebug(KCM_FCITX5) << "Entering FlatAddonModel::setData for index" << index.row() << "with role" << role;
     if (!index.isValid() || index.row() >= addonEntryList_.size() ||
         index.column() > 0) {
+        // qCWarning(KCM_FCITX5) << "Invalid index for setData";
         return false;
     }
 
     bool ret = false;
 
     if (role == Qt::CheckStateRole) {
+        // qCDebug(KCM_FCITX5) << "role is Qt::CheckStateRole";
         auto oldData = data(index, role).toBool();
         auto &item = addonEntryList_[index.row()];
         auto enabled = value.toBool();
@@ -175,16 +183,19 @@ bool FlatAddonModel::setData(const QModelIndex &index, const QVariant &value,
     }
 
     if (ret) {
+        // qCDebug(KCM_FCITX5) << "ret is true";
         Q_EMIT dataChanged(index, index);
         Q_EMIT changed();
     }
 
+    // qCDebug(KCM_FCITX5) << "Exiting FlatAddonModel::setData, changed:" << ret;
     return ret;
 }
 
 QVariant FlatAddonModel::data(const QModelIndex &index, int role) const {
-    qCDebug(KCM_FCITX5) << "FlatAddonModel::data - index:" << index << "role:" << role;
+    // qCDebug(KCM_FCITX5) << "FlatAddonModel::data - index:" << index << "role:" << role;
     if (!index.isValid() || index.row() >= addonEntryList_.size()) {
+        // qCDebug(KCM_FCITX5) << "index is invalid";
         return QVariant();
     }
 
@@ -193,36 +204,47 @@ QVariant FlatAddonModel::data(const QModelIndex &index, int role) const {
     switch (role) {
 
     case Qt::DisplayRole:
+        // qCDebug(KCM_FCITX5) << "role is Qt::DisplayRole";
         return addon.name();
 
     case CommentRole:
+        // qCDebug(KCM_FCITX5) << "role is CommentRole";
         return addon.comment();
 
     case ConfigurableRole:
+        // qCDebug(KCM_FCITX5) << "role is ConfigurableRole";
         return addon.configurable();
 
     case AddonNameRole:
+        // qCDebug(KCM_FCITX5) << "role is AddonNameRole";
         return addon.uniqueName();
 
     case CategoryRole:
+        // qCDebug(KCM_FCITX5) << "role is CategoryRole";
         return addon.category();
 
     case CategoryNameRole:
+        // qCDebug(KCM_FCITX5) << "role is CategoryNameRole";
         return categoryName(addon.category());
 
     case DependenciesRole:
+        // qCDebug(KCM_FCITX5) << "role is DependenciesRole";
         return reverseDependencies_.value(addon.uniqueName());
         ;
 
     case OptDependenciesRole:
+        // qCDebug(KCM_FCITX5) << "role is OptDependenciesRole";
         return reverseOptionalDependencies_.value(addon.uniqueName());
 
     case Qt::CheckStateRole:
         if (disabledList_.contains(addon.uniqueName())) {
+            // qCDebug(KCM_FCITX5) << "role is Qt::CheckStateRole and addon is disabled";
             return false;
         } else if (enabledList_.contains(addon.uniqueName())) {
+            // qCDebug(KCM_FCITX5) << "role is Qt::CheckStateRole and addon is enabled";
             return true;
         }
+        // qCDebug(KCM_FCITX5) << "role is Qt::CheckStateRole and addon is enabled";
         return addon.enabled();
 
     case RowTypeRole:
@@ -232,8 +254,9 @@ QVariant FlatAddonModel::data(const QModelIndex &index, int role) const {
 }
 
 int FlatAddonModel::rowCount(const QModelIndex &parent) const {
-    qCDebug(KCM_FCITX5) << "FlatAddonModel::rowCount - parent:" << parent;
+    // qCDebug(KCM_FCITX5) << "FlatAddonModel::rowCount - parent:" << parent;
     if (parent.isValid()) {
+        // qCDebug(KCM_FCITX5) << "FlatAddonModel::rowCount - parent is valid";
         return 0;
     }
 
@@ -241,6 +264,7 @@ int FlatAddonModel::rowCount(const QModelIndex &parent) const {
 }
 
 QHash<int, QByteArray> FlatAddonModel::roleNames() const {
+    // qCDebug(KCM_FCITX5) << "FlatAddonModel::roleNames";
     return {{Qt::DisplayRole, "name"},
             {CommentRole, "comment"},
             {ConfigurableRole, "configurable"},
@@ -253,7 +277,7 @@ QHash<int, QByteArray> FlatAddonModel::roleNames() const {
 }
 
 void FlatAddonModel::setAddons(const fcitx::FcitxQtAddonInfoV2List &list) {
-    qCDebug(KCM_FCITX5) << "FlatAddonModel::setAddons - list size:" << list.size();
+    // qCDebug(KCM_FCITX5) << "FlatAddonModel::setAddons - list size:" << list.size();
     beginResetModel();
     addonEntryList_ = list;
     nameToAddonMap_.clear();
@@ -279,62 +303,73 @@ void FlatAddonModel::setAddons(const fcitx::FcitxQtAddonInfoV2List &list) {
     enabledList_.clear();
     disabledList_.clear();
     endResetModel();
+    // qCDebug(KCM_FCITX5) << "Exiting FlatAddonModel::setAddons";
 }
 
 void FlatAddonModel::enable(const QString &addon) {
     qCDebug(KCM_FCITX5) << "FlatAddonModel::enable - addon:" << addon;
     for (int i = 0; i < addonEntryList_.size(); i++) {
         if (addonEntryList_[i].uniqueName() == addon) {
+            qCInfo(KCM_FCITX5) << "Enabling addon" << addon << "at index" << i;
             setData(index(i, 0), true, Qt::CheckStateRole);
             return;
         }
     }
+    qCWarning(KCM_FCITX5) << "Could not find addon" << addon << "to enable.";
 }
 
 bool AddonProxyModel::filterAcceptsRow(int sourceRow,
                                        const QModelIndex &sourceParent) const {
     Q_UNUSED(sourceParent)
-    qCDebug(KCM_FCITX5) << "AddonProxyModel::filterAcceptsRow - sourceRow:" << sourceRow << "sourceParent:" << sourceParent;
+    // qCDebug(KCM_FCITX5) << "AddonProxyModel::filterAcceptsRow - sourceRow:" << sourceRow << "sourceParent:" << sourceParent;
 
     const QModelIndex index = sourceModel()->index(sourceRow, 0, sourceParent);
 
     if (index.data(RowTypeRole) == CategoryType) {
+        // qCDebug(KCM_FCITX5) << "Filtering category";
         return filterCategory(index);
     }
 
+    // qCDebug(KCM_FCITX5) << "Filtering addon";
     return filterAddon(index);
 }
 
 bool AddonProxyModel::filterCategory(const QModelIndex &index) const {
+    // qCDebug(KCM_FCITX5) << "Filtering category";
     int childCount = index.model()->rowCount(index);
     if (childCount == 0)
         return false;
 
     for (int i = 0; i < childCount; ++i) {
         if (filterAddon(index.model()->index(i, 0, index))) {
+            // qCDebug(KCM_FCITX5) << "Filtering addon in category";
             return true;
         }
     }
+    // qCDebug(KCM_FCITX5) << "Filtering category returning false";
     return false;
 }
 
 bool AddonProxyModel::filterAddon(const QModelIndex &index) const {
+    // qCDebug(KCM_FCITX5) << "Filtering addon";
     auto name = index.data(Qt::DisplayRole).toString();
     auto uniqueName = index.data(AddonNameRole).toString();
     auto comment = index.data(CommentRole).toString();
 
     if (!filterText_.isEmpty()) {
+        // qCDebug(KCM_FCITX5) << "Filtering addon contains filter text";
         return name.contains(filterText_, Qt::CaseInsensitive) ||
                uniqueName.contains(filterText_, Qt::CaseInsensitive) ||
                comment.contains(filterText_, Qt::CaseInsensitive);
     }
 
+    // qCDebug(KCM_FCITX5) << "Filtering addon returning true";
     return true;
 }
 
 bool AddonProxyModel::lessThan(const QModelIndex &left,
                                const QModelIndex &right) const {
-
+    // qCDebug(KCM_FCITX5) << "LessThan - left:" << left << "right:" << right;
     int lhs = left.data(CategoryRole).toInt();
     int rhs = right.data(CategoryRole).toInt();
     // Reorder the addon category.
@@ -353,22 +388,27 @@ bool AddonProxyModel::lessThan(const QModelIndex &left,
     int result = lvalue - rvalue;
 
     if (result < 0) {
+        // qCDebug(KCM_FCITX5) << "LessThan - result < 0";
         return true;
     } else if (result > 0) {
+        // qCDebug(KCM_FCITX5) << "LessThan - result > 0";
         return false;
     }
 
     QString l = left.data(Qt::DisplayRole).toString();
     QString r = right.data(Qt::DisplayRole).toString();
+    // qCDebug(KCM_FCITX5) << "LessThan - l:" << l << "r:" << r;
     return QCollator().compare(l, r) < 0;
 }
 
 void AddonProxyModel::setFilterText(const QString &text) {
-    qCDebug(KCM_FCITX5) << "AddonProxyModel::setFilterText - text:" << text;
+    // qCDebug(KCM_FCITX5) << "AddonProxyModel::setFilterText - text:" << text;
     if (filterText_ != text) {
+        // qCDebug(KCM_FCITX5) << "Filter text changed to:" << text;
         filterText_ = text;
         invalidate();
     }
+    // qCDebug(KCM_FCITX5) << "Exiting AddonProxyModel::setFilterText";
 }
 
 } // namespace kcm

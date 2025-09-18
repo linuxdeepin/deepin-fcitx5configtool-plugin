@@ -10,7 +10,7 @@
 #include "logging.h"
 
 QFont fcitx::kcm::parseFont(const QString &string) {
-    qCDebug(KCM_FCITX5) << "parseFont - input string:" << string;
+    // qCDebug(KCM_FCITX5) << "parseFont - input string:" << string;
     auto result = stringutils::split(string.toStdString(), " ",
                                      stringutils::SplitBehavior::SkipEmpty);
     QStringList list;
@@ -19,9 +19,11 @@ QFont fcitx::kcm::parseFont(const QString &string) {
     }
     int size = 9; // Default size.
     if (!list.empty()) {
+        // qCDebug(KCM_FCITX5) << "parseFont - list is not empty";
         bool ok = false;
         auto fontSize = list.back().toInt(&ok);
         if (ok) {
+            // qCDebug(KCM_FCITX5) << "parseFont - fontSize:" << fontSize;
             if (fontSize > 0) {
                 size = fontSize;
             }
@@ -69,16 +71,16 @@ QFont fcitx::kcm::parseFont(const QString &string) {
     font.setWeight(weight);
     font.setStyle(style);
     font.setPointSize(size);
-    qCDebug(KCM_FCITX5) << "parseFont result - family:" << font.family()
-            << "size:" << font.pointSize()
-            << "weight:" << font.weight()
-            << "style:" << font.style();
+    // qCDebug(KCM_FCITX5) << "parseFont result - family:" << font.family()
+    //         << "size:" << font.pointSize()
+    //         << "weight:" << font.weight()
+    //         << "style:" << font.style();
     return font;
 }
 
 QString fcitx::kcm::fontToString(const QFont &font) {
-    qCDebug(KCM_FCITX5) << "fontToString - input font:"
-             << font.family() << font.pointSize();
+    // qCDebug(KCM_FCITX5) << "fontToString - input font:"
+    //          << font.family() << font.pointSize();
     QString style;
     QStringList styles;
     switch (font.style()) {

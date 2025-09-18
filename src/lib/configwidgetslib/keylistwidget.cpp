@@ -46,6 +46,7 @@ KeyListWidget::KeyListWidget(QWidget *parent) : QWidget(parent) {
 
     // Add an empty one.
     addKey();
+    qCDebug(KCM_FCITX5) << "Exiting KeyListWidget constructor";
 }
 
 void KeyListWidget::addKey(fcitx::Key key) {
@@ -80,6 +81,8 @@ void KeyListWidget::addKey(fcitx::Key key) {
                 removeButton->setVisible(showRemoveButton());
             });
     keysLayout_->addWidget(widget);
+
+    qCDebug(KCM_FCITX5) << "Exiting addKey";
 }
 
 void KeyListWidget::setKeys(const QList<fcitx::Key> &keys) {
@@ -103,9 +106,11 @@ void KeyListWidget::setKeys(const QList<fcitx::Key> &keys) {
         }
     }
     Q_EMIT keyChanged();
+    qCDebug(KCM_FCITX5) << "Exiting setKeys";
 }
 
 QList<fcitx::Key> KeyListWidget::keys() const {
+    qCDebug(KCM_FCITX5) << "Entering keys";
     QList<fcitx::Key> result;
     for (int i = 0; i < keysLayout_->count(); i++) {
         if (auto keyWidget = keysLayout_->itemAt(i)
@@ -120,6 +125,7 @@ QList<fcitx::Key> KeyListWidget::keys() const {
             }
         }
     }
+    qCDebug(KCM_FCITX5) << "Exiting keys with" << result.size() << "keys.";
     return result;
 }
 
@@ -140,6 +146,7 @@ void KeyListWidget::setAllowModifierLess(bool value) {
             keyWidget->setModifierlessAllowed(modifierLess_);
         }
     }
+    qCDebug(KCM_FCITX5) << "Exiting setAllowModifierLess";
 }
 
 void KeyListWidget::setAllowModifierOnly(bool value) {
@@ -159,6 +166,7 @@ void KeyListWidget::setAllowModifierOnly(bool value) {
             keyWidget->setModifierOnlyAllowed(modifierOnly_);
         }
     }
+    qCDebug(KCM_FCITX5) << "Exiting setAllowModifierOnly";
 }
 
 bool KeyListWidget::removeKeyAt(int idx) {
@@ -171,18 +179,22 @@ bool KeyListWidget::removeKeyAt(int idx) {
     }
     auto widget = keysLayout_->itemAt(idx)->widget();
     if (keysLayout_->count() == 1) {
+        qCDebug(KCM_FCITX5) << "Removing last key";
         keysLayout_->itemAt(0)
             ->widget()
             ->findChild<FcitxQtKeySequenceWidget *>()
             ->setKeySequence(QList<Key>());
     } else {
+        qCDebug(KCM_FCITX5) << "Removing key at index:" << idx;
         keysLayout_->removeWidget(widget);
         delete widget;
     }
+    qCDebug(KCM_FCITX5) << "Exiting removeKeyAt";
     return true;
 }
 
 bool KeyListWidget::showRemoveButton() const {
+    // qCDebug(KCM_FCITX5) << "Showing remove button, count:" << keysLayout_->count();
     return keysLayout_->count() > 1 ||
            (keysLayout_->count() == 1 &&
             keysLayout_->itemAt(0)
@@ -193,7 +205,9 @@ bool KeyListWidget::showRemoveButton() const {
 }
 
 void KeyListWidget::resizeEvent(QResizeEvent *event) {
+    // qCDebug(KCM_FCITX5) << "Entering resizeEvent";
     if (keysLayout_->count() > 0) {
+        // qCDebug(KCM_FCITX5) << "Resizing add button to match key widget height";
         addButton_->setMinimumHeight(
             keysLayout_->itemAt(0)
                 ->widget()
@@ -203,6 +217,7 @@ void KeyListWidget::resizeEvent(QResizeEvent *event) {
     }
 
     QWidget::resizeEvent(event);
+    // qCDebug(KCM_FCITX5) << "Exiting resizeEvent";
 }
 
 } // namespace kcm

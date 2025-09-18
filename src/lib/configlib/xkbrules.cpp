@@ -13,20 +13,22 @@
 #include "config.h"
 
 XkbRules &XkbRules::instance() {
+    // qCDebug(KCM_FCITX5) << "Entering XkbRules::instance";
     static XkbRules rules;
     static bool initialied = false;
     if (!initialied) {
-        qCDebug(KCM_FCITX5) << "Initializing XkbRules instance";
+        // qCDebug(KCM_FCITX5) << "Initializing XkbRules instance";
         initialied = true;
         QString dir = QDir::cleanPath(QStringLiteral(XKEYBOARDCONFIG_XKBBASE) + QDir::separator() + "rules");
-        qCDebug(KCM_FCITX5) << "Loading XKB rules from directory:" << dir;
+        // qCDebug(KCM_FCITX5) << "Loading XKB rules from directory:" << dir;
         
         bool mainLoaded = rules.open(QString("%1/%2.xml").arg(dir).arg(DEFAULT_XKB_RULES));
         bool extrasLoaded = rules.open(QString("%1/%2.extras.xml").arg(dir).arg(DEFAULT_XKB_RULES));
         
-        qCDebug(KCM_FCITX5) << "XKB rules loaded - main:" << mainLoaded
-               << "extras:" << extrasLoaded;
+        // qCDebug(KCM_FCITX5) << "XKB rules loaded - main:" << mainLoaded
+            //    << "extras:" << extrasLoaded;
     }
+    // qCDebug(KCM_FCITX5) << "Exiting XkbRules::instance";
     return rules;
 }
 

@@ -53,10 +53,11 @@ LayoutSelector::LayoutSelector(DBusProvider *dbus, QWidget *parent)
                                              QSizePolicy::Expanding);
         ui_->verticalLayout->addWidget(keyboardLayoutWidget_);
     }
+    qCDebug(KCM_FCITX5) << "Exiting LayoutSelector constructor";
 }
 
 LayoutSelector::~LayoutSelector() {
-    qCDebug(KCM_FCITX5) << "LayoutSelector destroyed";
+    // qCDebug(KCM_FCITX5) << "LayoutSelector destroyed";
 }
 
 QPair<QString, QString>
@@ -83,16 +84,20 @@ LayoutSelector::selectLayout(QWidget *parent, DBusProvider *dbus,
 
     auto ret = dialog->exec();
     if (ok) {
+        qCDebug(KCM_FCITX5) << "Setting ok to:" << ret;
         *ok = !!ret;
     }
     if (ret) {
+        qCDebug(KCM_FCITX5) << "Returning layout:" << layoutSelector->layout();
         return layoutSelector->layout();
     } else {
+        qCDebug(KCM_FCITX5) << "Returning empty layout";
         return {};
     }
 }
 
 void LayoutSelector::setLayout(const QString &layout, const QString &variant) {
+    qCDebug(KCM_FCITX5) << "Entering setLayout with layout:" << layout << "variant:" << variant;
     if (!layoutProvider_->loaded()) {
         qCDebug(KCM_FCITX5) << "Layout provider not loaded yet, caching selection:"
                            << "layout:" << preSelectLayout_
@@ -111,19 +116,23 @@ void LayoutSelector::setLayout(const QString &layout, const QString &variant) {
     }
     preSelectLayout_.clear();
     preSelectVariant_.clear();
+    qCDebug(KCM_FCITX5) << "Exiting setLayout";
 }
 
 QPair<QString, QString> LayoutSelector::layout() const {
+    // qCDebug(KCM_FCITX5) << "Entering layout";
     return {ui_->layoutComboBox->currentData().toString(),
             ui_->variantComboBox->currentData().toString()};
 }
 
 void LayoutSelector::languageComboBoxChanged() {
+    // qCDebug(KCM_FCITX5) << "Entering languageComboBoxChanged";
     layoutProvider_->layoutModel()->setLanguage(
         ui_->languageComboBox->currentData().toString());
 }
 
 void LayoutSelector::layoutComboBoxChanged() {
+    // qCDebug(KCM_FCITX5) << "Entering layoutComboBoxChanged";
     ui_->variantComboBox->clear();
     if (ui_->layoutComboBox->currentIndex() < 0) {
         qCWarning(KCM_FCITX5) << "Invalid layout index:"
@@ -135,21 +144,27 @@ void LayoutSelector::layoutComboBoxChanged() {
         ui_->layoutComboBox->currentData(LayoutInfoRole)
             .value<FcitxQtLayoutInfo>());
     ui_->variantComboBox->setCurrentIndex(0);
+    // qCDebug(KCM_FCITX5) << "Exiting layoutComboBoxChanged";
 }
 
 void LayoutSelector::variantComboBoxChanged() {
+    qCDebug(KCM_FCITX5) << "Entering variantComboBoxChanged";
     if (!keyboardLayoutWidget_) {
+        qCDebug(KCM_FCITX5) << "Exiting variantComboBoxChanged (no keyboard widget)";
         return;
     }
 
     auto layout = ui_->layoutComboBox->currentData().toString();
     auto variant = ui_->variantComboBox->currentData().toString();
     if (layout.isEmpty()) {
+        qCDebug(KCM_FCITX5) << "No layout selected, hiding keyboard widget";
         keyboardLayoutWidget_->setVisible(false);
     } else {
+        qCDebug(KCM_FCITX5) << "Showing keyboard widget for layout";
         keyboardLayoutWidget_->setKeyboardLayout(layout, variant);
         keyboardLayoutWidget_->setVisible(true);
     }
+    qCDebug(KCM_FCITX5) << "Exiting variantComboBoxChanged";
 }
 
 } // namespace kcm

@@ -53,6 +53,7 @@ static bool setSingleInstance() {
 }
 
 static void signal_callback_handler(int signum, siginfo_t *siginfo, void *context) {
+    qCDebug(fcitx5Helper) << "Entering signal_callback_handler";
     Q_UNUSED(context)
     qCDebug(fcitx5Helper) << "Received signal:" << signum << "from pid:" << (long)siginfo->si_pid;
     if (signum == SIGTERM && (long)siginfo->si_pid == 1) {
@@ -67,15 +68,18 @@ static void signal_callback_handler(int signum, siginfo_t *siginfo, void *contex
         qCDebug(fcitx5Helper) << "Command output:" << output << "Error:" << error;
         exit(signum);
     }
+    qCDebug(fcitx5Helper) << "Exiting signal_callback_handler";
 }
 
 static void setupSignalHandler() {
+    qCDebug(fcitx5Helper) << "Entering setupSignalHandler";
     //进程被init杀死，视为关机
     struct sigaction act;
     memset(&act, 0, sizeof(act));
     act.sa_sigaction = &signal_callback_handler;
     act.sa_flags = SA_SIGINFO;
     sigaction(SIGTERM, &act, nullptr);
+    qCDebug(fcitx5Helper) << "Exiting setupSignalHandler";
 }
 
 int main(int argc, char *argv[])
