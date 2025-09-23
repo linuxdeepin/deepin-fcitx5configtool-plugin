@@ -196,27 +196,35 @@
 <context>
     <name>ShortcutsModule</name>
     <message>
-        <location filename="../qml/ShortcutsModule.qml" line="116"/>
+        <location filename="../qml/ShortcutsModule.qml" line="119"/>
         <source>Shortcuts</source>
         <translation>Skróty</translation>
     </message>
     <message>
-        <location filename="../qml/ShortcutsModule.qml" line="131"/>
+        <location filename="../qml/ShortcutsModule.qml" line="134"/>
         <source>Restore Defaults</source>
         <translation>Przywróć domyślne ustawienia</translation>
     </message>
     <message>
-        <location filename="../qml/ShortcutsModule.qml" line="193"/>
+        <location filename="../qml/ShortcutsModule.qml" line="200"/>
         <source>Scroll between input methods</source>
         <translation>Przewiń między metodami wprowadzania</translation>
     </message>
     <message>
-        <location filename="../qml/ShortcutsModule.qml" line="223"/>
+        <location filename="../qml/ShortcutsModule.qml" line="12"/>
+        <location filename="../qml/ShortcutsModule.qml" line="14"/>
+        <location filename="../qml/ShortcutsModule.qml" line="151"/>
+        <location filename="../qml/ShortcutsModule.qml" line="152"/>
+        <source>None</source>
+        <translation>Brak</translation>
+    </message>
+    <message>
+        <location filename="../qml/ShortcutsModule.qml" line="230"/>
         <source>Turn on or off input methods</source>
         <translation>Włącz lub wyłącz metody wprowadzania</translation>
     </message>
     <message>
-        <location filename="../qml/ShortcutsModule.qml" line="266"/>
+        <location filename="../qml/ShortcutsModule.qml" line="273"/>
         <source>It turns on or off the currently used input method.If no input method is being used or the first input method is not the keyboard, it switches between the first input method and the currently used keyboard/input method.</source>
         <translation>Włącza lub wyłącza aktualnie używaną metodę wprowadzania. Jeśli nie jest używana żadna metoda wprowadzania lub Pierwsza metoda wprowadzania nie jest klawiaturą, przełącza się między pierwszą metodą wprowadzania a aktualnie używaną klawiaturą/metodą wprowadzania.</translation>
     </message>

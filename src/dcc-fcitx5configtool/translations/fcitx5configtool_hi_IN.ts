@@ -1,4 +1,6 @@
-<?xml version="1.0" ?><!DOCTYPE TS><TS version="2.1" language="hi_IN">
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE TS>
+<TS version="2.1" language="hi_IN">
 <context>
     <name>AddonsPage</name>
     <message>
@@ -10,30 +12,35 @@
 <context>
     <name>AdvancedSettingsModule</name>
     <message>
-        <location filename="../qml/AdvancedSettingsModule.qml" line="14"/>
+        <location filename="../qml/AdvancedSettingsModule.qml" line="15"/>
         <source>Advanced Settings</source>
         <translation>उन्नत निर्देश</translation>
     </message>
     <message>
-        <location filename="../qml/AdvancedSettingsModule.qml" line="28"/>
+        <location filename="../qml/AdvancedSettingsModule.qml" line="41"/>
         <source>&quot;Advanced Settings&quot; is only valid for the input method that uses the system settings, if the input method has its own settings, its own settings shall prevail.</source>
         <translation>&quot;उन्नत निर्देश&quot; केवल वह इनपुट मेथड लेती है जो सिस्टम सेटिंग्स का उपयोग करती है, यदि इनपुट मेथड के अपने सेटिंग्स हैं, तो अपने सेटिंग्स वाली सेटिंग्स विशेष रूप से लागू होती हैं।</translation>
     </message>
     <message>
-        <location filename="../qml/AdvancedSettingsModule.qml" line="41"/>
+        <location filename="../qml/AdvancedSettingsModule.qml" line="54"/>
         <source>Global Config</source>
         <translation>ग्लोबल कॉन्फ़िग</translation>
     </message>
     <message>
-        <location filename="../qml/AdvancedSettingsModule.qml" line="52"/>
+        <location filename="../qml/AdvancedSettingsModule.qml" line="70"/>
         <source>Add-ons</source>
         <translation>एडॉन्स</translation>
+    </message>
+    <message>
+        <location filename="../qml/AdvancedSettingsModule.qml" line="81"/>
+        <source>Keyboard layout</source>
+        <translation>कीबोर्ड लेआउट</translation>
     </message>
 </context>
 <context>
     <name>DetailConfigItem</name>
     <message>
-        <location filename="../qml/DetailConfigItem.qml" line="126"/>
+        <location filename="../qml/DetailConfigItem.qml" line="151"/>
         <source>Please enter a new shortcut</source>
         <translation>कृपया एक नया शॉर्टकट दर्ज करें</translation>
     </message>
@@ -41,22 +48,22 @@
 <context>
     <name>IMList</name>
     <message>
-        <location filename="../qml/IMList.qml" line="54"/>
+        <location filename="../qml/IMList.qml" line="152"/>
         <source>Move Up</source>
         <translation>ऊपर ले जाएं</translation>
     </message>
     <message>
-        <location filename="../qml/IMList.qml" line="61"/>
+        <location filename="../qml/IMList.qml" line="160"/>
         <source>Move Down</source>
         <translation>नीचे ले जाएं</translation>
     </message>
     <message>
-        <location filename="../qml/IMList.qml" line="69"/>
+        <location filename="../qml/IMList.qml" line="168"/>
         <source>Settings</source>
         <translation>सेटिंग्स</translation>
     </message>
     <message>
-        <location filename="../qml/IMList.qml" line="76"/>
+        <location filename="../qml/IMList.qml" line="176"/>
         <source>Remove</source>
         <translation>हटाएं</translation>
     </message>
@@ -64,27 +71,111 @@
 <context>
     <name>InputMethodsChooser</name>
     <message>
-        <location filename="../qml/InputMethodsChooser.qml" line="29"/>
+        <location filename="../qml/InputMethodsChooser.qml" line="35"/>
         <source>Add input method</source>
         <translation>इनपुट मेथड जोड़ें</translation>
     </message>
     <message>
-        <location filename="../qml/InputMethodsChooser.qml" line="37"/>
+        <location filename="../qml/InputMethodsChooser.qml" line="41"/>
         <source>Search</source>
         <translation>खोज</translation>
     </message>
     <message>
-        <location filename="../qml/InputMethodsChooser.qml" line="102"/>
+        <location filename="../qml/InputMethodsChooser.qml" line="109"/>
         <source>Find more in App Store</source>
         <translation>ऐप स्टोर में अधिक खोजें</translation>
     </message>
     <message>
-        <location filename="../qml/InputMethodsChooser.qml" line="121"/>
+        <location filename="../qml/InputMethodsChooser.qml" line="129"/>
         <source>Cancel</source>
         <translation>रद्द करें</translation>
     </message>
     <message>
-        <location filename="../qml/InputMethodsChooser.qml" line="128"/>
+        <location filename="../qml/InputMethodsChooser.qml" line="136"/>
+        <source>Add</source>
+        <translation>जोड़ें</translation>
+    </message>
+</context>
+<context>
+    <name>KeyboardLayout</name>
+    <message>
+        <location filename="../qml/KeyboardLayout.qml" line="16"/>
+        <source>Keyboard layout</source>
+        <translation>कीबोर्ड लेआउट</translation>
+    </message>
+    <message>
+        <location filename="../qml/KeyboardLayout.qml" line="34"/>
+        <source>done</source>
+        <translation>हो चुका</translation>
+    </message>
+    <message>
+        <location filename="../qml/KeyboardLayout.qml" line="34"/>
+        <source>edit</source>
+        <translation>संपादित करें</translation>
+    </message>
+    <message>
+        <location filename="../qml/KeyboardLayout.qml" line="57"/>
+        <source>Add the corresponding input method in &lt;a style=&apos;text-decoration: none;&apos; href=&apos;Manage Input Methods&apos;&gt;Input Method Management&lt;/a&gt; to ensure the keyboard layout works when added or switched.</source>
+        <translation>इनपुट मेथड प्रबंधन में &lt;a style=&apos;text-decoration: none;&apos; href=&apos;Manage Input Methods&apos;&gt;Input Method Management&lt;/a&gt; में संबंधित इनपुट मेथड जोड़ें ताकि कीबोर्ड लेआउट जोड़ने या बदलने पर काम करे।</translation>
+    </message>
+    <message>
+        <location filename="../qml/KeyboardLayout.qml" line="142"/>
+        <source>Add new keyboard layout...</source>
+        <translation>नया कीबोर्ड लेआउट जोड़ें...</translation>
+    </message>
+</context>
+<context>
+    <name>KeyboardLayoutModule</name>
+    <message>
+        <location filename="../qml/KeyboardLayoutModule.qml" line="16"/>
+        <source>Keyboard layout</source>
+        <translation>कीबोर्ड लेआउट</translation>
+    </message>
+    <message>
+        <location filename="../qml/KeyboardLayoutModule.qml" line="34"/>
+        <source>done</source>
+        <translation>हो चुका</translation>
+    </message>
+    <message>
+        <location filename="../qml/KeyboardLayoutModule.qml" line="34"/>
+        <source>edit</source>
+    <translation>संपादित करें</translation>
+    </message>
+    <message>
+        <location filename="../qml/KeyboardLayoutModule.qml" line="57"/>
+        <source>Add the corresponding input method in &lt;a style=&apos;text-decoration: none;&apos; href=&apos;Manage Input Methods&apos;&gt;Input Method Management&lt;/a&gt; to ensure the keyboard layout works when added or switched.</source>
+        <translation>इनपुट मेथड प्रबंधन में &lt;a style=&apos;text-decoration: none;&apos; href=&apos;Manage Input Methods&apos;&gt;Input Method Management&lt;/a&gt; में संबंधित इनपुट मेथड जोड़ें ताकि कीबोर्ड लेआउट जोड़ने या बदलने पर काम करे।</translation>
+    </message>
+    <message>
+        <location filename="../qml/KeyboardLayoutModule.qml" line="140"/>
+        <source>Add new keyboard layout...</source>
+        <translation>नया कीबोर्ड लेआउट जोड़ें...</translation>
+    </message>
+</context>
+<context>
+    <name>LayoutsChooser</name>
+    <message>
+        <location filename="../qml/LayoutsChooser.qml" line="30"/>
+        <source>Add new keyboard layout</source>
+        <translation>नया कीबोर्ड लेआउट जोड़ें</translation>
+    </message>
+    <message>
+        <location filename="../qml/LayoutsChooser.qml" line="38"/>
+        <source>Search</source>
+        <translation>खोज</translation>
+    </message>
+    <message>
+        <location filename="../qml/LayoutsChooser.qml" line="67"/>
+        <source>Current language keyboard layouts</source>
+        <translation>वर्तमान भाषा कीबोर्ड लेआउट्स</translation>
+    </message>
+    <message>
+        <location filename="../qml/LayoutsChooser.qml" line="90"/>
+        <source>Cancel</source>
+        <translation>रद्द करें</translation>
+    </message>
+    <message>
+        <location filename="../qml/LayoutsChooser.qml" line="97"/>
         <source>Add</source>
         <translation>जोड़ें</translation>
     </message>
@@ -97,7 +188,7 @@
         <translation>इनपुट मेथड प्रबंधन</translation>
     </message>
     <message>
-        <location filename="../qml/ManageInputMethodsModule.qml" line="29"/>
+        <location filename="../qml/ManageInputMethodsModule.qml" line="33"/>
         <source>Add input method</source>
         <translation>इनपुट मेथड जोड़ें</translation>
     </message>
@@ -105,34 +196,100 @@
 <context>
     <name>ShortcutsModule</name>
     <message>
-        <location filename="../qml/ShortcutsModule.qml" line="34"/>
+        <location filename="../qml/ShortcutsModule.qml" line="12"/>
+        <location filename="../qml/ShortcutsModule.qml" line="14"/>
+        <location filename="../qml/ShortcutsModule.qml" line="151"/>
+        <location filename="../qml/ShortcutsModule.qml" line="152"/>
+        <source>None</source>
+        <translation>कोई नहीं</translation>
+    </message>
+    <message>
+        <location filename="../qml/ShortcutsModule.qml" line="119"/>
         <source>Shortcuts</source>
         <translation>शॉर्टकट्स</translation>
     </message>
     <message>
-        <location filename="../qml/ShortcutsModule.qml" line="45"/>
+        <location filename="../qml/ShortcutsModule.qml" line="134"/>
         <source>Restore Defaults</source>
         <translation>डिफ़ॉल्ट वापस ले आएं</translation>
     </message>
     <message>
-        <location filename="../qml/ShortcutsModule.qml" line="97"/>
+        <location filename="../qml/ShortcutsModule.qml" line="200"/>
         <source>Scroll between input methods</source>
         <translation>इनपुट मेथड के बीच स्क्रॉल करें</translation>
     </message>
     <message>
-        <location filename="../qml/ShortcutsModule.qml" line="127"/>
+        <location filename="../qml/ShortcutsModule.qml" line="230"/>
         <source>Turn on or off input methods</source>
         <translation>इनपुट मेथड चालू या बंद करें</translation>
     </message>
     <message>
-        <location filename="../qml/ShortcutsModule.qml" line="131"/>
-        <source>Please enter a new shortcut</source>
-        <translation>कृपया एक नया शॉर्टकट दर्ज करें</translation>
-    </message>
-    <message>
-        <location filename="../qml/ShortcutsModule.qml" line="156"/>
+        <location filename="../qml/ShortcutsModule.qml" line="273"/>
         <source>It turns on or off the currently used input method.If no input method is being used or the first input method is not the keyboard, it switches between the first input method and the currently used keyboard/input method.</source>
         <translation>यह वर्तमान में उपयोग किए जा रहे इनपुट मेथड को चालू या बंद करता है। यदि कोई इनपुट मेथड उपयोग में नहीं है या पहला इनपुट मेथड कीबोर्ड नहीं है, तो यह पहले इनपुट मेथड और वर्तमान में उपयोग किए जा रहे कीबोर्ड/इनपुट मेथड के बीच बदल जाता है।</translation>
+    </message>
+</context>
+<context>
+    <name>dcc::Locale::dialectNames</name>
+    <message>
+        <location filename="../keyboard-layout/operation/dcclocale.cpp" line="62"/>
+        <source>Traditional Chinese (Chinese Hong Kong)</source>
+        <translation>पुरातन चीनी (चीनी हंग कोंग)</translation>
+    </message>
+    <message>
+        <location filename="../keyboard-layout/operation/dcclocale.cpp" line="65"/>
+        <source>Traditional Chinese (Chinese Taiwan)</source>
+        <translation>पुरातन चीनी (चीनी ताइवान)</translation>
+    </message>
+</context>
+<context>
+    <name>dcc::Locale::regionNames</name>
+    <message>
+        <location filename="../keyboard-layout/operation/dcclocale.cpp" line="86"/>
+        <source>Taiwan China</source>
+        <translation>ताइवान चीन</translation>
+    </message>
+</context>
+<context>
+    <name>dccV25::KeyboardController</name>
+    <message>
+        <location filename="../keyboard-layout/operation/keyboardcontroller.cpp" line="55"/>
+        <source>This shortcut conflicts with [%1]</source>
+            <translation>यह शॉर्टकट [%1] के साथ विघटित है</translation>
+    </message>
+</context>
+<context>
+    <name>dccV25::ShortcutModel</name>
+    <message>
+        <location filename="../keyboard-layout/operation/shortcutmodel.cpp" line="248"/>
+        <source>System</source>
+        <translation>सिस्टम</translation>
+    </message>
+    <message>
+        <location filename="../keyboard-layout/operation/shortcutmodel.cpp" line="253"/>
+        <source>Window</source>
+        <translation>विंडो</translation>
+    </message>
+    <message>
+        <location filename="../keyboard-layout/operation/shortcutmodel.cpp" line="258"/>
+        <source>Workspace</source>
+        <translation>वर्कस्पेस</translation>
+    </message>
+    <message>
+        <location filename="../keyboard-layout/operation/shortcutmodel.cpp" line="263"/>
+        <source>AssistiveTools</source>
+        <translation>सहायक उपकरण</translation>
+    </message>
+    <message>
+        <location filename="../keyboard-layout/operation/shortcutmodel.cpp" line="268"/>
+        <location filename="../keyboard-layout/operation/shortcutmodel.cpp" line="339"/>
+        <source>Custom</source>
+        <translation>स्वचालित</translation>
+    </message>
+    <message>
+        <location filename="../keyboard-layout/operation/shortcutmodel.cpp" line="394"/>
+        <source>None</source>
+        <translation>कोई नहीं</translation>
     </message>
 </context>
 <context>

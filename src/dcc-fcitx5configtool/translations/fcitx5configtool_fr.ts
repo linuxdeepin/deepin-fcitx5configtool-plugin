@@ -196,27 +196,35 @@
 <context>
     <name>ShortcutsModule</name>
     <message>
-        <location filename="../qml/ShortcutsModule.qml" line="116"/>
+        <location filename="../qml/ShortcutsModule.qml" line="119"/>
         <source>Shortcuts</source>
         <translation>Raccourcis clavier</translation>
     </message>
     <message>
-        <location filename="../qml/ShortcutsModule.qml" line="131"/>
+        <location filename="../qml/ShortcutsModule.qml" line="134"/>
         <source>Restore Defaults</source>
         <translation>Rétablir les paramètres par défaut</translation>
     </message>
     <message>
-        <location filename="../qml/ShortcutsModule.qml" line="193"/>
+        <location filename="../qml/ShortcutsModule.qml" line="200"/>
         <source>Scroll between input methods</source>
         <translation>Parcourir les méthodes de saisie</translation>
     </message>
     <message>
-        <location filename="../qml/ShortcutsModule.qml" line="223"/>
+        <location filename="../qml/ShortcutsModule.qml" line="12"/>
+        <location filename="../qml/ShortcutsModule.qml" line="14"/>
+        <location filename="../qml/ShortcutsModule.qml" line="151"/>
+        <location filename="../qml/ShortcutsModule.qml" line="152"/>
+        <source>None</source>
+        <translation>Aucun</translation>
+    </message>
+    <message>
+        <location filename="../qml/ShortcutsModule.qml" line="230"/>
         <source>Turn on or off input methods</source>
         <translation>Activer ou désactiver les méthodes de saisie</translation>
     </message>
     <message>
-        <location filename="../qml/ShortcutsModule.qml" line="266"/>
+        <location filename="../qml/ShortcutsModule.qml" line="273"/>
         <source>It turns on or off the currently used input method.If no input method is being used or the first input method is not the keyboard, it switches between the first input method and the currently used keyboard/input method.</source>
         <translation>Active ou désactive la méthode de saisie en cours d&apos;utilisation. Si aucune méthode n&apos;est utilisée ou si la première méthode n&apos;est pas le clavier, cela permet de basculer entre la première méthode de saisie et le clavier/la méthode actuellement utilisé.</translation>
     </message>

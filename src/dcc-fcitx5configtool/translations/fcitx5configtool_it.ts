@@ -83,7 +83,7 @@
     <message>
         <location filename="../qml/InputMethodsChooser.qml" line="109"/>
         <source>Find more in App Store</source>
-        <translation>Trova altro nell'App Store</translation>
+        <translation>Trova altro nell&apos;App Store</translation>
     </message>
     <message>
         <location filename="../qml/InputMethodsChooser.qml" line="129"/>
@@ -121,7 +121,7 @@
     <message>
         <location filename="../qml/KeyboardLayout.qml" line="142"/>
         <source>Add new keyboard layout...</source>
-            <translation>Aggiungi nuovo layout della tastiera...</translation>
+        <translation>Aggiungi nuovo layout della tastiera...</translation>
     </message>
 </context>
 <context>
@@ -196,27 +196,35 @@
 <context>
     <name>ShortcutsModule</name>
     <message>
-        <location filename="../qml/ShortcutsModule.qml" line="116"/>
+        <location filename="../qml/ShortcutsModule.qml" line="119"/>
         <source>Shortcuts</source>
         <translation>Collegamenti</translation>
     </message>
     <message>
-        <location filename="../qml/ShortcutsModule.qml" line="131"/>
+        <location filename="../qml/ShortcutsModule.qml" line="134"/>
         <source>Restore Defaults</source>
         <translation>Ripristina predefiniti</translation>
     </message>
     <message>
-        <location filename="../qml/ShortcutsModule.qml" line="193"/>
+        <location filename="../qml/ShortcutsModule.qml" line="200"/>
         <source>Scroll between input methods</source>
         <translation>Scorri tra i metodi di input</translation>
     </message>
     <message>
-        <location filename="../qml/ShortcutsModule.qml" line="223"/>
+        <location filename="../qml/ShortcutsModule.qml" line="12"/>
+        <location filename="../qml/ShortcutsModule.qml" line="14"/>
+        <location filename="../qml/ShortcutsModule.qml" line="151"/>
+        <location filename="../qml/ShortcutsModule.qml" line="152"/>
+        <source>None</source>
+        <translation>Nessuno</translation>
+    </message>
+    <message>
+        <location filename="../qml/ShortcutsModule.qml" line="230"/>
         <source>Turn on or off input methods</source>
         <translation>Attiva o disattiva i metodi di input</translation>
     </message>
     <message>
-        <location filename="../qml/ShortcutsModule.qml" line="266"/>
+        <location filename="../qml/ShortcutsModule.qml" line="273"/>
         <source>It turns on or off the currently used input method.If no input method is being used or the first input method is not the keyboard, it switches between the first input method and the currently used keyboard/input method.</source>
         <translation>Attiva o disattiva il metodo di input attualmente utilizzato. Se nessun metodo di input è in uso o il primo metodo di input non è la tastiera, passa tra il primo metodo di input e il metodo di input della tastiera attualmente utilizzato.</translation>
     </message>

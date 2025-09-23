@@ -9,7 +9,10 @@ import org.deepin.dcc 1.0
 
 DccObject {
     readonly property var enumKeys: ["Ctrl+Shift", "Alt+Shift", "None"]
+    readonly property var enumKeysI18n: ["Ctrl+Shift", "Alt+Shift", qsTr("None")]
     readonly property var triggerEnumKeys: ["Shift", "Ctrl+Space", "None"]
+    readonly property var triggerEnumKeysI18n: ["Shift", "Ctrl+Space", qsTr("None")]
+    
     property var triggerKeys: dccData.fcitx5ConfigProxy.globalConfigOption(
                                   "Hotkey", "TriggerKeys")
     property int enumerateForwardKeys: calculateEnumerateForwardKeys(
@@ -144,6 +147,10 @@ DccObject {
     }
 
     Component.onCompleted: {
+        // 设置翻译后的显示数组
+        enumKeysDisplay = ["Ctrl+Shift", "Alt+Shift", qsTr("None")]
+        triggerEnumKeysDisplay = ["Shift", "Ctrl+Space", qsTr("None")]
+        
         dccData.fcitx5ConfigProxy.onRequestConfigFinished.connect(() => {
                                                                       
                                                                       let fullTriggerKeys = dccData.fcitx5ConfigProxy.globalConfigOption("Hotkey", "TriggerKeys")
@@ -196,7 +203,7 @@ DccObject {
         page: D.ComboBox {
             id: comboBox
             flat: true
-            model: enumKeys
+            model: enumKeysI18n
             currentIndex: enumerateForwardKeys
 
             onCurrentIndexChanged: {
@@ -226,7 +233,7 @@ DccObject {
             page: D.ComboBox {
                 id: triggerComboBox
                 flat: true
-                model: triggerEnumKeys
+                model: triggerEnumKeysI18n
                 currentIndex: currentTriggerKeys
 
                 onCurrentIndexChanged: {

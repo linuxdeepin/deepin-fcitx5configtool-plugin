@@ -157,7 +157,7 @@
     <message>
         <location filename="../qml/LayoutsChooser.qml" line="30"/>
         <source>Add new keyboard layout</source>
-                <translation>Afegeix una nova distribució del teclat</translation>
+        <translation>Afegeix una nova distribució del teclat</translation>
     </message>
     <message>
         <location filename="../qml/LayoutsChooser.qml" line="38"/>
@@ -196,27 +196,35 @@
 <context>
     <name>ShortcutsModule</name>
     <message>
-        <location filename="../qml/ShortcutsModule.qml" line="116"/>
+        <location filename="../qml/ShortcutsModule.qml" line="119"/>
         <source>Shortcuts</source>
         <translation>Dreceres</translation>
     </message>
     <message>
-        <location filename="../qml/ShortcutsModule.qml" line="131"/>
+        <location filename="../qml/ShortcutsModule.qml" line="134"/>
         <source>Restore Defaults</source>
         <translation>Restaura els valors per defecte</translation>
     </message>
     <message>
-        <location filename="../qml/ShortcutsModule.qml" line="193"/>
+        <location filename="../qml/ShortcutsModule.qml" line="200"/>
         <source>Scroll between input methods</source>
         <translation>Desplaceu-vos pels mètodes d&apos;entrada</translation>
     </message>
     <message>
-        <location filename="../qml/ShortcutsModule.qml" line="223"/>
+        <location filename="../qml/ShortcutsModule.qml" line="12"/>
+        <location filename="../qml/ShortcutsModule.qml" line="14"/>
+        <location filename="../qml/ShortcutsModule.qml" line="151"/>
+        <location filename="../qml/ShortcutsModule.qml" line="152"/>
+        <source>None</source>
+        <translation>Cap</translation>
+    </message>
+    <message>
+        <location filename="../qml/ShortcutsModule.qml" line="230"/>
         <source>Turn on or off input methods</source>
         <translation>Activa o desactiva els mètodes d&apos;entrada</translation>
     </message>
     <message>
-        <location filename="../qml/ShortcutsModule.qml" line="266"/>
+        <location filename="../qml/ShortcutsModule.qml" line="273"/>
         <source>It turns on or off the currently used input method.If no input method is being used or the first input method is not the keyboard, it switches between the first input method and the currently used keyboard/input method.</source>
         <translation>Activa o desactiva el mètode d&apos;entrada que s&apos;usa actualment. Si no se n&apos;usa cap o el primer no és el teclat, canvia entre el primer mètode d&apos;entrada i el teclat o mètode d&apos;entrada actual.</translation>
     </message>

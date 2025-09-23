@@ -101,12 +101,12 @@
     <message>
         <location filename="../qml/KeyboardLayout.qml" line="16"/>
         <source>Keyboard layout</source>
-        <translation type="unfinished"></translation>
+        <translation>Näppäimistön asettelu</translation>
     </message>
     <message>
         <location filename="../qml/KeyboardLayout.qml" line="34"/>
         <source>done</source>
-            <translation>valmis</translation>
+        <translation>valmis</translation>
     </message>
     <message>
         <location filename="../qml/KeyboardLayout.qml" line="34"/>
@@ -179,7 +179,7 @@
         <source>Add</source>
         <translation>Lisää</translation>
     </message>
-</context>  
+</context>
 <context>
     <name>ManageInputMethodsModule</name>
     <message>
@@ -196,27 +196,35 @@
 <context>
     <name>ShortcutsModule</name>
     <message>
-        <location filename="../qml/ShortcutsModule.qml" line="116"/>
+        <location filename="../qml/ShortcutsModule.qml" line="119"/>
         <source>Shortcuts</source>
         <translation>Pikakäkset</translation>
     </message>
     <message>
-        <location filename="../qml/ShortcutsModule.qml" line="131"/>
+        <location filename="../qml/ShortcutsModule.qml" line="134"/>
         <source>Restore Defaults</source>
         <translation>Palauta oletusarvot</translation>
     </message>
     <message>
-        <location filename="../qml/ShortcutsModule.qml" line="193"/>
+        <location filename="../qml/ShortcutsModule.qml" line="200"/>
         <source>Scroll between input methods</source>
         <translation>Vaihda syöttömenetelmiä hiirellä</translation>
     </message>
     <message>
-        <location filename="../qml/ShortcutsModule.qml" line="223"/>
+        <location filename="../qml/ShortcutsModule.qml" line="12"/>
+        <location filename="../qml/ShortcutsModule.qml" line="14"/>
+        <location filename="../qml/ShortcutsModule.qml" line="151"/>
+        <location filename="../qml/ShortcutsModule.qml" line="152"/>
+        <source>None</source>
+        <translation>Ei mitään</translation>
+    </message>
+    <message>
+        <location filename="../qml/ShortcutsModule.qml" line="230"/>
         <source>Turn on or off input methods</source>
         <translation>Päälle- tai pois-kytkentä syöttömenetelmille</translation>
     </message>
     <message>
-        <location filename="../qml/ShortcutsModule.qml" line="266"/>
+        <location filename="../qml/ShortcutsModule.qml" line="273"/>
         <source>It turns on or off the currently used input method.If no input method is being used or the first input method is not the keyboard, it switches between the first input method and the currently used keyboard/input method.</source>
         <translation>Se käyttää päälle- tai pois-kytkentää nykyisesti käytettävälle syöttömenetelmälle. Jos ei käytetä syöttömenetelmää tai ensimmäinen syöttömenetelmä ei ole näppäimistö, se vaihtaa ensimmäistä syöttömenetelmää ja nykyistä käytettävää näppäimistöä/syöttömenetelmää.</translation>
     </message>
