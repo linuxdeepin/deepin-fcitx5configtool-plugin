@@ -10,30 +10,35 @@
 <context>
     <name>AdvancedSettingsModule</name>
     <message>
-        <location filename="../qml/AdvancedSettingsModule.qml" line="14"/>
+        <location filename="../qml/AdvancedSettingsModule.qml" line="15"/>
         <source>Advanced Settings</source>
         <translation>高級設定</translation>
     </message>
     <message>
-        <location filename="../qml/AdvancedSettingsModule.qml" line="28"/>
+        <location filename="../qml/AdvancedSettingsModule.qml" line="41"/>
         <source>&quot;Advanced Settings&quot; is only valid for the input method that uses the system settings, if the input method has its own settings, its own settings shall prevail.</source>
         <translation>「高級設定」僅針對使用系統設定的輸入法生效，若輸入法有自身的設定則以自身設定為準。</translation>
     </message>
     <message>
-        <location filename="../qml/AdvancedSettingsModule.qml" line="41"/>
+        <location filename="../qml/AdvancedSettingsModule.qml" line="54"/>
         <source>Global Config</source>
         <translation>全域性配置</translation>
     </message>
     <message>
-        <location filename="../qml/AdvancedSettingsModule.qml" line="52"/>
+        <location filename="../qml/AdvancedSettingsModule.qml" line="70"/>
         <source>Add-ons</source>
         <translation>附加元件</translation>
+    </message>
+    <message>
+        <location filename="../qml/AdvancedSettingsModule.qml" line="81"/>
+        <source>Keyboard layout</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
     <name>DetailConfigItem</name>
     <message>
-        <location filename="../qml/DetailConfigItem.qml" line="126"/>
+        <location filename="../qml/DetailConfigItem.qml" line="151"/>
         <source>Please enter a new shortcut</source>
         <translation>請輸入新的快捷鍵</translation>
     </message>
@@ -41,22 +46,22 @@
 <context>
     <name>IMList</name>
     <message>
-        <location filename="../qml/IMList.qml" line="54"/>
+        <location filename="../qml/IMList.qml" line="152"/>
         <source>Move Up</source>
         <translation>上移</translation>
     </message>
     <message>
-        <location filename="../qml/IMList.qml" line="61"/>
+        <location filename="../qml/IMList.qml" line="160"/>
         <source>Move Down</source>
         <translation>下移</translation>
     </message>
     <message>
-        <location filename="../qml/IMList.qml" line="69"/>
+        <location filename="../qml/IMList.qml" line="168"/>
         <source>Settings</source>
         <translation>設定</translation>
     </message>
     <message>
-        <location filename="../qml/IMList.qml" line="76"/>
+        <location filename="../qml/IMList.qml" line="176"/>
         <source>Remove</source>
         <translation>刪除</translation>
     </message>
@@ -64,27 +69,111 @@
 <context>
     <name>InputMethodsChooser</name>
     <message>
-        <location filename="../qml/InputMethodsChooser.qml" line="29"/>
+        <location filename="../qml/InputMethodsChooser.qml" line="35"/>
         <source>Add input method</source>
         <translation>新增輸入法</translation>
     </message>
     <message>
-        <location filename="../qml/InputMethodsChooser.qml" line="37"/>
+        <location filename="../qml/InputMethodsChooser.qml" line="41"/>
         <source>Search</source>
         <translation>搜尋</translation>
     </message>
     <message>
-        <location filename="../qml/InputMethodsChooser.qml" line="102"/>
+        <location filename="../qml/InputMethodsChooser.qml" line="109"/>
         <source>Find more in App Store</source>
         <translation>前往商店下載</translation>
     </message>
     <message>
-        <location filename="../qml/InputMethodsChooser.qml" line="121"/>
+        <location filename="../qml/InputMethodsChooser.qml" line="129"/>
         <source>Cancel</source>
         <translation>取消</translation>
     </message>
     <message>
-        <location filename="../qml/InputMethodsChooser.qml" line="128"/>
+        <location filename="../qml/InputMethodsChooser.qml" line="136"/>
+        <source>Add</source>
+        <translation>新增</translation>
+    </message>
+</context>
+<context>
+    <name>KeyboardLayout</name>
+    <message>
+        <location filename="../qml/KeyboardLayout.qml" line="16"/>
+        <source>Keyboard layout</source>
+        <translation>鍵盤佈局</translation>
+    </message>
+    <message>
+        <location filename="../qml/KeyboardLayout.qml" line="34"/>
+        <source>done</source>
+        <translation>完成</translation>
+    </message>
+    <message>
+        <location filename="../qml/KeyboardLayout.qml" line="34"/>
+        <source>edit</source>
+        <translation>編輯</translation>
+    </message>
+    <message>
+        <location filename="../qml/KeyboardLayout.qml" line="57"/>
+        <source>Add the corresponding input method in &lt;a style=&apos;text-decoration: none;&apos; href=&apos;Manage Input Methods&apos;&gt;Input Method Management&lt;/a&gt; to ensure the keyboard layout works when added or switched.</source>
+        <translation>如需新增或切換鍵盤佈局，請同時在 &lt;a style=&apos;text-decoration: none;&apos; href=&apos;Manage Input Methods&apos;&gt; 輸入法管理 &lt;/a&gt;  中新增對應的輸入法以確保生效</translation>
+    </message>
+    <message>
+        <location filename="../qml/KeyboardLayout.qml" line="142"/>
+        <source>Add new keyboard layout...</source>
+        <translation>新增鍵盤佈局...</translation>
+    </message>
+</context>
+<context>
+    <name>KeyboardLayoutModule</name>
+    <message>
+        <location filename="../qml/KeyboardLayoutModule.qml" line="16"/>
+        <source>Keyboard layout</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../qml/KeyboardLayoutModule.qml" line="34"/>
+        <source>done</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../qml/KeyboardLayoutModule.qml" line="34"/>
+        <source>edit</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../qml/KeyboardLayoutModule.qml" line="57"/>
+        <source>Add the corresponding input method in &lt;a style=&apos;text-decoration: none;&apos; href=&apos;Manage Input Methods&apos;&gt;Input Method Management&lt;/a&gt; to ensure the keyboard layout works when added or switched.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../qml/KeyboardLayoutModule.qml" line="140"/>
+        <source>Add new keyboard layout...</source>
+        <translation type="unfinished"/>
+    </message>
+</context>
+<context>
+    <name>LayoutsChooser</name>
+    <message>
+        <location filename="../qml/LayoutsChooser.qml" line="30"/>
+        <source>Add new keyboard layout</source>
+        <translation>新增鍵盤佈局</translation>
+    </message>
+    <message>
+        <location filename="../qml/LayoutsChooser.qml" line="38"/>
+        <source>Search</source>
+        <translation>搜尋</translation>
+    </message>
+    <message>
+        <location filename="../qml/LayoutsChooser.qml" line="67"/>
+        <source>Current language keyboard layouts</source>
+        <translation>當前語言鍵盤佈局</translation>
+    </message>
+    <message>
+        <location filename="../qml/LayoutsChooser.qml" line="90"/>
+        <source>Cancel</source>
+            <translation>取消</translation>
+    </message>
+    <message>
+        <location filename="../qml/LayoutsChooser.qml" line="97"/>
         <source>Add</source>
         <translation>新增</translation>
     </message>
@@ -97,7 +186,7 @@
         <translation>輸入法管理</translation>
     </message>
     <message>
-        <location filename="../qml/ManageInputMethodsModule.qml" line="29"/>
+        <location filename="../qml/ManageInputMethodsModule.qml" line="33"/>
         <source>Add input method</source>
         <translation>新增輸入法</translation>
     </message>
@@ -105,34 +194,100 @@
 <context>
     <name>ShortcutsModule</name>
     <message>
-        <location filename="../qml/ShortcutsModule.qml" line="34"/>
+        <location filename="../qml/ShortcutsModule.qml" line="12"/>
+        <location filename="../qml/ShortcutsModule.qml" line="14"/>
+        <location filename="../qml/ShortcutsModule.qml" line="151"/>
+        <location filename="../qml/ShortcutsModule.qml" line="152"/>
+        <source>None</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../qml/ShortcutsModule.qml" line="119"/>
         <source>Shortcuts</source>
         <translation>快捷鍵</translation>
     </message>
     <message>
-        <location filename="../qml/ShortcutsModule.qml" line="45"/>
+        <location filename="../qml/ShortcutsModule.qml" line="134"/>
         <source>Restore Defaults</source>
         <translation>恢復預設</translation>
     </message>
     <message>
-        <location filename="../qml/ShortcutsModule.qml" line="97"/>
+        <location filename="../qml/ShortcutsModule.qml" line="200"/>
         <source>Scroll between input methods</source>
         <translation>輪序切換輸入法</translation>
     </message>
     <message>
-        <location filename="../qml/ShortcutsModule.qml" line="127"/>
+        <location filename="../qml/ShortcutsModule.qml" line="230"/>
         <source>Turn on or off input methods</source>
         <translation>開啟/關閉輸入法</translation>
     </message>
     <message>
-        <location filename="../qml/ShortcutsModule.qml" line="131"/>
-        <source>Please enter a new shortcut</source>
-        <translation>請輸入新的快捷鍵</translation>
-    </message>
-    <message>
-        <location filename="../qml/ShortcutsModule.qml" line="156"/>
+        <location filename="../qml/ShortcutsModule.qml" line="273"/>
         <source>It turns on or off the currently used input method.If no input method is being used or the first input method is not the keyboard, it switches between the first input method and the currently used keyboard/input method.</source>
         <translation>開啟/關閉當前使用的輸入法，如果當前未使用輸入法或者第一位輸入法不是鍵盤，則會在當前使用的鍵盤/輸入法和第一位輸入法之間切換。</translation>
+    </message>
+</context>
+<context>
+    <name>dcc::Locale::dialectNames</name>
+    <message>
+        <location filename="../keyboard-layout/operation/dcclocale.cpp" line="62"/>
+        <source>Traditional Chinese (Chinese Hong Kong)</source>
+        <translation>繁體中文（中國香港）</translation>
+    </message>
+    <message>
+        <location filename="../keyboard-layout/operation/dcclocale.cpp" line="65"/>
+        <source>Traditional Chinese (Chinese Taiwan)</source>
+        <translation>繁體中文（中國台灣）</translation>
+    </message>
+</context>
+<context>
+    <name>dcc::Locale::regionNames</name>
+    <message>
+        <location filename="../keyboard-layout/operation/dcclocale.cpp" line="86"/>
+        <source>Taiwan China</source>
+        <translation>中國臺灣</translation>
+    </message>
+</context>
+<context>
+    <name>dccV25::KeyboardController</name>
+    <message>
+        <location filename="../keyboard-layout/operation/keyboardcontroller.cpp" line="55"/>
+        <source>This shortcut conflicts with [%1]</source>
+            <translation>此快捷鍵與[%1]衝突</translation>
+    </message>
+</context>
+<context>
+    <name>dccV25::ShortcutModel</name>
+    <message>
+        <location filename="../keyboard-layout/operation/shortcutmodel.cpp" line="248"/>
+        <source>System</source>
+        <translation>系統</translation>
+    </message>
+    <message>
+        <location filename="../keyboard-layout/operation/shortcutmodel.cpp" line="253"/>
+        <source>Window</source>
+        <translation>視窗</translation>
+    </message>
+    <message>
+        <location filename="../keyboard-layout/operation/shortcutmodel.cpp" line="258"/>
+        <source>Workspace</source>
+        <translation>工作區</translation>
+    </message>
+    <message>
+        <location filename="../keyboard-layout/operation/shortcutmodel.cpp" line="263"/>
+        <source>AssistiveTools</source>
+        <translation>輔助功能</translation>
+    </message>
+    <message>
+        <location filename="../keyboard-layout/operation/shortcutmodel.cpp" line="268"/>
+        <location filename="../keyboard-layout/operation/shortcutmodel.cpp" line="339"/>
+        <source>Custom</source>
+        <translation>自定義</translation>
+    </message>
+    <message>
+        <location filename="../keyboard-layout/operation/shortcutmodel.cpp" line="394"/>
+        <source>None</source>
+        <translation>無</translation>
     </message>
 </context>
 <context>
