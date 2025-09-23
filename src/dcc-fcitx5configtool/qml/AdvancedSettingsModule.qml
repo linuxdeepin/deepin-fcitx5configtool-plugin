@@ -6,6 +6,7 @@ import QtQuick.Layouts 1.15
 
 import org.deepin.dtk 1.0 as D
 import org.deepin.dcc 1.0
+// KeyboardLayout components are now in the same directory
 
 DccObject {
     DccObject {
@@ -72,5 +73,16 @@ DccObject {
             spacing: 0
         }
         AddonsPage {}
+    }
+
+    DccObject {
+        name: "KeyboardLayoutModule"
+        parentName: "AdvancedSettings"
+        displayName: qsTr("Keyboard layout")
+        weight: 340
+        page: DccRightView {
+            spacing: 5
+        }
+        KeyboardLayoutModule {}
     }
 }
