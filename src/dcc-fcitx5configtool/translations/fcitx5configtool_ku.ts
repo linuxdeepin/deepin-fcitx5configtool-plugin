@@ -1,43 +1,48 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.1">
+<TS version="2.1" language="ku">
 <context>
     <name>AddonsPage</name>
     <message>
         <location filename="../qml/AddonsPage.qml" line="20"/>
         <source>Add-ons</source>
-        <translation type="unfinished"></translation>
+        <translation>Zêdeyên</translation>
     </message>
 </context>
 <context>
     <name>AdvancedSettingsModule</name>
     <message>
-        <location filename="../qml/AdvancedSettingsModule.qml" line="14"/>
+        <location filename="../qml/AdvancedSettingsModule.qml" line="15"/>
         <source>Advanced Settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Mîhengên Pêşkeftî</translation>
     </message>
     <message>
-        <location filename="../qml/AdvancedSettingsModule.qml" line="40"/>
-        <source>"Advanced Settings" is only valid for the input method that uses the system settings, if the input method has its own settings, its own settings shall prevail.</source>
-        <translation type="unfinished"></translation>
+        <location filename="../qml/AdvancedSettingsModule.qml" line="41"/>
+        <source>&quot;Advanced Settings&quot; is only valid for the input method that uses the system settings, if the input method has its own settings, its own settings shall prevail.</source>
+        <translation>"Mîhengên Pêşkeftî" tenê ji bo awayê têketinê ya ku mîhengên pergalê bi kar tîne derbasdar e, heke awayê têketinê mîhengên xwe hebe, mîhengên wê xwe dê serdest bin.</translation>
     </message>
     <message>
-        <location filename="../qml/AdvancedSettingsModule.qml" line="53"/>
+        <location filename="../qml/AdvancedSettingsModule.qml" line="54"/>
         <source>Global Config</source>
-        <translation type="unfinished"></translation>
+        <translation>Veavakirina Gerdûnî</translation>
     </message>
     <message>
-        <location filename="../qml/AdvancedSettingsModule.qml" line="69"/>
+        <location filename="../qml/AdvancedSettingsModule.qml" line="70"/>
         <source>Add-ons</source>
-        <translation type="unfinished"></translation>
+        <translation>Zêdeyên</translation>
+    </message>
+    <message>
+        <location filename="../qml/AdvancedSettingsModule.qml" line="81"/>
+        <source>Keyboard layout</source>
+        <translation>Nexşeya klavyeyê</translation>
     </message>
 </context>
 <context>
     <name>DetailConfigItem</name>
     <message>
-        <location filename="../qml/DetailConfigItem.qml" line="150"/>
+        <location filename="../qml/DetailConfigItem.qml" line="151"/>
         <source>Please enter a new shortcut</source>
-        <translation type="unfinished"></translation>
+        <translation>Ji kerema xwe kurterêyeke nû binivîse</translation>
     </message>
 </context>
 <context>
@@ -45,22 +50,22 @@
     <message>
         <location filename="../qml/IMList.qml" line="152"/>
         <source>Move Up</source>
-        <translation type="unfinished"></translation>
+        <translation>Berbi jor</translation>
     </message>
     <message>
         <location filename="../qml/IMList.qml" line="160"/>
         <source>Move Down</source>
-        <translation type="unfinished"></translation>
+        <translation>Berbi jêr</translation>
     </message>
     <message>
         <location filename="../qml/IMList.qml" line="168"/>
         <source>Settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Mîheng</translation>
     </message>
     <message>
         <location filename="../qml/IMList.qml" line="176"/>
         <source>Remove</source>
-        <translation type="unfinished"></translation>
+        <translation>Rake</translation>
     </message>
 </context>
 <context>
@@ -68,27 +73,111 @@
     <message>
         <location filename="../qml/InputMethodsChooser.qml" line="35"/>
         <source>Add input method</source>
-        <translation type="unfinished"></translation>
+        <translation>Awayê têketinê zêde bike</translation>
     </message>
     <message>
         <location filename="../qml/InputMethodsChooser.qml" line="41"/>
         <source>Search</source>
-        <translation type="unfinished"></translation>
+        <translation>Lêgerîn</translation>
     </message>
     <message>
         <location filename="../qml/InputMethodsChooser.qml" line="109"/>
         <source>Find more in App Store</source>
-        <translation type="unfinished"></translation>
+        <translation>Di App Store de zêdetir bibîne</translation>
     </message>
     <message>
         <location filename="../qml/InputMethodsChooser.qml" line="129"/>
         <source>Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation>Betal bike</translation>
     </message>
     <message>
         <location filename="../qml/InputMethodsChooser.qml" line="136"/>
         <source>Add</source>
-        <translation type="unfinished"></translation>
+        <translation>Zêde bike</translation>
+    </message>
+</context>
+<context>
+    <name>KeyboardLayout</name>
+    <message>
+        <location filename="../qml/KeyboardLayout.qml" line="16"/>
+        <source>Keyboard layout</source>
+        <translation>Nexşeya klavyeyê</translation>
+    </message>
+    <message>
+        <location filename="../qml/KeyboardLayout.qml" line="34"/>
+        <source>done</source>
+        <translation>qediya</translation>
+    </message>
+    <message>
+        <location filename="../qml/KeyboardLayout.qml" line="34"/>
+        <source>edit</source>
+        <translation>biguherîne</translation>
+    </message>
+    <message>
+        <location filename="../qml/KeyboardLayout.qml" line="57"/>
+        <source>Add the corresponding input method in &lt;a style=&apos;text-decoration: none;&apos; href=&apos;Manage Input Methods&apos;&gt;Input Method Management&lt;/a&gt; to ensure the keyboard layout works when added or switched.</source>
+        <translation>Ji bo nexşeya klavyeyê dema ku tê zêdekirin an guherkirin bixebite, awayê têketinê ya guncan di &lt;a style=&apos;text-decoration: none;&apos; href=&apos;Manage Input Methods&apos;&gt;Rêveberiya Awayên Têketinê&lt;/a&gt; de zêde bike.</translation>
+    </message>
+    <message>
+        <location filename="../qml/KeyboardLayout.qml" line="142"/>
+        <source>Add new keyboard layout...</source>
+        <translation>Nexşeya klavyeyê ya nû zêde bike...</translation>
+    </message>
+</context>
+<context>
+    <name>KeyboardLayoutModule</name>
+    <message>
+        <location filename="../qml/KeyboardLayoutModule.qml" line="16"/>
+        <source>Keyboard layout</source>
+        <translation>Nexşeya klavyeyê</translation>
+    </message>
+    <message>
+        <location filename="../qml/KeyboardLayoutModule.qml" line="34"/>
+        <source>done</source>
+        <translation>qediya</translation>
+    </message>
+    <message>
+        <location filename="../qml/KeyboardLayoutModule.qml" line="34"/>
+        <source>edit</source>
+        <translation>biguherîne</translation>
+    </message>
+    <message>
+        <location filename="../qml/KeyboardLayoutModule.qml" line="57"/>
+        <source>Add the corresponding input method in &lt;a style=&apos;text-decoration: none;&apos; href=&apos;Manage Input Methods&apos;&gt;Input Method Management&lt;/a&gt; to ensure the keyboard layout works when added or switched.</source>
+        <translation>Ji bo nexşeya klavyeyê dema ku tê zêdekirin an guherkirin bixebite, awayê têketinê ya guncan di &lt;a style=&apos;text-decoration: none;&apos; href=&apos;Manage Input Methods&apos;&gt;Rêveberiya Awayên Têketinê&lt;/a&gt; de zêde bike.</translation>
+    </message>
+    <message>
+        <location filename="../qml/KeyboardLayoutModule.qml" line="140"/>
+        <source>Add new keyboard layout...</source>
+        <translation>Nexşeya klavyeyê ya nû zêde bike...</translation>
+    </message>
+</context>
+<context>
+    <name>LayoutsChooser</name>
+    <message>
+        <location filename="../qml/LayoutsChooser.qml" line="30"/>
+        <source>Add new keyboard layout</source>
+        <translation>Nexşeya klavyeyê ya nû zêde bike</translation>
+    </message>
+    <message>
+        <location filename="../qml/LayoutsChooser.qml" line="38"/>
+        <source>Search</source>
+        <translation>Lêgerîn</translation>
+    </message>
+    <message>
+        <location filename="../qml/LayoutsChooser.qml" line="67"/>
+        <source>Current language keyboard layouts</source>
+        <translation>Nexşeyên klavyeyê yên zimanê niha</translation>
+    </message>
+    <message>
+        <location filename="../qml/LayoutsChooser.qml" line="90"/>
+        <source>Cancel</source>
+        <translation>Betal bike</translation>
+    </message>
+    <message>
+        <location filename="../qml/LayoutsChooser.qml" line="97"/>
+        <source>Add</source>
+        <translation>Zêde bike</translation>
     </message>
 </context>
 <context>
@@ -96,45 +185,111 @@
     <message>
         <location filename="../qml/ManageInputMethodsModule.qml" line="15"/>
         <source>Input method management</source>
-        <translation type="unfinished"></translation>
+        <translation>Rêveberiya awayên têketinê</translation>
     </message>
     <message>
         <location filename="../qml/ManageInputMethodsModule.qml" line="33"/>
         <source>Add input method</source>
-        <translation type="unfinished"></translation>
+        <translation>Awayê têketinê zêde bike</translation>
     </message>
 </context>
 <context>
     <name>ShortcutsModule</name>
     <message>
-        <location filename="../qml/ShortcutsModule.qml" line="34"/>
+        <location filename="../qml/ShortcutsModule.qml" line="12"/>
+        <location filename="../qml/ShortcutsModule.qml" line="14"/>
+        <location filename="../qml/ShortcutsModule.qml" line="151"/>
+        <location filename="../qml/ShortcutsModule.qml" line="152"/>
+        <source>None</source>
+        <translation>Tu tişt</translation>
+    </message>
+    <message>
+        <location filename="../qml/ShortcutsModule.qml" line="119"/>
         <source>Shortcuts</source>
-        <translation type="unfinished"></translation>
+        <translation>Kurterê</translation>
     </message>
     <message>
-        <location filename="../qml/ShortcutsModule.qml" line="49"/>
+        <location filename="../qml/ShortcutsModule.qml" line="134"/>
         <source>Restore Defaults</source>
-        <translation type="unfinished"></translation>
+        <translation>Heyîn vegere</translation>
     </message>
     <message>
-        <location filename="../qml/ShortcutsModule.qml" line="101"/>
+        <location filename="../qml/ShortcutsModule.qml" line="200"/>
         <source>Scroll between input methods</source>
-        <translation type="unfinished"></translation>
+        <translation>Di navbera awayên têketinê de bigere</translation>
     </message>
     <message>
-        <location filename="../qml/ShortcutsModule.qml" line="131"/>
+        <location filename="../qml/ShortcutsModule.qml" line="230"/>
         <source>Turn on or off input methods</source>
-        <translation type="unfinished"></translation>
+        <translation>Awayên têketinê veke an bigire</translation>
     </message>
     <message>
-        <location filename="../qml/ShortcutsModule.qml" line="135"/>
-        <source>Please enter a new shortcut</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../qml/ShortcutsModule.qml" line="162"/>
+        <location filename="../qml/ShortcutsModule.qml" line="273"/>
         <source>It turns on or off the currently used input method.If no input method is being used or the first input method is not the keyboard, it switches between the first input method and the currently used keyboard/input method.</source>
-        <translation type="unfinished"></translation>
+        <translation>Ew awayê têketinê ya ku niha tê bikaranîn vedike an digire. Heke awayê têketinê nayê bikaranîn an awayê têketinê yê yekem klavye nîne, ew di navbera awayê têketinê yê yekem û klavyeya niha tê bikaranîn/awayê têketinê de diguhere.</translation>
+    </message>
+</context>
+<context>
+    <name>dcc::Locale::dialectNames</name>
+    <message>
+        <location filename="../keyboard-layout/operation/dcclocale.cpp" line="62"/>
+        <source>Traditional Chinese (Chinese Hong Kong)</source>
+        <translation>Çînî ya Kevneşopî (Çînî Hong Kong)</translation>
+    </message>
+    <message>
+        <location filename="../qml/AdvancedSettingsModule.qml" line="65"/>
+        <source>Traditional Chinese (Chinese Taiwan)</source>
+        <translation>Çînî ya Kevneşopî (Çînî Taiwan)</translation>
+    </message>
+</context>
+<context>
+    <name>dcc::Locale::regionNames</name>
+    <message>
+        <location filename="../keyboard-layout/operation/dcclocale.cpp" line="86"/>
+        <source>Taiwan China</source>
+        <translation>Taiwan Çîn</translation>
+    </message>
+</context>
+<context>
+    <name>dccV25::KeyboardController</name>
+    <message>
+        <location filename="../keyboard-layout/operation/keyboardcontroller.cpp" line="55"/>
+        <source>This shortcut conflicts with [%1]</source>
+        <translation>Ev kurterê bi [%1] re nakokî dike</translation>
+    </message>
+</context>
+<context>
+    <name>dccV25::ShortcutModel</name>
+    <message>
+        <location filename="../keyboard-layout/operation/shortcutmodel.cpp" line="248"/>
+        <source>System</source>
+        <translation>Pergal</translation>
+    </message>
+    <message>
+        <location filename="../keyboard-layout/operation/shortcutmodel.cpp" line="253"/>
+        <source>Window</source>
+        <translation>Pace</translation>
+    </message>
+    <message>
+        <location filename="../keyboard-layout/operation/shortcutmodel.cpp" line="258"/>
+        <source>Workspace</source>
+        <translation>Cihê kar</translation>
+    </message>
+    <message>
+        <location filename="../keyboard-layout/operation/shortcutmodel.cpp" line="263"/>
+        <source>AssistiveTools</source>
+        <translation>Amûrên alîkarî</translation>
+    </message>
+    <message>
+        <location filename="../keyboard-layout/operation/shortcutmodel.cpp" line="268"/>
+        <location filename="../keyboard-layout/operation/shortcutmodel.cpp" line="339"/>
+        <source>Custom</source>
+        <translation>Taybet</translation>
+    </message>
+    <message>
+        <location filename="../keyboard-layout/operation/shortcutmodel.cpp" line="394"/>
+        <source>None</source>
+        <translation>Tu tişt</translation>
     </message>
 </context>
 <context>
@@ -142,12 +297,12 @@
     <message>
         <location filename="../qml/fcitx5configtool.qml" line="8"/>
         <source>Input Methods</source>
-        <translation type="unfinished"></translation>
+        <translation>Awayên Têketinê</translation>
     </message>
     <message>
         <location filename="../qml/fcitx5configtool.qml" line="9"/>
         <source>Input method management, input method shortcuts, advanced settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Rêveberiya awayên têketinê, kurterêyên awayên têketinê, mîhengên pêşkeftî</translation>
     </message>
 </context>
 </TS>

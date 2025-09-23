@@ -23,6 +23,7 @@ Build-Depends:
  libkf6itemviews-dev | libkf5itemviews-dev,
  libxkbcommon-dev,
  libxkbfile-dev,
+ libicu-dev,
  pkg-config,
  xkb-data,
 Standards-Version: 4.6.2

@@ -1,43 +1,48 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.1">
+<TS version="2.1" language="mn">
 <context>
     <name>AddonsPage</name>
     <message>
         <location filename="../qml/AddonsPage.qml" line="20"/>
         <source>Add-ons</source>
-        <translation type="unfinished"></translation>
+        <translation>Нэмэлт программууд</translation>
     </message>
 </context>
 <context>
     <name>AdvancedSettingsModule</name>
     <message>
-        <location filename="../qml/AdvancedSettingsModule.qml" line="14"/>
+        <location filename="../qml/AdvancedSettingsModule.qml" line="15"/>
         <source>Advanced Settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Нарийвчилсан тохиргоо</translation>
     </message>
     <message>
-        <location filename="../qml/AdvancedSettingsModule.qml" line="40"/>
-        <source>"Advanced Settings" is only valid for the input method that uses the system settings, if the input method has its own settings, its own settings shall prevail.</source>
-        <translation type="unfinished"></translation>
+        <location filename="../qml/AdvancedSettingsModule.qml" line="41"/>
+        <source>&quot;Advanced Settings&quot; is only valid for the input method that uses the system settings, if the input method has its own settings, its own settings shall prevail.</source>
+        <translation>"Нарийвчилсан тохиргоо" нь зөвхөн системийн тохиргоог ашигладаг оролтын аргын хувьд хэрэгжинэ. Хэрэв оролтын аргад өөрийн тохиргоо байгаа бол өөрийн тохиргоо давуу байна.</translation>
     </message>
     <message>
-        <location filename="../qml/AdvancedSettingsModule.qml" line="53"/>
+        <location filename="../qml/AdvancedSettingsModule.qml" line="54"/>
         <source>Global Config</source>
-        <translation type="unfinished"></translation>
+        <translation>Дэлхийн тохиргоо</translation>
     </message>
     <message>
-        <location filename="../qml/AdvancedSettingsModule.qml" line="69"/>
+        <location filename="../qml/AdvancedSettingsModule.qml" line="70"/>
         <source>Add-ons</source>
-        <translation type="unfinished"></translation>
+        <translation>Нэмэлт программууд</translation>
+    </message>
+    <message>
+        <location filename="../qml/AdvancedSettingsModule.qml" line="81"/>
+        <source>Keyboard layout</source>
+        <translation>Гарын байрлал</translation>
     </message>
 </context>
 <context>
     <name>DetailConfigItem</name>
     <message>
-        <location filename="../qml/DetailConfigItem.qml" line="150"/>
+        <location filename="../qml/DetailConfigItem.qml" line="151"/>
         <source>Please enter a new shortcut</source>
-        <translation type="unfinished"></translation>
+        <translation>Шинэ товчлол оруулна уу</translation>
     </message>
 </context>
 <context>
@@ -45,22 +50,22 @@
     <message>
         <location filename="../qml/IMList.qml" line="152"/>
         <source>Move Up</source>
-        <translation type="unfinished"></translation>
+        <translation>Дээш шилжүүлэх</translation>
     </message>
     <message>
         <location filename="../qml/IMList.qml" line="160"/>
         <source>Move Down</source>
-        <translation type="unfinished"></translation>
+        <translation>Доош шилжүүлэх</translation>
     </message>
     <message>
         <location filename="../qml/IMList.qml" line="168"/>
         <source>Settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Тохиргоо</translation>
     </message>
     <message>
         <location filename="../qml/IMList.qml" line="176"/>
         <source>Remove</source>
-        <translation type="unfinished"></translation>
+        <translation>Хасах</translation>
     </message>
 </context>
 <context>
@@ -68,27 +73,111 @@
     <message>
         <location filename="../qml/InputMethodsChooser.qml" line="35"/>
         <source>Add input method</source>
-        <translation type="unfinished"></translation>
+        <translation>Оролтын арга нэмэх</translation>
     </message>
     <message>
         <location filename="../qml/InputMethodsChooser.qml" line="41"/>
         <source>Search</source>
-        <translation type="unfinished"></translation>
+        <translation>Хайх</translation>
     </message>
     <message>
         <location filename="../qml/InputMethodsChooser.qml" line="109"/>
         <source>Find more in App Store</source>
-        <translation type="unfinished"></translation>
+        <translation>App Store-ээс илүү олныг олох</translation>
     </message>
     <message>
         <location filename="../qml/InputMethodsChooser.qml" line="129"/>
         <source>Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation>Цуцлах</translation>
     </message>
     <message>
         <location filename="../qml/InputMethodsChooser.qml" line="136"/>
         <source>Add</source>
-        <translation type="unfinished"></translation>
+        <translation>Нэмэх</translation>
+    </message>
+</context>
+<context>
+    <name>KeyboardLayout</name>
+    <message>
+        <location filename="../qml/KeyboardLayout.qml" line="16"/>
+        <source>Keyboard layout</source>
+        <translation>Гарын байрлал</translation>
+    </message>
+    <message>
+        <location filename="../qml/KeyboardLayout.qml" line="34"/>
+        <source>done</source>
+        <translation>дууссан</translation>
+    </message>
+    <message>
+        <location filename="../qml/KeyboardLayout.qml" line="34"/>
+        <source>edit</source>
+        <translation>засах</translation>
+    </message>
+    <message>
+        <location filename="../qml/KeyboardLayout.qml" line="57"/>
+        <source>Add the corresponding input method in &lt;a style=&apos;text-decoration: none;&apos; href=&apos;Manage Input Methods&apos;&gt;Input Method Management&lt;/a&gt; to ensure the keyboard layout works when added or switched.</source>
+        <translation>Гарын байрлал нэмэгдэх эсвэл шилжих үед ажиллахын тулд &lt;a style=&apos;text-decoration: none;&apos; href=&apos;Manage Input Methods&apos;&gt;Оролтын аргын удирдлага&lt;/a&gt;-т харгалзах оролтын аргыг нэмнэ үү.</translation>
+    </message>
+    <message>
+        <location filename="../qml/KeyboardLayout.qml" line="142"/>
+        <source>Add new keyboard layout...</source>
+        <translation>Шинэ гарын байрлал нэмэх...</translation>
+    </message>
+</context>
+<context>
+    <name>KeyboardLayoutModule</name>
+    <message>
+        <location filename="../qml/KeyboardLayoutModule.qml" line="16"/>
+        <source>Keyboard layout</source>
+        <translation>Гарын байрлал</translation>
+    </message>
+    <message>
+        <location filename="../qml/KeyboardLayoutModule.qml" line="34"/>
+        <source>done</source>
+        <translation>дууссан</translation>
+    </message>
+    <message>
+        <location filename="../qml/KeyboardLayoutModule.qml" line="34"/>
+        <source>edit</source>
+        <translation>засах</translation>
+    </message>
+    <message>
+        <location filename="../qml/KeyboardLayoutModule.qml" line="57"/>
+        <source>Add the corresponding input method in &lt;a style=&apos;text-decoration: none;&apos; href=&apos;Manage Input Methods&apos;&gt;Input Method Management&lt;/a&gt; to ensure the keyboard layout works when added or switched.</source>
+        <translation>Гарын байрлал нэмэгдэх эсвэл шилжих үед ажиллахын тулд &lt;a style=&apos;text-decoration: none;&apos; href=&apos;Manage Input Methods&apos;&gt;Оролтын аргын удирдлага&lt;/a&gt;-т харгалзах оролтын аргыг нэмнэ үү.</translation>
+    </message>
+    <message>
+        <location filename="../qml/KeyboardLayoutModule.qml" line="140"/>
+        <source>Add new keyboard layout...</source>
+        <translation>Шинэ гарын байрлал нэмэх...</translation>
+    </message>
+</context>
+<context>
+    <name>LayoutsChooser</name>
+    <message>
+        <location filename="../qml/LayoutsChooser.qml" line="30"/>
+        <source>Add new keyboard layout</source>
+        <translation>Шинэ гарын байрлал нэмэх</translation>
+    </message>
+    <message>
+        <location filename="../qml/LayoutsChooser.qml" line="38"/>
+        <source>Search</source>
+        <translation>Хайх</translation>
+    </message>
+    <message>
+        <location filename="../qml/LayoutsChooser.qml" line="67"/>
+        <source>Current language keyboard layouts</source>
+        <translation>Одоогийн хэлний гарын байрлал</translation>
+    </message>
+    <message>
+        <location filename="../qml/LayoutsChooser.qml" line="90"/>
+        <source>Cancel</source>
+        <translation>Цуцлах</translation>
+    </message>
+    <message>
+        <location filename="../qml/LayoutsChooser.qml" line="97"/>
+        <source>Add</source>
+        <translation>Нэмэх</translation>
     </message>
 </context>
 <context>
@@ -96,45 +185,111 @@
     <message>
         <location filename="../qml/ManageInputMethodsModule.qml" line="15"/>
         <source>Input method management</source>
-        <translation type="unfinished"></translation>
+        <translation>Оролтын аргын удирдлага</translation>
     </message>
     <message>
         <location filename="../qml/ManageInputMethodsModule.qml" line="33"/>
         <source>Add input method</source>
-        <translation type="unfinished"></translation>
+        <translation>Оролтын арга нэмэх</translation>
     </message>
 </context>
 <context>
     <name>ShortcutsModule</name>
     <message>
-        <location filename="../qml/ShortcutsModule.qml" line="34"/>
+        <location filename="../qml/ShortcutsModule.qml" line="12"/>
+        <location filename="../qml/ShortcutsModule.qml" line="14"/>
+        <location filename="../qml/ShortcutsModule.qml" line="151"/>
+        <location filename="../qml/ShortcutsModule.qml" line="152"/>
+        <source>None</source>
+        <translation>Байхгүй</translation>
+    </message>
+    <message>
+        <location filename="../qml/ShortcutsModule.qml" line="119"/>
         <source>Shortcuts</source>
-        <translation type="unfinished"></translation>
+        <translation>Товчлолууд</translation>
     </message>
     <message>
-        <location filename="../qml/ShortcutsModule.qml" line="49"/>
+        <location filename="../qml/ShortcutsModule.qml" line="134"/>
         <source>Restore Defaults</source>
-        <translation type="unfinished"></translation>
+        <translation>Анхдагч тохиргоог сэргээх</translation>
     </message>
     <message>
-        <location filename="../qml/ShortcutsModule.qml" line="101"/>
+        <location filename="../qml/ShortcutsModule.qml" line="200"/>
         <source>Scroll between input methods</source>
-        <translation type="unfinished"></translation>
+        <translation>Оролтын аргуудын хооронд гүйлгэх</translation>
     </message>
     <message>
-        <location filename="../qml/ShortcutsModule.qml" line="131"/>
+        <location filename="../qml/ShortcutsModule.qml" line="230"/>
         <source>Turn on or off input methods</source>
-        <translation type="unfinished"></translation>
+        <translation>Оролтын аргуудыг асаах эсвэл унтраах</translation>
     </message>
     <message>
-        <location filename="../qml/ShortcutsModule.qml" line="135"/>
-        <source>Please enter a new shortcut</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../qml/ShortcutsModule.qml" line="162"/>
+        <location filename="../qml/ShortcutsModule.qml" line="273"/>
         <source>It turns on or off the currently used input method.If no input method is being used or the first input method is not the keyboard, it switches between the first input method and the currently used keyboard/input method.</source>
-        <translation type="unfinished"></translation>
+        <translation>Энэ нь одоогоор хэрэглэж буй оролтын аргыг асаах эсвэл унтраах юм. Хэрэв ямар ч оролтын арга хэрэглэж байхгүй эсвэл эхний оролтын арга гар биш бол энэ нь эхний оролтын арга болон одоогоор хэрэглэж буй гар/оролтын аргын хооронд шилжинэ.</translation>
+    </message>
+</context>
+<context>
+    <name>dcc::Locale::dialectNames</name>
+    <message>
+        <location filename="../keyboard-layout/operation/dcclocale.cpp" line="62"/>
+        <source>Traditional Chinese (Chinese Hong Kong)</source>
+        <translation>Уламжлалт хятад хэл (Хонг Конг хятад)</translation>
+    </message>
+    <message>
+        <location filename="../keyboard-layout/operation/dcclocale.cpp" line="65"/>
+        <source>Traditional Chinese (Chinese Taiwan)</source>
+        <translation>Уламжлалт хятад хэл (Тайвань хятад)</translation>
+    </message>
+</context>
+<context>
+    <name>dcc::Locale::regionNames</name>
+    <message>
+        <location filename="../keyboard-layout/operation/dcclocale.cpp" line="86"/>
+        <source>Taiwan China</source>
+        <translation>Тайвань Хятад</translation>
+    </message>
+</context>
+<context>
+    <name>dccV25::KeyboardController</name>
+    <message>
+        <location filename="../keyboard-layout/operation/keyboardcontroller.cpp" line="55"/>
+        <source>This shortcut conflicts with [%1]</source>
+        <translation>Энэ товчлол [%1]-тэй зөрчилдөж байна</translation>
+    </message>
+</context>
+<context>
+    <name>dccV25::ShortcutModel</name>
+    <message>
+        <location filename="../keyboard-layout/operation/shortcutmodel.cpp" line="248"/>
+        <source>System</source>
+        <translation>Систем</translation>
+    </message>
+    <message>
+        <location filename="../keyboard-layout/operation/shortcutmodel.cpp" line="253"/>
+        <source>Window</source>
+        <translation>Цонх</translation>
+    </message>
+    <message>
+        <location filename="../keyboard-layout/operation/shortcutmodel.cpp" line="258"/>
+        <source>Workspace</source>
+        <translation>Ажлын орон зай</translation>
+    </message>
+    <message>
+        <location filename="../keyboard-layout/operation/shortcutmodel.cpp" line="263"/>
+        <source>AssistiveTools</source>
+        <translation>Туслах хэрэгслүүд</translation>
+    </message>
+    <message>
+        <location filename="../keyboard-layout/operation/shortcutmodel.cpp" line="268"/>
+        <location filename="../keyboard-layout/operation/shortcutmodel.cpp" line="339"/>
+        <source>Custom</source>
+        <translation>Тохируулсан</translation>
+    </message>
+    <message>
+        <location filename="../keyboard-layout/operation/shortcutmodel.cpp" line="394"/>
+        <source>None</source>
+        <translation>Байхгүй</translation>
     </message>
 </context>
 <context>
@@ -142,12 +297,12 @@
     <message>
         <location filename="../qml/fcitx5configtool.qml" line="8"/>
         <source>Input Methods</source>
-        <translation type="unfinished"></translation>
+        <translation>Оролтын аргууд</translation>
     </message>
     <message>
         <location filename="../qml/fcitx5configtool.qml" line="9"/>
         <source>Input method management, input method shortcuts, advanced settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Оролтын аргын удирдлага, оролтын аргын товчлолууд, нарийвчилсан тохиргоо</translation>
     </message>
 </context>
 </TS>
