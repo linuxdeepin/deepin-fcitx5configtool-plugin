@@ -7,28 +7,43 @@
         <location filename="../qml/AddonsPage.qml" line="20"/>
         <source>Add-ons</source>
         <translation>ተጨማሪ አካላት</translation>
+        <translation>ተጨማሪ አካላት</translation>
     </message>
 </context>
 <context>
     <name>AdvancedSettingsModule</name>
     <message>
         <location filename="../qml/AdvancedSettingsModule.qml" line="15"/>
+        <location filename="../qml/AdvancedSettingsModule.qml" line="15"/>
         <source>Advanced Settings</source>
+        <translation>ተጨማሪ መስክ</translation>
         <translation>ተጨማሪ መስክ</translation>
     </message>
     <message>
         <location filename="../qml/AdvancedSettingsModule.qml" line="41"/>
         <source>&quot;Advanced Settings&quot; is only valid for the input method that uses the system settings, if the input method has its own settings, its own settings shall prevail.</source>
         <translation>ተጨማሪ መስክ በአስተዋጽዮ ላይ መስክ ነው፤ ለተጨማሪ መስክ በመጠቀም የሚያደርገው መስክ ይሰጣል፤ የተጨማሪ መስክ የሚያደርገው መስክ ይሰጣል።</translation>
+        <location filename="../qml/AdvancedSettingsModule.qml" line="41"/>
+        <source>&quot;Advanced Settings&quot; is only valid for the input method that uses the system settings, if the input method has its own settings, its own settings shall prevail.</source>
+        <translation>ተጨማሪ መስክ በአስተዋጽዮ ላይ መስክ ነው፤ ለተጨማሪ መስክ በመጠቀም የሚያደርገው መስክ ይሰጣል፤ የተጨማሪ መስክ የሚያደርገው መስክ ይሰጣል።</translation>
     </message>
     <message>
         <location filename="../qml/AdvancedSettingsModule.qml" line="54"/>
+        <location filename="../qml/AdvancedSettingsModule.qml" line="54"/>
         <source>Global Config</source>
+        <translation>መጠቀም አስተዋጽዮ</translation>
         <translation>መጠቀም አስተዋጽዮ</translation>
     </message>
     <message>
         <location filename="../qml/AdvancedSettingsModule.qml" line="70"/>
+        <location filename="../qml/AdvancedSettingsModule.qml" line="70"/>
         <source>Add-ons</source>
+        <translation>ተጨማሪ አካላት</translation>
+    </message>
+    <message>
+        <location filename="../qml/AdvancedSettingsModule.qml" line="81"/>
+        <source>Keyboard layout</source>
+        <translation>በርካታ መስክ</translation>
         <translation>ተጨማሪ አካላት</translation>
     </message>
     <message>
@@ -41,7 +56,9 @@
     <name>DetailConfigItem</name>
     <message>
         <location filename="../qml/DetailConfigItem.qml" line="151"/>
+        <location filename="../qml/DetailConfigItem.qml" line="151"/>
         <source>Please enter a new shortcut</source>
+        <translation>እባክዎ ከልማድ ያስገቡ</translation>
         <translation>እባክዎ ከልማድ ያስገቡ</translation>
     </message>
 </context>
@@ -51,20 +68,24 @@
         <location filename="../qml/IMList.qml" line="152"/>
         <source>Move Up</source>
         <translation>መመለስ በላይ</translation>
+        <translation>መመለስ በላይ</translation>
     </message>
     <message>
         <location filename="../qml/IMList.qml" line="160"/>
         <source>Move Down</source>
+        <translation>መመለስ በታች</translation>
         <translation>መመለስ በታች</translation>
     </message>
     <message>
         <location filename="../qml/IMList.qml" line="168"/>
         <source>Settings</source>
         <translation>መስክ</translation>
+        <translation>መስክ</translation>
     </message>
     <message>
         <location filename="../qml/IMList.qml" line="176"/>
         <source>Remove</source>
+        <translation>መሰል</translation>
         <translation>መሰል</translation>
     </message>
 </context>
@@ -74,25 +95,114 @@
         <location filename="../qml/InputMethodsChooser.qml" line="35"/>
         <source>Add input method</source>
         <translation>በርካታ መስክ ያስገቡ</translation>
+        <translation>በርካታ መስክ ያስገቡ</translation>
     </message>
     <message>
         <location filename="../qml/InputMethodsChooser.qml" line="41"/>
         <source>Search</source>
+        <translation>መፈለጊያ</translation>
         <translation>መፈለጊያ</translation>
     </message>
     <message>
         <location filename="../qml/InputMethodsChooser.qml" line="109"/>
         <source>Find more in App Store</source>
         <translation>የመተግበሪያ መደቦች ውስጥ ተጨማሪ ያግኙ</translation>
+        <translation>የመተግበሪያ መደቦች ውስጥ ተጨማሪ ያግኙ</translation>
     </message>
     <message>
         <location filename="../qml/InputMethodsChooser.qml" line="129"/>
         <source>Cancel</source>
         <translation>የመተግበሪያ መደቦች ውስጥ ተጨማሪ ያግኙ</translation>
+        <translation>የመተግበሪያ መደቦች ውስጥ ተጨማሪ ያግኙ</translation>
     </message>
     <message>
         <location filename="../qml/InputMethodsChooser.qml" line="136"/>
         <source>Add</source>
+        <translation>ያስገቡ</translation>
+    </message>
+</context>
+<context>
+    <name>KeyboardLayout</name>
+    <message>
+        <location filename="../qml/KeyboardLayout.qml" line="16"/>
+        <source>Keyboard layout</source>
+        <translation>በርካታ መስክ</translation>
+    </message>
+    <message>
+        <location filename="../qml/KeyboardLayout.qml" line="34"/>
+        <source>done</source>
+        <translation>ተመረጠ</translation>
+    </message>
+    <message>
+        <location filename="../qml/KeyboardLayout.qml" line="34"/>
+        <source>edit</source>
+        <translation>አርታ</translation>
+    </message>
+    <message>
+        <location filename="../qml/KeyboardLayout.qml" line="57"/>
+        <source>Add the corresponding input method in &lt;a style=&apos;text-decoration: none;&apos; href=&apos;Manage Input Methods&apos;&gt;Input Method Management&lt;/a&gt; to ensure the keyboard layout works when added or switched.</source>
+        <translation>ተጨማሪ መስክ በመጠቀም የሚያደርገው መስክ ይሰጣል፤ የተጨማሪ መስክ የሚያደርገው መስክ ይሰጣል።</translation>
+    </message>
+    <message>
+        <location filename="../qml/KeyboardLayout.qml" line="142"/>
+        <source>Add new keyboard layout...</source>
+        <translation>ከልማድ በርካታ መስክ ያስገቡ...</translation>
+    </message>
+</context>
+<context>
+    <name>KeyboardLayoutModule</name>
+    <message>
+        <location filename="../qml/KeyboardLayoutModule.qml" line="16"/>
+        <source>Keyboard layout</source>
+        <translation>በርካታ መስክ</translation>
+    </message>
+    <message>
+        <location filename="../qml/KeyboardLayoutModule.qml" line="34"/>
+        <source>done</source>
+        <translation>ተመረጠ</translation>
+    </message>
+    <message>
+        <location filename="../qml/KeyboardLayoutModule.qml" line="34"/>
+        <source>edit</source>
+        <translation>አርታ</translation>
+    </message>
+    <message>
+        <location filename="../qml/KeyboardLayoutModule.qml" line="57"/>
+        <source>Add the corresponding input method in &lt;a style=&apos;text-decoration: none;&apos; href=&apos;Manage Input Methods&apos;&gt;Input Method Management&lt;/a&gt; to ensure the keyboard layout works when added or switched.</source>
+        <translation>ተጨማሪ መስክ በመጠቀም የሚያደርገው መስክ ይሰጣል፤ የተጨማሪ መስክ የሚያደርገው መስክ ይሰጣል።</translation>
+    </message>
+    <message>
+        <location filename="../qml/KeyboardLayoutModule.qml" line="140"/>
+        <source>Add new keyboard layout...</source>
+        <translation>ከልማድ በርካታ መስክ ያስገቡ...</translation>
+    </message>
+</context>
+<context>
+    <name>LayoutsChooser</name>
+    <message>
+        <location filename="../qml/LayoutsChooser.qml" line="30"/>
+        <source>Add new keyboard layout</source>
+        <translation>ከልማድ በርካታ መስክ ያስገቡ</translation>
+    </message>
+    <message>
+        <location filename="../qml/LayoutsChooser.qml" line="38"/>
+        <source>Search</source>
+        <translation>መፈለጊያ</translation>
+    </message>
+    <message>
+        <location filename="../qml/LayoutsChooser.qml" line="67"/>
+        <source>Current language keyboard layouts</source>
+        <translation>መስሪያ በርካታ መስክ</translation>
+    </message>
+    <message>
+        <location filename="../qml/LayoutsChooser.qml" line="90"/>
+        <source>Cancel</source>
+        <translation>የመተግበሪያ መደቦች ውስጥ ተጨማሪ ያግኙ</translation>
+    </message>
+    <message>
+        <location filename="../qml/LayoutsChooser.qml" line="97"/>
+        <source>Add</source>
+        <translation>ያስገቡ</translation>
         <translation>ያስገቡ</translation>
     </message>
 </context>
@@ -186,10 +296,12 @@
         <location filename="../qml/ManageInputMethodsModule.qml" line="15"/>
         <source>Input method management</source>
         <translation>መስክ መጠቀም</translation>
+        <translation>መስክ መጠቀም</translation>
     </message>
     <message>
         <location filename="../qml/ManageInputMethodsModule.qml" line="33"/>
         <source>Add input method</source>
+        <translation>መስክ ያስገቡ</translation>
         <translation>መስክ ያስገቡ</translation>
     </message>
 </context>
@@ -205,20 +317,35 @@
     </message>
     <message>
         <location filename="../qml/ShortcutsModule.qml" line="119"/>
+        <location filename="../qml/ShortcutsModule.qml" line="12"/>
+        <location filename="../qml/ShortcutsModule.qml" line="14"/>
+        <location filename="../qml/ShortcutsModule.qml" line="151"/>
+        <location filename="../qml/ShortcutsModule.qml" line="152"/>
+        <source>None</source>
+        <translation>አይደለም</translation>
+    </message>
+    <message>
+        <location filename="../qml/ShortcutsModule.qml" line="119"/>
         <source>Shortcuts</source>
+        <translation>ከልማድ</translation>
         <translation>ከልማድ</translation>
     </message>
     <message>
         <location filename="../qml/ShortcutsModule.qml" line="134"/>
+        <location filename="../qml/ShortcutsModule.qml" line="134"/>
         <source>Restore Defaults</source>
+        <translation>መጠቀም አስተዋጽዮ</translation>
         <translation>መጠቀም አስተዋጽዮ</translation>
     </message>
     <message>
         <location filename="../qml/ShortcutsModule.qml" line="200"/>
+        <location filename="../qml/ShortcutsModule.qml" line="200"/>
         <source>Scroll between input methods</source>
+        <translation>መስክ በመመለስ ያለው</translation>
         <translation>መስክ በመመለስ ያለው</translation>
     </message>
     <message>
+        <location filename="../qml/ShortcutsModule.qml" line="230"/>
         <location filename="../qml/ShortcutsModule.qml" line="230"/>
         <source>Turn on or off input methods</source>
         <translation>መስክ ያስገቡ ወይም ያስገቡ</translation>
@@ -226,7 +353,7 @@
     <message>
         <location filename="../qml/ShortcutsModule.qml" line="273"/>
         <source>It turns on or off the currently used input method.If no input method is being used or the first input method is not the keyboard, it switches between the first input method and the currently used keyboard/input method.</source>
-        <translation>መስክ ያስገቡ ወይም ያስገቡ። መስክ ያስገቡ ወይም ያስገቡ። መስክ ያስገቡ ወይም ያስገቡ። መስክ ያስገቡ ወይም ያስገቡ። መስክ ያስገቡ ወይም ያስገቡ። መስክ ያስገቡ ወይም ያስገቡ። መስክ ያስገቡ ወይም ያስገቡ። መስክ ያስገቡ ወይም ያስገቡ። መስክ ያስገቡ ወይም ያስገቡ። መስክ ያስገቡ ወይም ያስገቡ። መስክ ያስገቡ ወይም ያስገቡ። መስክ ያስገቡ ወይም ያስገቡ። መስክ ያስገቡ ወይም ያስገቡ። መስክ ያስገቡ ወይም ያስገቡ። መስክ ያስገቡ ወይም ያስገቡ። መስክ ያስገቡ ወይም ያስገቡ። መስክ ያስገቡ ወይም ያስገቡ። መስክ ያስገቡ ወይም ያስገቡ። መስክ ያስገቡ ወይም ያስገቡ። መስክ ያስገቡ ወይም ያስገቡ። መስ
+        <translation>የአሁኑን ጥቅም ላይ የዋለ የግቤት ዘዴን ያብራራል ወይም ያጠፋል። የግቤት ዘዴ ካልተጠቀመ ወይም የመጀመሪያው የግቤት ዘዴ ኪቦርድ ካልሆነ፣ በመጀመሪያው የግቤት ዘዴ እና በአሁኑ ጊዜ በጥቅም ላይ ባለው ኪቦርድ/የግቤት ዘዴ መካከል ይቀይራል።</translation>
     </message>
 </context>
 <context>
@@ -285,8 +412,15 @@
         <location filename="../keyboard-layout/operation/shortcutmodel.cpp" line="339"/>
         <source>Custom</source>
         <translation>ተጨማሪ</translation>
+        <location filename="../keyboard-layout/operation/shortcutmodel.cpp" line="268"/>
+        <location filename="../keyboard-layout/operation/shortcutmodel.cpp" line="339"/>
+        <source>Custom</source>
+        <translation>ተጨማሪ</translation>
     </message>
     <message>
+        <location filename="../keyboard-layout/operation/shortcutmodel.cpp" line="394"/>
+        <source>None</source>
+        <translation>አይደለም</translation>
         <location filename="../keyboard-layout/operation/shortcutmodel.cpp" line="394"/>
         <source>None</source>
         <translation>አይደለም</translation>
@@ -298,10 +432,12 @@
         <location filename="../qml/fcitx5configtool.qml" line="8"/>
         <source>Input Methods</source>
         <translation>መስክ</translation>
+        <translation>መስክ</translation>
     </message>
     <message>
         <location filename="../qml/fcitx5configtool.qml" line="9"/>
         <source>Input method management, input method shortcuts, advanced settings</source>
+        <translation>መስክ መጠቀም, መስክ ከልማድ, ተጨማሪ መስክ</translation>
         <translation>መስክ መጠቀም, መስክ ከልማድ, ተጨማሪ መስክ</translation>
     </message>
 </context>

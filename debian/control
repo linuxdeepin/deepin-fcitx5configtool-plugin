@@ -24,6 +24,7 @@ Build-Depends:
  libxkbcommon-dev,
  libxkbfile-dev,
  libicu-dev,
+ libpolkit-qt6-1-dev,
  pkg-config,
  xkb-data,
 Standards-Version: 4.6.2
