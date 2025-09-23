@@ -1,3 +1,10 @@
+deepin-fcitx5configtool-plugin (6.0.18) unstable; urgency=medium
+
+  * feat: enhance shortcut configuration in QML
+  * feat: integrate keyboard layout module and enhance configuration
+
+ -- dengzhongyuan <dengzhongyuan@uniontech.com>  Tue, 23 Sep 2025 19:15:41 +0800
+
 deepin-fcitx5configtool-plugin (6.0.17) unstable; urgency=medium
 
   * fix: update translations of fr
