@@ -17,16 +17,24 @@ find_package(Qt${QT_DESIRED_VERSION} COMPONENTS Core Gui DBus LinguistTools Qml 
 find_package(DdeControlCenter REQUIRED)
 find_package(Dtk${DTK_VERSION_MAJOR} COMPONENTS Core REQUIRED)
 find_package(PkgConfig REQUIRED)
+find_package(PolkitQt6-1 REQUIRED)
+find_package(PkgConfig REQUIRED)
+pkg_check_modules(ICU REQUIRED icu-uc icu-i18n)
 
 
 set(DccFcitx5configtool_Name fcitx5configtool)
 file(GLOB_RECURSE DccFcitx5configtool_SRCS
         "operation/qrc/*.qrc"
+        "keyboard-layout/operation/qrc/*.qrc"
         "*.cpp"
         "*.h"
+        "*.qml"
         "private/*.h"
         "operation/*.cpp"
         "operation/*.h"
+        "keyboard-layout/operation/*.cpp"
+        "keyboard-layout/operation/*.h"
+        "keyboard-layout/qml/*.qml"
 )
 
 add_library(${DccFcitx5configtool_Name} MODULE
@@ -37,6 +45,8 @@ target_include_directories(${DccFcitx5configtool_Name} PUBLIC
     Dde::Control-Center
     configlib${QT_DESIRED_VERSION}
     configwidgetslib${QT_DESIRED_VERSION}
+    keyboard-layout/operation
+    ${ICU_INCLUDE_DIRS}
 )
 
 set(DccFcitx5configtool_Libraries
@@ -45,6 +55,8 @@ set(DccFcitx5configtool_Libraries
         Qt${QT_DESIRED_VERSION}::Qml
         Dtk${DTK_VERSION_MAJOR}::Core
         Dde::Control-Center
+        PolkitQt6-1::Agent
+        ${ICU_LIBRARIES}
 )
 
 target_link_libraries(${DccFcitx5configtool_Name} PRIVATE

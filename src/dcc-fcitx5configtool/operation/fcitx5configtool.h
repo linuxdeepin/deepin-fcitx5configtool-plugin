@@ -14,6 +14,10 @@
 #include <QVariant>
 #include <QVariantMap>
 
+namespace dccV25 {
+class KeyboardController;
+}
+
 namespace deepin {
 namespace fcitx5configtool {
 class Fcitx5ConfigToolWorkerPrivate;
@@ -22,12 +26,14 @@ class Fcitx5ConfigToolWorker : public QObject
     Q_OBJECT
     Q_PROPERTY(Fcitx5ConfigProxy *fcitx5ConfigProxy READ fcitx5ConfigProxy NOTIFY requestConfigFinished)
     Q_PROPERTY(Fcitx5AddonsProxy *fcitx5AddonsProxy READ fcitx5AddonsProxy NOTIFY requestAddonsFinished)
+    Q_PROPERTY(dccV25::KeyboardController *keyboardController READ keyboardController CONSTANT)
 
 public:
     explicit Fcitx5ConfigToolWorker(QObject *parent = nullptr);
 
     Fcitx5ConfigProxy *fcitx5ConfigProxy() const;
     Fcitx5AddonsProxy *fcitx5AddonsProxy() const;
+    dccV25::KeyboardController *keyboardController() const;
     Q_INVOKABLE void showAddonSettingsDialog(const QString &addonStr, const QString &title) const;
     Q_INVOKABLE IMListModel *imlistModel() const;
     Q_INVOKABLE fcitx::kcm::IMProxyModel *imProxyModel() const;

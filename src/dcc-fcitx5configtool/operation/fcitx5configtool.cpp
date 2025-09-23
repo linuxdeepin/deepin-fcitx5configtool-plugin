@@ -5,6 +5,7 @@
 #include "private/fcitx5configtool_p.h"
 #include "fcitx5configproxy.h"
 #include "fcitx5addonsproxy.h"
+#include "keyboardcontroller.h"
 
 #include <dbusprovider.h>
 #include <imconfig.h>
@@ -49,6 +50,7 @@ void Fcitx5ConfigToolWorkerPrivate::init()
     addonsProxy = new Fcitx5AddonsProxy(dbusProvider, this);
     imListModel = new IMListModel(this);
     imListModel->resetData(imConfig->currentIMModel());
+    keyboardController = new dccV25::KeyboardController(this);
 
     initConnect();
     qCDebug(configTool) << "Exiting Fcitx5ConfigToolWorkerPrivate::init";
@@ -118,6 +120,11 @@ Fcitx5AddonsProxy *Fcitx5ConfigToolWorker::fcitx5AddonsProxy() const
 {
     // qCDebug(configTool) << "Accessing fcitx5AddonsProxy";
     return d->addonsProxy;
+}
+
+dccV25::KeyboardController *Fcitx5ConfigToolWorker::keyboardController() const
+{
+    return d->keyboardController;
 }
 
 void Fcitx5ConfigToolWorker::showAddonSettingsDialog(const QString &addonStr, const QString &title) const

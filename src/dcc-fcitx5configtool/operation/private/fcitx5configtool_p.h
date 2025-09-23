@@ -13,6 +13,10 @@ class IMConfig;
 class DBusProvider;
 }
 
+namespace dccV25 {
+class KeyboardController;
+}
+
 namespace deepin {
 namespace fcitx5configtool {
 class Fcitx5ConfigProxy;
@@ -30,6 +34,7 @@ class Fcitx5ConfigToolWorkerPrivate : public QObject
     Fcitx5ConfigProxy *configProxy { nullptr };
     Fcitx5AddonsProxy *addonsProxy { nullptr };
     IMListModel *imListModel { nullptr };
+    dccV25::KeyboardController *keyboardController { nullptr };
 
 private:
     void init();
