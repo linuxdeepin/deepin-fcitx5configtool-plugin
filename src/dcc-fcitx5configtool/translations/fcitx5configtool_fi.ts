@@ -32,7 +32,7 @@
     <message>
         <location filename="../qml/AdvancedSettingsModule.qml" line="81"/>
         <source>Keyboard layout</source>
-        <translation type="unfinished"/>
+        <translation>Näppäimistön asettelu</translation>
     </message>
 </context>
 <context>
@@ -127,27 +127,27 @@
     <message>
         <location filename="../qml/KeyboardLayoutModule.qml" line="16"/>
         <source>Keyboard layout</source>
-        <translation type="unfinished"/>
+        <translation>Näppäimistön asettelu</translation>
     </message>
     <message>
         <location filename="../qml/KeyboardLayoutModule.qml" line="34"/>
         <source>done</source>
-        <translation type="unfinished"/>
+        <translation>valmis</translation>
     </message>
     <message>
         <location filename="../qml/KeyboardLayoutModule.qml" line="34"/>
         <source>edit</source>
-        <translation type="unfinished"/>
+        <translation>muokkaa</translation>
     </message>
     <message>
         <location filename="../qml/KeyboardLayoutModule.qml" line="57"/>
         <source>Add the corresponding input method in &lt;a style=&apos;text-decoration: none;&apos; href=&apos;Manage Input Methods&apos;&gt;Input Method Management&lt;/a&gt; to ensure the keyboard layout works when added or switched.</source>
-        <translation type="unfinished"/>
+        <translation>Lisää sopiva kieli &lt;a style=&apos;text-decoration: none;&apos; href=&apos;Manage Input Methods&apos;&gt;Input Method Management&lt;/a&gt; ja testaa, että näppäimistö toimii oikein</translation>
     </message>
     <message>
         <location filename="../qml/KeyboardLayoutModule.qml" line="140"/>
         <source>Add new keyboard layout...</source>
-        <translation type="unfinished"/>
+        <translation>Lisää uusi näppäimistön asettelu...</translation>
     </message>
 </context>
 <context>
@@ -199,7 +199,7 @@
         <location filename="../qml/ShortcutsModule.qml" line="151"/>
         <location filename="../qml/ShortcutsModule.qml" line="152"/>
         <source>None</source>
-        <translation type="unfinished"/>
+        <translation>Ei mitään</translation>
     </message>
     <message>
         <location filename="../qml/ShortcutsModule.qml" line="119"/>
