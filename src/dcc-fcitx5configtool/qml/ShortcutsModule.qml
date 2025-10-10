@@ -8,6 +8,7 @@ import org.deepin.dtk 1.0 as D
 import org.deepin.dcc 1.0
 
 DccObject {
+    id: root
     readonly property var enumKeys: ["Ctrl+Shift", "Alt+Shift", "None"]
     readonly property var enumKeysI18n: ["Ctrl+Shift", "Alt+Shift", qsTr("None")]
     readonly property var triggerEnumKeys: ["Shift", "Ctrl+Space", "None"]
@@ -15,11 +16,9 @@ DccObject {
     
     property var triggerKeys: dccData.fcitx5ConfigProxy.globalConfigOption(
                                   "Hotkey", "TriggerKeys")
-    property int enumerateForwardKeys: calculateEnumerateForwardKeys(
-                                           dccData.fcitx5ConfigProxy.globalConfigOption(
-                                               "Hotkey",
-                                               "EnumerateForwardKeys").value)
-    property int currentTriggerKeys: calculateTriggerKeys(triggerKeys.value)
+    // 改为受控属性，避免等值赋值不触发刷新
+    property int enumerateForwardKeys: -1
+    property int currentTriggerKeys: -1
     property bool isUserChanging: false
 
     function calculateEnumerateForwardKeys(value) {
@@ -150,19 +149,45 @@ DccObject {
         // 设置翻译后的显示数组
         enumKeysDisplay = ["Ctrl+Shift", "Alt+Shift", qsTr("None")]
         triggerEnumKeysDisplay = ["Shift", "Ctrl+Space", qsTr("None")]
-        
-        dccData.fcitx5ConfigProxy.onRequestConfigFinished.connect(() => {
-                                                                      
-                                                                      let fullTriggerKeys = dccData.fcitx5ConfigProxy.globalConfigOption("Hotkey", "TriggerKeys")
-                                                                      
-                                                                      if (!isUserChanging) {
-                                                                          triggerKeys = fullTriggerKeys
-                                                                          console.warn("Updated triggerKeys:", triggerKeys.value)
-                                                                      } else {
-                                                                          console.warn("Skipping config update - user is changing")
-                                                                      }
-                                                                      enumerateForwardKeys = calculateEnumerateForwardKeys(dccData.fcitx5ConfigProxy.globalConfigOption("Hotkey", "EnumerateForwardKeys").value)
-                                                                  })
+
+        let enumInitOpt = dccData.fcitx5ConfigProxy.globalConfigOption("Hotkey", "EnumerateForwardKeys")
+        let enumInitVal = enumInitOpt && enumInitOpt.value ? enumInitOpt.value : []
+        let enumInitIdx = calculateEnumerateForwardKeys(enumInitVal)
+        let triggerInitOpt = dccData.fcitx5ConfigProxy.globalConfigOption("Hotkey", "TriggerKeys")
+        let triggerInitVal = triggerInitOpt && triggerInitOpt.value ? triggerInitOpt.value : []
+        let triggerInitIdx = calculateTriggerKeys(triggerInitVal)
+        currentTriggerKeys = triggerInitIdx
+    }
+
+    // 使用 Connections 绑定信号，确保对象替换/重载后仍能收到
+    Connections {
+        target: dccData.fcitx5ConfigProxy
+        function onRequestConfigFinished() {
+            let fullTriggerKeys = dccData.fcitx5ConfigProxy.globalConfigOption("Hotkey", "TriggerKeys")
+            let enumValue = dccData.fcitx5ConfigProxy.globalConfigOption("Hotkey", "EnumerateForwardKeys").value
+
+
+            let newTriggerIdx = calculateTriggerKeys(fullTriggerKeys.value)
+            if (!isUserChanging) {
+                triggerKeys = fullTriggerKeys
+                if (currentTriggerKeys === newTriggerIdx) {
+                    currentTriggerKeys = -1
+                    Qt.callLater(() => { currentTriggerKeys = newTriggerIdx })
+                } else {
+                    currentTriggerKeys = newTriggerIdx
+                }
+            } else {
+                console.warn("[QML] Skipping set triggerKeys (user changing)")
+            }
+
+            const idxEnum = calculateEnumerateForwardKeys(enumValue)
+            if (enumerateForwardKeys === idxEnum) {
+                enumerateForwardKeys = -1
+                Qt.callLater(() => { enumerateForwardKeys = idxEnum })
+            } else {
+                enumerateForwardKeys = idxEnum
+            }
+        }
     }
 
     function reverseEnumerateForwardKeys(index) {
@@ -205,10 +230,23 @@ DccObject {
             flat: true
             model: enumKeysI18n
             currentIndex: enumerateForwardKeys
+            // 恢复默认 delegate，由主题负责显示选中项勾号
 
-            onCurrentIndexChanged: {
-                console.log("Current index changed to:", currentIndex,
-                            "with text:", model[currentIndex])
+            Component.onCompleted: {
+                if (root.enumerateForwardKeys === -1) {
+                    try {
+                        let ev = dccData.fcitx5ConfigProxy.globalConfigOption("Hotkey", "EnumerateForwardKeys").value || []
+                        let eidx = calculateEnumerateForwardKeys(ev)
+                        console.warn("[QML][page] init enum from backend idx=", eidx)
+                        root.enumerateForwardKeys = eidx
+                    } catch (e) {
+                        console.warn("[QML][page] init enum failed:", e)
+                    }
+                }
+            }
+
+            // 只在用户激活选择时写回，避免程序化更新触发写回
+            onActivated: {
                 dccData.fcitx5ConfigProxy.setValue(
                             "Hotkey/EnumerateForwardKeys/0",
                             reverseEnumerateForwardKeys(currentIndex), true)
@@ -236,22 +274,37 @@ DccObject {
                 model: triggerEnumKeysI18n
                 currentIndex: currentTriggerKeys
 
+            // 恢复默认 delegate，由主题负责显示选中项勾号
+
+                Component.onCompleted: {
+                    console.warn("[QML][page] trigger ComboBox created: idx=", triggerComboBox.currentIndex,
+                                 " root.trigger=", root.currentTriggerKeys)
+                    if (root.currentTriggerKeys === -1) {
+                        try {
+                            let tv = dccData.fcitx5ConfigProxy.globalConfigOption("Hotkey", "TriggerKeys").value || []
+                            let tidx = calculateTriggerKeys(tv)
+                            console.warn("[QML][page] init trigger from backend idx=", tidx)
+                            root.currentTriggerKeys = tidx
+                        } catch (e) {
+                            console.warn("[QML][page] init trigger failed:", e)
+                        }
+                    }
+                }
+
                 onCurrentIndexChanged: {
+                    console.warn("[QML] trigger onCurrentIndexChanged idx=", currentIndex, " text=", model[currentIndex])
                     isUserChanging = true
-                    
                     if (currentIndex === 0) {
-                        // Shift选项：分别设置左右Shift
+                        console.warn("[QML] write TriggerKeys -> Shift_L + Shift_R")
                         dccData.fcitx5ConfigProxy.setValue("Hotkey/TriggerKeys/0", ["Shift_L"], true)
                         dccData.fcitx5ConfigProxy.setValue("Hotkey/TriggerKeys/1", ["Shift_R"], true)
                     } else {
                         let newKeys = reverseTriggerKeys(currentIndex)
+                        console.warn("[QML] write TriggerKeys ->", JSON.stringify(newKeys))
                         dccData.fcitx5ConfigProxy.setValue("Hotkey/TriggerKeys/0", newKeys, true)
                         dccData.fcitx5ConfigProxy.setValue("Hotkey/TriggerKeys/1", [""], true)
                     }
-                    
-                    Qt.callLater(() => {
-                        isUserChanging = false
-                    })
+                    Qt.callLater(() => { isUserChanging = false })
                 }
             }
         }
