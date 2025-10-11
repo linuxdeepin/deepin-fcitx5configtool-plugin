@@ -1,3 +1,9 @@
+deepin-fcitx5configtool-plugin (6.0.19) unstable; urgency=medium
+
+  * fix: add Lao translation file & font alignment issue
+
+ -- dengzhongyuan <dengzhongyuan@uniontech.com>  Sat, 11 Oct 2025 09:47:03 +0800
+
 deepin-fcitx5configtool-plugin (6.0.18) unstable; urgency=medium
 
   * feat: enhance shortcut configuration in QML
