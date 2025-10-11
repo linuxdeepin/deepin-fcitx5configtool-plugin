@@ -33,7 +33,7 @@ namespace fcitx5configtool {
 static QString kFcitxConfigGlobalPath = "fcitx://config/global";
 static const QString kSogouAddonUniqueName = "com.sogou.ime.ng.fcitx5.deepin-addon";
 static const QString kSogouIMUniqueName = "com.sogou.ime.ng.fcitx5.deepin";
-static const QString kSogouConfigureAppId = "com.sogou.ime.ng.fcitx5.deepin.configurer";
+static const QString kSogouConfigureAppId = "sogou-ime-setting";
 
 Fcitx5ConfigToolWorkerPrivate::Fcitx5ConfigToolWorkerPrivate(Fcitx5ConfigToolWorker *parent)
     : QObject(parent), q(parent)

@@ -230,6 +230,11 @@ DccObject {
             flat: true
             model: enumKeysI18n
             currentIndex: enumerateForwardKeys
+            FontMetrics { id: enumFm; font: comboBox.font }
+            topPadding: 4
+            bottomPadding: 6
+            implicitHeight: enumFm.height + topPadding + bottomPadding
+            clip: false
             // 恢复默认 delegate，由主题负责显示选中项勾号
 
             Component.onCompleted: {
@@ -273,6 +278,11 @@ DccObject {
                 flat: true
                 model: triggerEnumKeysI18n
                 currentIndex: currentTriggerKeys
+            FontMetrics { id: triggerFm; font: triggerComboBox.font }
+            topPadding: 4
+            bottomPadding: 6
+            implicitHeight: triggerFm.height + topPadding + bottomPadding
+            clip: false
 
             // 恢复默认 delegate，由主题负责显示选中项勾号
 

@@ -196,35 +196,35 @@
 <context>
     <name>ShortcutsModule</name>
     <message>
-        <location filename="../qml/ShortcutsModule.qml" line="119"/>
+        <location filename="../qml/ShortcutsModule.qml" line="118"/>
         <source>Shortcuts</source>
         <translation>Snarveier</translation>
     </message>
     <message>
-        <location filename="../qml/ShortcutsModule.qml" line="134"/>
+        <location filename="../qml/ShortcutsModule.qml" line="133"/>
         <source>Restore Defaults</source>
         <translation>Gjenopprett standardverdier</translation>
     </message>
     <message>
-        <location filename="../qml/ShortcutsModule.qml" line="200"/>
+        <location filename="../qml/ShortcutsModule.qml" line="225"/>
         <source>Scroll between input methods</source>
         <translation>Rulle mellom inntastningsmetoder</translation>
     </message>
     <message>
-        <location filename="../qml/ShortcutsModule.qml" line="12"/>
-        <location filename="../qml/ShortcutsModule.qml" line="14"/>
+        <location filename="../qml/ShortcutsModule.qml" line="13"/>
+        <location filename="../qml/ShortcutsModule.qml" line="15"/>
+        <location filename="../qml/ShortcutsModule.qml" line="150"/>
         <location filename="../qml/ShortcutsModule.qml" line="151"/>
-        <location filename="../qml/ShortcutsModule.qml" line="152"/>
         <source>None</source>
         <translation>Ingen</translation>
     </message>
     <message>
-        <location filename="../qml/ShortcutsModule.qml" line="230"/>
+        <location filename="../qml/ShortcutsModule.qml" line="273"/>
         <source>Turn on or off input methods</source>
         <translation>Slå på eller av inntastningsmetoder</translation>
     </message>
     <message>
-        <location filename="../qml/ShortcutsModule.qml" line="273"/>
+        <location filename="../qml/ShortcutsModule.qml" line="336"/>
         <source>It turns on or off the currently used input method.If no input method is being used or the first input method is not the keyboard, it switches between the first input method and the currently used keyboard/input method.</source>
         <translation>Det slår på eller av den nåværende inntastningsmetoden. Hvis ingen inntastningsmetode brukes eller første inntastningsmetode ikke er tastaturet, vil det skifte mellom første inntastningsmetode og det nåværende tastaturet/inntastningsmetoden.</translation>
     </message>
