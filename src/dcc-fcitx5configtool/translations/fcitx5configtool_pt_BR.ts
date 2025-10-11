@@ -196,35 +196,35 @@
 <context>
     <name>ShortcutsModule</name>
     <message>
-        <location filename="../qml/ShortcutsModule.qml" line="119"/>
+        <location filename="../qml/ShortcutsModule.qml" line="118"/>
         <source>Shortcuts</source>
         <translation>Atalhos</translation>
     </message>
     <message>
-        <location filename="../qml/ShortcutsModule.qml" line="134"/>
+        <location filename="../qml/ShortcutsModule.qml" line="133"/>
         <source>Restore Defaults</source>
         <translation>Restaurar padrões</translation>
     </message>
     <message>
-        <location filename="../qml/ShortcutsModule.qml" line="200"/>
+        <location filename="../qml/ShortcutsModule.qml" line="225"/>
         <source>Scroll between input methods</source>
         <translation>Alternar entre métodos de entrada com o scroll</translation>
     </message>
     <message>
-        <location filename="../qml/ShortcutsModule.qml" line="12"/>
-        <location filename="../qml/ShortcutsModule.qml" line="14"/>
+        <location filename="../qml/ShortcutsModule.qml" line="13"/>
+        <location filename="../qml/ShortcutsModule.qml" line="15"/>
+        <location filename="../qml/ShortcutsModule.qml" line="150"/>
         <location filename="../qml/ShortcutsModule.qml" line="151"/>
-        <location filename="../qml/ShortcutsModule.qml" line="152"/>
         <source>None</source>
         <translation>Nenhum</translation>
     </message>
     <message>
-        <location filename="../qml/ShortcutsModule.qml" line="230"/>
+        <location filename="../qml/ShortcutsModule.qml" line="273"/>
         <source>Turn on or off input methods</source>
         <translation>Ativar ou desativar métodos de entrada</translation>
     </message>
     <message>
-        <location filename="../qml/ShortcutsModule.qml" line="273"/>
+        <location filename="../qml/ShortcutsModule.qml" line="336"/>
         <source>It turns on or off the currently used input method.If no input method is being used or the first input method is not the keyboard, it switches between the first input method and the currently used keyboard/input method.</source>
         <translation>Ativa ou desativa o método de entrada atualmente em uso. Se nenhum método de entrada estiver ativo, ou se o primeiro método não for o teclado, a função alterna entre o primeiro método de entrada e o teclado / método de entrada em uso.</translation>
     </message>

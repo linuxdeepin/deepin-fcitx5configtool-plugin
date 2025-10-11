@@ -196,35 +196,35 @@
 <context>
     <name>ShortcutsModule</name>
     <message>
-        <location filename="../qml/ShortcutsModule.qml" line="119"/>
+        <location filename="../qml/ShortcutsModule.qml" line="118"/>
         <source>Shortcuts</source>
         <translation>快捷键</translation>
     </message>
     <message>
-        <location filename="../qml/ShortcutsModule.qml" line="134"/>
+        <location filename="../qml/ShortcutsModule.qml" line="133"/>
         <source>Restore Defaults</source>
         <translation>恢复默认</translation>
     </message>
     <message>
-        <location filename="../qml/ShortcutsModule.qml" line="200"/>
+        <location filename="../qml/ShortcutsModule.qml" line="225"/>
         <source>Scroll between input methods</source>
         <translation>轮序切换输入法</translation>
     </message>
     <message>
-        <location filename="../qml/ShortcutsModule.qml" line="12"/>
-        <location filename="../qml/ShortcutsModule.qml" line="14"/>
+        <location filename="../qml/ShortcutsModule.qml" line="13"/>
+        <location filename="../qml/ShortcutsModule.qml" line="15"/>
+        <location filename="../qml/ShortcutsModule.qml" line="150"/>
         <location filename="../qml/ShortcutsModule.qml" line="151"/>
-        <location filename="../qml/ShortcutsModule.qml" line="152"/>
         <source>None</source>
         <translation>空</translation>
     </message>
     <message>
-        <location filename="../qml/ShortcutsModule.qml" line="230"/>
+        <location filename="../qml/ShortcutsModule.qml" line="273"/>
         <source>Turn on or off input methods</source>
         <translation>开启/关闭输入法</translation>
     </message>
     <message>
-        <location filename="../qml/ShortcutsModule.qml" line="273"/>
+        <location filename="../qml/ShortcutsModule.qml" line="336"/>
         <source>It turns on or off the currently used input method.If no input method is being used or the first input method is not the keyboard, it switches between the first input method and the currently used keyboard/input method.</source>
         <translation>开启/关闭当前使用的输入法，如果当前未使用输入法或者第一位输入法不是键盘，则会在当前使用的键盘/输入法和第一位输入法之间切换。</translation>
     </message>

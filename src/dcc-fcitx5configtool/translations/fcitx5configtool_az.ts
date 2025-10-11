@@ -196,35 +196,35 @@
 <context>
     <name>ShortcutsModule</name>
     <message>
-        <location filename="../qml/ShortcutsModule.qml" line="119"/>
+        <location filename="../qml/ShortcutsModule.qml" line="118"/>
         <source>Shortcuts</source>
         <translation>Kürsütlər</translation>
     </message>
     <message>
-        <location filename="../qml/ShortcutsModule.qml" line="134"/>
+        <location filename="../qml/ShortcutsModule.qml" line="133"/>
         <source>Restore Defaults</source>
         <translation>Default əlavələri geri qaytar</translation>
     </message>
     <message>
-        <location filename="../qml/ShortcutsModule.qml" line="200"/>
+        <location filename="../qml/ShortcutsModule.qml" line="225"/>
         <source>Scroll between input methods</source>
         <translation>Giriş üsulu arasınday keç</translation>
     </message>
     <message>
-        <location filename="../qml/ShortcutsModule.qml" line="12"/>
-        <location filename="../qml/ShortcutsModule.qml" line="14"/>
+        <location filename="../qml/ShortcutsModule.qml" line="13"/>
+        <location filename="../qml/ShortcutsModule.qml" line="15"/>
+        <location filename="../qml/ShortcutsModule.qml" line="150"/>
         <location filename="../qml/ShortcutsModule.qml" line="151"/>
-        <location filename="../qml/ShortcutsModule.qml" line="152"/>
         <source>None</source>
         <translation>Heç bir</translation>
     </message>
     <message>
-        <location filename="../qml/ShortcutsModule.qml" line="230"/>
+        <location filename="../qml/ShortcutsModule.qml" line="273"/>
         <source>Turn on or off input methods</source>
         <translation>Giriş üsulu və ya kürsüt əsasında işlətmə</translation>
     </message>
     <message>
-        <location filename="../qml/ShortcutsModule.qml" line="273"/>
+        <location filename="../qml/ShortcutsModule.qml" line="336"/>
         <source>It turns on or off the currently used input method.If no input method is being used or the first input method is not the keyboard, it switches between the first input method and the currently used keyboard/input method.</source>
         <translation>İndi istifadə olunan giriş üsulunu aç və ya kapat. Giriş üsulu istifadə olunmuyorsa və ya ilk giriş üsulu klaviatura deyilsə, ilk giriş üsulu və ya indi istifadə olunan klaviatura/giriş üsulu arasınday keç.</translation>
     </message>
