@@ -32,7 +32,7 @@
     <message>
         <location filename="../qml/AdvancedSettingsModule.qml" line="81"/>
         <source>Keyboard layout</source>
-        <translation type="unfinished"/>
+        <translation>键盘布局</translation>
     </message>
 </context>
 <context>
@@ -114,12 +114,12 @@
     <message>
         <location filename="../qml/KeyboardLayout.qml" line="57"/>
         <source>Add the corresponding input method in &lt;a style=&apos;text-decoration: none;&apos; href=&apos;Manage Input Methods&apos;&gt;Input Method Management&lt;/a&gt; to ensure the keyboard layout works when added or switched.</source>
-        <translation>如需添加或切换键盘布局，请同时在 &lt;a style=&apos;text-decoration: none;&apos; href=&apos;Manage Input Methods&apos;&gt; 输入法管理 &lt;/a&gt;  中添加对应的输入法以确保生效</translation>
+        <translation>在“&lt;a style=&apos;text-decoration: none;&apos; href=&apos;Manage Input Methods&apos;&gt;输入法管理&lt;/a&gt;”中添加相应的输入法，以确保键盘布局在添加或切换时能正常工作。</translation>
     </message>
     <message>
         <location filename="../qml/KeyboardLayout.qml" line="142"/>
         <source>Add new keyboard layout...</source>
-        <translation>添加键盘布局...</translation>
+        <translation>添加新的键盘布局...</translation>
     </message>
 </context>
 <context>
@@ -127,27 +127,27 @@
     <message>
         <location filename="../qml/KeyboardLayoutModule.qml" line="16"/>
         <source>Keyboard layout</source>
-        <translation type="unfinished"/>
+        <translation>键盘布局</translation>
     </message>
     <message>
         <location filename="../qml/KeyboardLayoutModule.qml" line="34"/>
         <source>done</source>
-        <translation type="unfinished"/>
+        <translation>完成</translation>
     </message>
     <message>
         <location filename="../qml/KeyboardLayoutModule.qml" line="34"/>
         <source>edit</source>
-        <translation type="unfinished"/>
+        <translation>编辑</translation>
     </message>
     <message>
         <location filename="../qml/KeyboardLayoutModule.qml" line="57"/>
         <source>Add the corresponding input method in &lt;a style=&apos;text-decoration: none;&apos; href=&apos;Manage Input Methods&apos;&gt;Input Method Management&lt;/a&gt; to ensure the keyboard layout works when added or switched.</source>
-        <translation type="unfinished"/>
+        <translation>在“&lt;a style=&apos;text-decoration: none;&apos; href=&apos;Manage Input Methods&apos;&gt;输入法管理&lt;/a&gt;”中添加相应的输入法，以确保键盘布局在添加或切换时能正常工作。</translation>
     </message>
     <message>
         <location filename="../qml/KeyboardLayoutModule.qml" line="140"/>
         <source>Add new keyboard layout...</source>
-        <translation type="unfinished"/>
+        <translation>添加新的键盘布局...</translation>
     </message>
 </context>
 <context>
@@ -155,7 +155,7 @@
     <message>
         <location filename="../qml/LayoutsChooser.qml" line="30"/>
         <source>Add new keyboard layout</source>
-        <translation>添加键盘布局</translation>
+        <translation>添加新的键盘布局</translation>
     </message>
     <message>
         <location filename="../qml/LayoutsChooser.qml" line="38"/>
@@ -165,7 +165,7 @@
     <message>
         <location filename="../qml/LayoutsChooser.qml" line="67"/>
         <source>Current language keyboard layouts</source>
-        <translation>当前语言键盘布局</translation>
+        <translation>当前语言的键盘布局</translation>
     </message>
     <message>
         <location filename="../qml/LayoutsChooser.qml" line="90"/>
@@ -199,7 +199,7 @@
         <location filename="../qml/ShortcutsModule.qml" line="151"/>
         <location filename="../qml/ShortcutsModule.qml" line="152"/>
         <source>None</source>
-        <translation type="unfinished"/>
+        <translation>空</translation>
     </message>
     <message>
         <location filename="../qml/ShortcutsModule.qml" line="119"/>
@@ -232,12 +232,12 @@
     <message>
         <location filename="../keyboard-layout/operation/dcclocale.cpp" line="62"/>
         <source>Traditional Chinese (Chinese Hong Kong)</source>
-        <translation>繁体中文（中国香港）</translation>
+        <translation>繁体中文（香港）</translation>
     </message>
     <message>
         <location filename="../keyboard-layout/operation/dcclocale.cpp" line="65"/>
         <source>Traditional Chinese (Chinese Taiwan)</source>
-        <translation>繁体中文（中国台湾）</translation>
+        <translation>繁体中文（台湾）</translation>
     </message>
 </context>
 <context>
@@ -245,7 +245,7 @@
     <message>
         <location filename="../keyboard-layout/operation/dcclocale.cpp" line="86"/>
         <source>Taiwan China</source>
-        <translation>中国台湾</translation>
+        <translation>台湾中国</translation>
     </message>
 </context>
 <context>
@@ -253,7 +253,7 @@
     <message>
         <location filename="../keyboard-layout/operation/keyboardcontroller.cpp" line="55"/>
         <source>This shortcut conflicts with [%1]</source>
-            <translation>此快捷键与[%1]冲突</translation>
+            <translation>此快捷键与 [%1] 冲突</translation>
     </message>
 </context>
 <context>
@@ -271,12 +271,12 @@
     <message>
         <location filename="../keyboard-layout/operation/shortcutmodel.cpp" line="258"/>
         <source>Workspace</source>
-        <translation>工作区</translation>
+        <translation>工作空间</translation>
     </message>
     <message>
         <location filename="../keyboard-layout/operation/shortcutmodel.cpp" line="263"/>
         <source>AssistiveTools</source>
-        <translation>辅助功能</translation>
+        <translation>辅助工具</translation>
     </message>
     <message>
         <location filename="../keyboard-layout/operation/shortcutmodel.cpp" line="268"/>
