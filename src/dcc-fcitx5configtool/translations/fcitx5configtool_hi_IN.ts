@@ -1,6 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE TS>
-<TS version="2.1" language="hi_IN">
+<?xml version="1.0" ?><!DOCTYPE TS><TS version="2.1" language="hi_IN">
 <context>
     <name>AddonsPage</name>
     <message>
@@ -34,7 +32,7 @@
     <message>
         <location filename="../qml/AdvancedSettingsModule.qml" line="81"/>
         <source>Keyboard layout</source>
-        <translation>कीबोर्ड लेआउट</translation>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -101,27 +99,27 @@
     <message>
         <location filename="../qml/KeyboardLayout.qml" line="16"/>
         <source>Keyboard layout</source>
-        <translation>कीबोर्ड लेआउट</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../qml/KeyboardLayout.qml" line="34"/>
         <source>done</source>
-        <translation>हो चुका</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../qml/KeyboardLayout.qml" line="34"/>
         <source>edit</source>
-        <translation>संपादित करें</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../qml/KeyboardLayout.qml" line="57"/>
         <source>Add the corresponding input method in &lt;a style=&apos;text-decoration: none;&apos; href=&apos;Manage Input Methods&apos;&gt;Input Method Management&lt;/a&gt; to ensure the keyboard layout works when added or switched.</source>
-        <translation>इनपुट मेथड प्रबंधन में &lt;a style=&apos;text-decoration: none;&apos; href=&apos;Manage Input Methods&apos;&gt;Input Method Management&lt;/a&gt; में संबंधित इनपुट मेथड जोड़ें ताकि कीबोर्ड लेआउट जोड़ने या बदलने पर काम करे।</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../qml/KeyboardLayout.qml" line="142"/>
         <source>Add new keyboard layout...</source>
-        <translation>नया कीबोर्ड लेआउट जोड़ें...</translation>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -129,27 +127,27 @@
     <message>
         <location filename="../qml/KeyboardLayoutModule.qml" line="16"/>
         <source>Keyboard layout</source>
-        <translation>कीबोर्ड लेआउट</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../qml/KeyboardLayoutModule.qml" line="34"/>
         <source>done</source>
-        <translation>हो चुका</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../qml/KeyboardLayoutModule.qml" line="34"/>
         <source>edit</source>
-    <translation>संपादित करें</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../qml/KeyboardLayoutModule.qml" line="57"/>
         <source>Add the corresponding input method in &lt;a style=&apos;text-decoration: none;&apos; href=&apos;Manage Input Methods&apos;&gt;Input Method Management&lt;/a&gt; to ensure the keyboard layout works when added or switched.</source>
-        <translation>इनपुट मेथड प्रबंधन में &lt;a style=&apos;text-decoration: none;&apos; href=&apos;Manage Input Methods&apos;&gt;Input Method Management&lt;/a&gt; में संबंधित इनपुट मेथड जोड़ें ताकि कीबोर्ड लेआउट जोड़ने या बदलने पर काम करे।</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../qml/KeyboardLayoutModule.qml" line="140"/>
         <source>Add new keyboard layout...</source>
-        <translation>नया कीबोर्ड लेआउट जोड़ें...</translation>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -157,27 +155,27 @@
     <message>
         <location filename="../qml/LayoutsChooser.qml" line="30"/>
         <source>Add new keyboard layout</source>
-        <translation>नया कीबोर्ड लेआउट जोड़ें</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../qml/LayoutsChooser.qml" line="38"/>
         <source>Search</source>
-        <translation>खोज</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../qml/LayoutsChooser.qml" line="67"/>
         <source>Current language keyboard layouts</source>
-        <translation>वर्तमान भाषा कीबोर्ड लेआउट्स</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../qml/LayoutsChooser.qml" line="90"/>
         <source>Cancel</source>
-        <translation>रद्द करें</translation>
+            <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../qml/LayoutsChooser.qml" line="97"/>
         <source>Add</source>
-        <translation>जोड़ें</translation>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -201,7 +199,7 @@
         <location filename="../qml/ShortcutsModule.qml" line="151"/>
         <location filename="../qml/ShortcutsModule.qml" line="152"/>
         <source>None</source>
-        <translation>कोई नहीं</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../qml/ShortcutsModule.qml" line="119"/>
@@ -234,12 +232,12 @@
     <message>
         <location filename="../keyboard-layout/operation/dcclocale.cpp" line="62"/>
         <source>Traditional Chinese (Chinese Hong Kong)</source>
-        <translation>पुरातन चीनी (चीनी हंग कोंग)</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../keyboard-layout/operation/dcclocale.cpp" line="65"/>
         <source>Traditional Chinese (Chinese Taiwan)</source>
-        <translation>पुरातन चीनी (चीनी ताइवान)</translation>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -247,7 +245,7 @@
     <message>
         <location filename="../keyboard-layout/operation/dcclocale.cpp" line="86"/>
         <source>Taiwan China</source>
-        <translation>ताइवान चीन</translation>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -255,7 +253,7 @@
     <message>
         <location filename="../keyboard-layout/operation/keyboardcontroller.cpp" line="55"/>
         <source>This shortcut conflicts with [%1]</source>
-            <translation>यह शॉर्टकट [%1] के साथ विघटित है</translation>
+            <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -263,33 +261,33 @@
     <message>
         <location filename="../keyboard-layout/operation/shortcutmodel.cpp" line="248"/>
         <source>System</source>
-        <translation>सिस्टम</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../keyboard-layout/operation/shortcutmodel.cpp" line="253"/>
         <source>Window</source>
-        <translation>विंडो</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../keyboard-layout/operation/shortcutmodel.cpp" line="258"/>
         <source>Workspace</source>
-        <translation>वर्कस्पेस</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../keyboard-layout/operation/shortcutmodel.cpp" line="263"/>
         <source>AssistiveTools</source>
-        <translation>सहायक उपकरण</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../keyboard-layout/operation/shortcutmodel.cpp" line="268"/>
         <location filename="../keyboard-layout/operation/shortcutmodel.cpp" line="339"/>
         <source>Custom</source>
-        <translation>स्वचालित</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../keyboard-layout/operation/shortcutmodel.cpp" line="394"/>
         <source>None</source>
-        <translation>कोई नहीं</translation>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
