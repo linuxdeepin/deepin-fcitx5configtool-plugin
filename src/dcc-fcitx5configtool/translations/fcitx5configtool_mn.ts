@@ -1,6 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE TS>
-<TS version="2.1" language="mn">
+<?xml version="1.0" ?><!DOCTYPE TS><TS version="2.1" language="mn">
 <context>
     <name>AddonsPage</name>
     <message>
@@ -19,7 +17,7 @@
     <message>
         <location filename="../qml/AdvancedSettingsModule.qml" line="41"/>
         <source>&quot;Advanced Settings&quot; is only valid for the input method that uses the system settings, if the input method has its own settings, its own settings shall prevail.</source>
-        <translation>"Нарийвчилсан тохиргоо" нь зөвхөн системийн тохиргоог ашигладаг оролтын аргын хувьд хэрэгжинэ. Хэрэв оролтын аргад өөрийн тохиргоо байгаа бол өөрийн тохиргоо давуу байна.</translation>
+        <translation>&quot;Нарийвчилсан тохиргоо&quot; нь зөвхөн системийн тохиргоог ашигладаг оролтын аргын хувьд хэрэгжинэ. Хэрэв оролтын аргад өөрийн тохиргоо байгаа бол өөрийн тохиргоо давуу байна.</translation>
     </message>
     <message>
         <location filename="../qml/AdvancedSettingsModule.qml" line="54"/>
@@ -172,7 +170,7 @@
     <message>
         <location filename="../qml/LayoutsChooser.qml" line="90"/>
         <source>Cancel</source>
-        <translation>Цуцлах</translation>
+            <translation>Цуцлах</translation>
     </message>
     <message>
         <location filename="../qml/LayoutsChooser.qml" line="97"/>
@@ -255,7 +253,7 @@
     <message>
         <location filename="../keyboard-layout/operation/keyboardcontroller.cpp" line="55"/>
         <source>This shortcut conflicts with [%1]</source>
-        <translation>Энэ товчлол [%1]-тэй зөрчилдөж байна</translation>
+            <translation>Энэ товчлол [%1]-тэй зөрчилдөж байна</translation>
     </message>
 </context>
 <context>
