@@ -1,6 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE TS>
-<TS version="2.1">
+<?xml version="1.0" ?><!DOCTYPE TS><TS version="2.1" language="af">
 <context>
     <name>AddonsPage</name>
     <message>
@@ -42,7 +40,7 @@
     <message>
         <location filename="../qml/DetailConfigItem.qml" line="151"/>
         <source>Please enter a new shortcut</source>
-        <translation>Vooruitgaan met 'n nuwe snelkoppeling</translation>
+        <translation>Vooruitgaan met &apos;n nuwe snelkoppeling</translation>
     </message>
 </context>
 <context>
@@ -78,7 +76,7 @@
     <message>
         <location filename="../qml/InputMethodsChooser.qml" line="41"/>
         <source>Search</source>
-                <translation>Soek</translation>
+        <translation>Soek</translation>
     </message>
     <message>
         <location filename="../qml/InputMethodsChooser.qml" line="109"/>
@@ -172,7 +170,7 @@
     <message>
         <location filename="../qml/LayoutsChooser.qml" line="90"/>
         <source>Cancel</source>
-        <translation>Kanselleer</translation>
+            <translation>Kanselleer</translation>
     </message>
     <message>
         <location filename="../qml/LayoutsChooser.qml" line="97"/>
@@ -255,7 +253,7 @@
     <message>
         <location filename="../keyboard-layout/operation/keyboardcontroller.cpp" line="55"/>
         <source>This shortcut conflicts with [%1]</source>
-        <translation>Hierdie snelkoppeling kollideer met [%1]</translation>
+            <translation>Hierdie snelkoppeling kollideer met [%1]</translation>
     </message>
 </context>
 <context>
