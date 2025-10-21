@@ -1,6 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE TS>
-<TS version="2.1" language="fi">
+<?xml version="1.0" ?><!DOCTYPE TS><TS version="2.1" language="fi">
 <context>
     <name>AddonsPage</name>
     <message>
@@ -116,7 +114,7 @@
     <message>
         <location filename="../qml/KeyboardLayout.qml" line="57"/>
         <source>Add the corresponding input method in &lt;a style=&apos;text-decoration: none;&apos; href=&apos;Manage Input Methods&apos;&gt;Input Method Management&lt;/a&gt; to ensure the keyboard layout works when added or switched.</source>
-        <translation>Lisää vastaava syöttömenetelmä &lt;a style=&apos;text-decoration: none;&apos; href=&apos;Manage Input Methods&apos;&gt;Input Method Management&lt;/a&gt;n, jotta näppäimistön asettelu toimii, kun se lisätään tai vaihdetaan.</translation>
+        <translation>Lisää sopiva kieli &lt;a style=&apos;text-decoration: none;&apos; href=&apos;Manage Input Methods&apos;&gt;Input Method Management&lt;/a&gt; ja testaa, että näppäimistö toimii oikein</translation>
     </message>
     <message>
         <location filename="../qml/KeyboardLayout.qml" line="142"/>
@@ -144,7 +142,7 @@
     <message>
         <location filename="../qml/KeyboardLayoutModule.qml" line="57"/>
         <source>Add the corresponding input method in &lt;a style=&apos;text-decoration: none;&apos; href=&apos;Manage Input Methods&apos;&gt;Input Method Management&lt;/a&gt; to ensure the keyboard layout works when added or switched.</source>
-        <translation>Lisää vastaava syöttömenetelmä &lt;a style=&apos;text-decoration: none;&apos; href=&apos;Manage Input Methods&apos;&gt;Input Method Management&lt;/a&gt;n, jotta näppäimistön asettelu toimii, kun se lisätään tai vaihdetaan.</translation>
+        <translation>Lisää sopiva kieli &lt;a style=&apos;text-decoration: none;&apos; href=&apos;Manage Input Methods&apos;&gt;Input Method Management&lt;/a&gt; ja testaa, että näppäimistö toimii oikein</translation>
     </message>
     <message>
         <location filename="../qml/KeyboardLayoutModule.qml" line="140"/>
@@ -162,17 +160,17 @@
     <message>
         <location filename="../qml/LayoutsChooser.qml" line="38"/>
         <source>Search</source>
-        <translation>Etsi</translation>
+        <translation>Haku</translation>
     </message>
     <message>
         <location filename="../qml/LayoutsChooser.qml" line="67"/>
         <source>Current language keyboard layouts</source>
-        <translation>Nykyisen kielen näppäimistön asettelut</translation>
+        <translation>Nykyinen näppäimistön asettelu</translation>
     </message>
     <message>
         <location filename="../qml/LayoutsChooser.qml" line="90"/>
         <source>Cancel</source>
-        <translation>Peruuta</translation>
+            <translation>Peruuta</translation>
     </message>
     <message>
         <location filename="../qml/LayoutsChooser.qml" line="97"/>
@@ -196,35 +194,35 @@
 <context>
     <name>ShortcutsModule</name>
     <message>
-        <location filename="../qml/ShortcutsModule.qml" line="118"/>
-        <source>Shortcuts</source>
-        <translation>Pikakäkset</translation>
-    </message>
-    <message>
-        <location filename="../qml/ShortcutsModule.qml" line="133"/>
-        <source>Restore Defaults</source>
-        <translation>Palauta oletusarvot</translation>
-    </message>
-    <message>
-        <location filename="../qml/ShortcutsModule.qml" line="225"/>
-        <source>Scroll between input methods</source>
-        <translation>Vaihda syöttömenetelmiä hiirellä</translation>
-    </message>
-    <message>
-        <location filename="../qml/ShortcutsModule.qml" line="13"/>
-        <location filename="../qml/ShortcutsModule.qml" line="15"/>
-        <location filename="../qml/ShortcutsModule.qml" line="150"/>
+        <location filename="../qml/ShortcutsModule.qml" line="12"/>
+        <location filename="../qml/ShortcutsModule.qml" line="14"/>
         <location filename="../qml/ShortcutsModule.qml" line="151"/>
+        <location filename="../qml/ShortcutsModule.qml" line="152"/>
         <source>None</source>
         <translation>Ei mitään</translation>
     </message>
     <message>
-        <location filename="../qml/ShortcutsModule.qml" line="273"/>
+        <location filename="../qml/ShortcutsModule.qml" line="119"/>
+        <source>Shortcuts</source>
+        <translation>Pikakäkset</translation>
+    </message>
+    <message>
+        <location filename="../qml/ShortcutsModule.qml" line="134"/>
+        <source>Restore Defaults</source>
+        <translation>Palauta oletusarvot</translation>
+    </message>
+    <message>
+        <location filename="../qml/ShortcutsModule.qml" line="200"/>
+        <source>Scroll between input methods</source>
+        <translation>Vaihda syöttömenetelmiä hiirellä</translation>
+    </message>
+    <message>
+        <location filename="../qml/ShortcutsModule.qml" line="230"/>
         <source>Turn on or off input methods</source>
         <translation>Päälle- tai pois-kytkentä syöttömenetelmille</translation>
     </message>
     <message>
-        <location filename="../qml/ShortcutsModule.qml" line="336"/>
+        <location filename="../qml/ShortcutsModule.qml" line="273"/>
         <source>It turns on or off the currently used input method.If no input method is being used or the first input method is not the keyboard, it switches between the first input method and the currently used keyboard/input method.</source>
         <translation>Se käyttää päälle- tai pois-kytkentää nykyisesti käytettävälle syöttömenetelmälle. Jos ei käytetä syöttömenetelmää tai ensimmäinen syöttömenetelmä ei ole näppäimistö, se vaihtaa ensimmäistä syöttömenetelmää ja nykyistä käytettävää näppäimistöä/syöttömenetelmää.</translation>
     </message>
@@ -234,12 +232,12 @@
     <message>
         <location filename="../keyboard-layout/operation/dcclocale.cpp" line="62"/>
         <source>Traditional Chinese (Chinese Hong Kong)</source>
-        <translation>Traditionaalinen kiina (Kiinaan Hong Kong)</translation>
+        <translation>Perinteinen kiina (Kiina Hong Kong)</translation>
     </message>
     <message>
         <location filename="../keyboard-layout/operation/dcclocale.cpp" line="65"/>
         <source>Traditional Chinese (Chinese Taiwan)</source>
-        <translation>Traditionaalinen kiina (Kiinaan Taiwan)</translation>
+        <translation>Perinteinen kiina (Kiina Taiwan)</translation>
     </message>
 </context>
 <context>
@@ -247,7 +245,7 @@
     <message>
         <location filename="../keyboard-layout/operation/dcclocale.cpp" line="86"/>
         <source>Taiwan China</source>
-        <translation>Kiinaan Taiwan</translation>
+        <translation>Taiwan Kiina</translation>
     </message>
 </context>
 <context>
@@ -255,7 +253,7 @@
     <message>
         <location filename="../keyboard-layout/operation/keyboardcontroller.cpp" line="55"/>
         <source>This shortcut conflicts with [%1]</source>
-        <translation>Tämä pikakäsky ristiriittaa [%1]</translation>
+            <translation>Tämä on ristiriidassa [%1] kanssa</translation>
     </message>
 </context>
 <context>
@@ -278,7 +276,7 @@
     <message>
         <location filename="../keyboard-layout/operation/shortcutmodel.cpp" line="263"/>
         <source>AssistiveTools</source>
-        <translation>Apuohjelmat</translation>
+        <translation>Apuvälineet</translation>
     </message>
     <message>
         <location filename="../keyboard-layout/operation/shortcutmodel.cpp" line="268"/>
@@ -289,7 +287,7 @@
     <message>
         <location filename="../keyboard-layout/operation/shortcutmodel.cpp" line="394"/>
         <source>None</source>
-        <translation>Ei mitään</translation>
+        <translation>Mitään</translation>
     </message>
 </context>
 <context>
