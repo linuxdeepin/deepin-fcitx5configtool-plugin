@@ -1,6 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE TS>
-<TS version="2.1" language="tr">
+<?xml version="1.0" ?><!DOCTYPE TS><TS version="2.1" language="tr">
 <context>
     <name>AddonsPage</name>
     <message>
@@ -19,12 +17,12 @@
     <message>
         <location filename="../qml/AdvancedSettingsModule.qml" line="41"/>
         <source>&quot;Advanced Settings&quot; is only valid for the input method that uses the system settings, if the input method has its own settings, its own settings shall prevail.</source>
-        <translation>"Gelişmiş Ayarlar" yalnızca sistem ayarlarını kullanan giriş yöntemi için geçerlidir. Giriş yöntemi kendi ayarlarına sahipse, kendi ayarları geçerli olacaktır.</translation>
+        <translation>&quot;Gelişmiş Ayarlar&quot; yalnızca sistematik ayarları kullanan giriş yöntemi için geçerlidir. Giriş yöntemi kendi ayarlarını varsa, kendi ayarları geçerlidir.</translation>
     </message>
     <message>
         <location filename="../qml/AdvancedSettingsModule.qml" line="54"/>
         <source>Global Config</source>
-        <translation>Genel Yapılandırma</translation>
+        <translation>Küresel Yapılandırma</translation>
     </message>
     <message>
         <location filename="../qml/AdvancedSettingsModule.qml" line="70"/>
@@ -34,7 +32,7 @@
     <message>
         <location filename="../qml/AdvancedSettingsModule.qml" line="81"/>
         <source>Keyboard layout</source>
-        <translation>Klavye düzeni</translation>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -83,7 +81,7 @@
     <message>
         <location filename="../qml/InputMethodsChooser.qml" line="109"/>
         <source>Find more in App Store</source>
-        <translation>App Store'da daha fazlasını bul</translation>
+        <translation>App Store&apos;da daha fazlasını bul</translation>
     </message>
     <message>
         <location filename="../qml/InputMethodsChooser.qml" line="129"/>
@@ -106,17 +104,17 @@
     <message>
         <location filename="../qml/KeyboardLayout.qml" line="34"/>
         <source>done</source>
-        <translation>tamam</translation>
+        <translation>tamamla</translation>
     </message>
     <message>
         <location filename="../qml/KeyboardLayout.qml" line="34"/>
         <source>edit</source>
-        <translation>düzenle</translation>
+        <translation>Düzenle</translation>
     </message>
     <message>
         <location filename="../qml/KeyboardLayout.qml" line="57"/>
         <source>Add the corresponding input method in &lt;a style=&apos;text-decoration: none;&apos; href=&apos;Manage Input Methods&apos;&gt;Input Method Management&lt;/a&gt; to ensure the keyboard layout works when added or switched.</source>
-        <translation>Klavye düzeninin ekleme veya değiştirme sırasında çalışmasını sağlamak için &lt;a style=&apos;text-decoration: none;&apos; href=&apos;Manage Input Methods&apos;&gt;Giriş Yöntemi Yönetimi&lt;/a&gt; bölümüne karşılık gelen giriş yöntemini ekleyin.</translation>
+        <translation>Klavye düzeni eklendiğinde veya değiştirildiğinde çalışmasını sağlamak için &lt;a style=&apos;text-decoration: none;&apos; href=&apos;Manage Input Methods&apos;&gt;Giriş Yöntemi Yönetimine&lt;/a&gt; karşılık gelen giriş yöntemini ekleyin.</translation>
     </message>
     <message>
         <location filename="../qml/KeyboardLayout.qml" line="142"/>
@@ -129,27 +127,27 @@
     <message>
         <location filename="../qml/KeyboardLayoutModule.qml" line="16"/>
         <source>Keyboard layout</source>
-        <translation>Klavye düzeni</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../qml/KeyboardLayoutModule.qml" line="34"/>
         <source>done</source>
-        <translation>tamam</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../qml/KeyboardLayoutModule.qml" line="34"/>
         <source>edit</source>
-        <translation>düzenle</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../qml/KeyboardLayoutModule.qml" line="57"/>
         <source>Add the corresponding input method in &lt;a style=&apos;text-decoration: none;&apos; href=&apos;Manage Input Methods&apos;&gt;Input Method Management&lt;/a&gt; to ensure the keyboard layout works when added or switched.</source>
-        <translation>Klavye düzeninin ekleme veya değiştirme sırasında çalışmasını sağlamak için &lt;a style=&apos;text-decoration: none;&apos; href=&apos;Manage Input Methods&apos;&gt;Giriş Yöntemi Yönetimi&lt;/a&gt; bölümüne karşılık gelen giriş yöntemini ekleyin.</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../qml/KeyboardLayoutModule.qml" line="140"/>
         <source>Add new keyboard layout...</source>
-        <translation>Yeni klavye düzeni ekle...</translation>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -167,12 +165,12 @@
     <message>
         <location filename="../qml/LayoutsChooser.qml" line="67"/>
         <source>Current language keyboard layouts</source>
-        <translation>Mevcut dil klavye düzenleri</translation>
+        <translation>Mevcut dil için klavye düzenleri</translation>
     </message>
     <message>
         <location filename="../qml/LayoutsChooser.qml" line="90"/>
         <source>Cancel</source>
-        <translation>İptal</translation>
+            <translation>İptal</translation>
     </message>
     <message>
         <location filename="../qml/LayoutsChooser.qml" line="97"/>
@@ -201,7 +199,7 @@
         <location filename="../qml/ShortcutsModule.qml" line="151"/>
         <location filename="../qml/ShortcutsModule.qml" line="152"/>
         <source>None</source>
-        <translation>Yok</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../qml/ShortcutsModule.qml" line="119"/>
@@ -216,7 +214,7 @@
     <message>
         <location filename="../qml/ShortcutsModule.qml" line="200"/>
         <source>Scroll between input methods</source>
-        <translation>Giriş yöntemleri arasında geçiş yap</translation>
+        <translation>Giriş yöntemleri arasında kaydır</translation>
     </message>
     <message>
         <location filename="../qml/ShortcutsModule.qml" line="230"/>
@@ -226,7 +224,7 @@
     <message>
         <location filename="../qml/ShortcutsModule.qml" line="273"/>
         <source>It turns on or off the currently used input method.If no input method is being used or the first input method is not the keyboard, it switches between the first input method and the currently used keyboard/input method.</source>
-        <translation>Şu anda kullanılan giriş yöntemini açar veya kapatır. Hiçbir giriş yöntemi kullanılmıyorsa veya ilk giriş yöntemi klavye değilse, ilk giriş yöntemi ile şu anda kullanılan klavye/giriş yöntemi arasında geçiş yapar.</translation>
+        <translation>Şu anda kullanılan giriş yöntemini aç veya kapatır. Giriş yöntemi kullanılmıyor veya ilk giriş yöntemi klavye değilse, ilk giriş yöntemi ve şu anda kullanılan klavye/giriş yöntemi arasında geçiş yapar.</translation>
     </message>
 </context>
 <context>
@@ -234,12 +232,12 @@
     <message>
         <location filename="../keyboard-layout/operation/dcclocale.cpp" line="62"/>
         <source>Traditional Chinese (Chinese Hong Kong)</source>
-        <translation>Geleneksel Çince (Çince Hong Kong)</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../keyboard-layout/operation/dcclocale.cpp" line="65"/>
         <source>Traditional Chinese (Chinese Taiwan)</source>
-        <translation>Geleneksel Çince (Çince Tayvan)</translation>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -247,7 +245,7 @@
     <message>
         <location filename="../keyboard-layout/operation/dcclocale.cpp" line="86"/>
         <source>Taiwan China</source>
-        <translation>Tayvan Çin</translation>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -255,7 +253,7 @@
     <message>
         <location filename="../keyboard-layout/operation/keyboardcontroller.cpp" line="55"/>
         <source>This shortcut conflicts with [%1]</source>
-        <translation>Bu kısayol [%1] ile çakışıyor</translation>
+            <translation>Bu kısayol [%1] ile çakışıyor</translation>
     </message>
 </context>
 <context>
@@ -278,7 +276,7 @@
     <message>
         <location filename="../keyboard-layout/operation/shortcutmodel.cpp" line="263"/>
         <source>AssistiveTools</source>
-        <translation>Yardımcı Araçlar</translation>
+        <translation>YardımcıAraçlar</translation>
     </message>
     <message>
         <location filename="../keyboard-layout/operation/shortcutmodel.cpp" line="268"/>
@@ -289,7 +287,7 @@
     <message>
         <location filename="../keyboard-layout/operation/shortcutmodel.cpp" line="394"/>
         <source>None</source>
-        <translation>Yok</translation>
+        <translation>Hiçbiri</translation>
     </message>
 </context>
 <context>
