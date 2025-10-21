@@ -1,6 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE TS>
-<TS version="2.1" language="id">
+<?xml version="1.0" ?><!DOCTYPE TS><TS version="2.1" language="id">
 <context>
     <name>AddonsPage</name>
     <message>
@@ -34,7 +32,7 @@
     <message>
         <location filename="../qml/AdvancedSettingsModule.qml" line="81"/>
         <source>Keyboard layout</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -101,27 +99,27 @@
     <message>
         <location filename="../qml/KeyboardLayout.qml" line="16"/>
         <source>Keyboard layout</source>
-        <translation>Tata letak papan ketik</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../qml/KeyboardLayout.qml" line="34"/>
         <source>done</source>
-        <translation>selesai</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../qml/KeyboardLayout.qml" line="34"/>
         <source>edit</source>
-        <translation>edit</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../qml/KeyboardLayout.qml" line="57"/>
         <source>Add the corresponding input method in &lt;a style=&apos;text-decoration: none;&apos; href=&apos;Manage Input Methods&apos;&gt;Input Method Management&lt;/a&gt; to ensure the keyboard layout works when added or switched.</source>
-        <translation>Tambahkan metode masuk yang sesuai di &lt;a style=&apos;text-decoration: none;&apos; href=&apos;Manage Input Methods&apos;&gt;Input Method Management&lt;/a&gt; untuk memastikan tata letak papan ketik berfungsi saat ditambahkan atau beralih.</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../qml/KeyboardLayout.qml" line="142"/>
         <source>Add new keyboard layout...</source>
-        <translation>Tambahkan tata letak papan ketik baru...</translation>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -129,27 +127,27 @@
     <message>
         <location filename="../qml/KeyboardLayoutModule.qml" line="16"/>
         <source>Keyboard layout</source>
-        <translation>Tata letak papan ketik</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../qml/KeyboardLayoutModule.qml" line="34"/>
         <source>done</source>
-        <translation>selesai</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../qml/KeyboardLayoutModule.qml" line="34"/>
         <source>edit</source>
-        <translation>edit</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../qml/KeyboardLayoutModule.qml" line="57"/>
         <source>Add the corresponding input method in &lt;a style=&apos;text-decoration: none;&apos; href=&apos;Manage Input Methods&apos;&gt;Input Method Management&lt;/a&gt; to ensure the keyboard layout works when added or switched.</source>
-        <translation>Tambahkan metode masuk yang sesuai di &lt;a style=&apos;text-decoration: none;&apos; href=&apos;Manage Input Methods&apos;&gt;Input Method Management&lt;/a&gt; untuk memastikan tata letak papan ketik berfungsi saat ditambahkan atau beralih.</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../qml/KeyboardLayoutModule.qml" line="140"/>
         <source>Add new keyboard layout...</source>
-        <translation>Tambahkan tata letak papan ketik baru...</translation>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -157,27 +155,27 @@
     <message>
         <location filename="../qml/LayoutsChooser.qml" line="30"/>
         <source>Add new keyboard layout</source>
-        <translation>Tambahkan tata letak papan ketik baru</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../qml/LayoutsChooser.qml" line="38"/>
         <source>Search</source>
-        <translation>Cari</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../qml/LayoutsChooser.qml" line="67"/>
         <source>Current language keyboard layouts</source>
-        <translation>Tata letak papan ketik bahasa saat ini</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../qml/LayoutsChooser.qml" line="90"/>
         <source>Cancel</source>
-        <translation>Batal</translation>
+            <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../qml/LayoutsChooser.qml" line="97"/>
         <source>Add</source>
-        <translation>Tambahkan</translation>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -201,7 +199,7 @@
         <location filename="../qml/ShortcutsModule.qml" line="151"/>
         <location filename="../qml/ShortcutsModule.qml" line="152"/>
         <source>None</source>
-        <translation>Tidak ada</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../qml/ShortcutsModule.qml" line="119"/>
@@ -234,12 +232,12 @@
     <message>
         <location filename="../keyboard-layout/operation/dcclocale.cpp" line="62"/>
         <source>Traditional Chinese (Chinese Hong Kong)</source>
-        <translation>Tionghoa Tradisional (Hong Kong Tionghoa)</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../keyboard-layout/operation/dcclocale.cpp" line="65"/>
         <source>Traditional Chinese (Chinese Taiwan)</source>
-        <translation>Tionghoa Tradisional (Taiwan Tionghoa)</translation>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -247,7 +245,7 @@
     <message>
         <location filename="../keyboard-layout/operation/dcclocale.cpp" line="86"/>
         <source>Taiwan China</source>
-        <translation>Taiwan Tionghoa</translation>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -255,7 +253,7 @@
     <message>
         <location filename="../keyboard-layout/operation/keyboardcontroller.cpp" line="55"/>
         <source>This shortcut conflicts with [%1]</source>
-        <translation>Pintasan ini bertentangan dengan [%1]</translation>
+            <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -263,33 +261,33 @@
     <message>
         <location filename="../keyboard-layout/operation/shortcutmodel.cpp" line="248"/>
         <source>System</source>
-        <translation>Sistem</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../keyboard-layout/operation/shortcutmodel.cpp" line="253"/>
         <source>Window</source>
-        <translation>Jendela</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../keyboard-layout/operation/shortcutmodel.cpp" line="258"/>
         <source>Workspace</source>
-        <translation>Ruang kerja</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../keyboard-layout/operation/shortcutmodel.cpp" line="263"/>
         <source>AssistiveTools</source>
-        <translation>Alat Bantu</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../keyboard-layout/operation/shortcutmodel.cpp" line="268"/>
         <location filename="../keyboard-layout/operation/shortcutmodel.cpp" line="339"/>
         <source>Custom</source>
-        <translation>Kustom</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../keyboard-layout/operation/shortcutmodel.cpp" line="394"/>
         <source>None</source>
-        <translation>Tidak ada</translation>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
