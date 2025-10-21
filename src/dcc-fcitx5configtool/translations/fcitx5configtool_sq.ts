@@ -4,7 +4,7 @@
     <message>
         <location filename="../qml/AddonsPage.qml" line="20"/>
         <source>Add-ons</source>
-        <translation>Shtesa</translation>
+        <translation>Shtojca</translation>
     </message>
 </context>
 <context>
@@ -12,27 +12,27 @@
     <message>
         <location filename="../qml/AdvancedSettingsModule.qml" line="15"/>
         <source>Advanced Settings</source>
-        <translation>Rregullime të Mëtejshme</translation>
+        <translation>Cilësimet e Përparuara</translation>
     </message>
     <message>
         <location filename="../qml/AdvancedSettingsModule.qml" line="41"/>
         <source>&quot;Advanced Settings&quot; is only valid for the input method that uses the system settings, if the input method has its own settings, its own settings shall prevail.</source>
-        <translation>“Rregullime të Mëtejshme” është e vlefshme vetëm për metodë dhëniesh që përdor rregullimet e sistemit, nëse metoda e dhënieve ka rregullimet e veta, përparësinë do ta kenë rregullimet e veta.</translation>
+        <translation>&quot;Cilësimet e Përparuara&quot; janë të vlefshme vetëm për metodën e hyrjes që përdor cilësimet e sistemit. Nëse metoda e hyrjes ka cilësimet e veta, cilësimet e veta do të zënë vendin.</translation>
     </message>
     <message>
         <location filename="../qml/AdvancedSettingsModule.qml" line="54"/>
         <source>Global Config</source>
-        <translation>Formësim Global</translation>
+        <translation>Konfigurimi Global</translation>
     </message>
     <message>
         <location filename="../qml/AdvancedSettingsModule.qml" line="70"/>
         <source>Add-ons</source>
-        <translation>Shtesa</translation>
+        <translation>Shtojca</translation>
     </message>
     <message>
         <location filename="../qml/AdvancedSettingsModule.qml" line="81"/>
         <source>Keyboard layout</source>
-        <translation>Skemë tastiere</translation>
+        <translation>Planimetria e tastierës</translation>
     </message>
 </context>
 <context>
@@ -40,7 +40,7 @@
     <message>
         <location filename="../qml/DetailConfigItem.qml" line="151"/>
         <source>Please enter a new shortcut</source>
-        <translation>Ju lutemi, jepni një shkurtore të re</translation>
+        <translation>Ju lutemi shkruani një shkurtore të re</translation>
     </message>
 </context>
 <context>
@@ -48,22 +48,22 @@
     <message>
         <location filename="../qml/IMList.qml" line="152"/>
         <source>Move Up</source>
-        <translation>Ngjite Sipër</translation>
+        <translation>Lëviz Lart</translation>
     </message>
     <message>
         <location filename="../qml/IMList.qml" line="160"/>
         <source>Move Down</source>
-        <translation>Zbrite Poshtë</translation>
+        <translation>Lëviz Poshtë</translation>
     </message>
     <message>
         <location filename="../qml/IMList.qml" line="168"/>
         <source>Settings</source>
-        <translation>Rregullime</translation>
+        <translation>Cilësimet</translation>
     </message>
     <message>
         <location filename="../qml/IMList.qml" line="176"/>
         <source>Remove</source>
-        <translation>Hiqe</translation>
+        <translation>Hiq</translation>
     </message>
 </context>
 <context>
@@ -71,7 +71,7 @@
     <message>
         <location filename="../qml/InputMethodsChooser.qml" line="35"/>
         <source>Add input method</source>
-        <translation>Shtoni metodë dhëniesh</translation>
+        <translation>Shto metodë hyrjeje</translation>
     </message>
     <message>
         <location filename="../qml/InputMethodsChooser.qml" line="41"/>
@@ -81,12 +81,12 @@
     <message>
         <location filename="../qml/InputMethodsChooser.qml" line="109"/>
         <source>Find more in App Store</source>
-        <translation>Gjeni më tepër, te Shitorja e Aplikacioneve</translation>
+        <translation>Gjej më shumë në App Store</translation>
     </message>
     <message>
         <location filename="../qml/InputMethodsChooser.qml" line="129"/>
         <source>Cancel</source>
-        <translation>Anuloje</translation>
+        <translation>Anulo</translation>
     </message>
     <message>
         <location filename="../qml/InputMethodsChooser.qml" line="136"/>
@@ -99,27 +99,27 @@
     <message>
         <location filename="../qml/KeyboardLayout.qml" line="16"/>
         <source>Keyboard layout</source>
-        <translation>Skemë tastiere</translation>
+        <translation>Planimetria e tastierës</translation>
     </message>
     <message>
         <location filename="../qml/KeyboardLayout.qml" line="34"/>
         <source>done</source>
-        <translation>u bë</translation>
+        <translation>mbaruar</translation>
     </message>
     <message>
         <location filename="../qml/KeyboardLayout.qml" line="34"/>
         <source>edit</source>
-        <translation>përpunoni</translation>
+        <translation>ndrysho</translation>
     </message>
     <message>
         <location filename="../qml/KeyboardLayout.qml" line="57"/>
         <source>Add the corresponding input method in &lt;a style=&apos;text-decoration: none;&apos; href=&apos;Manage Input Methods&apos;&gt;Input Method Management&lt;/a&gt; to ensure the keyboard layout works when added or switched.</source>
-        <translation>Për të garantuar se skema e tastierës funksionon, kur shtohet, ose kur kalohet në të, shtoni te &lt;a style=&apos;text-decoration: none;&apos; href=&apos;Manage Input Methods&apos;&gt;Administrim Metodash Dhënieje&lt;/a&gt; metodën përkatëse të dhënies.</translation>
+        <translation>Shtoni metodën përkatëse të hyrjes tek &lt;a style=&apos;text-decoration: none;&apos; href=&apos;Manage Input Methods&apos;&gt;Menaxhimi i Metodave të Hyrjes&lt;/a&gt; për të siguruar që planimetria e tastierës të funksionojë kur shtohet ose ndryshohet.</translation>
     </message>
     <message>
         <location filename="../qml/KeyboardLayout.qml" line="142"/>
         <source>Add new keyboard layout...</source>
-        <translation>Shtoni skemë të re tastiere…</translation>
+        <translation>Shto planimetri të re tastiere...</translation>
     </message>
 </context>
 <context>
@@ -127,27 +127,27 @@
     <message>
         <location filename="../qml/KeyboardLayoutModule.qml" line="16"/>
         <source>Keyboard layout</source>
-        <translation>Skemë tastiere</translation>
+        <translation>Planimetria e tastierës</translation>
     </message>
     <message>
         <location filename="../qml/KeyboardLayoutModule.qml" line="34"/>
         <source>done</source>
-        <translation>u bë</translation>
+        <translation>mbaruar</translation>
     </message>
     <message>
         <location filename="../qml/KeyboardLayoutModule.qml" line="34"/>
         <source>edit</source>
-        <translation>përpunoni</translation>
+        <translation>ndrysho</translation>
     </message>
     <message>
         <location filename="../qml/KeyboardLayoutModule.qml" line="57"/>
         <source>Add the corresponding input method in &lt;a style=&apos;text-decoration: none;&apos; href=&apos;Manage Input Methods&apos;&gt;Input Method Management&lt;/a&gt; to ensure the keyboard layout works when added or switched.</source>
-        <translation>Për të garantuar se skema e tastierës funksionon, kur shtohet, ose kur kalohet në të, shtoni te &lt;a style=&apos;text-decoration: none;&apos; href=&apos;Manage Input Methods&apos;&gt;Administrim Metodash Dhënieje&lt;/a&gt; metodën përkatëse të dhënies.</translation>
+        <translation>Shtoni metodën përkatëse të hyrjes tek &lt;a style=&apos;text-decoration: none;&apos; href=&apos;Manage Input Methods&apos;&gt;Menaxhimi i Metodave të Hyrjes&lt;/a&gt; për të siguruar që planimetria e tastierës të funksionojë kur shtohet ose ndryshohet.</translation>
     </message>
     <message>
         <location filename="../qml/KeyboardLayoutModule.qml" line="140"/>
         <source>Add new keyboard layout...</source>
-        <translation>Shtoni skemë të re tastiere…</translation>
+        <translation>Shto planimetri të re tastiere...</translation>
     </message>
 </context>
 <context>
@@ -155,7 +155,7 @@
     <message>
         <location filename="../qml/LayoutsChooser.qml" line="30"/>
         <source>Add new keyboard layout</source>
-        <translation>Shtoni skemë të re tastiere</translation>
+        <translation>Shto planimetri të re tastiere</translation>
     </message>
     <message>
         <location filename="../qml/LayoutsChooser.qml" line="38"/>
@@ -165,12 +165,12 @@
     <message>
         <location filename="../qml/LayoutsChooser.qml" line="67"/>
         <source>Current language keyboard layouts</source>
-        <translation>Skema të tanishme tastiere gjuhe</translation>
+        <translation>Planimetritë e tastierës së gjuhës aktuale</translation>
     </message>
     <message>
         <location filename="../qml/LayoutsChooser.qml" line="90"/>
         <source>Cancel</source>
-            <translation>Anuloje</translation>
+            <translation>Anulo</translation>
     </message>
     <message>
         <location filename="../qml/LayoutsChooser.qml" line="97"/>
@@ -183,12 +183,12 @@
     <message>
         <location filename="../qml/ManageInputMethodsModule.qml" line="15"/>
         <source>Input method management</source>
-        <translation>Administrim metodash dhënieje</translation>
+        <translation>Menaxhimi i metodave të hyrjes</translation>
     </message>
     <message>
         <location filename="../qml/ManageInputMethodsModule.qml" line="33"/>
         <source>Add input method</source>
-        <translation>Shtoni metodë dhëniesh</translation>
+        <translation>Shto metodë hyrjeje</translation>
     </message>
 </context>
 <context>
@@ -204,7 +204,7 @@
     <message>
         <location filename="../qml/ShortcutsModule.qml" line="119"/>
         <source>Shortcuts</source>
-        <translation>Shkurtore</translation>
+        <translation>Shkurtoret</translation>
     </message>
     <message>
         <location filename="../qml/ShortcutsModule.qml" line="134"/>
@@ -214,17 +214,17 @@
     <message>
         <location filename="../qml/ShortcutsModule.qml" line="200"/>
         <source>Scroll between input methods</source>
-        <translation>Kaloni nëpër metoda dhënieje</translation>
+        <translation>Këmbej midis metodave të hyrjes</translation>
     </message>
     <message>
         <location filename="../qml/ShortcutsModule.qml" line="230"/>
         <source>Turn on or off input methods</source>
-        <translation>Aktivizoni ose çaktivizoni metoda dhënieje</translation>
+        <translation>Ndiz ose fik metodat e hyrjes</translation>
     </message>
     <message>
         <location filename="../qml/ShortcutsModule.qml" line="273"/>
         <source>It turns on or off the currently used input method.If no input method is being used or the first input method is not the keyboard, it switches between the first input method and the currently used keyboard/input method.</source>
-        <translation>Aktivizon ose çaktivizon metodën e dhënieve të përdorur aktualisht. Nëse s’po përdoret metodë dhëniesh, ose metoda e parë e dhënieve s’është tastiera, bën kalimin nga metoda e parë e dhënieve te metoda e tanishme e përdorur për tastierë/dhënie, ose anasjelltas.</translation>
+        <translation>Ndez ose fik metodën e hyrjes që përdoret aktualisht. Nëse nuk po përdoret asnjë metodë hyrjeje ose metoda e parë e hyrjes nuk është tastiera, kalimi bëhet midis metodës së parë të hyrjes dhe tastierës/metodës së hyrjes që përdoret aktualisht.</translation>
     </message>
 </context>
 <context>
@@ -232,12 +232,12 @@
     <message>
         <location filename="../keyboard-layout/operation/dcclocale.cpp" line="62"/>
         <source>Traditional Chinese (Chinese Hong Kong)</source>
-        <translation>Kineze Tradicionale (Kineze Hong-Kongu)</translation>
+        <translation>Kineze Tradicionale (Kineze Hong Kong)</translation>
     </message>
     <message>
         <location filename="../keyboard-layout/operation/dcclocale.cpp" line="65"/>
         <source>Traditional Chinese (Chinese Taiwan)</source>
-        <translation>Kineze Tradicionale (Kineze Tajvani)</translation>
+        <translation>Kineze Tradicionale (Kineze Taiwan)</translation>
     </message>
 </context>
 <context>
@@ -245,7 +245,7 @@
     <message>
         <location filename="../keyboard-layout/operation/dcclocale.cpp" line="86"/>
         <source>Taiwan China</source>
-        <translation>Kina Tajvan</translation>
+        <translation>Taiwan Kinë</translation>
     </message>
 </context>
 <context>
@@ -253,7 +253,7 @@
     <message>
         <location filename="../keyboard-layout/operation/keyboardcontroller.cpp" line="55"/>
         <source>This shortcut conflicts with [%1]</source>
-            <translation>Kjo shkurtore përplaset me [%1]</translation>
+            <translation>Kjo shkurtore konflikton me [%1]</translation>
     </message>
 </context>
 <context>
@@ -261,7 +261,7 @@
     <message>
         <location filename="../keyboard-layout/operation/shortcutmodel.cpp" line="248"/>
         <source>System</source>
-        <translation>Sistem</translation>
+        <translation>Sistemi</translation>
     </message>
     <message>
         <location filename="../keyboard-layout/operation/shortcutmodel.cpp" line="253"/>
@@ -271,18 +271,18 @@
     <message>
         <location filename="../keyboard-layout/operation/shortcutmodel.cpp" line="258"/>
         <source>Workspace</source>
-        <translation>Hapësirë pune</translation>
+        <translation>Hapësira e Punës</translation>
     </message>
     <message>
         <location filename="../keyboard-layout/operation/shortcutmodel.cpp" line="263"/>
         <source>AssistiveTools</source>
-        <translation>Mjete Ndihmuese</translation>
+        <translation>Mjete Ndihmëse</translation>
     </message>
     <message>
         <location filename="../keyboard-layout/operation/shortcutmodel.cpp" line="268"/>
         <location filename="../keyboard-layout/operation/shortcutmodel.cpp" line="339"/>
         <source>Custom</source>
-        <translation>Vetjake</translation>
+        <translation>Personalizo</translation>
     </message>
     <message>
         <location filename="../keyboard-layout/operation/shortcutmodel.cpp" line="394"/>
@@ -295,12 +295,12 @@
     <message>
         <location filename="../qml/fcitx5configtool.qml" line="8"/>
         <source>Input Methods</source>
-        <translation>Metoda Dhëniesh</translation>
+        <translation>Metodat e Hyrjes</translation>
     </message>
     <message>
         <location filename="../qml/fcitx5configtool.qml" line="9"/>
         <source>Input method management, input method shortcuts, advanced settings</source>
-        <translation>Administrim metoda dhëniesh, shkurtore metodash dhëniesh, rregullime të mëtejshme</translation>
+        <translation>Menaxhimi i metodave të hyrjes, shkurtoret e metodave të hyrjes, cilësimet e përparuara</translation>
     </message>
 </context>
 </TS>
