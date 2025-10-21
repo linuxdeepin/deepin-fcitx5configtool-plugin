@@ -1,6 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE TS>
-<TS version="2.1" language="fil">
+<?xml version="1.0" ?><!DOCTYPE TS><TS version="2.1" language="fil">
 <context>
     <name>AddonsPage</name>
     <message>
@@ -14,17 +12,17 @@
     <message>
         <location filename="../qml/AdvancedSettingsModule.qml" line="15"/>
         <source>Advanced Settings</source>
-        <translation>Mga Advanced na Setting</translation>
+        <translation>Mga Pangkabug-os na Setting</translation>
     </message>
     <message>
         <location filename="../qml/AdvancedSettingsModule.qml" line="41"/>
         <source>&quot;Advanced Settings&quot; is only valid for the input method that uses the system settings, if the input method has its own settings, its own settings shall prevail.</source>
-        <translation>Ang &quot;Mga Advanced na Setting&quot; ay valid lamang para sa input method na gumagamit ng system settings. Kung ang input method ay may sariling settings, ang sariling settings nito ang mananaig.</translation>
+        <translation>&quot;Mga Pangkabug-os na Setting&quot; ay lamang valid para sa input method na gumagamit ng system settings, kung ang input method ay may sariling setting, ang sariling setting ay magmamana.</translation>
     </message>
     <message>
         <location filename="../qml/AdvancedSettingsModule.qml" line="54"/>
         <source>Global Config</source>
-        <translation>Global na Configuration</translation>
+        <translation>Pangkabug-os na Konfigurasyon</translation>
     </message>
     <message>
         <location filename="../qml/AdvancedSettingsModule.qml" line="70"/>
@@ -34,7 +32,7 @@
     <message>
         <location filename="../qml/AdvancedSettingsModule.qml" line="81"/>
         <source>Keyboard layout</source>
-        <translation>Layout ng keyboard</translation>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -42,7 +40,7 @@
     <message>
         <location filename="../qml/DetailConfigItem.qml" line="151"/>
         <source>Please enter a new shortcut</source>
-        <translation>Mangyaring maglagay ng bagong shortcut</translation>
+        <translation>Saan ipasok ang isang bagong shortcut</translation>
     </message>
 </context>
 <context>
@@ -55,12 +53,12 @@
     <message>
         <location filename="../qml/IMList.qml" line="160"/>
         <source>Move Down</source>
-        <translation>Ilipat Pababa</translation>
+        <translation>Ilipat Paibaba</translation>
     </message>
     <message>
         <location filename="../qml/IMList.qml" line="168"/>
         <source>Settings</source>
-        <translation>Mga Setting</translation>
+        <translation>Setting</translation>
     </message>
     <message>
         <location filename="../qml/IMList.qml" line="176"/>
@@ -73,27 +71,27 @@
     <message>
         <location filename="../qml/InputMethodsChooser.qml" line="35"/>
         <source>Add input method</source>
-        <translation>Magdagdag ng input method</translation>
+        <translation>Idagdag ang input method</translation>
     </message>
     <message>
         <location filename="../qml/InputMethodsChooser.qml" line="41"/>
         <source>Search</source>
-        <translation>Maghanap</translation>
+        <translation>Hanapin</translation>
     </message>
     <message>
         <location filename="../qml/InputMethodsChooser.qml" line="109"/>
         <source>Find more in App Store</source>
-        <translation>Maghanap ng higit pa sa App Store</translation>
+        <translation>Hanapin ang mas marami sa App Store</translation>
     </message>
     <message>
         <location filename="../qml/InputMethodsChooser.qml" line="129"/>
         <source>Cancel</source>
-        <translation>Kanselahin</translation>
+        <translation>Bilangin</translation>
     </message>
     <message>
         <location filename="../qml/InputMethodsChooser.qml" line="136"/>
         <source>Add</source>
-        <translation>Magdagdag</translation>
+        <translation>Idagdag</translation>
     </message>
 </context>
 <context>
@@ -101,27 +99,27 @@
     <message>
         <location filename="../qml/KeyboardLayout.qml" line="16"/>
         <source>Keyboard layout</source>
-        <translation>Layout ng keyboard</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../qml/KeyboardLayout.qml" line="34"/>
         <source>done</source>
-        <translation>tapos na</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../qml/KeyboardLayout.qml" line="34"/>
         <source>edit</source>
-        <translation>i-edit</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../qml/KeyboardLayout.qml" line="57"/>
         <source>Add the corresponding input method in &lt;a style=&apos;text-decoration: none;&apos; href=&apos;Manage Input Methods&apos;&gt;Input Method Management&lt;/a&gt; to ensure the keyboard layout works when added or switched.</source>
-        <translation>Magdagdag ng naaangkop na input method sa &lt;a style=&apos;text-decoration: none;&apos; href=&apos;Manage Input Methods&apos;&gt;Pamamahala ng Input Method&lt;/a&gt; upang masiguro na gumagana ang keyboard layout kapag dinagdag o pinagpalit.</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../qml/KeyboardLayout.qml" line="142"/>
         <source>Add new keyboard layout...</source>
-        <translation>Magdagdag ng bagong keyboard layout...</translation>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -129,27 +127,27 @@
     <message>
         <location filename="../qml/KeyboardLayoutModule.qml" line="16"/>
         <source>Keyboard layout</source>
-        <translation>Layout ng keyboard</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../qml/KeyboardLayoutModule.qml" line="34"/>
         <source>done</source>
-        <translation>tapos na</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../qml/KeyboardLayoutModule.qml" line="34"/>
         <source>edit</source>
-        <translation>i-edit</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../qml/KeyboardLayoutModule.qml" line="57"/>
         <source>Add the corresponding input method in &lt;a style=&apos;text-decoration: none;&apos; href=&apos;Manage Input Methods&apos;&gt;Input Method Management&lt;/a&gt; to ensure the keyboard layout works when added or switched.</source>
-        <translation>Magdagdag ng naaangkop na input method sa &lt;a style=&apos;text-decoration: none;&apos; href=&apos;Manage Input Methods&apos;&gt;Pamamahala ng Input Method&lt;/a&gt; upang masiguro na gumagana ang keyboard layout kapag dinagdag o pinagpalit.</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../qml/KeyboardLayoutModule.qml" line="140"/>
         <source>Add new keyboard layout...</source>
-        <translation>Magdagdag ng bagong keyboard layout...</translation>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -157,27 +155,27 @@
     <message>
         <location filename="../qml/LayoutsChooser.qml" line="30"/>
         <source>Add new keyboard layout</source>
-        <translation>Magdagdag ng bagong keyboard layout</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../qml/LayoutsChooser.qml" line="38"/>
         <source>Search</source>
-        <translation>Maghanap</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../qml/LayoutsChooser.qml" line="67"/>
         <source>Current language keyboard layouts</source>
-        <translation>Mga keyboard layout ng kasalukuyang wika</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../qml/LayoutsChooser.qml" line="90"/>
         <source>Cancel</source>
-        <translation>Kanselahin</translation>
+            <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../qml/LayoutsChooser.qml" line="97"/>
         <source>Add</source>
-        <translation>Magdagdag</translation>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -185,12 +183,12 @@
     <message>
         <location filename="../qml/ManageInputMethodsModule.qml" line="15"/>
         <source>Input method management</source>
-        <translation>Pamamahala ng input method</translation>
+        <translation>Pangangalakal ng Input Method</translation>
     </message>
     <message>
         <location filename="../qml/ManageInputMethodsModule.qml" line="33"/>
         <source>Add input method</source>
-        <translation>Magdagdag ng input method</translation>
+        <translation>Idagdag ang input method</translation>
     </message>
 </context>
 <context>
@@ -201,7 +199,7 @@
         <location filename="../qml/ShortcutsModule.qml" line="151"/>
         <location filename="../qml/ShortcutsModule.qml" line="152"/>
         <source>None</source>
-        <translation>Wala</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../qml/ShortcutsModule.qml" line="119"/>
@@ -211,12 +209,12 @@
     <message>
         <location filename="../qml/ShortcutsModule.qml" line="134"/>
         <source>Restore Defaults</source>
-        <translation>Ibalik sa Default</translation>
+        <translation>Pawiin ang Default</translation>
     </message>
     <message>
         <location filename="../qml/ShortcutsModule.qml" line="200"/>
         <source>Scroll between input methods</source>
-        <translation>Mag-scroll sa pagitan ng mga input method</translation>
+        <translation>Ilipat sa pagitan ng mga input method</translation>
     </message>
     <message>
         <location filename="../qml/ShortcutsModule.qml" line="230"/>
@@ -226,7 +224,7 @@
     <message>
         <location filename="../qml/ShortcutsModule.qml" line="273"/>
         <source>It turns on or off the currently used input method.If no input method is being used or the first input method is not the keyboard, it switches between the first input method and the currently used keyboard/input method.</source>
-        <translation>Ito ay nag-on o nag-off sa kasalukuyang ginagamit na input method. Kung walang input method na ginagamit o ang unang input method ay hindi keyboard, ito ay lumilipat sa pagitan ng unang input method at ang kasalukuyang ginagamit na keyboard/input method.</translation>
+        <translation>It turns on or off the currently used input method. If no input method is being used or the first input method is not the keyboard, it switches between the first input method and the currently used keyboard/input method.</translation>
     </message>
 </context>
 <context>
@@ -234,12 +232,12 @@
     <message>
         <location filename="../keyboard-layout/operation/dcclocale.cpp" line="62"/>
         <source>Traditional Chinese (Chinese Hong Kong)</source>
-        <translation>Tradisyonal na Tsino (Tsino Hong Kong)</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../keyboard-layout/operation/dcclocale.cpp" line="65"/>
         <source>Traditional Chinese (Chinese Taiwan)</source>
-        <translation>Tradisyonal na Tsino (Tsino Taiwan)</translation>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -247,7 +245,7 @@
     <message>
         <location filename="../keyboard-layout/operation/dcclocale.cpp" line="86"/>
         <source>Taiwan China</source>
-        <translation>Taiwan Tsina</translation>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -255,7 +253,7 @@
     <message>
         <location filename="../keyboard-layout/operation/keyboardcontroller.cpp" line="55"/>
         <source>This shortcut conflicts with [%1]</source>
-        <translation>Ang shortcut na ito ay sumasalungat sa [%1]</translation>
+            <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -263,33 +261,33 @@
     <message>
         <location filename="../keyboard-layout/operation/shortcutmodel.cpp" line="248"/>
         <source>System</source>
-        <translation>Sistema</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../keyboard-layout/operation/shortcutmodel.cpp" line="253"/>
         <source>Window</source>
-        <translation>Bintana</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../keyboard-layout/operation/shortcutmodel.cpp" line="258"/>
         <source>Workspace</source>
-        <translation>Workspace</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../keyboard-layout/operation/shortcutmodel.cpp" line="263"/>
         <source>AssistiveTools</source>
-        <translation>Mga Assistive Tool</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../keyboard-layout/operation/shortcutmodel.cpp" line="268"/>
         <location filename="../keyboard-layout/operation/shortcutmodel.cpp" line="339"/>
         <source>Custom</source>
-        <translation>Custom</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../keyboard-layout/operation/shortcutmodel.cpp" line="394"/>
         <source>None</source>
-        <translation>Wala</translation>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -302,7 +300,7 @@
     <message>
         <location filename="../qml/fcitx5configtool.qml" line="9"/>
         <source>Input method management, input method shortcuts, advanced settings</source>
-        <translation>Pamamahala ng input method, mga shortcut ng input method, advanced na mga setting</translation>
+        <translation>Pangangalakal ng Input Method, mga shortcut ng input method, at mga pangkabug-os na setting</translation>
     </message>
 </context>
 </TS>
