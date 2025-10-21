@@ -4,7 +4,7 @@
     <message>
         <location filename="../qml/AddonsPage.qml" line="20"/>
         <source>Add-ons</source>
-        <translation>الإضافات</translation>
+        <translation>Add-ons</translation>
     </message>
 </context>
 <context>
@@ -12,27 +12,27 @@
     <message>
         <location filename="../qml/AdvancedSettingsModule.qml" line="15"/>
         <source>Advanced Settings</source>
-        <translation>الإعدادات المتقدمة</translation>
+        <translation>Advanced Settings</translation>
     </message>
     <message>
         <location filename="../qml/AdvancedSettingsModule.qml" line="41"/>
         <source>&quot;Advanced Settings&quot; is only valid for the input method that uses the system settings, if the input method has its own settings, its own settings shall prevail.</source>
-        <translation>&quot;الإعدادات المتقدمة&quot; صالحة فقط للطريقة المدخلة التي تعتمد على إعدادات النظام، وإذا كانت الطريقة المدخلة تحتوي على إعدادات خاصة، فإن هذه الإعدادات الخاصة تُفضَّل.</translation>
+        <translation>&quot;Advanced Settings&quot; is only valid for the input method that uses the system settings. If the input method has its own settings, its own settings shall prevail.</translation>
     </message>
     <message>
         <location filename="../qml/AdvancedSettingsModule.qml" line="54"/>
         <source>Global Config</source>
-        <translation>الإعدادات العالمية</translation>
+        <translation>Global Config</translation>
     </message>
     <message>
         <location filename="../qml/AdvancedSettingsModule.qml" line="70"/>
         <source>Add-ons</source>
-        <translation>الإضافات</translation>
+        <translation>Add-ons</translation>
     </message>
     <message>
         <location filename="../qml/AdvancedSettingsModule.qml" line="81"/>
         <source>Keyboard layout</source>
-        <translation type="unfinished"/>
+        <translation>Keyboard layout</translation>
     </message>
 </context>
 <context>
@@ -40,7 +40,7 @@
     <message>
         <location filename="../qml/DetailConfigItem.qml" line="151"/>
         <source>Please enter a new shortcut</source>
-        <translation>الرجاء إدخال قصاصة مفتاح جديدة</translation>
+        <translation>Please enter a new shortcut</translation>
     </message>
 </context>
 <context>
@@ -48,22 +48,22 @@
     <message>
         <location filename="../qml/IMList.qml" line="152"/>
         <source>Move Up</source>
-        <translation>التحرك لأعلى</translation>
+        <translation>Move Up</translation>
     </message>
     <message>
         <location filename="../qml/IMList.qml" line="160"/>
         <source>Move Down</source>
-        <translation>التحرك لأسفل</translation>
+        <translation>Move Down</translation>
     </message>
     <message>
         <location filename="../qml/IMList.qml" line="168"/>
         <source>Settings</source>
-        <translation>الإعدادات</translation>
+        <translation>Settings</translation>
     </message>
     <message>
         <location filename="../qml/IMList.qml" line="176"/>
         <source>Remove</source>
-        <translation>إزالة</translation>
+        <translation>Remove</translation>
     </message>
 </context>
 <context>
@@ -71,27 +71,27 @@
     <message>
         <location filename="../qml/InputMethodsChooser.qml" line="35"/>
         <source>Add input method</source>
-        <translation>إضافة طريقة مدخلة</translation>
+        <translation>Add input method</translation>
     </message>
     <message>
         <location filename="../qml/InputMethodsChooser.qml" line="41"/>
         <source>Search</source>
-        <translation>البحث</translation>
+        <translation>Search</translation>
     </message>
     <message>
         <location filename="../qml/InputMethodsChooser.qml" line="109"/>
         <source>Find more in App Store</source>
-        <translation>ابحث عن المزيد في متجر التطبيقات</translation>
+        <translation>Find more in App Store</translation>
     </message>
     <message>
         <location filename="../qml/InputMethodsChooser.qml" line="129"/>
         <source>Cancel</source>
-        <translation>إلغاء</translation>
+        <translation>Cancel</translation>
     </message>
     <message>
         <location filename="../qml/InputMethodsChooser.qml" line="136"/>
         <source>Add</source>
-        <translation>إضافة</translation>
+        <translation>Add</translation>
     </message>
 </context>
 <context>
@@ -99,27 +99,27 @@
     <message>
         <location filename="../qml/KeyboardLayout.qml" line="16"/>
         <source>Keyboard layout</source>
-        <translation type="unfinished"/>
+        <translation>Keyboard layout</translation>
     </message>
     <message>
         <location filename="../qml/KeyboardLayout.qml" line="34"/>
         <source>done</source>
-        <translation type="unfinished"/>
+        <translation>done</translation>
     </message>
     <message>
         <location filename="../qml/KeyboardLayout.qml" line="34"/>
         <source>edit</source>
-        <translation type="unfinished"/>
+        <translation>edit</translation>
     </message>
     <message>
         <location filename="../qml/KeyboardLayout.qml" line="57"/>
         <source>Add the corresponding input method in &lt;a style=&apos;text-decoration: none;&apos; href=&apos;Manage Input Methods&apos;&gt;Input Method Management&lt;/a&gt; to ensure the keyboard layout works when added or switched.</source>
-        <translation type="unfinished"/>
+        <translation>Add the corresponding input method in &lt;a style=&apos;text-decoration: none;&apos; href=&apos;Manage Input Methods&apos;&gt;Input Method Management&lt;/a&gt; to ensure the keyboard layout works when added or switched.</translation>
     </message>
     <message>
         <location filename="../qml/KeyboardLayout.qml" line="142"/>
         <source>Add new keyboard layout...</source>
-        <translation type="unfinished"/>
+        <translation>Add new keyboard layout...</translation>
     </message>
 </context>
 <context>
@@ -127,27 +127,27 @@
     <message>
         <location filename="../qml/KeyboardLayoutModule.qml" line="16"/>
         <source>Keyboard layout</source>
-        <translation type="unfinished"/>
+        <translation>Keyboard layout</translation>
     </message>
     <message>
         <location filename="../qml/KeyboardLayoutModule.qml" line="34"/>
         <source>done</source>
-        <translation type="unfinished"/>
+        <translation>done</translation>
     </message>
     <message>
         <location filename="../qml/KeyboardLayoutModule.qml" line="34"/>
         <source>edit</source>
-        <translation type="unfinished"/>
+        <translation>edit</translation>
     </message>
     <message>
         <location filename="../qml/KeyboardLayoutModule.qml" line="57"/>
         <source>Add the corresponding input method in &lt;a style=&apos;text-decoration: none;&apos; href=&apos;Manage Input Methods&apos;&gt;Input Method Management&lt;/a&gt; to ensure the keyboard layout works when added or switched.</source>
-        <translation type="unfinished"/>
+        <translation>Add the corresponding input method in &lt;a style=&apos;text-decoration: none;&apos; href=&apos;Manage Input Methods&apos;&gt;Input Method Management&lt;/a&gt; to ensure the keyboard layout works when added or switched.</translation>
     </message>
     <message>
         <location filename="../qml/KeyboardLayoutModule.qml" line="140"/>
         <source>Add new keyboard layout...</source>
-        <translation type="unfinished"/>
+        <translation>Add new keyboard layout...</translation>
     </message>
 </context>
 <context>
@@ -155,27 +155,27 @@
     <message>
         <location filename="../qml/LayoutsChooser.qml" line="30"/>
         <source>Add new keyboard layout</source>
-        <translation type="unfinished"/>
+        <translation>Add new keyboard layout</translation>
     </message>
     <message>
         <location filename="../qml/LayoutsChooser.qml" line="38"/>
         <source>Search</source>
-        <translation type="unfinished"/>
+        <translation>Search</translation>
     </message>
     <message>
         <location filename="../qml/LayoutsChooser.qml" line="67"/>
         <source>Current language keyboard layouts</source>
-        <translation type="unfinished"/>
+        <translation>Current language keyboard layouts</translation>
     </message>
     <message>
         <location filename="../qml/LayoutsChooser.qml" line="90"/>
         <source>Cancel</source>
-            <translation type="unfinished"/>
+            <translation>Cancel</translation>
     </message>
     <message>
         <location filename="../qml/LayoutsChooser.qml" line="97"/>
         <source>Add</source>
-        <translation type="unfinished"/>
+        <translation>Add</translation>
     </message>
 </context>
 <context>
@@ -183,12 +183,12 @@
     <message>
         <location filename="../qml/ManageInputMethodsModule.qml" line="15"/>
         <source>Input method management</source>
-        <translation>إدارة الطريقة المدخلة</translation>
+        <translation>Input method management</translation>
     </message>
     <message>
         <location filename="../qml/ManageInputMethodsModule.qml" line="33"/>
         <source>Add input method</source>
-        <translation>إضافة طريقة مدخلة</translation>
+        <translation>Add input method</translation>
     </message>
 </context>
 <context>
@@ -199,32 +199,32 @@
         <location filename="../qml/ShortcutsModule.qml" line="151"/>
         <location filename="../qml/ShortcutsModule.qml" line="152"/>
         <source>None</source>
-        <translation type="unfinished"/>
+        <translation>None</translation>
     </message>
     <message>
         <location filename="../qml/ShortcutsModule.qml" line="119"/>
         <source>Shortcuts</source>
-        <translation>القصص</translation>
+        <translation>Shortcuts</translation>
     </message>
     <message>
         <location filename="../qml/ShortcutsModule.qml" line="134"/>
         <source>Restore Defaults</source>
-        <translation>استعادة القيم الافتراضية</translation>
+        <translation>Restore Defaults</translation>
     </message>
     <message>
         <location filename="../qml/ShortcutsModule.qml" line="200"/>
         <source>Scroll between input methods</source>
-        <translation>التنقل بين طرق المدخلة</translation>
+        <translation>Scroll between input methods</translation>
     </message>
     <message>
         <location filename="../qml/ShortcutsModule.qml" line="230"/>
         <source>Turn on or off input methods</source>
-        <translation>تشغيل أو إيقاف طرق المدخلة</translation>
+        <translation>Turn on or off input methods</translation>
     </message>
     <message>
         <location filename="../qml/ShortcutsModule.qml" line="273"/>
         <source>It turns on or off the currently used input method.If no input method is being used or the first input method is not the keyboard, it switches between the first input method and the currently used keyboard/input method.</source>
-        <translation>يتمكّن من تشغيل أو إيقاف الطريقة المدخلة المستخدمة حاليًا. إذا لم تُستخدم أي طريقة مدخلة أو كانت الطريقة المدخلة الأولى ليست لوحة المفاتيح، فإنه ينتقل بين الطريقة المدخلة الأولى واللوحة المفاتيح/الطريقة المدخلة المستخدمة.</translation>
+        <translation>It turns on or off the currently used input method. If no input method is being used or the first input method is not the keyboard, it switches between the first input method and the currently used keyboard/input method.</translation>
     </message>
 </context>
 <context>
@@ -232,12 +232,12 @@
     <message>
         <location filename="../keyboard-layout/operation/dcclocale.cpp" line="62"/>
         <source>Traditional Chinese (Chinese Hong Kong)</source>
-        <translation type="unfinished"/>
+        <translation>Traditional Chinese (Chinese Hong Kong)</translation>
     </message>
     <message>
         <location filename="../keyboard-layout/operation/dcclocale.cpp" line="65"/>
         <source>Traditional Chinese (Chinese Taiwan)</source>
-        <translation type="unfinished"/>
+        <translation>Traditional Chinese (Chinese Taiwan)</translation>
     </message>
 </context>
 <context>
@@ -245,7 +245,7 @@
     <message>
         <location filename="../keyboard-layout/operation/dcclocale.cpp" line="86"/>
         <source>Taiwan China</source>
-        <translation type="unfinished"/>
+        <translation>Taiwan China</translation>
     </message>
 </context>
 <context>
@@ -253,7 +253,7 @@
     <message>
         <location filename="../keyboard-layout/operation/keyboardcontroller.cpp" line="55"/>
         <source>This shortcut conflicts with [%1]</source>
-            <translation type="unfinished"/>
+            <translation>This shortcut conflicts with [%1]</translation>
     </message>
 </context>
 <context>
@@ -261,33 +261,33 @@
     <message>
         <location filename="../keyboard-layout/operation/shortcutmodel.cpp" line="248"/>
         <source>System</source>
-        <translation type="unfinished"/>
+        <translation>System</translation>
     </message>
     <message>
         <location filename="../keyboard-layout/operation/shortcutmodel.cpp" line="253"/>
         <source>Window</source>
-        <translation type="unfinished"/>
+        <translation>Window</translation>
     </message>
     <message>
         <location filename="../keyboard-layout/operation/shortcutmodel.cpp" line="258"/>
         <source>Workspace</source>
-        <translation type="unfinished"/>
+        <translation>Workspace</translation>
     </message>
     <message>
         <location filename="../keyboard-layout/operation/shortcutmodel.cpp" line="263"/>
         <source>AssistiveTools</source>
-        <translation type="unfinished"/>
+        <translation>AssistiveTools</translation>
     </message>
     <message>
         <location filename="../keyboard-layout/operation/shortcutmodel.cpp" line="268"/>
         <location filename="../keyboard-layout/operation/shortcutmodel.cpp" line="339"/>
         <source>Custom</source>
-        <translation type="unfinished"/>
+        <translation>Custom</translation>
     </message>
     <message>
         <location filename="../keyboard-layout/operation/shortcutmodel.cpp" line="394"/>
         <source>None</source>
-        <translation type="unfinished"/>
+        <translation>None</translation>
     </message>
 </context>
 <context>
@@ -295,12 +295,12 @@
     <message>
         <location filename="../qml/fcitx5configtool.qml" line="8"/>
         <source>Input Methods</source>
-        <translation>طرق المدخلة</translation>
+        <translation>Input Methods</translation>
     </message>
     <message>
         <location filename="../qml/fcitx5configtool.qml" line="9"/>
         <source>Input method management, input method shortcuts, advanced settings</source>
-        <translation>إدارة طرق المدخلة، قصص طرق المدخلة، إعدادات متقدمة</translation>
+        <translation>Input method management, input method shortcuts, advanced settings</translation>
     </message>
 </context>
 </TS>
