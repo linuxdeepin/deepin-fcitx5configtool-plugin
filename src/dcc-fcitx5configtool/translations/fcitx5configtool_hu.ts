@@ -32,7 +32,7 @@
     <message>
         <location filename="../qml/AdvancedSettingsModule.qml" line="81"/>
         <source>Keyboard layout</source>
-        <translation type="unfinished"/>
+        <translation>Billentyűzet elrendezés</translation>
     </message>
 </context>
 <context>
@@ -99,7 +99,7 @@
     <message>
         <location filename="../qml/KeyboardLayout.qml" line="16"/>
         <source>Keyboard layout</source>
-        <translation>Billentyűzetbeállítás</translation>
+        <translation>Billentyűzet elrendezés</translation>
     </message>
     <message>
         <location filename="../qml/KeyboardLayout.qml" line="34"/>
@@ -109,17 +109,17 @@
     <message>
         <location filename="../qml/KeyboardLayout.qml" line="34"/>
         <source>edit</source>
-        <translation> szerkesztés</translation>
+        <translation>szerkesztés</translation>
     </message>
     <message>
         <location filename="../qml/KeyboardLayout.qml" line="57"/>
         <source>Add the corresponding input method in &lt;a style=&apos;text-decoration: none;&apos; href=&apos;Manage Input Methods&apos;&gt;Input Method Management&lt;/a&gt; to ensure the keyboard layout works when added or switched.</source>
-        <translation>Adjon hozzá a megfelelő beviteli módot a &lt;a style=&apos;text-decoration: none;&apos; href=&apos;Manage Input Methods&apos;&gt;Beviteli módszer kezelése&lt;/a&gt; közlésében, hogy biztos legyen, hogy a billentyűzetbeállítás működik hozzáadásakor vagy váltásakor.</translation>
+        <translation>Adja hozzá a megfelelő beviteli módszert a &lt;a style=&apos;text-decoration: none;&apos; href=&apos;Manage Input Methods&apos;&gt;Input Method Management&lt;/a&gt;ban, hogy a billentyűzet elrendezés működjön, amikor hozzáadódik vagy vált.</translation>
     </message>
     <message>
         <location filename="../qml/KeyboardLayout.qml" line="142"/>
         <source>Add new keyboard layout...</source>
-        <translation>Új billentyűzetbeállítás hozzáadása...</translation>
+        <translation>Új billentyűzet elrendezés hozzáadása...</translation>
     </message>
 </context>
 <context>
@@ -127,27 +127,27 @@
     <message>
         <location filename="../qml/KeyboardLayoutModule.qml" line="16"/>
         <source>Keyboard layout</source>
-        <translation type="unfinished"/>
+        <translation>Billentyűzet elrendezés</translation>
     </message>
     <message>
         <location filename="../qml/KeyboardLayoutModule.qml" line="34"/>
         <source>done</source>
-        <translation type="unfinished"/>
+        <translation>kész</translation>
     </message>
     <message>
         <location filename="../qml/KeyboardLayoutModule.qml" line="34"/>
         <source>edit</source>
-        <translation type="unfinished"/>
+        <translation>szerkesztés</translation>
     </message>
     <message>
         <location filename="../qml/KeyboardLayoutModule.qml" line="57"/>
         <source>Add the corresponding input method in &lt;a style=&apos;text-decoration: none;&apos; href=&apos;Manage Input Methods&apos;&gt;Input Method Management&lt;/a&gt; to ensure the keyboard layout works when added or switched.</source>
-        <translation type="unfinished"/>
+        <translation>Adja hozzá a megfelelő beviteli módszert a &lt;a style=&apos;text-decoration: none;&apos; href=&apos;Manage Input Methods&apos;&gt;Input Method Management&lt;/a&gt;ban, hogy a billentyűzet elrendezés működjön, amikor hozzáadódik vagy vált.</translation>
     </message>
     <message>
         <location filename="../qml/KeyboardLayoutModule.qml" line="140"/>
         <source>Add new keyboard layout...</source>
-        <translation type="unfinished"/>
+        <translation>Új billentyűzet elrendezés hozzáadása...</translation>
     </message>
 </context>
 <context>
@@ -155,7 +155,7 @@
     <message>
         <location filename="../qml/LayoutsChooser.qml" line="30"/>
         <source>Add new keyboard layout</source>
-        <translation type="unfinished"/>
+        <translation>Új billentyűzet elrendezés hozzáadása</translation>
     </message>
     <message>
         <location filename="../qml/LayoutsChooser.qml" line="38"/>
@@ -165,12 +165,12 @@
     <message>
         <location filename="../qml/LayoutsChooser.qml" line="67"/>
         <source>Current language keyboard layouts</source>
-        <translation type="unfinished"/>
+        <translation>Aktuális nyelv billentyűzet elrendezései</translation>
     </message>
     <message>
         <location filename="../qml/LayoutsChooser.qml" line="90"/>
         <source>Cancel</source>
-            <translation>Mégsem</translation>
+            <translation>Mégse</translation>
     </message>
     <message>
         <location filename="../qml/LayoutsChooser.qml" line="97"/>
@@ -199,7 +199,7 @@
         <location filename="../qml/ShortcutsModule.qml" line="151"/>
         <location filename="../qml/ShortcutsModule.qml" line="152"/>
         <source>None</source>
-        <translation type="unfinished"/>
+        <translation>Nincs</translation>
     </message>
     <message>
         <location filename="../qml/ShortcutsModule.qml" line="119"/>
@@ -232,12 +232,12 @@
     <message>
         <location filename="../keyboard-layout/operation/dcclocale.cpp" line="62"/>
         <source>Traditional Chinese (Chinese Hong Kong)</source>
-        <translation type="unfinished"/>
+        <translation>Hagyományos kínai (Kínai Hong Kong)</translation>
     </message>
     <message>
         <location filename="../keyboard-layout/operation/dcclocale.cpp" line="65"/>
         <source>Traditional Chinese (Chinese Taiwan)</source>
-        <translation type="unfinished"/>
+        <translation>Hagyományos kínai (Kínai Taiwan)</translation>
     </message>
 </context>
 <context>
@@ -245,7 +245,7 @@
     <message>
         <location filename="../keyboard-layout/operation/dcclocale.cpp" line="86"/>
         <source>Taiwan China</source>
-        <translation type="unfinished"/>
+        <translation>Kínai Taiwan</translation>
     </message>
 </context>
 <context>
@@ -253,7 +253,7 @@
     <message>
         <location filename="../keyboard-layout/operation/keyboardcontroller.cpp" line="55"/>
         <source>This shortcut conflicts with [%1]</source>
-            <translation>Ez a raktárkézés konfliktusba kerül [%1] címmel</translation>
+            <translation>Ez a rövidítés konfliktussal van [%1]</translation>
     </message>
 </context>
 <context>
@@ -276,13 +276,13 @@
     <message>
         <location filename="../keyboard-layout/operation/shortcutmodel.cpp" line="263"/>
         <source>AssistiveTools</source>
-        <translation>Segítő eszközök</translation>
+        <translation>Segédeszközök</translation>
     </message>
     <message>
         <location filename="../keyboard-layout/operation/shortcutmodel.cpp" line="268"/>
         <location filename="../keyboard-layout/operation/shortcutmodel.cpp" line="339"/>
         <source>Custom</source>
-        <translation>Egyéni</translation>
+        <translation>Egyedi</translation>
     </message>
     <message>
         <location filename="../keyboard-layout/operation/shortcutmodel.cpp" line="394"/>
