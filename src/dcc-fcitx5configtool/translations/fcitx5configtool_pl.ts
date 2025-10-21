@@ -104,17 +104,17 @@
     <message>
         <location filename="../qml/KeyboardLayout.qml" line="34"/>
         <source>done</source>
-        <translation>Gotowe</translation>
+        <translation>gotowe</translation>
     </message>
     <message>
         <location filename="../qml/KeyboardLayout.qml" line="34"/>
         <source>edit</source>
-        <translation>Edytuj</translation>
+        <translation>edytuj</translation>
     </message>
     <message>
         <location filename="../qml/KeyboardLayout.qml" line="57"/>
         <source>Add the corresponding input method in &lt;a style=&apos;text-decoration: none;&apos; href=&apos;Manage Input Methods&apos;&gt;Input Method Management&lt;/a&gt; to ensure the keyboard layout works when added or switched.</source>
-        <translation>Dodaj metody wprowadzania w &lt;a style=&apos;text-decoration: none;&apos; href=&apos;Manage Input Methods&apos;&gt;Zarządzanie metodami wprowadzania&lt;/a&gt;, aby upewnić się, że układ klawiatury działa i przełącza się prawidłowo.</translation>
+        <translation>Dodaj odpowiednią metodę wprowadzania w &lt;a style=&apos;text-decoration: none;&apos; href=&apos;Manage Input Methods&apos;&gt;Zarządzanie metodami wprowadzania&lt;/a&gt; aby upewnić się, że układ klawiatury działa po dodaniu lub przełączeniu.</translation>
     </message>
     <message>
         <location filename="../qml/KeyboardLayout.qml" line="142"/>
@@ -132,17 +132,17 @@
     <message>
         <location filename="../qml/KeyboardLayoutModule.qml" line="34"/>
         <source>done</source>
-        <translation>Gotowe</translation>
+        <translation>gotowe</translation>
     </message>
     <message>
         <location filename="../qml/KeyboardLayoutModule.qml" line="34"/>
         <source>edit</source>
-        <translation>Edytuj</translation>
+        <translation>edytuj</translation>
     </message>
     <message>
         <location filename="../qml/KeyboardLayoutModule.qml" line="57"/>
         <source>Add the corresponding input method in &lt;a style=&apos;text-decoration: none;&apos; href=&apos;Manage Input Methods&apos;&gt;Input Method Management&lt;/a&gt; to ensure the keyboard layout works when added or switched.</source>
-        <translation>Dodaj metody wprowadzania w &lt;a style=&apos;text-decoration: none;&apos; href=&apos;Manage Input Methods&apos;&gt;Zarządzanie metodami wprowadzania&lt;/a&gt;, aby upewnić się, że układ klawiatury działa i przełącza się prawidłowo.</translation>
+        <translation>Dodaj odpowiednią metodę wprowadzania w &lt;a style=&apos;text-decoration: none;&apos; href=&apos;Manage Input Methods&apos;&gt;Zarządzanie metodami wprowadzania&lt;/a&gt; aby upewnić się, że układ klawiatury działa po dodaniu lub przełączeniu.</translation>
     </message>
     <message>
         <location filename="../qml/KeyboardLayoutModule.qml" line="140"/>
@@ -160,12 +160,12 @@
     <message>
         <location filename="../qml/LayoutsChooser.qml" line="38"/>
         <source>Search</source>
-        <translation>Szukaj</translation>
+        <translation>Wyszukaj</translation>
     </message>
     <message>
         <location filename="../qml/LayoutsChooser.qml" line="67"/>
         <source>Current language keyboard layouts</source>
-        <translation>Aktualne układy klawiatury</translation>
+        <translation>Aktualny język układów klawiatury</translation>
     </message>
     <message>
         <location filename="../qml/LayoutsChooser.qml" line="90"/>
@@ -232,12 +232,12 @@
     <message>
         <location filename="../keyboard-layout/operation/dcclocale.cpp" line="62"/>
         <source>Traditional Chinese (Chinese Hong Kong)</source>
-        <translation>Chiński tradycyjny (Chiński Hong Kong)</translation>
+        <translation>Chinęskie tradycyjne (Hong Kong)</translation>
     </message>
     <message>
         <location filename="../keyboard-layout/operation/dcclocale.cpp" line="65"/>
         <source>Traditional Chinese (Chinese Taiwan)</source>
-        <translation>Chiński tradycyjny (Chiński Tajwański)</translation>
+        <translation>Chinęskie tradycyjne (Tajwan)</translation>
     </message>
 </context>
 <context>
@@ -245,7 +245,7 @@
     <message>
         <location filename="../keyboard-layout/operation/dcclocale.cpp" line="86"/>
         <source>Taiwan China</source>
-        <translation>Tajwan Chiny</translation>
+        <translation>Tajwan China</translation>
     </message>
 </context>
 <context>
@@ -253,7 +253,7 @@
     <message>
         <location filename="../keyboard-layout/operation/keyboardcontroller.cpp" line="55"/>
         <source>This shortcut conflicts with [%1]</source>
-            <translation>Ten skrót jest w konflikcie z [%1]</translation>
+            <translation>Ten skrót konfliktuje z [%1]</translation>
     </message>
 </context>
 <context>
@@ -282,7 +282,7 @@
         <location filename="../keyboard-layout/operation/shortcutmodel.cpp" line="268"/>
         <location filename="../keyboard-layout/operation/shortcutmodel.cpp" line="339"/>
         <source>Custom</source>
-        <translation>Własne</translation>
+        <translation>Niestandardowe</translation>
     </message>
     <message>
         <location filename="../keyboard-layout/operation/shortcutmodel.cpp" line="394"/>
