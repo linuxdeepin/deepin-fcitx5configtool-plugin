@@ -1,6 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE TS>
-<TS version="2.1" language="it_IT">
+<?xml version="1.0" ?><!DOCTYPE TS><TS version="2.1" language="it">
 <context>
     <name>AddonsPage</name>
     <message>
@@ -172,7 +170,7 @@
     <message>
         <location filename="../qml/LayoutsChooser.qml" line="90"/>
         <source>Cancel</source>
-        <translation>Annulla</translation>
+            <translation>Annulla</translation>
     </message>
     <message>
         <location filename="../qml/LayoutsChooser.qml" line="97"/>
@@ -196,35 +194,35 @@
 <context>
     <name>ShortcutsModule</name>
     <message>
-        <location filename="../qml/ShortcutsModule.qml" line="118"/>
-        <source>Shortcuts</source>
-        <translation>Collegamenti</translation>
-    </message>
-    <message>
-        <location filename="../qml/ShortcutsModule.qml" line="133"/>
-        <source>Restore Defaults</source>
-        <translation>Ripristina predefiniti</translation>
-    </message>
-    <message>
-        <location filename="../qml/ShortcutsModule.qml" line="225"/>
-        <source>Scroll between input methods</source>
-        <translation>Scorri tra i metodi di input</translation>
-    </message>
-    <message>
-        <location filename="../qml/ShortcutsModule.qml" line="13"/>
-        <location filename="../qml/ShortcutsModule.qml" line="15"/>
-        <location filename="../qml/ShortcutsModule.qml" line="150"/>
+        <location filename="../qml/ShortcutsModule.qml" line="12"/>
+        <location filename="../qml/ShortcutsModule.qml" line="14"/>
         <location filename="../qml/ShortcutsModule.qml" line="151"/>
+        <location filename="../qml/ShortcutsModule.qml" line="152"/>
         <source>None</source>
         <translation>Nessuno</translation>
     </message>
     <message>
-        <location filename="../qml/ShortcutsModule.qml" line="273"/>
+        <location filename="../qml/ShortcutsModule.qml" line="119"/>
+        <source>Shortcuts</source>
+        <translation>Collegamenti</translation>
+    </message>
+    <message>
+        <location filename="../qml/ShortcutsModule.qml" line="134"/>
+        <source>Restore Defaults</source>
+        <translation>Ripristina predefiniti</translation>
+    </message>
+    <message>
+        <location filename="../qml/ShortcutsModule.qml" line="200"/>
+        <source>Scroll between input methods</source>
+        <translation>Scorri tra i metodi di input</translation>
+    </message>
+    <message>
+        <location filename="../qml/ShortcutsModule.qml" line="230"/>
         <source>Turn on or off input methods</source>
         <translation>Attiva o disattiva i metodi di input</translation>
     </message>
     <message>
-        <location filename="../qml/ShortcutsModule.qml" line="336"/>
+        <location filename="../qml/ShortcutsModule.qml" line="273"/>
         <source>It turns on or off the currently used input method.If no input method is being used or the first input method is not the keyboard, it switches between the first input method and the currently used keyboard/input method.</source>
         <translation>Attiva o disattiva il metodo di input attualmente utilizzato. Se nessun metodo di input è in uso o il primo metodo di input non è la tastiera, passa tra il primo metodo di input e il metodo di input della tastiera attualmente utilizzato.</translation>
     </message>
@@ -255,7 +253,7 @@
     <message>
         <location filename="../keyboard-layout/operation/keyboardcontroller.cpp" line="55"/>
         <source>This shortcut conflicts with [%1]</source>
-        <translation>Questo collegamento è in conflitto con [%1]</translation>
+            <translation>Questo collegamento è in conflitto con [%1]</translation>
     </message>
 </context>
 <context>
