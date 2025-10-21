@@ -1,6 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE TS>
-<TS version="2.1" language="ja">
+<?xml version="1.0" ?><!DOCTYPE TS><TS version="2.1" language="ja">
 <context>
     <name>AddonsPage</name>
     <message>
@@ -34,7 +32,7 @@
     <message>
         <location filename="../qml/AdvancedSettingsModule.qml" line="81"/>
         <source>Keyboard layout</source>
-        <translation>キーボードレイアウト</translation>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -116,12 +114,12 @@
     <message>
         <location filename="../qml/KeyboardLayout.qml" line="57"/>
         <source>Add the corresponding input method in &lt;a style=&apos;text-decoration: none;&apos; href=&apos;Manage Input Methods&apos;&gt;Input Method Management&lt;/a&gt; to ensure the keyboard layout works when added or switched.</source>
-        <translation>&lt;a style=&apos;text-decoration: none;&apos; href=&apos;Manage Input Methods&apos;&gt;Input Method Management&lt;/a&gt;に対応する入力メソッドを追加して、キーボードレイアウトが追加または切り替えられたときに機能するようにします。</translation>
+        <translation>&lt;a style=&apos;text-decoration: none;&apos; href=&apos;Manage Input Methods&apos;&gt;入力メソッド管理&lt;/a&gt;で対応する入力メソッドを追加し、キーボードレイアウトを追加または切り替えたときに機能するようにします。</translation>
     </message>
     <message>
         <location filename="../qml/KeyboardLayout.qml" line="142"/>
         <source>Add new keyboard layout...</source>
-        <translation>新しいキーボードレイアウトを追加...</translation>
+        <translation>キーボードレイアウトを追加</translation>
     </message>
 </context>
 <context>
@@ -129,27 +127,27 @@
     <message>
         <location filename="../qml/KeyboardLayoutModule.qml" line="16"/>
         <source>Keyboard layout</source>
-        <translation>キーボードレイアウト</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../qml/KeyboardLayoutModule.qml" line="34"/>
         <source>done</source>
-        <translation>完了</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../qml/KeyboardLayoutModule.qml" line="34"/>
         <source>edit</source>
-        <translation>編集</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../qml/KeyboardLayoutModule.qml" line="57"/>
         <source>Add the corresponding input method in &lt;a style=&apos;text-decoration: none;&apos; href=&apos;Manage Input Methods&apos;&gt;Input Method Management&lt;/a&gt; to ensure the keyboard layout works when added or switched.</source>
-        <translation>&lt;a style=&apos;text-decoration: none;&apos; href=&apos;Manage Input Methods&apos;&gt;Input Method Management&lt;/a&gt;に対応する入力メソッドを追加して、キーボードレイアウトが追加または切り替えられたときに機能するようにします。</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../qml/KeyboardLayoutModule.qml" line="140"/>
         <source>Add new keyboard layout...</source>
-        <translation>新しいキーボードレイアウトを追加...</translation>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -172,7 +170,7 @@
     <message>
         <location filename="../qml/LayoutsChooser.qml" line="90"/>
         <source>Cancel</source>
-        <translation>キャンセル</translation>
+            <translation>キャンセル</translation>
     </message>
     <message>
         <location filename="../qml/LayoutsChooser.qml" line="97"/>
@@ -196,35 +194,35 @@
 <context>
     <name>ShortcutsModule</name>
     <message>
-        <location filename="../qml/ShortcutsModule.qml" line="118"/>
+        <location filename="../qml/ShortcutsModule.qml" line="12"/>
+        <location filename="../qml/ShortcutsModule.qml" line="14"/>
+        <location filename="../qml/ShortcutsModule.qml" line="151"/>
+        <location filename="../qml/ShortcutsModule.qml" line="152"/>
+        <source>None</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../qml/ShortcutsModule.qml" line="119"/>
         <source>Shortcuts</source>
         <translation>ショートカット</translation>
     </message>
     <message>
-        <location filename="../qml/ShortcutsModule.qml" line="133"/>
+        <location filename="../qml/ShortcutsModule.qml" line="134"/>
         <source>Restore Defaults</source>
         <translation>デフォルトに復元</translation>
     </message>
     <message>
-        <location filename="../qml/ShortcutsModule.qml" line="225"/>
+        <location filename="../qml/ShortcutsModule.qml" line="200"/>
         <source>Scroll between input methods</source>
         <translation>入力メソッドの切換</translation>
     </message>
     <message>
-        <location filename="../qml/ShortcutsModule.qml" line="13"/>
-        <location filename="../qml/ShortcutsModule.qml" line="15"/>
-        <location filename="../qml/ShortcutsModule.qml" line="150"/>
-        <location filename="../qml/ShortcutsModule.qml" line="151"/>
-        <source>None</source>
-        <translation>なし</translation>
-    </message>
-    <message>
-        <location filename="../qml/ShortcutsModule.qml" line="273"/>
+        <location filename="../qml/ShortcutsModule.qml" line="230"/>
         <source>Turn on or off input methods</source>
         <translation>入力メソッドの有効/無効の切り替え</translation>
     </message>
     <message>
-        <location filename="../qml/ShortcutsModule.qml" line="336"/>
+        <location filename="../qml/ShortcutsModule.qml" line="273"/>
         <source>It turns on or off the currently used input method.If no input method is being used or the first input method is not the keyboard, it switches between the first input method and the currently used keyboard/input method.</source>
         <translation>入力メソッドが使用されていない場合、または最初の入力メソッドがキーボード以外の場合、最初の入力メソッドと現在使用されているキーボード/入力メソッドを切り替えます。</translation>
     </message>
@@ -234,12 +232,12 @@
     <message>
         <location filename="../keyboard-layout/operation/dcclocale.cpp" line="62"/>
         <source>Traditional Chinese (Chinese Hong Kong)</source>
-        <translation>伝統的な中国語 (中国香港)</translation>
+        <translation>繫体中国語 (香港)</translation>
     </message>
     <message>
         <location filename="../keyboard-layout/operation/dcclocale.cpp" line="65"/>
         <source>Traditional Chinese (Chinese Taiwan)</source>
-        <translation>伝統的な中国語 (中国台湾)</translation>
+        <translation>繫体中国語 (台湾)</translation>
     </message>
 </context>
 <context>
@@ -247,7 +245,7 @@
     <message>
         <location filename="../keyboard-layout/operation/dcclocale.cpp" line="86"/>
         <source>Taiwan China</source>
-        <translation>台湾中国</translation>
+        <translation>台湾</translation>
     </message>
 </context>
 <context>
@@ -255,7 +253,7 @@
     <message>
         <location filename="../keyboard-layout/operation/keyboardcontroller.cpp" line="55"/>
         <source>This shortcut conflicts with [%1]</source>
-        <translation>このショートカットは [%1] と競合します</translation>
+            <translation>このショートカットは[%1]と競合しています</translation>
     </message>
 </context>
 <context>
@@ -278,7 +276,7 @@
     <message>
         <location filename="../keyboard-layout/operation/shortcutmodel.cpp" line="263"/>
         <source>AssistiveTools</source>
-        <translation>支援ツール</translation>
+        <translation>アシストツール</translation>
     </message>
     <message>
         <location filename="../keyboard-layout/operation/shortcutmodel.cpp" line="268"/>
