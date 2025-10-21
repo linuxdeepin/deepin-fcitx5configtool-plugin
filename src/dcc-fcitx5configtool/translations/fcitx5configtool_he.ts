@@ -4,7 +4,7 @@
     <message>
         <location filename="../qml/AddonsPage.qml" line="20"/>
         <source>Add-ons</source>
-        <translation type="unfinished"/>
+        <translation>תוספות</translation>
     </message>
 </context>
 <context>
@@ -12,27 +12,27 @@
     <message>
         <location filename="../qml/AdvancedSettingsModule.qml" line="15"/>
         <source>Advanced Settings</source>
-        <translation type="unfinished"/>
+        <translation>הגדרות מתקדמות</translation>
     </message>
     <message>
         <location filename="../qml/AdvancedSettingsModule.qml" line="41"/>
         <source>&quot;Advanced Settings&quot; is only valid for the input method that uses the system settings, if the input method has its own settings, its own settings shall prevail.</source>
-        <translation type="unfinished"/>
+        <translation>&quot;הגדרות מתקדמות&quot; תקפות רק עבור שיטת הקלט שמשתמשת בהגדרות המערכת. אם לשיטת הקלט יש הגדרות משלה, ההגדרות שלה יגברו.</translation>
     </message>
     <message>
         <location filename="../qml/AdvancedSettingsModule.qml" line="54"/>
         <source>Global Config</source>
-        <translation type="unfinished"/>
+        <translation>הגדרות כלליות</translation>
     </message>
     <message>
         <location filename="../qml/AdvancedSettingsModule.qml" line="70"/>
         <source>Add-ons</source>
-        <translation type="unfinished"/>
+        <translation>תוספות</translation>
     </message>
     <message>
         <location filename="../qml/AdvancedSettingsModule.qml" line="81"/>
         <source>Keyboard layout</source>
-        <translation type="unfinished"/>
+        <translation>פריסת מקלדת</translation>
     </message>
 </context>
 <context>
@@ -40,7 +40,7 @@
     <message>
         <location filename="../qml/DetailConfigItem.qml" line="151"/>
         <source>Please enter a new shortcut</source>
-        <translation type="unfinished"/>
+        <translation>אנא הכנס קיצור דרך חדש</translation>
     </message>
 </context>
 <context>
@@ -48,22 +48,22 @@
     <message>
         <location filename="../qml/IMList.qml" line="152"/>
         <source>Move Up</source>
-        <translation type="unfinished"/>
+        <translation>העבר למעלה</translation>
     </message>
     <message>
         <location filename="../qml/IMList.qml" line="160"/>
         <source>Move Down</source>
-        <translation type="unfinished"/>
+        <translation>העבר למטה</translation>
     </message>
     <message>
         <location filename="../qml/IMList.qml" line="168"/>
         <source>Settings</source>
-        <translation type="unfinished"/>
+        <translation>הגדרות</translation>
     </message>
     <message>
         <location filename="../qml/IMList.qml" line="176"/>
         <source>Remove</source>
-        <translation type="unfinished"/>
+        <translation>הסר</translation>
     </message>
 </context>
 <context>
@@ -71,27 +71,27 @@
     <message>
         <location filename="../qml/InputMethodsChooser.qml" line="35"/>
         <source>Add input method</source>
-        <translation type="unfinished"/>
+        <translation>הוסף שיטת קלט</translation>
     </message>
     <message>
         <location filename="../qml/InputMethodsChooser.qml" line="41"/>
         <source>Search</source>
-        <translation type="unfinished"/>
+        <translation>חיפוש</translation>
     </message>
     <message>
         <location filename="../qml/InputMethodsChooser.qml" line="109"/>
         <source>Find more in App Store</source>
-        <translation type="unfinished"/>
+        <translation>מצא עוד בחנות האפליקציות</translation>
     </message>
     <message>
         <location filename="../qml/InputMethodsChooser.qml" line="129"/>
         <source>Cancel</source>
-        <translation type="unfinished"/>
+        <translation>ביטול</translation>
     </message>
     <message>
         <location filename="../qml/InputMethodsChooser.qml" line="136"/>
         <source>Add</source>
-        <translation type="unfinished"/>
+        <translation>הוסף</translation>
     </message>
 </context>
 <context>
@@ -99,27 +99,27 @@
     <message>
         <location filename="../qml/KeyboardLayout.qml" line="16"/>
         <source>Keyboard layout</source>
-        <translation type="unfinished"/>
+        <translation>פריסת מקלדת</translation>
     </message>
     <message>
         <location filename="../qml/KeyboardLayout.qml" line="34"/>
         <source>done</source>
-        <translation type="unfinished"/>
+        <translation>בוצע</translation>
     </message>
     <message>
         <location filename="../qml/KeyboardLayout.qml" line="34"/>
         <source>edit</source>
-        <translation type="unfinished"/>
+        <translation>עריכה</translation>
     </message>
     <message>
         <location filename="../qml/KeyboardLayout.qml" line="57"/>
         <source>Add the corresponding input method in &lt;a style=&apos;text-decoration: none;&apos; href=&apos;Manage Input Methods&apos;&gt;Input Method Management&lt;/a&gt; to ensure the keyboard layout works when added or switched.</source>
-        <translation type="unfinished"/>
+        <translation>הוסף את שיטת הקלט המתאימה ב&lt;a style=&apos;text-decoration: none;&apos; href=&apos;Manage Input Methods&apos;&gt;ניהול שיטות קלט&lt;/a&gt; כדי לוודא שפריסת המקלדת פועלת כאשר היא מתווספת או מוחלפת.</translation>
     </message>
     <message>
         <location filename="../qml/KeyboardLayout.qml" line="142"/>
         <source>Add new keyboard layout...</source>
-        <translation type="unfinished"/>
+        <translation>הוסף פריסת מקלדת חדשה...</translation>
     </message>
 </context>
 <context>
@@ -127,27 +127,27 @@
     <message>
         <location filename="../qml/KeyboardLayoutModule.qml" line="16"/>
         <source>Keyboard layout</source>
-        <translation type="unfinished"/>
+        <translation>פריסת מקלדת</translation>
     </message>
     <message>
         <location filename="../qml/KeyboardLayoutModule.qml" line="34"/>
         <source>done</source>
-        <translation type="unfinished"/>
+        <translation>בוצע</translation>
     </message>
     <message>
         <location filename="../qml/KeyboardLayoutModule.qml" line="34"/>
         <source>edit</source>
-        <translation type="unfinished"/>
+        <translation>עריכה</translation>
     </message>
     <message>
         <location filename="../qml/KeyboardLayoutModule.qml" line="57"/>
         <source>Add the corresponding input method in &lt;a style=&apos;text-decoration: none;&apos; href=&apos;Manage Input Methods&apos;&gt;Input Method Management&lt;/a&gt; to ensure the keyboard layout works when added or switched.</source>
-        <translation type="unfinished"/>
+        <translation>הוסף את שיטת הקלט המתאימה ב&lt;a style=&apos;text-decoration: none;&apos; href=&apos;Manage Input Methods&apos;&gt;ניהול שיטות קלט&lt;/a&gt; כדי לוודא שפריסת המקלדת פועלת כאשר היא מתווספת או מוחלפת.</translation>
     </message>
     <message>
         <location filename="../qml/KeyboardLayoutModule.qml" line="140"/>
         <source>Add new keyboard layout...</source>
-        <translation type="unfinished"/>
+        <translation>הוסף פריסת מקלדת חדשה...</translation>
     </message>
 </context>
 <context>
@@ -155,7 +155,7 @@
     <message>
         <location filename="../qml/LayoutsChooser.qml" line="30"/>
         <source>Add new keyboard layout</source>
-        <translation type="unfinished"/>
+        <translation>הוסף פריסת מקלדת חדשה</translation>
     </message>
     <message>
         <location filename="../qml/LayoutsChooser.qml" line="38"/>
@@ -165,7 +165,7 @@
     <message>
         <location filename="../qml/LayoutsChooser.qml" line="67"/>
         <source>Current language keyboard layouts</source>
-        <translation type="unfinished"/>
+        <translation>פריסות מקלדת של השפה הנוכחית</translation>
     </message>
     <message>
         <location filename="../qml/LayoutsChooser.qml" line="90"/>
@@ -183,12 +183,12 @@
     <message>
         <location filename="../qml/ManageInputMethodsModule.qml" line="15"/>
         <source>Input method management</source>
-        <translation type="unfinished"/>
+        <translation>ניהול שיטות קלט</translation>
     </message>
     <message>
         <location filename="../qml/ManageInputMethodsModule.qml" line="33"/>
         <source>Add input method</source>
-        <translation type="unfinished"/>
+        <translation>הוסף שיטת קלט</translation>
     </message>
 </context>
 <context>
@@ -199,32 +199,32 @@
         <location filename="../qml/ShortcutsModule.qml" line="151"/>
         <location filename="../qml/ShortcutsModule.qml" line="152"/>
         <source>None</source>
-        <translation type="unfinished"/>
+        <translation>ללא</translation>
     </message>
     <message>
         <location filename="../qml/ShortcutsModule.qml" line="119"/>
         <source>Shortcuts</source>
-        <translation type="unfinished"/>
+        <translation>קיצורי דרך</translation>
     </message>
     <message>
         <location filename="../qml/ShortcutsModule.qml" line="134"/>
         <source>Restore Defaults</source>
-        <translation type="unfinished"/>
+        <translation>שחזר ברירות מחדל</translation>
     </message>
     <message>
         <location filename="../qml/ShortcutsModule.qml" line="200"/>
         <source>Scroll between input methods</source>
-        <translation type="unfinished"/>
+        <translation>גלול בין שיטות קלט</translation>
     </message>
     <message>
         <location filename="../qml/ShortcutsModule.qml" line="230"/>
         <source>Turn on or off input methods</source>
-        <translation type="unfinished"/>
+        <translation>הפעל או כבה שיטות קלט</translation>
     </message>
     <message>
         <location filename="../qml/ShortcutsModule.qml" line="273"/>
         <source>It turns on or off the currently used input method.If no input method is being used or the first input method is not the keyboard, it switches between the first input method and the currently used keyboard/input method.</source>
-        <translation type="unfinished"/>
+        <translation>זה מפעיל או מכבה את שיטת הקלט הנוכחית. אם לא נעשה שימוש בשיטת קלט או שיטת הקלט הראשונה אינה המקלדת, זה מחליף בין שיטת הקלט הראשונה לבין המקלדת/שיטת הקלט הנוכחית.</translation>
     </message>
 </context>
 <context>
@@ -232,12 +232,12 @@
     <message>
         <location filename="../keyboard-layout/operation/dcclocale.cpp" line="62"/>
         <source>Traditional Chinese (Chinese Hong Kong)</source>
-        <translation type="unfinished"/>
+        <translation>סינית מסורתית (סינית הונג קונג)</translation>
     </message>
     <message>
         <location filename="../keyboard-layout/operation/dcclocale.cpp" line="65"/>
         <source>Traditional Chinese (Chinese Taiwan)</source>
-        <translation type="unfinished"/>
+        <translation>סינית מסורתית (סינית טיוואן)</translation>
     </message>
 </context>
 <context>
@@ -245,7 +245,7 @@
     <message>
         <location filename="../keyboard-layout/operation/dcclocale.cpp" line="86"/>
         <source>Taiwan China</source>
-        <translation type="unfinished"/>
+        <translation>טיוואן סין</translation>
     </message>
 </context>
 <context>
@@ -253,7 +253,7 @@
     <message>
         <location filename="../keyboard-layout/operation/keyboardcontroller.cpp" line="55"/>
         <source>This shortcut conflicts with [%1]</source>
-            <translation>הקצרה הזו מתנגשת עם [%1]</translation>
+            <translation>קיצור דרך זה מתנגש עם [%1]</translation>
     </message>
 </context>
 <context>
@@ -271,23 +271,23 @@
     <message>
         <location filename="../keyboard-layout/operation/shortcutmodel.cpp" line="258"/>
         <source>Workspace</source>
-        <translation>מישור עבודה</translation>
+        <translation>סביבת עבודה</translation>
     </message>
     <message>
         <location filename="../keyboard-layout/operation/shortcutmodel.cpp" line="263"/>
         <source>AssistiveTools</source>
-        <translation> Werkzeuge zur Unterstützung</translation>
+        <translation>כלי נגישות</translation>
     </message>
     <message>
         <location filename="../keyboard-layout/operation/shortcutmodel.cpp" line="268"/>
         <location filename="../keyboard-layout/operation/shortcutmodel.cpp" line="339"/>
         <source>Custom</source>
-        <translation>מאפיין</translation>
+        <translation>מותאם אישית</translation>
     </message>
     <message>
         <location filename="../keyboard-layout/operation/shortcutmodel.cpp" line="394"/>
         <source>None</source>
-        <translation>לא</translation>
+        <translation>ללא</translation>
     </message>
 </context>
 <context>
@@ -295,12 +295,12 @@
     <message>
         <location filename="../qml/fcitx5configtool.qml" line="8"/>
         <source>Input Methods</source>
-        <translation type="unfinished"/>
+        <translation>שיטות קלט</translation>
     </message>
     <message>
         <location filename="../qml/fcitx5configtool.qml" line="9"/>
         <source>Input method management, input method shortcuts, advanced settings</source>
-        <translation type="unfinished"/>
+        <translation>ניהול שיטות קלט, קיצורי דרך לשיטות קלט, הגדרות מתקדמות</translation>
     </message>
 </context>
 </TS>
