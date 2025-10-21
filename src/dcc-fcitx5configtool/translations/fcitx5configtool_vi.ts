@@ -4,7 +4,7 @@
     <message>
         <location filename="../qml/AddonsPage.qml" line="20"/>
         <source>Add-ons</source>
-        <translation type="unfinished"/>
+        <translation>Tiện ích</translation>
     </message>
 </context>
 <context>
@@ -12,27 +12,27 @@
     <message>
         <location filename="../qml/AdvancedSettingsModule.qml" line="15"/>
         <source>Advanced Settings</source>
-        <translation type="unfinished"/>
+        <translation>Cài đặt nâng cao</translation>
     </message>
     <message>
         <location filename="../qml/AdvancedSettingsModule.qml" line="41"/>
         <source>&quot;Advanced Settings&quot; is only valid for the input method that uses the system settings, if the input method has its own settings, its own settings shall prevail.</source>
-        <translation type="unfinished"/>
+        <translation>&quot;Cài đặt nâng cao&quot; chỉ có hiệu lực cho phương pháp nhập sử dụng cài đặt hệ thống. Nếu phương pháp nhập có cài đặt riêng, cài đặt riêng sẽ có ưu tiên.</translation>
     </message>
     <message>
         <location filename="../qml/AdvancedSettingsModule.qml" line="54"/>
         <source>Global Config</source>
-        <translation type="unfinished"/>
+        <translation>Cấu hình toàn cục</translation>
     </message>
     <message>
         <location filename="../qml/AdvancedSettingsModule.qml" line="70"/>
         <source>Add-ons</source>
-        <translation type="unfinished"/>
+        <translation>Tiện ích</translation>
     </message>
     <message>
         <location filename="../qml/AdvancedSettingsModule.qml" line="81"/>
         <source>Keyboard layout</source>
-        <translation type="unfinished"/>
+        <translation>Bố cục bàn phím</translation>
     </message>
 </context>
 <context>
@@ -40,7 +40,7 @@
     <message>
         <location filename="../qml/DetailConfigItem.qml" line="151"/>
         <source>Please enter a new shortcut</source>
-        <translation type="unfinished"/>
+        <translation>Vui lòng nhập phím tắt mới</translation>
     </message>
 </context>
 <context>
@@ -48,22 +48,22 @@
     <message>
         <location filename="../qml/IMList.qml" line="152"/>
         <source>Move Up</source>
-        <translation type="unfinished"/>
+        <translation>Di chuyển lên</translation>
     </message>
     <message>
         <location filename="../qml/IMList.qml" line="160"/>
         <source>Move Down</source>
-        <translation type="unfinished"/>
+        <translation>Di chuyển xuống</translation>
     </message>
     <message>
         <location filename="../qml/IMList.qml" line="168"/>
         <source>Settings</source>
-        <translation type="unfinished"/>
+        <translation>Cài đặt</translation>
     </message>
     <message>
         <location filename="../qml/IMList.qml" line="176"/>
         <source>Remove</source>
-        <translation type="unfinished"/>
+        <translation>Xóa</translation>
     </message>
 </context>
 <context>
@@ -71,27 +71,27 @@
     <message>
         <location filename="../qml/InputMethodsChooser.qml" line="35"/>
         <source>Add input method</source>
-        <translation type="unfinished"/>
+        <translation>Thêm phương pháp nhập</translation>
     </message>
     <message>
         <location filename="../qml/InputMethodsChooser.qml" line="41"/>
         <source>Search</source>
-        <translation type="unfinished"/>
+        <translation>Tìm kiếm</translation>
     </message>
     <message>
         <location filename="../qml/InputMethodsChooser.qml" line="109"/>
         <source>Find more in App Store</source>
-        <translation type="unfinished"/>
+        <translation>Tìm thêm trong App Store</translation>
     </message>
     <message>
         <location filename="../qml/InputMethodsChooser.qml" line="129"/>
         <source>Cancel</source>
-        <translation type="unfinished"/>
+        <translation>Hủy</translation>
     </message>
     <message>
         <location filename="../qml/InputMethodsChooser.qml" line="136"/>
         <source>Add</source>
-        <translation type="unfinished"/>
+        <translation>Thêm</translation>
     </message>
 </context>
 <context>
@@ -99,27 +99,27 @@
     <message>
         <location filename="../qml/KeyboardLayout.qml" line="16"/>
         <source>Keyboard layout</source>
-        <translation type="unfinished"/>
+        <translation>Bố cục bàn phím</translation>
     </message>
     <message>
         <location filename="../qml/KeyboardLayout.qml" line="34"/>
         <source>done</source>
-        <translation type="unfinished"/>
+        <translation>xong</translation>
     </message>
     <message>
         <location filename="../qml/KeyboardLayout.qml" line="34"/>
         <source>edit</source>
-        <translation type="unfinished"/>
+        <translation>chỉnh sửa</translation>
     </message>
     <message>
         <location filename="../qml/KeyboardLayout.qml" line="57"/>
         <source>Add the corresponding input method in &lt;a style=&apos;text-decoration: none;&apos; href=&apos;Manage Input Methods&apos;&gt;Input Method Management&lt;/a&gt; to ensure the keyboard layout works when added or switched.</source>
-        <translation type="unfinished"/>
+        <translation>Thêm phương pháp nhập tương ứng trong &lt;a style=&apos;text-decoration: none;&apos; href=&apos;Manage Input Methods&apos;&gt;Quản lý phương pháp nhập&lt;/a&gt; để đảm bảo bố cục bàn phím hoạt động khi được thêm hoặc chuyển đổi.</translation>
     </message>
     <message>
         <location filename="../qml/KeyboardLayout.qml" line="142"/>
         <source>Add new keyboard layout...</source>
-        <translation type="unfinished"/>
+        <translation>Thêm bố cục bàn phím mới...</translation>
     </message>
 </context>
 <context>
@@ -127,27 +127,27 @@
     <message>
         <location filename="../qml/KeyboardLayoutModule.qml" line="16"/>
         <source>Keyboard layout</source>
-        <translation type="unfinished"/>
+        <translation>Bố cục bàn phím</translation>
     </message>
     <message>
         <location filename="../qml/KeyboardLayoutModule.qml" line="34"/>
         <source>done</source>
-        <translation type="unfinished"/>
+        <translation>xong</translation>
     </message>
     <message>
         <location filename="../qml/KeyboardLayoutModule.qml" line="34"/>
         <source>edit</source>
-        <translation type="unfinished"/>
+        <translation>chỉnh sửa</translation>
     </message>
     <message>
         <location filename="../qml/KeyboardLayoutModule.qml" line="57"/>
         <source>Add the corresponding input method in &lt;a style=&apos;text-decoration: none;&apos; href=&apos;Manage Input Methods&apos;&gt;Input Method Management&lt;/a&gt; to ensure the keyboard layout works when added or switched.</source>
-        <translation type="unfinished"/>
+        <translation>Thêm phương pháp nhập tương ứng trong &lt;a style=&apos;text-decoration: none;&apos; href=&apos;Manage Input Methods&apos;&gt;Quản lý phương pháp nhập&lt;/a&gt; để đảm bảo bố cục bàn phím hoạt động khi được thêm hoặc chuyển đổi.</translation>
     </message>
     <message>
         <location filename="../qml/KeyboardLayoutModule.qml" line="140"/>
         <source>Add new keyboard layout...</source>
-        <translation type="unfinished"/>
+        <translation>Thêm bố cục bàn phím mới...</translation>
     </message>
 </context>
 <context>
@@ -155,7 +155,7 @@
     <message>
         <location filename="../qml/LayoutsChooser.qml" line="30"/>
         <source>Add new keyboard layout</source>
-        <translation type="unfinished"/>
+        <translation>Thêm bố cục bàn phím mới</translation>
     </message>
     <message>
         <location filename="../qml/LayoutsChooser.qml" line="38"/>
@@ -165,12 +165,12 @@
     <message>
         <location filename="../qml/LayoutsChooser.qml" line="67"/>
         <source>Current language keyboard layouts</source>
-        <translation type="unfinished"/>
+        <translation>Bố cục bàn phím ngôn ngữ hiện tại</translation>
     </message>
     <message>
         <location filename="../qml/LayoutsChooser.qml" line="90"/>
         <source>Cancel</source>
-            <translation>Hủy bỏ</translation>
+            <translation>Hủy</translation>
     </message>
     <message>
         <location filename="../qml/LayoutsChooser.qml" line="97"/>
@@ -183,12 +183,12 @@
     <message>
         <location filename="../qml/ManageInputMethodsModule.qml" line="15"/>
         <source>Input method management</source>
-        <translation type="unfinished"/>
+        <translation>Quản lý phương pháp nhập</translation>
     </message>
     <message>
         <location filename="../qml/ManageInputMethodsModule.qml" line="33"/>
         <source>Add input method</source>
-        <translation type="unfinished"/>
+        <translation>Thêm phương pháp nhập</translation>
     </message>
 </context>
 <context>
@@ -199,32 +199,32 @@
         <location filename="../qml/ShortcutsModule.qml" line="151"/>
         <location filename="../qml/ShortcutsModule.qml" line="152"/>
         <source>None</source>
-        <translation type="unfinished"/>
+        <translation>Không có</translation>
     </message>
     <message>
         <location filename="../qml/ShortcutsModule.qml" line="119"/>
         <source>Shortcuts</source>
-        <translation type="unfinished"/>
+        <translation>Phím tắt</translation>
     </message>
     <message>
         <location filename="../qml/ShortcutsModule.qml" line="134"/>
         <source>Restore Defaults</source>
-        <translation type="unfinished"/>
+        <translation>Khôi phục mặc định</translation>
     </message>
     <message>
         <location filename="../qml/ShortcutsModule.qml" line="200"/>
         <source>Scroll between input methods</source>
-        <translation type="unfinished"/>
+        <translation>Cuộn giữa các phương pháp nhập</translation>
     </message>
     <message>
         <location filename="../qml/ShortcutsModule.qml" line="230"/>
         <source>Turn on or off input methods</source>
-        <translation type="unfinished"/>
+        <translation>Bật hoặc tắt phương pháp nhập</translation>
     </message>
     <message>
         <location filename="../qml/ShortcutsModule.qml" line="273"/>
         <source>It turns on or off the currently used input method.If no input method is being used or the first input method is not the keyboard, it switches between the first input method and the currently used keyboard/input method.</source>
-        <translation type="unfinished"/>
+        <translation>Bật hoặc tắt phương pháp nhập hiện đang sử dụng. Nếu không có phương pháp nhập nào đang được sử dụng hoặc phương pháp nhập đầu tiên không phải là bàn phím, nó chuyển đổi giữa phương pháp nhập đầu tiên và bàn phím/phương pháp nhập hiện đang sử dụng.</translation>
     </message>
 </context>
 <context>
@@ -232,12 +232,12 @@
     <message>
         <location filename="../keyboard-layout/operation/dcclocale.cpp" line="62"/>
         <source>Traditional Chinese (Chinese Hong Kong)</source>
-        <translation type="unfinished"/>
+        <translation>Tiếng Trung phồn thể (Trung Quốc Hồng Kông)</translation>
     </message>
     <message>
         <location filename="../keyboard-layout/operation/dcclocale.cpp" line="65"/>
         <source>Traditional Chinese (Chinese Taiwan)</source>
-        <translation type="unfinished"/>
+        <translation>Tiếng Trung phồn thể (Trung Quốc Đài Loan)</translation>
     </message>
 </context>
 <context>
@@ -245,7 +245,7 @@
     <message>
         <location filename="../keyboard-layout/operation/dcclocale.cpp" line="86"/>
         <source>Taiwan China</source>
-        <translation type="unfinished"/>
+        <translation>Đài Loan Trung Quốc</translation>
     </message>
 </context>
 <context>
@@ -271,7 +271,7 @@
     <message>
         <location filename="../keyboard-layout/operation/shortcutmodel.cpp" line="258"/>
         <source>Workspace</source>
-        <translation>Bàn làm việc</translation>
+        <translation>Không gian làm việc</translation>
     </message>
     <message>
         <location filename="../keyboard-layout/operation/shortcutmodel.cpp" line="263"/>
@@ -295,12 +295,12 @@
     <message>
         <location filename="../qml/fcitx5configtool.qml" line="8"/>
         <source>Input Methods</source>
-        <translation type="unfinished"/>
+        <translation>Phương pháp nhập</translation>
     </message>
     <message>
         <location filename="../qml/fcitx5configtool.qml" line="9"/>
         <source>Input method management, input method shortcuts, advanced settings</source>
-        <translation type="unfinished"/>
+        <translation>Quản lý phương pháp nhập, phím tắt phương pháp nhập, cài đặt nâng cao</translation>
     </message>
 </context>
 </TS>
