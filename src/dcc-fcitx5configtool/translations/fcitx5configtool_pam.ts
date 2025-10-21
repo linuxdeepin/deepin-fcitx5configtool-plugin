@@ -1,6 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE TS>
-<TS version="2.1" language="pam">
+<?xml version="1.0" ?><!DOCTYPE TS><TS version="2.1" language="pam">
 <context>
     <name>AddonsPage</name>
     <message>
@@ -19,7 +17,7 @@
     <message>
         <location filename="../qml/AdvancedSettingsModule.qml" line="41"/>
         <source>&quot;Advanced Settings&quot; is only valid for the input method that uses the system settings, if the input method has its own settings, its own settings shall prevail.</source>
-        <translation>"Malasakit a Setting" mepakanian mu kareng paralan input a agamit ya ing system settings. Nung ing paralan input atin yang sariling settings, ing kayang sariling settings ing mangibabaw.</translation>
+        <translation>&quot;Malasakit a Setting&quot; mepakanian mu kareng paralan input a agamit ya ing system settings. Nung ing paralan input atin yang sariling settings, ing kayang sariling settings ing mangibabaw.</translation>
     </message>
     <message>
         <location filename="../qml/AdvancedSettingsModule.qml" line="54"/>
@@ -172,7 +170,7 @@
     <message>
         <location filename="../qml/LayoutsChooser.qml" line="90"/>
         <source>Cancel</source>
-        <translation>Cancel</translation>
+            <translation>Cancel</translation>
     </message>
     <message>
         <location filename="../qml/LayoutsChooser.qml" line="97"/>
@@ -255,7 +253,7 @@
     <message>
         <location filename="../keyboard-layout/operation/keyboardcontroller.cpp" line="55"/>
         <source>This shortcut conflicts with [%1]</source>
-        <translation>Ing shortcut a ini maki conflict ya king [%1]</translation>
+            <translation>Ing shortcut a ini maki conflict ya king [%1]</translation>
     </message>
 </context>
 <context>
