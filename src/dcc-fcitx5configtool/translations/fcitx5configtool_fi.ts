@@ -114,7 +114,7 @@
     <message>
         <location filename="../qml/KeyboardLayout.qml" line="57"/>
         <source>Add the corresponding input method in &lt;a style=&apos;text-decoration: none;&apos; href=&apos;Manage Input Methods&apos;&gt;Input Method Management&lt;/a&gt; to ensure the keyboard layout works when added or switched.</source>
-        <translation>Lisää sopiva kieli &lt;a style=&apos;text-decoration: none;&apos; href=&apos;Manage Input Methods&apos;&gt;Input Method Management&lt;/a&gt; ja testaa, että näppäimistö toimii oikein</translation>
+        <translation>Lisää vastaava syöttömenetelmä &lt;a style=&apos;text-decoration: none;&apos; href=&apos;Manage Input Methods&apos;&gt;Input Method Management&lt;/a&gt;n, jotta näppäimistön asettelu toimii, kun se lisätään tai vaihdetaan.</translation>
     </message>
     <message>
         <location filename="../qml/KeyboardLayout.qml" line="142"/>
@@ -142,7 +142,7 @@
     <message>
         <location filename="../qml/KeyboardLayoutModule.qml" line="57"/>
         <source>Add the corresponding input method in &lt;a style=&apos;text-decoration: none;&apos; href=&apos;Manage Input Methods&apos;&gt;Input Method Management&lt;/a&gt; to ensure the keyboard layout works when added or switched.</source>
-        <translation>Lisää sopiva kieli &lt;a style=&apos;text-decoration: none;&apos; href=&apos;Manage Input Methods&apos;&gt;Input Method Management&lt;/a&gt; ja testaa, että näppäimistö toimii oikein</translation>
+        <translation>Lisää vastaava syöttömenetelmä &lt;a style=&apos;text-decoration: none;&apos; href=&apos;Manage Input Methods&apos;&gt;Input Method Management&lt;/a&gt;n, jotta näppäimistön asettelu toimii, kun se lisätään tai vaihdetaan.</translation>
     </message>
     <message>
         <location filename="../qml/KeyboardLayoutModule.qml" line="140"/>
@@ -160,12 +160,12 @@
     <message>
         <location filename="../qml/LayoutsChooser.qml" line="38"/>
         <source>Search</source>
-        <translation>Haku</translation>
+        <translation>Etsi</translation>
     </message>
     <message>
         <location filename="../qml/LayoutsChooser.qml" line="67"/>
         <source>Current language keyboard layouts</source>
-        <translation>Nykyinen näppäimistön asettelu</translation>
+        <translation>Nykyisen kielen näppäimistön asettelut</translation>
     </message>
     <message>
         <location filename="../qml/LayoutsChooser.qml" line="90"/>
@@ -232,12 +232,12 @@
     <message>
         <location filename="../keyboard-layout/operation/dcclocale.cpp" line="62"/>
         <source>Traditional Chinese (Chinese Hong Kong)</source>
-        <translation>Perinteinen kiina (Kiina Hong Kong)</translation>
+        <translation>Traditionaalinen kiina (Kiinaan Hong Kong)</translation>
     </message>
     <message>
         <location filename="../keyboard-layout/operation/dcclocale.cpp" line="65"/>
         <source>Traditional Chinese (Chinese Taiwan)</source>
-        <translation>Perinteinen kiina (Kiina Taiwan)</translation>
+        <translation>Traditionaalinen kiina (Kiinaan Taiwan)</translation>
     </message>
 </context>
 <context>
@@ -245,7 +245,7 @@
     <message>
         <location filename="../keyboard-layout/operation/dcclocale.cpp" line="86"/>
         <source>Taiwan China</source>
-        <translation>Taiwan Kiina</translation>
+        <translation>Kiinaan Taiwan</translation>
     </message>
 </context>
 <context>
@@ -253,7 +253,7 @@
     <message>
         <location filename="../keyboard-layout/operation/keyboardcontroller.cpp" line="55"/>
         <source>This shortcut conflicts with [%1]</source>
-            <translation>Tämä on ristiriidassa [%1] kanssa</translation>
+            <translation>Tämä pikakäsky ristiriittaa [%1]</translation>
     </message>
 </context>
 <context>
@@ -276,7 +276,7 @@
     <message>
         <location filename="../keyboard-layout/operation/shortcutmodel.cpp" line="263"/>
         <source>AssistiveTools</source>
-        <translation>Apuvälineet</translation>
+        <translation>Apuohjelmat</translation>
     </message>
     <message>
         <location filename="../keyboard-layout/operation/shortcutmodel.cpp" line="268"/>
@@ -287,7 +287,7 @@
     <message>
         <location filename="../keyboard-layout/operation/shortcutmodel.cpp" line="394"/>
         <source>None</source>
-        <translation>Mitään</translation>
+        <translation>Ei mitään</translation>
     </message>
 </context>
 <context>
