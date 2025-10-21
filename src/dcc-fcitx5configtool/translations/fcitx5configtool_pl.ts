@@ -1,6 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE TS>
-<TS version="2.1" language="pl">
+<?xml version="1.0" ?><!DOCTYPE TS><TS version="2.1" language="pl">
 <context>
     <name>AddonsPage</name>
     <message>
@@ -106,17 +104,17 @@
     <message>
         <location filename="../qml/KeyboardLayout.qml" line="34"/>
         <source>done</source>
-        <translation>gotowe</translation>
+        <translation>Gotowe</translation>
     </message>
     <message>
         <location filename="../qml/KeyboardLayout.qml" line="34"/>
         <source>edit</source>
-        <translation>edytuj</translation>
+        <translation>Edytuj</translation>
     </message>
     <message>
         <location filename="../qml/KeyboardLayout.qml" line="57"/>
         <source>Add the corresponding input method in &lt;a style=&apos;text-decoration: none;&apos; href=&apos;Manage Input Methods&apos;&gt;Input Method Management&lt;/a&gt; to ensure the keyboard layout works when added or switched.</source>
-        <translation>Dodaj odpowiednią metodę wprowadzania w &lt;a style=&apos;text-decoration: none;&apos; href=&apos;Manage Input Methods&apos;&gt;Zarządzanie metodami wprowadzania&lt;/a&gt; aby upewnić się, że układ klawiatury działa po dodaniu lub przełączeniu.</translation>
+        <translation>Dodaj metody wprowadzania w &lt;a style=&apos;text-decoration: none;&apos; href=&apos;Manage Input Methods&apos;&gt;Zarządzanie metodami wprowadzania&lt;/a&gt;, aby upewnić się, że układ klawiatury działa i przełącza się prawidłowo.</translation>
     </message>
     <message>
         <location filename="../qml/KeyboardLayout.qml" line="142"/>
@@ -134,17 +132,17 @@
     <message>
         <location filename="../qml/KeyboardLayoutModule.qml" line="34"/>
         <source>done</source>
-        <translation>gotowe</translation>
+        <translation>Gotowe</translation>
     </message>
     <message>
         <location filename="../qml/KeyboardLayoutModule.qml" line="34"/>
         <source>edit</source>
-        <translation>edytuj</translation>
+        <translation>Edytuj</translation>
     </message>
     <message>
         <location filename="../qml/KeyboardLayoutModule.qml" line="57"/>
         <source>Add the corresponding input method in &lt;a style=&apos;text-decoration: none;&apos; href=&apos;Manage Input Methods&apos;&gt;Input Method Management&lt;/a&gt; to ensure the keyboard layout works when added or switched.</source>
-        <translation>Dodaj odpowiednią metodę wprowadzania w &lt;a style=&apos;text-decoration: none;&apos; href=&apos;Manage Input Methods&apos;&gt;Zarządzanie metodami wprowadzania&lt;/a&gt; aby upewnić się, że układ klawiatury działa po dodaniu lub przełączeniu.</translation>
+        <translation>Dodaj metody wprowadzania w &lt;a style=&apos;text-decoration: none;&apos; href=&apos;Manage Input Methods&apos;&gt;Zarządzanie metodami wprowadzania&lt;/a&gt;, aby upewnić się, że układ klawiatury działa i przełącza się prawidłowo.</translation>
     </message>
     <message>
         <location filename="../qml/KeyboardLayoutModule.qml" line="140"/>
@@ -162,17 +160,17 @@
     <message>
         <location filename="../qml/LayoutsChooser.qml" line="38"/>
         <source>Search</source>
-        <translation>Wyszukaj</translation>
+        <translation>Szukaj</translation>
     </message>
     <message>
         <location filename="../qml/LayoutsChooser.qml" line="67"/>
         <source>Current language keyboard layouts</source>
-        <translation>Aktualny język układów klawiatury</translation>
+        <translation>Aktualne układy klawiatury</translation>
     </message>
     <message>
         <location filename="../qml/LayoutsChooser.qml" line="90"/>
         <source>Cancel</source>
-        <translation>Anuluj</translation>
+            <translation>Anuluj</translation>
     </message>
     <message>
         <location filename="../qml/LayoutsChooser.qml" line="97"/>
@@ -196,35 +194,35 @@
 <context>
     <name>ShortcutsModule</name>
     <message>
-        <location filename="../qml/ShortcutsModule.qml" line="118"/>
-        <source>Shortcuts</source>
-        <translation>Skróty</translation>
-    </message>
-    <message>
-        <location filename="../qml/ShortcutsModule.qml" line="133"/>
-        <source>Restore Defaults</source>
-        <translation>Przywróć domyślne ustawienia</translation>
-    </message>
-    <message>
-        <location filename="../qml/ShortcutsModule.qml" line="225"/>
-        <source>Scroll between input methods</source>
-        <translation>Przewiń między metodami wprowadzania</translation>
-    </message>
-    <message>
-        <location filename="../qml/ShortcutsModule.qml" line="13"/>
-        <location filename="../qml/ShortcutsModule.qml" line="15"/>
-        <location filename="../qml/ShortcutsModule.qml" line="150"/>
+        <location filename="../qml/ShortcutsModule.qml" line="12"/>
+        <location filename="../qml/ShortcutsModule.qml" line="14"/>
         <location filename="../qml/ShortcutsModule.qml" line="151"/>
+        <location filename="../qml/ShortcutsModule.qml" line="152"/>
         <source>None</source>
         <translation>Brak</translation>
     </message>
     <message>
-        <location filename="../qml/ShortcutsModule.qml" line="273"/>
+        <location filename="../qml/ShortcutsModule.qml" line="119"/>
+        <source>Shortcuts</source>
+        <translation>Skróty</translation>
+    </message>
+    <message>
+        <location filename="../qml/ShortcutsModule.qml" line="134"/>
+        <source>Restore Defaults</source>
+        <translation>Przywróć domyślne ustawienia</translation>
+    </message>
+    <message>
+        <location filename="../qml/ShortcutsModule.qml" line="200"/>
+        <source>Scroll between input methods</source>
+        <translation>Przewiń między metodami wprowadzania</translation>
+    </message>
+    <message>
+        <location filename="../qml/ShortcutsModule.qml" line="230"/>
         <source>Turn on or off input methods</source>
         <translation>Włącz lub wyłącz metody wprowadzania</translation>
     </message>
     <message>
-        <location filename="../qml/ShortcutsModule.qml" line="336"/>
+        <location filename="../qml/ShortcutsModule.qml" line="273"/>
         <source>It turns on or off the currently used input method.If no input method is being used or the first input method is not the keyboard, it switches between the first input method and the currently used keyboard/input method.</source>
         <translation>Włącza lub wyłącza aktualnie używaną metodę wprowadzania. Jeśli nie jest używana żadna metoda wprowadzania lub Pierwsza metoda wprowadzania nie jest klawiaturą, przełącza się między pierwszą metodą wprowadzania a aktualnie używaną klawiaturą/metodą wprowadzania.</translation>
     </message>
@@ -234,12 +232,12 @@
     <message>
         <location filename="../keyboard-layout/operation/dcclocale.cpp" line="62"/>
         <source>Traditional Chinese (Chinese Hong Kong)</source>
-        <translation>Chinęskie tradycyjne (Hong Kong)</translation>
+        <translation>Chiński tradycyjny (Chiński Hong Kong)</translation>
     </message>
     <message>
         <location filename="../keyboard-layout/operation/dcclocale.cpp" line="65"/>
         <source>Traditional Chinese (Chinese Taiwan)</source>
-        <translation>Chinęskie tradycyjne (Tajwan)</translation>
+        <translation>Chiński tradycyjny (Chiński Tajwański)</translation>
     </message>
 </context>
 <context>
@@ -247,7 +245,7 @@
     <message>
         <location filename="../keyboard-layout/operation/dcclocale.cpp" line="86"/>
         <source>Taiwan China</source>
-        <translation>Tajwan China</translation>
+        <translation>Tajwan Chiny</translation>
     </message>
 </context>
 <context>
@@ -255,7 +253,7 @@
     <message>
         <location filename="../keyboard-layout/operation/keyboardcontroller.cpp" line="55"/>
         <source>This shortcut conflicts with [%1]</source>
-        <translation>Ten skrót konfliktuje z [%1]</translation>
+            <translation>Ten skrót jest w konflikcie z [%1]</translation>
     </message>
 </context>
 <context>
@@ -284,7 +282,7 @@
         <location filename="../keyboard-layout/operation/shortcutmodel.cpp" line="268"/>
         <location filename="../keyboard-layout/operation/shortcutmodel.cpp" line="339"/>
         <source>Custom</source>
-        <translation>Niestandardowe</translation>
+        <translation>Własne</translation>
     </message>
     <message>
         <location filename="../keyboard-layout/operation/shortcutmodel.cpp" line="394"/>
