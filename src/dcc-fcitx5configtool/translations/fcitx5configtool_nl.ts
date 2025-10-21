@@ -1,6 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE TS>
-<TS version="2.1" language="nl">
+<?xml version="1.0" ?><!DOCTYPE TS><TS version="2.1" language="nl">
 <context>
     <name>AddonsPage</name>
     <message>
@@ -19,7 +17,7 @@
     <message>
         <location filename="../qml/AdvancedSettingsModule.qml" line="41"/>
         <source>&quot;Advanced Settings&quot; is only valid for the input method that uses the system settings, if the input method has its own settings, its own settings shall prevail.</source>
-        <translation>"Geavanceerde instellingen" geldt alleen voor de invoermethode die systeeminstellingen gebruikt. Als de invoermethode eigen instellingen heeft, hebben deze voorrang.</translation>
+        <translation>&quot;Geavanceerde instellingen&quot; geldt alleen voor de invoermethode die systeeminstellingen gebruikt. Als de invoermethode eigen instellingen heeft, hebben deze voorrang.</translation>
     </message>
     <message>
         <location filename="../qml/AdvancedSettingsModule.qml" line="54"/>
@@ -172,7 +170,7 @@
     <message>
         <location filename="../qml/LayoutsChooser.qml" line="90"/>
         <source>Cancel</source>
-        <translation>Annuleren</translation>
+            <translation>Annuleren</translation>
     </message>
     <message>
         <location filename="../qml/LayoutsChooser.qml" line="97"/>
@@ -255,7 +253,7 @@
     <message>
         <location filename="../keyboard-layout/operation/keyboardcontroller.cpp" line="55"/>
         <source>This shortcut conflicts with [%1]</source>
-        <translation>Deze snelkoppeling conflicteert met [%1]</translation>
+            <translation>Deze snelkoppeling conflicteert met [%1]</translation>
     </message>
 </context>
 <context>
