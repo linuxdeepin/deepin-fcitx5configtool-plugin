@@ -1,6 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE TS>
-<TS version="2.1" language="ug">
+<?xml version="1.0" ?><!DOCTYPE TS><TS version="2.1" language="ug">
 <context>
     <name>AddonsPage</name>
     <message>
@@ -19,7 +17,7 @@
     <message>
         <location filename="../qml/AdvancedSettingsModule.qml" line="41"/>
         <source>&quot;Advanced Settings&quot; is only valid for the input method that uses the system settings, if the input method has its own settings, its own settings shall prevail.</source>
-        <translation>"ئالىي تەڭشەكلەر" پەقەت سىستېما تەڭشىكىنى ئىشلىتىدىغان كىرگۈزۈش ئۇسۇلىغىلا ئۈنۈملۈك. ئەگەر كىرگۈزۈش ئۇسۇلىنىڭ ئۆزىنىڭ تەڭشىكى بولسا، ئۆزىنىڭ تەڭشىكى ئۈستۈن تۇرىدۇ.</translation>
+        <translation>&quot;ئالىي تەڭشەكلەر&quot; پەقەت سىستېما تەڭشىكىنى ئىشلىتىدىغان كىرگۈزۈش ئۇسۇلىغىلا ئۈنۈملۈك. ئەگەر كىرگۈزۈش ئۇسۇلىنىڭ ئۆزىنىڭ تەڭشىكى بولسا، ئۆزىنىڭ تەڭشىكى ئۈستۈن تۇرىدۇ.</translation>
     </message>
     <message>
         <location filename="../qml/AdvancedSettingsModule.qml" line="54"/>
@@ -172,7 +170,7 @@
     <message>
         <location filename="../qml/LayoutsChooser.qml" line="90"/>
         <source>Cancel</source>
-        <translation>بىكار قىل</translation>
+            <translation>بىكار قىل</translation>
     </message>
     <message>
         <location filename="../qml/LayoutsChooser.qml" line="97"/>
@@ -255,7 +253,7 @@
     <message>
         <location filename="../keyboard-layout/operation/keyboardcontroller.cpp" line="55"/>
         <source>This shortcut conflicts with [%1]</source>
-        <translation>بۇ تېزلەتمە [%1] بىلەن توقۇنۇشىدۇ</translation>
+            <translation>بۇ تېزلەتمە [%1] بىلەن توقۇنۇشىدۇ</translation>
     </message>
 </context>
 <context>
