@@ -1,6 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE TS>
-<TS version="2.1" language="pt_BR">
+<?xml version="1.0" ?><!DOCTYPE TS><TS version="2.1" language="pt_BR">
 <context>
     <name>AddonsPage</name>
     <message>
@@ -34,7 +32,7 @@
     <message>
         <location filename="../qml/AdvancedSettingsModule.qml" line="81"/>
         <source>Keyboard layout</source>
-        <translation>Layout do teclado</translation>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -106,17 +104,17 @@
     <message>
         <location filename="../qml/KeyboardLayout.qml" line="34"/>
         <source>done</source>
-        <translation>feito</translation>
+        <translation>Feito</translation>
     </message>
     <message>
         <location filename="../qml/KeyboardLayout.qml" line="34"/>
         <source>edit</source>
-        <translation>editar</translation>
+        <translation>Editar</translation>
     </message>
     <message>
         <location filename="../qml/KeyboardLayout.qml" line="57"/>
         <source>Add the corresponding input method in &lt;a style=&apos;text-decoration: none;&apos; href=&apos;Manage Input Methods&apos;&gt;Input Method Management&lt;/a&gt; to ensure the keyboard layout works when added or switched.</source>
-        <translation>Adicione o método de entrada correspondente em &lt;a style=&apos;text-decoration: none;&apos; href=&apos;Manage Input Methods&apos;&gt;Gerenciamento de Métodos de Entrada&lt;/a&gt; para garantir que o layout do teclado funcione quando adicionado ou alternado.</translation>
+        <translation>Adicione o método de entrada correspondente em &lt;a style=&apos;text-decoration: none;&apos; href=&apos;Manage Input Methods&apos;&gt;IGerenciamento de Método de Entrada&lt;/a&gt; para garantir que o layout do teclado funcione quando for adicionado ou trocado.</translation>
     </message>
     <message>
         <location filename="../qml/KeyboardLayout.qml" line="142"/>
@@ -129,27 +127,27 @@
     <message>
         <location filename="../qml/KeyboardLayoutModule.qml" line="16"/>
         <source>Keyboard layout</source>
-        <translation>Layout do teclado</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../qml/KeyboardLayoutModule.qml" line="34"/>
         <source>done</source>
-        <translation>feito</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../qml/KeyboardLayoutModule.qml" line="34"/>
         <source>edit</source>
-        <translation>editar</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../qml/KeyboardLayoutModule.qml" line="57"/>
         <source>Add the corresponding input method in &lt;a style=&apos;text-decoration: none;&apos; href=&apos;Manage Input Methods&apos;&gt;Input Method Management&lt;/a&gt; to ensure the keyboard layout works when added or switched.</source>
-        <translation>Adicione o método de entrada correspondente em &lt;a style=&apos;text-decoration: none;&apos; href=&apos;Manage Input Methods&apos;&gt;Gerenciamento de Métodos de Entrada&lt;/a&gt; para garantir que o layout do teclado funcione quando adicionado ou alternado.</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../qml/KeyboardLayoutModule.qml" line="140"/>
         <source>Add new keyboard layout...</source>
-        <translation>Adicionar novo layout de teclado...</translation>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -167,12 +165,12 @@
     <message>
         <location filename="../qml/LayoutsChooser.qml" line="67"/>
         <source>Current language keyboard layouts</source>
-        <translation>Layouts de teclado atuais da linguagem</translation>
+        <translation>Layouts de teclado do idioma atual</translation>
     </message>
     <message>
         <location filename="../qml/LayoutsChooser.qml" line="90"/>
         <source>Cancel</source>
-        <translation>Cancelar</translation>
+            <translation>Cancelar</translation>
     </message>
     <message>
         <location filename="../qml/LayoutsChooser.qml" line="97"/>
@@ -196,35 +194,35 @@
 <context>
     <name>ShortcutsModule</name>
     <message>
-        <location filename="../qml/ShortcutsModule.qml" line="118"/>
+        <location filename="../qml/ShortcutsModule.qml" line="12"/>
+        <location filename="../qml/ShortcutsModule.qml" line="14"/>
+        <location filename="../qml/ShortcutsModule.qml" line="151"/>
+        <location filename="../qml/ShortcutsModule.qml" line="152"/>
+        <source>None</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../qml/ShortcutsModule.qml" line="119"/>
         <source>Shortcuts</source>
         <translation>Atalhos</translation>
     </message>
     <message>
-        <location filename="../qml/ShortcutsModule.qml" line="133"/>
+        <location filename="../qml/ShortcutsModule.qml" line="134"/>
         <source>Restore Defaults</source>
         <translation>Restaurar padrões</translation>
     </message>
     <message>
-        <location filename="../qml/ShortcutsModule.qml" line="225"/>
+        <location filename="../qml/ShortcutsModule.qml" line="200"/>
         <source>Scroll between input methods</source>
         <translation>Alternar entre métodos de entrada com o scroll</translation>
     </message>
     <message>
-        <location filename="../qml/ShortcutsModule.qml" line="13"/>
-        <location filename="../qml/ShortcutsModule.qml" line="15"/>
-        <location filename="../qml/ShortcutsModule.qml" line="150"/>
-        <location filename="../qml/ShortcutsModule.qml" line="151"/>
-        <source>None</source>
-        <translation>Nenhum</translation>
-    </message>
-    <message>
-        <location filename="../qml/ShortcutsModule.qml" line="273"/>
+        <location filename="../qml/ShortcutsModule.qml" line="230"/>
         <source>Turn on or off input methods</source>
         <translation>Ativar ou desativar métodos de entrada</translation>
     </message>
     <message>
-        <location filename="../qml/ShortcutsModule.qml" line="336"/>
+        <location filename="../qml/ShortcutsModule.qml" line="273"/>
         <source>It turns on or off the currently used input method.If no input method is being used or the first input method is not the keyboard, it switches between the first input method and the currently used keyboard/input method.</source>
         <translation>Ativa ou desativa o método de entrada atualmente em uso. Se nenhum método de entrada estiver ativo, ou se o primeiro método não for o teclado, a função alterna entre o primeiro método de entrada e o teclado / método de entrada em uso.</translation>
     </message>
@@ -234,12 +232,12 @@
     <message>
         <location filename="../keyboard-layout/operation/dcclocale.cpp" line="62"/>
         <source>Traditional Chinese (Chinese Hong Kong)</source>
-        <translation>Chinês tradicional (Hong Kong)</translation>
+        <translation>Chinês Tradicional (Hong Kong)</translation>
     </message>
     <message>
         <location filename="../keyboard-layout/operation/dcclocale.cpp" line="65"/>
         <source>Traditional Chinese (Chinese Taiwan)</source>
-        <translation>Chinês tradicional (Taiwan)</translation>
+        <translation>Chinês Tradicional (Taiwan)</translation>
     </message>
 </context>
 <context>
@@ -247,7 +245,7 @@
     <message>
         <location filename="../keyboard-layout/operation/dcclocale.cpp" line="86"/>
         <source>Taiwan China</source>
-        <translation>Taiwan China</translation>
+        <translation>Taiwan</translation>
     </message>
 </context>
 <context>
@@ -255,7 +253,7 @@
     <message>
         <location filename="../keyboard-layout/operation/keyboardcontroller.cpp" line="55"/>
         <source>This shortcut conflicts with [%1]</source>
-        <translation>Este atalho conflita com [%1]</translation>
+            <translation>Este atalho entra em conflito com [%1]</translation>
     </message>
 </context>
 <context>
@@ -273,12 +271,12 @@
     <message>
         <location filename="../keyboard-layout/operation/shortcutmodel.cpp" line="258"/>
         <source>Workspace</source>
-        <translation>Área de trabalho</translation>
+        <translation>Espaço de trabalho</translation>
     </message>
     <message>
         <location filename="../keyboard-layout/operation/shortcutmodel.cpp" line="263"/>
         <source>AssistiveTools</source>
-        <translation>Ferramentas assistivas</translation>
+        <translation>Ferramentas Assistivas</translation>
     </message>
     <message>
         <location filename="../keyboard-layout/operation/shortcutmodel.cpp" line="268"/>
