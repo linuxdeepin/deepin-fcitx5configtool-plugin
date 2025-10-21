@@ -1,6 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE TS>
-<TS version="2.1" language="ca">
+<?xml version="1.0" ?><!DOCTYPE TS><TS version="2.1" language="ca">
 <context>
     <name>AddonsPage</name>
     <message>
@@ -34,7 +32,7 @@
     <message>
         <location filename="../qml/AdvancedSettingsModule.qml" line="81"/>
         <source>Keyboard layout</source>
-        <translation>Distribució del teclat</translation>
+        <translation>Disposició del teclat</translation>
     </message>
 </context>
 <context>
@@ -101,7 +99,7 @@
     <message>
         <location filename="../qml/KeyboardLayout.qml" line="16"/>
         <source>Keyboard layout</source>
-        <translation>Distribució del teclat</translation>
+        <translation>Disposició del teclat</translation>
     </message>
     <message>
         <location filename="../qml/KeyboardLayout.qml" line="34"/>
@@ -111,17 +109,17 @@
     <message>
         <location filename="../qml/KeyboardLayout.qml" line="34"/>
         <source>edit</source>
-        <translation>editar</translation>
+        <translation>edita</translation>
     </message>
     <message>
         <location filename="../qml/KeyboardLayout.qml" line="57"/>
         <source>Add the corresponding input method in &lt;a style=&apos;text-decoration: none;&apos; href=&apos;Manage Input Methods&apos;&gt;Input Method Management&lt;/a&gt; to ensure the keyboard layout works when added or switched.</source>
-        <translation>Afegeix el mètode d&apos;entrada corresponent en &lt;a style=&apos;text-decoration: none;&apos; href=&apos;Manage Input Methods&apos;&gt;Input Method Management&lt;/a&gt; per assegurar que la distribució del teclat funciona quan s&apos;afegeix o es canvia.</translation>
+        <translation>Afegiu el mètode d&apos;entrada corresponent a la &lt;a style=&apos;text-decoration: none;&apos; href=&apos;Manage Input Methods&apos;&gt;Gestió del mètode d&apos;entrada&lt;/a&gt; per garantir que la disposició del teclat funcioni quan s&apos;afegeixi o es canviï.</translation>
     </message>
     <message>
         <location filename="../qml/KeyboardLayout.qml" line="142"/>
         <source>Add new keyboard layout...</source>
-        <translation>Afegeix una nova distribució del teclat...</translation>
+        <translation>Afegiu una disposició de teclat nova...</translation>
     </message>
 </context>
 <context>
@@ -129,7 +127,7 @@
     <message>
         <location filename="../qml/KeyboardLayoutModule.qml" line="16"/>
         <source>Keyboard layout</source>
-        <translation>Distribució del teclat</translation>
+        <translation>Disposició del teclat</translation>
     </message>
     <message>
         <location filename="../qml/KeyboardLayoutModule.qml" line="34"/>
@@ -139,17 +137,17 @@
     <message>
         <location filename="../qml/KeyboardLayoutModule.qml" line="34"/>
         <source>edit</source>
-        <translation>editar</translation>
+        <translation>edita</translation>
     </message>
     <message>
         <location filename="../qml/KeyboardLayoutModule.qml" line="57"/>
         <source>Add the corresponding input method in &lt;a style=&apos;text-decoration: none;&apos; href=&apos;Manage Input Methods&apos;&gt;Input Method Management&lt;/a&gt; to ensure the keyboard layout works when added or switched.</source>
-        <translation>Afegeix el mètode d&apos;entrada corresponent en &lt;a style=&apos;text-decoration: none;&apos; href=&apos;Manage Input Methods&apos;&gt;Input Method Management&lt;/a&gt; per assegurar que la distribució del teclat funciona quan s&apos;afegeix o es canvia.</translation>
+        <translation>Afegiu el mètode d&apos;entrada corresponent a la &lt;a style=&apos;text-decoration: none;&apos; href=&apos;Manage Input Methods&apos;&gt;Gestió del mètode d&apos;entrada&lt;/a&gt; per garantir que la disposició del teclat funcioni quan s&apos;afegeixi o es canviï.</translation>
     </message>
     <message>
         <location filename="../qml/KeyboardLayoutModule.qml" line="140"/>
         <source>Add new keyboard layout...</source>
-        <translation>Afegeix una nova distribució del teclat...</translation>
+        <translation>Afegiu una disposició de teclat nova...</translation>
     </message>
 </context>
 <context>
@@ -157,7 +155,7 @@
     <message>
         <location filename="../qml/LayoutsChooser.qml" line="30"/>
         <source>Add new keyboard layout</source>
-        <translation>Afegeix una nova distribució del teclat</translation>
+        <translation>Afegeix una disposició de teclat nova</translation>
     </message>
     <message>
         <location filename="../qml/LayoutsChooser.qml" line="38"/>
@@ -167,12 +165,12 @@
     <message>
         <location filename="../qml/LayoutsChooser.qml" line="67"/>
         <source>Current language keyboard layouts</source>
-        <translation>Distribució del teclat de la llengua actual</translation>
+        <translation>Disposicions de teclat actuals</translation>
     </message>
     <message>
         <location filename="../qml/LayoutsChooser.qml" line="90"/>
         <source>Cancel</source>
-        <translation>Cancel·la</translation>
+            <translation>Cancel·la</translation>
     </message>
     <message>
         <location filename="../qml/LayoutsChooser.qml" line="97"/>
@@ -196,35 +194,35 @@
 <context>
     <name>ShortcutsModule</name>
     <message>
-        <location filename="../qml/ShortcutsModule.qml" line="118"/>
-        <source>Shortcuts</source>
-        <translation>Dreceres</translation>
-    </message>
-    <message>
-        <location filename="../qml/ShortcutsModule.qml" line="133"/>
-        <source>Restore Defaults</source>
-        <translation>Restaura els valors per defecte</translation>
-    </message>
-    <message>
-        <location filename="../qml/ShortcutsModule.qml" line="225"/>
-        <source>Scroll between input methods</source>
-        <translation>Desplaceu-vos pels mètodes d&apos;entrada</translation>
-    </message>
-    <message>
-        <location filename="../qml/ShortcutsModule.qml" line="13"/>
-        <location filename="../qml/ShortcutsModule.qml" line="15"/>
-        <location filename="../qml/ShortcutsModule.qml" line="150"/>
+        <location filename="../qml/ShortcutsModule.qml" line="12"/>
+        <location filename="../qml/ShortcutsModule.qml" line="14"/>
         <location filename="../qml/ShortcutsModule.qml" line="151"/>
+        <location filename="../qml/ShortcutsModule.qml" line="152"/>
         <source>None</source>
         <translation>Cap</translation>
     </message>
     <message>
-        <location filename="../qml/ShortcutsModule.qml" line="273"/>
+        <location filename="../qml/ShortcutsModule.qml" line="119"/>
+        <source>Shortcuts</source>
+        <translation>Dreceres</translation>
+    </message>
+    <message>
+        <location filename="../qml/ShortcutsModule.qml" line="134"/>
+        <source>Restore Defaults</source>
+        <translation>Restaura els valors per defecte</translation>
+    </message>
+    <message>
+        <location filename="../qml/ShortcutsModule.qml" line="200"/>
+        <source>Scroll between input methods</source>
+        <translation>Desplaceu-vos pels mètodes d&apos;entrada</translation>
+    </message>
+    <message>
+        <location filename="../qml/ShortcutsModule.qml" line="230"/>
         <source>Turn on or off input methods</source>
         <translation>Activa o desactiva els mètodes d&apos;entrada</translation>
     </message>
     <message>
-        <location filename="../qml/ShortcutsModule.qml" line="336"/>
+        <location filename="../qml/ShortcutsModule.qml" line="273"/>
         <source>It turns on or off the currently used input method.If no input method is being used or the first input method is not the keyboard, it switches between the first input method and the currently used keyboard/input method.</source>
         <translation>Activa o desactiva el mètode d&apos;entrada que s&apos;usa actualment. Si no se n&apos;usa cap o el primer no és el teclat, canvia entre el primer mètode d&apos;entrada i el teclat o mètode d&apos;entrada actual.</translation>
     </message>
@@ -234,12 +232,12 @@
     <message>
         <location filename="../keyboard-layout/operation/dcclocale.cpp" line="62"/>
         <source>Traditional Chinese (Chinese Hong Kong)</source>
-        <translation>Chino tradicional (Hong Kong)</translation>
+        <translation>Xinès tradicional (xinès de Hong Kong)</translation>
     </message>
     <message>
         <location filename="../keyboard-layout/operation/dcclocale.cpp" line="65"/>
         <source>Traditional Chinese (Chinese Taiwan)</source>
-        <translation>Chino tradicional (Taiwan)</translation>
+        <translation>Xinès tradicional (xinès taiwanès)</translation>
     </message>
 </context>
 <context>
@@ -247,7 +245,7 @@
     <message>
         <location filename="../keyboard-layout/operation/dcclocale.cpp" line="86"/>
         <source>Taiwan China</source>
-        <translation>Taiwan</translation>
+        <translation>Taiwan Xina</translation>
     </message>
 </context>
 <context>
@@ -255,7 +253,7 @@
     <message>
         <location filename="../keyboard-layout/operation/keyboardcontroller.cpp" line="55"/>
         <source>This shortcut conflicts with [%1]</source>
-        <translation>Aquesta drecera conflueix amb [%1]</translation>
+            <translation>Aquesta drecera té conflicte amb [%1]</translation>
     </message>
 </context>
 <context>
@@ -278,7 +276,7 @@
     <message>
         <location filename="../keyboard-layout/operation/shortcutmodel.cpp" line="263"/>
         <source>AssistiveTools</source>
-        <translation>Herramientes asistenciales</translation>
+        <translation>Eines d&apos;assistència</translation>
     </message>
     <message>
         <location filename="../keyboard-layout/operation/shortcutmodel.cpp" line="268"/>
