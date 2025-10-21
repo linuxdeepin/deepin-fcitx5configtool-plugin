@@ -1,6 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE TS>
-<TS version="2.1" language="uk">
+<?xml version="1.0" ?><!DOCTYPE TS><TS version="2.1" language="uk">
 <context>
     <name>AddonsPage</name>
     <message>
@@ -106,22 +104,22 @@
     <message>
         <location filename="../qml/KeyboardLayout.qml" line="34"/>
         <source>done</source>
-        <translation>готово</translation>
+        <translation>виконано</translation>
     </message>
     <message>
         <location filename="../qml/KeyboardLayout.qml" line="34"/>
         <source>edit</source>
-        <translation>редагувати</translation>
+        <translation>Змінити</translation>
     </message>
     <message>
         <location filename="../qml/KeyboardLayout.qml" line="57"/>
         <source>Add the corresponding input method in &lt;a style=&apos;text-decoration: none;&apos; href=&apos;Manage Input Methods&apos;&gt;Input Method Management&lt;/a&gt; to ensure the keyboard layout works when added or switched.</source>
-        <translation>Додайте відповідний спосіб введення в &lt;a style=&apos;text-decoration: none;&apos; href=&apos;Manage Input Methods&apos;&gt;Керування способами введення&lt;/a&gt; для забезпечення правильної роботи розкладки клавіатури після додавання або перемикання.</translation>
+        <translation>Додайте відповідний спосіб введення на сторінці &lt;a style=&apos;text-decoration: none;&apos; href=&apos;Manage Input Methods&apos;&gt;Керування способами введення&lt;/a&gt;, щоб переконатися, що розкладка клавіатури працює після додавання або перемикання.</translation>
     </message>
     <message>
         <location filename="../qml/KeyboardLayout.qml" line="142"/>
         <source>Add new keyboard layout...</source>
-        <translation>Додати нову розкладку клавіатури...</translation>
+        <translation>Додати нову розкладку клавіатури…</translation>
     </message>
 </context>
 <context>
@@ -134,22 +132,22 @@
     <message>
         <location filename="../qml/KeyboardLayoutModule.qml" line="34"/>
         <source>done</source>
-        <translation>готово</translation>
+        <translation>виконано</translation>
     </message>
     <message>
         <location filename="../qml/KeyboardLayoutModule.qml" line="34"/>
         <source>edit</source>
-        <translation>редагувати</translation>
+        <translation>Змінити</translation>
     </message>
     <message>
         <location filename="../qml/KeyboardLayoutModule.qml" line="57"/>
         <source>Add the corresponding input method in &lt;a style=&apos;text-decoration: none;&apos; href=&apos;Manage Input Methods&apos;&gt;Input Method Management&lt;/a&gt; to ensure the keyboard layout works when added or switched.</source>
-        <translation>Додайте відповідний спосіб введення в &lt;a style=&apos;text-decoration: none;&apos; href=&apos;Manage Input Methods&apos;&gt;Керування способами введення&lt;/a&gt; для забезпечення правильної роботи розкладки клавіатури після додавання або перемикання.</translation>
+        <translation>Додайте відповідний спосіб введення на сторінці &lt;a style=&apos;text-decoration: none;&apos; href=&apos;Manage Input Methods&apos;&gt;Керування способами введення&lt;/a&gt;, щоб переконатися, що розкладка клавіатури працює після додавання або перемикання.</translation>
     </message>
     <message>
         <location filename="../qml/KeyboardLayoutModule.qml" line="140"/>
         <source>Add new keyboard layout...</source>
-        <translation>Додати нову розкладку клавіатури...</translation>
+        <translation>Додати нову розкладку клавіатури…</translation>
     </message>
 </context>
 <context>
@@ -162,22 +160,22 @@
     <message>
         <location filename="../qml/LayoutsChooser.qml" line="38"/>
         <source>Search</source>
-        <translation>Шукати</translation>
+        <translation>Пошук</translation>
     </message>
     <message>
         <location filename="../qml/LayoutsChooser.qml" line="67"/>
         <source>Current language keyboard layouts</source>
-        <translation>Поточна мова розкладки клавіатури</translation>
+        <translation>Розкладки клавіатури поточної мови</translation>
     </message>
     <message>
         <location filename="../qml/LayoutsChooser.qml" line="90"/>
         <source>Cancel</source>
-        <translation>Скасувати</translation>
+            <translation>Скасувати</translation>
     </message>
     <message>
         <location filename="../qml/LayoutsChooser.qml" line="97"/>
         <source>Add</source>
-        <translation>Додати</translation>
+        <translation>&amp;Додати</translation>
     </message>
 </context>
 <context>
@@ -196,35 +194,35 @@
 <context>
     <name>ShortcutsModule</name>
     <message>
-        <location filename="../qml/ShortcutsModule.qml" line="118"/>
-        <source>Shortcuts</source>
-        <translation>Скорочення</translation>
-    </message>
-    <message>
-        <location filename="../qml/ShortcutsModule.qml" line="133"/>
-        <source>Restore Defaults</source>
-        <translation>Відновити типові параметри</translation>
-    </message>
-    <message>
-        <location filename="../qml/ShortcutsModule.qml" line="225"/>
-        <source>Scroll between input methods</source>
-        <translation>Гортання між способами введення</translation>
-    </message>
-    <message>
-        <location filename="../qml/ShortcutsModule.qml" line="13"/>
-        <location filename="../qml/ShortcutsModule.qml" line="15"/>
-        <location filename="../qml/ShortcutsModule.qml" line="150"/>
+        <location filename="../qml/ShortcutsModule.qml" line="12"/>
+        <location filename="../qml/ShortcutsModule.qml" line="14"/>
         <location filename="../qml/ShortcutsModule.qml" line="151"/>
+        <location filename="../qml/ShortcutsModule.qml" line="152"/>
         <source>None</source>
         <translation>Немає</translation>
     </message>
     <message>
-        <location filename="../qml/ShortcutsModule.qml" line="273"/>
+        <location filename="../qml/ShortcutsModule.qml" line="119"/>
+        <source>Shortcuts</source>
+        <translation>Скорочення</translation>
+    </message>
+    <message>
+        <location filename="../qml/ShortcutsModule.qml" line="134"/>
+        <source>Restore Defaults</source>
+        <translation>Відновити типові параметри</translation>
+    </message>
+    <message>
+        <location filename="../qml/ShortcutsModule.qml" line="200"/>
+        <source>Scroll between input methods</source>
+        <translation>Гортання між способами введення</translation>
+    </message>
+    <message>
+        <location filename="../qml/ShortcutsModule.qml" line="230"/>
         <source>Turn on or off input methods</source>
         <translation>Увімкнути або вимкнути способи введення</translation>
     </message>
     <message>
-        <location filename="../qml/ShortcutsModule.qml" line="336"/>
+        <location filename="../qml/ShortcutsModule.qml" line="273"/>
         <source>It turns on or off the currently used input method.If no input method is being used or the first input method is not the keyboard, it switches between the first input method and the currently used keyboard/input method.</source>
         <translation>Вмикає або вимикає поточний використаний спосіб введення. Якщо не використано жоден спосіб введення або першим способом введення не є клавіатурний, перемикає між першим способом введення і поточним використаним способом введення з клавіатури.</translation>
     </message>
@@ -234,12 +232,12 @@
     <message>
         <location filename="../keyboard-layout/operation/dcclocale.cpp" line="62"/>
         <source>Traditional Chinese (Chinese Hong Kong)</source>
-        <translation>Традиційна китайська (Китайська Гонконг)</translation>
+        <translation>Традиційна китайська (Гонконг)</translation>
     </message>
     <message>
         <location filename="../keyboard-layout/operation/dcclocale.cpp" line="65"/>
         <source>Traditional Chinese (Chinese Taiwan)</source>
-        <translation>Традиційна китайська (Китайська Тайвань)</translation>
+        <translation>Традиційна китайська (Тайвань)</translation>
     </message>
 </context>
 <context>
@@ -247,7 +245,7 @@
     <message>
         <location filename="../keyboard-layout/operation/dcclocale.cpp" line="86"/>
         <source>Taiwan China</source>
-        <translation>Тайвань Китай</translation>
+        <translation>Тайвань</translation>
     </message>
 </context>
 <context>
@@ -255,7 +253,7 @@
     <message>
         <location filename="../keyboard-layout/operation/keyboardcontroller.cpp" line="55"/>
         <source>This shortcut conflicts with [%1]</source>
-        <translation>Це скорочення перетинається з [%1]</translation>
+            <translation>Це клавіатурне скорочення конфліктує із [%1]</translation>
     </message>
 </context>
 <context>
@@ -273,18 +271,18 @@
     <message>
         <location filename="../keyboard-layout/operation/shortcutmodel.cpp" line="258"/>
         <source>Workspace</source>
-        <translation>Робоча область</translation>
+        <translation>Робочий простір</translation>
     </message>
     <message>
         <location filename="../keyboard-layout/operation/shortcutmodel.cpp" line="263"/>
         <source>AssistiveTools</source>
-        <translation>Допоміжні засоби</translation>
+        <translation>Допоміжні інструменти</translation>
     </message>
     <message>
         <location filename="../keyboard-layout/operation/shortcutmodel.cpp" line="268"/>
         <location filename="../keyboard-layout/operation/shortcutmodel.cpp" line="339"/>
         <source>Custom</source>
-        <translation>Власний</translation>
+        <translation>Нетиповий</translation>
     </message>
     <message>
         <location filename="../keyboard-layout/operation/shortcutmodel.cpp" line="394"/>
