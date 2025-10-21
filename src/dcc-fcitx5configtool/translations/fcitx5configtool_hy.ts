@@ -1,6 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE TS>
-<TS version="2.1">
+<?xml version="1.0" ?><!DOCTYPE TS><TS version="2.1" language="hy">
 <context>
     <name>AddonsPage</name>
     <message>
@@ -73,7 +71,7 @@
     <message>
         <location filename="../qml/InputMethodsChooser.qml" line="35"/>
         <source>Add input method</source>
-            <translation>Add input method</translation>
+        <translation>Add input method</translation>
     </message>
     <message>
         <location filename="../qml/InputMethodsChooser.qml" line="41"/>
@@ -172,7 +170,7 @@
     <message>
         <location filename="../qml/LayoutsChooser.qml" line="90"/>
         <source>Cancel</source>
-        <translation>Cancel</translation>
+            <translation>Cancel</translation>
     </message>
     <message>
         <location filename="../qml/LayoutsChooser.qml" line="97"/>
@@ -255,7 +253,7 @@
     <message>
         <location filename="../keyboard-layout/operation/keyboardcontroller.cpp" line="55"/>
         <source>This shortcut conflicts with [%1]</source>
-        <translation>This shortcut conflicts with [%1]</translation>
+            <translation>This shortcut conflicts with [%1]</translation>
     </message>
 </context>
 <context>
