@@ -1,6 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE TS>
-<TS version="2.1" language="az">
+<?xml version="1.0" ?><!DOCTYPE TS><TS version="2.1" language="az">
 <context>
     <name>AddonsPage</name>
     <message>
@@ -34,7 +32,7 @@
     <message>
         <location filename="../qml/AdvancedSettingsModule.qml" line="81"/>
         <source>Keyboard layout</source>
-        <translation>Klaviatura dizaynı</translation>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -101,27 +99,27 @@
     <message>
         <location filename="../qml/KeyboardLayout.qml" line="16"/>
         <source>Keyboard layout</source>
-        <translation>Klaviatura dizaynı</translation>
+        <translation>ترتيب لوحة المفاتيح</translation>
     </message>
     <message>
         <location filename="../qml/KeyboardLayout.qml" line="34"/>
         <source>done</source>
-        <translation>bitdi</translation>
+        <translation>تم</translation>
     </message>
     <message>
         <location filename="../qml/KeyboardLayout.qml" line="34"/>
         <source>edit</source>
-        <translation>redaktə et</translation>
+        <translation>تحرير</translation>
     </message>
     <message>
         <location filename="../qml/KeyboardLayout.qml" line="57"/>
         <source>Add the corresponding input method in &lt;a style=&apos;text-decoration: none;&apos; href=&apos;Manage Input Methods&apos;&gt;Input Method Management&lt;/a&gt; to ensure the keyboard layout works when added or switched.</source>
-        <translation>Giriş üsulu ilə uyğun klaviatura dizaynını &lt;a style=&apos;text-decoration: none;&apos; href=&apos;Manage Input Methods&apos;&gt;Giriş üsulu idarəetməsi&lt;/a&gt; klaviatura dizaynı işləyərkən əlavə edilərkən və ya dəyişdikdə geri çevrildikdə geri çevrilməsini təmin etmək üçün əlavə edin.</translation>
+        <translation>أضف الطريقة ذات الصلة للإدخال في &lt;a style=&apos;text-decoration: none;&apos; href=&apos;Manage Input Methods&apos;&gt;إدارة طرق الإدخال&lt;/a&gt; للتأكد من أن لوحة المفاتيح تعمل عند الإضافة أو التبديل.</translation>
     </message>
     <message>
         <location filename="../qml/KeyboardLayout.qml" line="142"/>
         <source>Add new keyboard layout...</source>
-        <translation>Yeni klaviatura dizaynı əlavə et...</translation>
+        <translation>إضافة لوحة مفاتيح جديدة...</translation>
     </message>
 </context>
 <context>
@@ -129,27 +127,27 @@
     <message>
         <location filename="../qml/KeyboardLayoutModule.qml" line="16"/>
         <source>Keyboard layout</source>
-        <translation>Klaviatura dizaynı</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../qml/KeyboardLayoutModule.qml" line="34"/>
         <source>done</source>
-        <translation>bitdi</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../qml/KeyboardLayoutModule.qml" line="34"/>
         <source>edit</source>
-        <translation>redaktə et</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../qml/KeyboardLayoutModule.qml" line="57"/>
         <source>Add the corresponding input method in &lt;a style=&apos;text-decoration: none;&apos; href=&apos;Manage Input Methods&apos;&gt;Input Method Management&lt;/a&gt; to ensure the keyboard layout works when added or switched.</source>
-        <translation>Giriş üsulu ilə uyğun klaviatura dizaynını &lt;a style=&apos;text-decoration: none;&apos; href=&apos;Manage Input Methods&apos;&gt;Giriş üsulu idarəetməsi&lt;/a&gt; klaviatura dizaynı işləyərkən əlavə edilərkən və ya dəyişdikdə geri çevrildikdə geri çevrilməsini təmin etmək üçün əlavə edin.</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../qml/KeyboardLayoutModule.qml" line="140"/>
         <source>Add new keyboard layout...</source>
-        <translation>Yeni klaviatura dizaynı əlavə et...</translation>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -157,27 +155,27 @@
     <message>
         <location filename="../qml/LayoutsChooser.qml" line="30"/>
         <source>Add new keyboard layout</source>
-        <translation>Yeni klaviatura dizaynı əlavə et</translation>
+        <translation>Yeni klaviatura dizaynı əlavə edin</translation>
     </message>
     <message>
         <location filename="../qml/LayoutsChooser.qml" line="38"/>
         <source>Search</source>
-        <translation>Ara</translation>
+        <translation>بحث</translation>
     </message>
     <message>
         <location filename="../qml/LayoutsChooser.qml" line="67"/>
         <source>Current language keyboard layouts</source>
-        <translation>Hazırki dilin klaviatura dizaynları</translation>
+        <translation>Cari dillər klaviatura dizaynları</translation>
     </message>
     <message>
         <location filename="../qml/LayoutsChooser.qml" line="90"/>
         <source>Cancel</source>
-        <translation>Ləğv et</translation>
+            <translation>إلغاء</translation>
     </message>
     <message>
         <location filename="../qml/LayoutsChooser.qml" line="97"/>
         <source>Add</source>
-        <translation>Əlavə et</translation>
+        <translation>إضافة</translation>
     </message>
 </context>
 <context>
@@ -196,35 +194,35 @@
 <context>
     <name>ShortcutsModule</name>
     <message>
-        <location filename="../qml/ShortcutsModule.qml" line="118"/>
+        <location filename="../qml/ShortcutsModule.qml" line="12"/>
+        <location filename="../qml/ShortcutsModule.qml" line="14"/>
+        <location filename="../qml/ShortcutsModule.qml" line="151"/>
+        <location filename="../qml/ShortcutsModule.qml" line="152"/>
+        <source>None</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../qml/ShortcutsModule.qml" line="119"/>
         <source>Shortcuts</source>
         <translation>Kürsütlər</translation>
     </message>
     <message>
-        <location filename="../qml/ShortcutsModule.qml" line="133"/>
+        <location filename="../qml/ShortcutsModule.qml" line="134"/>
         <source>Restore Defaults</source>
         <translation>Default əlavələri geri qaytar</translation>
     </message>
     <message>
-        <location filename="../qml/ShortcutsModule.qml" line="225"/>
+        <location filename="../qml/ShortcutsModule.qml" line="200"/>
         <source>Scroll between input methods</source>
         <translation>Giriş üsulu arasınday keç</translation>
     </message>
     <message>
-        <location filename="../qml/ShortcutsModule.qml" line="13"/>
-        <location filename="../qml/ShortcutsModule.qml" line="15"/>
-        <location filename="../qml/ShortcutsModule.qml" line="150"/>
-        <location filename="../qml/ShortcutsModule.qml" line="151"/>
-        <source>None</source>
-        <translation>Heç bir</translation>
-    </message>
-    <message>
-        <location filename="../qml/ShortcutsModule.qml" line="273"/>
+        <location filename="../qml/ShortcutsModule.qml" line="230"/>
         <source>Turn on or off input methods</source>
         <translation>Giriş üsulu və ya kürsüt əsasında işlətmə</translation>
     </message>
     <message>
-        <location filename="../qml/ShortcutsModule.qml" line="336"/>
+        <location filename="../qml/ShortcutsModule.qml" line="273"/>
         <source>It turns on or off the currently used input method.If no input method is being used or the first input method is not the keyboard, it switches between the first input method and the currently used keyboard/input method.</source>
         <translation>İndi istifadə olunan giriş üsulunu aç və ya kapat. Giriş üsulu istifadə olunmuyorsa və ya ilk giriş üsulu klaviatura deyilsə, ilk giriş üsulu və ya indi istifadə olunan klaviatura/giriş üsulu arasınday keç.</translation>
     </message>
@@ -234,12 +232,12 @@
     <message>
         <location filename="../keyboard-layout/operation/dcclocale.cpp" line="62"/>
         <source>Traditional Chinese (Chinese Hong Kong)</source>
-        <translation>İstinadın İslam Cibiri (İslam Cibiri)</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../keyboard-layout/operation/dcclocale.cpp" line="65"/>
         <source>Traditional Chinese (Chinese Taiwan)</source>
-        <translation>İstinadın İslam Cibiri (İslam Cibiri)</translation>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -247,7 +245,7 @@
     <message>
         <location filename="../keyboard-layout/operation/dcclocale.cpp" line="86"/>
         <source>Taiwan China</source>
-        <translation>İslam Cibiri</translation>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -255,7 +253,7 @@
     <message>
         <location filename="../keyboard-layout/operation/keyboardcontroller.cpp" line="55"/>
         <source>This shortcut conflicts with [%1]</source>
-        <translation>Bu kürsüt [%1] ilə uyğundur</translation>
+            <translation>此快捷键与 [%1] 冲突</translation>
     </message>
 </context>
 <context>
@@ -263,33 +261,33 @@
     <message>
         <location filename="../keyboard-layout/operation/shortcutmodel.cpp" line="248"/>
         <source>System</source>
-        <translation>Sistem</translation>
+        <translation>النظام</translation>
     </message>
     <message>
         <location filename="../keyboard-layout/operation/shortcutmodel.cpp" line="253"/>
         <source>Window</source>
-        <translation>Pəncərə</translation>
+        <translation>النافذة</translation>
     </message>
     <message>
         <location filename="../keyboard-layout/operation/shortcutmodel.cpp" line="258"/>
         <source>Workspace</source>
-        <translation>İş məkanı</translation>
+        <translation>منطقة العمل</translation>
     </message>
     <message>
         <location filename="../keyboard-layout/operation/shortcutmodel.cpp" line="263"/>
         <source>AssistiveTools</source>
-        <translation>AssistiveTools</translation>
+        <translation>أدوات المساعدة</translation>
     </message>
     <message>
         <location filename="../keyboard-layout/operation/shortcutmodel.cpp" line="268"/>
         <location filename="../keyboard-layout/operation/shortcutmodel.cpp" line="339"/>
         <source>Custom</source>
-        <translation>Özəl</translation>
+        <translation>مخصص</translation>
     </message>
     <message>
         <location filename="../keyboard-layout/operation/shortcutmodel.cpp" line="394"/>
         <source>None</source>
-        <translation>Heç bir</translation>
+        <translation>لا يوجد</translation>
     </message>
 </context>
 <context>
