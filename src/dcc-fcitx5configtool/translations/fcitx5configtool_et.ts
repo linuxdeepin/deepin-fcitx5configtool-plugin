@@ -4,7 +4,7 @@
     <message>
         <location filename="../qml/AddonsPage.qml" line="20"/>
         <source>Add-ons</source>
-        <translation type="unfinished"/>
+        <translation>Lisandid</translation>
     </message>
 </context>
 <context>
@@ -12,27 +12,27 @@
     <message>
         <location filename="../qml/AdvancedSettingsModule.qml" line="15"/>
         <source>Advanced Settings</source>
-        <translation type="unfinished"/>
+        <translation>Täpsemad seaded</translation>
     </message>
     <message>
         <location filename="../qml/AdvancedSettingsModule.qml" line="41"/>
         <source>&quot;Advanced Settings&quot; is only valid for the input method that uses the system settings, if the input method has its own settings, its own settings shall prevail.</source>
-        <translation type="unfinished"/>
+        <translation>&quot;Täpsemad seaded&quot; kehtivad ainult sisestusmeetodi puhul, mis kasutab süsteemi seadeid. Kui sisestusmeetodil on oma seaded, siis kehtivad nende oma seaded.</translation>
     </message>
     <message>
         <location filename="../qml/AdvancedSettingsModule.qml" line="54"/>
         <source>Global Config</source>
-        <translation type="unfinished"/>
+        <translation>Üldine konfiguratsioon</translation>
     </message>
     <message>
         <location filename="../qml/AdvancedSettingsModule.qml" line="70"/>
         <source>Add-ons</source>
-        <translation type="unfinished"/>
+        <translation>Lisandid</translation>
     </message>
     <message>
         <location filename="../qml/AdvancedSettingsModule.qml" line="81"/>
         <source>Keyboard layout</source>
-        <translation type="unfinished"/>
+        <translation>Klaviatuuri paigutus</translation>
     </message>
 </context>
 <context>
@@ -40,7 +40,7 @@
     <message>
         <location filename="../qml/DetailConfigItem.qml" line="151"/>
         <source>Please enter a new shortcut</source>
-        <translation type="unfinished"/>
+        <translation>Palun sisestage uus kiirklahv</translation>
     </message>
 </context>
 <context>
@@ -48,22 +48,22 @@
     <message>
         <location filename="../qml/IMList.qml" line="152"/>
         <source>Move Up</source>
-        <translation type="unfinished"/>
+        <translation>Liiguta üles</translation>
     </message>
     <message>
         <location filename="../qml/IMList.qml" line="160"/>
         <source>Move Down</source>
-        <translation type="unfinished"/>
+        <translation>Liiguta alla</translation>
     </message>
     <message>
         <location filename="../qml/IMList.qml" line="168"/>
         <source>Settings</source>
-        <translation type="unfinished"/>
+        <translation>Seaded</translation>
     </message>
     <message>
         <location filename="../qml/IMList.qml" line="176"/>
         <source>Remove</source>
-        <translation type="unfinished"/>
+        <translation>Eemalda</translation>
     </message>
 </context>
 <context>
@@ -71,27 +71,27 @@
     <message>
         <location filename="../qml/InputMethodsChooser.qml" line="35"/>
         <source>Add input method</source>
-        <translation type="unfinished"/>
+        <translation>Lisa sisestusmeetod</translation>
     </message>
     <message>
         <location filename="../qml/InputMethodsChooser.qml" line="41"/>
         <source>Search</source>
-        <translation type="unfinished"/>
+        <translation>Otsi</translation>
     </message>
     <message>
         <location filename="../qml/InputMethodsChooser.qml" line="109"/>
         <source>Find more in App Store</source>
-        <translation type="unfinished"/>
+        <translation>Leia rohkem rakenduste poest</translation>
     </message>
     <message>
         <location filename="../qml/InputMethodsChooser.qml" line="129"/>
         <source>Cancel</source>
-        <translation type="unfinished"/>
+        <translation>Tühista</translation>
     </message>
     <message>
         <location filename="../qml/InputMethodsChooser.qml" line="136"/>
         <source>Add</source>
-        <translation type="unfinished"/>
+        <translation>Lisa</translation>
     </message>
 </context>
 <context>
@@ -99,27 +99,27 @@
     <message>
         <location filename="../qml/KeyboardLayout.qml" line="16"/>
         <source>Keyboard layout</source>
-        <translation>Klahvikotti planeerimine</translation>
+        <translation>Klaviatuuri paigutus</translation>
     </message>
     <message>
         <location filename="../qml/KeyboardLayout.qml" line="34"/>
         <source>done</source>
-        <translation>võetud</translation>
+        <translation>valmis</translation>
     </message>
     <message>
         <location filename="../qml/KeyboardLayout.qml" line="34"/>
         <source>edit</source>
-        <translation>üldendamine</translation>
+        <translation>muuda</translation>
     </message>
     <message>
         <location filename="../qml/KeyboardLayout.qml" line="57"/>
         <source>Add the corresponding input method in &lt;a style=&apos;text-decoration: none;&apos; href=&apos;Manage Input Methods&apos;&gt;Input Method Management&lt;/a&gt; to ensure the keyboard layout works when added or switched.</source>
-        <translation>Lisage vastav sisestusmeetod &lt;a style=&apos;text-decoration: none;&apos; href=&apos;Manage Input Methods&apos;&gt;Sisestusmeetodide juhendimisel&lt;/a&gt;, et saavutada klahvikotti planeerimine, kui see lisatakse või vahetatakse.</translation>
+        <translation>Lisage vastav sisestusmeetod &lt;a style=&apos;text-decoration: none;&apos; href=&apos;Manage Input Methods&apos;&gt;Sisestusmeetodite halduses&lt;/a&gt;, et tagada klaviatuuri paigutuse töötamine lisamisel või vahetamisel.</translation>
     </message>
     <message>
         <location filename="../qml/KeyboardLayout.qml" line="142"/>
         <source>Add new keyboard layout...</source>
-        <translation>Lisage uus klahvikotti planeerimine...</translation>
+        <translation>Lisa uus klaviatuuri paigutus...</translation>
     </message>
 </context>
 <context>
@@ -127,27 +127,27 @@
     <message>
         <location filename="../qml/KeyboardLayoutModule.qml" line="16"/>
         <source>Keyboard layout</source>
-        <translation type="unfinished"/>
+        <translation>Klaviatuuri paigutus</translation>
     </message>
     <message>
         <location filename="../qml/KeyboardLayoutModule.qml" line="34"/>
         <source>done</source>
-        <translation type="unfinished"/>
+        <translation>valmis</translation>
     </message>
     <message>
         <location filename="../qml/KeyboardLayoutModule.qml" line="34"/>
         <source>edit</source>
-        <translation type="unfinished"/>
+        <translation>muuda</translation>
     </message>
     <message>
         <location filename="../qml/KeyboardLayoutModule.qml" line="57"/>
         <source>Add the corresponding input method in &lt;a style=&apos;text-decoration: none;&apos; href=&apos;Manage Input Methods&apos;&gt;Input Method Management&lt;/a&gt; to ensure the keyboard layout works when added or switched.</source>
-        <translation type="unfinished"/>
+        <translation>Lisage vastav sisestusmeetod &lt;a style=&apos;text-decoration: none;&apos; href=&apos;Manage Input Methods&apos;&gt;Sisestusmeetodite halduses&lt;/a&gt;, et tagada klaviatuuri paigutuse töötamine lisamisel või vahetamisel.</translation>
     </message>
     <message>
         <location filename="../qml/KeyboardLayoutModule.qml" line="140"/>
         <source>Add new keyboard layout...</source>
-        <translation type="unfinished"/>
+        <translation>Lisa uus klaviatuuri paigutus...</translation>
     </message>
 </context>
 <context>
@@ -155,27 +155,27 @@
     <message>
         <location filename="../qml/LayoutsChooser.qml" line="30"/>
         <source>Add new keyboard layout</source>
-        <translation type="unfinished"/>
+        <translation>Lisa uus klaviatuuri paigutus</translation>
     </message>
     <message>
         <location filename="../qml/LayoutsChooser.qml" line="38"/>
         <source>Search</source>
-        <translation>Otsing</translation>
+        <translation>Otsi</translation>
     </message>
     <message>
         <location filename="../qml/LayoutsChooser.qml" line="67"/>
         <source>Current language keyboard layouts</source>
-        <translation type="unfinished"/>
+        <translation>Praeguse keele klaviatuuri paigutused</translation>
     </message>
     <message>
         <location filename="../qml/LayoutsChooser.qml" line="90"/>
         <source>Cancel</source>
-            <translation>Lõpeta</translation>
+            <translation>Tühista</translation>
     </message>
     <message>
         <location filename="../qml/LayoutsChooser.qml" line="97"/>
         <source>Add</source>
-        <translation>Lisada</translation>
+        <translation>Lisa</translation>
     </message>
 </context>
 <context>
@@ -183,12 +183,12 @@
     <message>
         <location filename="../qml/ManageInputMethodsModule.qml" line="15"/>
         <source>Input method management</source>
-        <translation type="unfinished"/>
+        <translation>Sisestusmeetodite haldus</translation>
     </message>
     <message>
         <location filename="../qml/ManageInputMethodsModule.qml" line="33"/>
         <source>Add input method</source>
-        <translation type="unfinished"/>
+        <translation>Lisa sisestusmeetod</translation>
     </message>
 </context>
 <context>
@@ -199,32 +199,32 @@
         <location filename="../qml/ShortcutsModule.qml" line="151"/>
         <location filename="../qml/ShortcutsModule.qml" line="152"/>
         <source>None</source>
-        <translation type="unfinished"/>
+        <translation>Puudub</translation>
     </message>
     <message>
         <location filename="../qml/ShortcutsModule.qml" line="119"/>
         <source>Shortcuts</source>
-        <translation type="unfinished"/>
+        <translation>Kiirklahvid</translation>
     </message>
     <message>
         <location filename="../qml/ShortcutsModule.qml" line="134"/>
         <source>Restore Defaults</source>
-        <translation type="unfinished"/>
+        <translation>Taasta vaikeväärtused</translation>
     </message>
     <message>
         <location filename="../qml/ShortcutsModule.qml" line="200"/>
         <source>Scroll between input methods</source>
-        <translation type="unfinished"/>
+        <translation>Keri sisestusmeetodite vahel</translation>
     </message>
     <message>
         <location filename="../qml/ShortcutsModule.qml" line="230"/>
         <source>Turn on or off input methods</source>
-        <translation type="unfinished"/>
+        <translation>Lülita sisestusmeetodid sisse või välja</translation>
     </message>
     <message>
         <location filename="../qml/ShortcutsModule.qml" line="273"/>
         <source>It turns on or off the currently used input method.If no input method is being used or the first input method is not the keyboard, it switches between the first input method and the currently used keyboard/input method.</source>
-        <translation type="unfinished"/>
+        <translation>Lülitab praegu kasutatava sisestusmeetodi sisse või välja. Kui ühtegi sisestusmeetodit ei kasutata või esimene sisestusmeetod ei ole klaviatuur, siis vahetab esimese sisestusmeetodi ja praegu kasutatava klaviatuuri/sisestusmeetodi vahel.</translation>
     </message>
 </context>
 <context>
@@ -232,12 +232,12 @@
     <message>
         <location filename="../keyboard-layout/operation/dcclocale.cpp" line="62"/>
         <source>Traditional Chinese (Chinese Hong Kong)</source>
-        <translation type="unfinished"/>
+        <translation>Traditsiooniline hiina keel (Hiina Hongkong)</translation>
     </message>
     <message>
         <location filename="../keyboard-layout/operation/dcclocale.cpp" line="65"/>
         <source>Traditional Chinese (Chinese Taiwan)</source>
-        <translation type="unfinished"/>
+        <translation>Traditsiooniline hiina keel (Hiina Taiwan)</translation>
     </message>
 </context>
 <context>
@@ -245,7 +245,7 @@
     <message>
         <location filename="../keyboard-layout/operation/dcclocale.cpp" line="86"/>
         <source>Taiwan China</source>
-        <translation type="unfinished"/>
+        <translation>Taiwan Hiina</translation>
     </message>
 </context>
 <context>
@@ -253,7 +253,7 @@
     <message>
         <location filename="../keyboard-layout/operation/keyboardcontroller.cpp" line="55"/>
         <source>This shortcut conflicts with [%1]</source>
-            <translation>See pikaavaldus ületab [%1]</translation>
+            <translation>See kiirklahv on vastuolus järgmisega: [%1]</translation>
     </message>
 </context>
 <context>
@@ -276,7 +276,7 @@
     <message>
         <location filename="../keyboard-layout/operation/shortcutmodel.cpp" line="263"/>
         <source>AssistiveTools</source>
-        <translation>Abistavad välineid</translation>
+        <translation>Abistavad tööriistad</translation>
     </message>
     <message>
         <location filename="../keyboard-layout/operation/shortcutmodel.cpp" line="268"/>
@@ -287,7 +287,7 @@
     <message>
         <location filename="../keyboard-layout/operation/shortcutmodel.cpp" line="394"/>
         <source>None</source>
-        <translation> pole</translation>
+        <translation>Puudub</translation>
     </message>
 </context>
 <context>
@@ -295,12 +295,12 @@
     <message>
         <location filename="../qml/fcitx5configtool.qml" line="8"/>
         <source>Input Methods</source>
-        <translation type="unfinished"/>
+        <translation>Sisestusmeetodid</translation>
     </message>
     <message>
         <location filename="../qml/fcitx5configtool.qml" line="9"/>
         <source>Input method management, input method shortcuts, advanced settings</source>
-        <translation type="unfinished"/>
+        <translation>Sisestusmeetodite haldus, sisestusmeetodite kiirklahvid, täpsemad seaded</translation>
     </message>
 </context>
 </TS>
