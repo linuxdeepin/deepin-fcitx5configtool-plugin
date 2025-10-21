@@ -1,6 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE TS>
-<TS version="2.1" language="ru">
+<?xml version="1.0" ?><!DOCTYPE TS><TS version="2.1" language="ru">
 <context>
     <name>AddonsPage</name>
     <message>
@@ -34,7 +32,7 @@
     <message>
         <location filename="../qml/AdvancedSettingsModule.qml" line="81"/>
         <source>Keyboard layout</source>
-        <translation>Раскладка клавиатуры</translation>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -83,7 +81,7 @@
     <message>
         <location filename="../qml/InputMethodsChooser.qml" line="109"/>
         <source>Find more in App Store</source>
-        <translation>Найдите больше в App Store</translation>
+        <translation>Найти больше в магазине приложений</translation>
     </message>
     <message>
         <location filename="../qml/InputMethodsChooser.qml" line="129"/>
@@ -101,27 +99,27 @@
     <message>
         <location filename="../qml/KeyboardLayout.qml" line="16"/>
         <source>Keyboard layout</source>
-        <translation>Раскладка клавиатуры</translation>
+        <translation>Набор клавиш</translation>
     </message>
     <message>
         <location filename="../qml/KeyboardLayout.qml" line="34"/>
         <source>done</source>
-        <translation>готово</translation>
+        <translation>Готово</translation>
     </message>
     <message>
         <location filename="../qml/KeyboardLayout.qml" line="34"/>
         <source>edit</source>
-        <translation>редактировать</translation>
+        <translation>Редактировать</translation>
     </message>
     <message>
         <location filename="../qml/KeyboardLayout.qml" line="57"/>
         <source>Add the corresponding input method in &lt;a style=&apos;text-decoration: none;&apos; href=&apos;Manage Input Methods&apos;&gt;Input Method Management&lt;/a&gt; to ensure the keyboard layout works when added or switched.</source>
-        <translation>Добавьте соответствующий метод ввода в &lt;a style=&apos;text-decoration: none;&apos; href=&apos;Manage Input Methods&apos;&gt;Управление методами ввода&lt;/a&gt; для обеспечения правильной работы раскладки клавиатуры при добавлении или переключении.</translation>
+        <translation>Добавьте соответствующий метод ввода в &lt;a style=&apos;text-decoration: none;&apos; href=&apos;Manage Input Methods&apos;&gt;Управлении методами ввода&lt;/a&gt;, чтобы убедиться, что набор клавиш работает при добавлении или переключении.</translation>
     </message>
     <message>
         <location filename="../qml/KeyboardLayout.qml" line="142"/>
         <source>Add new keyboard layout...</source>
-        <translation>Добавить новую раскладку клавиатуры...</translation>
+        <translation>Добавить новый набор клавиш...</translation>
     </message>
 </context>
 <context>
@@ -129,27 +127,27 @@
     <message>
         <location filename="../qml/KeyboardLayoutModule.qml" line="16"/>
         <source>Keyboard layout</source>
-        <translation>Раскладка клавиатуры</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../qml/KeyboardLayoutModule.qml" line="34"/>
         <source>done</source>
-        <translation>готово</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../qml/KeyboardLayoutModule.qml" line="34"/>
         <source>edit</source>
-        <translation>редактировать</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../qml/KeyboardLayoutModule.qml" line="57"/>
         <source>Add the corresponding input method in &lt;a style=&apos;text-decoration: none;&apos; href=&apos;Manage Input Methods&apos;&gt;Input Method Management&lt;/a&gt; to ensure the keyboard layout works when added or switched.</source>
-        <translation>Добавьте соответствующий метод ввода в &lt;a style=&apos;text-decoration: none;&apos; href=&apos;Manage Input Methods&apos;&gt;Управление методами ввода&lt;/a&gt; для обеспечения правильной работы раскладки клавиатуры при добавлении или переключении.</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../qml/KeyboardLayoutModule.qml" line="140"/>
         <source>Add new keyboard layout...</source>
-        <translation>Добавить новую раскладку клавиатуры...</translation>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -157,7 +155,7 @@
     <message>
         <location filename="../qml/LayoutsChooser.qml" line="30"/>
         <source>Add new keyboard layout</source>
-        <translation>Добавить новую раскладку клавиатуры</translation>
+        <translation>Добавить раскладку клавиатуры</translation>
     </message>
     <message>
         <location filename="../qml/LayoutsChooser.qml" line="38"/>
@@ -167,12 +165,12 @@
     <message>
         <location filename="../qml/LayoutsChooser.qml" line="67"/>
         <source>Current language keyboard layouts</source>
-        <translation>Текущая языковая раскладка клавиатуры</translation>
+        <translation>Текущие раскладки клавиатуры</translation>
     </message>
     <message>
         <location filename="../qml/LayoutsChooser.qml" line="90"/>
         <source>Cancel</source>
-        <translation>Отмена</translation>
+            <translation>Отмена</translation>
     </message>
     <message>
         <location filename="../qml/LayoutsChooser.qml" line="97"/>
@@ -196,35 +194,35 @@
 <context>
     <name>ShortcutsModule</name>
     <message>
-        <location filename="../qml/ShortcutsModule.qml" line="118"/>
+        <location filename="../qml/ShortcutsModule.qml" line="12"/>
+        <location filename="../qml/ShortcutsModule.qml" line="14"/>
+        <location filename="../qml/ShortcutsModule.qml" line="151"/>
+        <location filename="../qml/ShortcutsModule.qml" line="152"/>
+        <source>None</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../qml/ShortcutsModule.qml" line="119"/>
         <source>Shortcuts</source>
         <translation>Сочетания клавиш</translation>
     </message>
     <message>
-        <location filename="../qml/ShortcutsModule.qml" line="133"/>
+        <location filename="../qml/ShortcutsModule.qml" line="134"/>
         <source>Restore Defaults</source>
         <translation>Восстановить настройки по умолчанию</translation>
     </message>
     <message>
-        <location filename="../qml/ShortcutsModule.qml" line="225"/>
+        <location filename="../qml/ShortcutsModule.qml" line="200"/>
         <source>Scroll between input methods</source>
         <translation>Прокрутка между методами ввода</translation>
     </message>
     <message>
-        <location filename="../qml/ShortcutsModule.qml" line="13"/>
-        <location filename="../qml/ShortcutsModule.qml" line="15"/>
-        <location filename="../qml/ShortcutsModule.qml" line="150"/>
-        <location filename="../qml/ShortcutsModule.qml" line="151"/>
-        <source>None</source>
-        <translation>Нет</translation>
-    </message>
-    <message>
-        <location filename="../qml/ShortcutsModule.qml" line="273"/>
+        <location filename="../qml/ShortcutsModule.qml" line="230"/>
         <source>Turn on or off input methods</source>
         <translation>Включить или выключить методы ввода</translation>
     </message>
     <message>
-        <location filename="../qml/ShortcutsModule.qml" line="336"/>
+        <location filename="../qml/ShortcutsModule.qml" line="273"/>
         <source>It turns on or off the currently used input method.If no input method is being used or the first input method is not the keyboard, it switches between the first input method and the currently used keyboard/input method.</source>
         <translation>Включает или выключает текущий метод ввода. Если метод ввода не используется или первый метод ввода не является клавиатурой, он переключает первый метод ввода и текущую клавиатуру/метод ввода.</translation>
     </message>
@@ -234,12 +232,12 @@
     <message>
         <location filename="../keyboard-layout/operation/dcclocale.cpp" line="62"/>
         <source>Traditional Chinese (Chinese Hong Kong)</source>
-        <translation>Традиционная китайская (Китайская Гонконг)</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../keyboard-layout/operation/dcclocale.cpp" line="65"/>
         <source>Traditional Chinese (Chinese Taiwan)</source>
-        <translation>Традиционная китайская (Китайская Тайвань)</translation>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -247,7 +245,7 @@
     <message>
         <location filename="../keyboard-layout/operation/dcclocale.cpp" line="86"/>
         <source>Taiwan China</source>
-        <translation>Тайвань Китай</translation>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -255,7 +253,7 @@
     <message>
         <location filename="../keyboard-layout/operation/keyboardcontroller.cpp" line="55"/>
         <source>This shortcut conflicts with [%1]</source>
-        <translation>Это сочетание клавиш конфликтует с [%1]</translation>
+            <translation>Эта комбинация клавиш конфликтует с [%1]</translation>
     </message>
 </context>
 <context>
@@ -273,12 +271,12 @@
     <message>
         <location filename="../keyboard-layout/operation/shortcutmodel.cpp" line="258"/>
         <source>Workspace</source>
-        <translation>Рабочая область</translation>
+        <translation>Рабочее пространство</translation>
     </message>
     <message>
         <location filename="../keyboard-layout/operation/shortcutmodel.cpp" line="263"/>
         <source>AssistiveTools</source>
-        <translation>Вспомогательные инструменты</translation>
+        <translation>Средства доступа</translation>
     </message>
     <message>
         <location filename="../keyboard-layout/operation/shortcutmodel.cpp" line="268"/>
