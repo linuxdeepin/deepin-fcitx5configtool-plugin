@@ -32,7 +32,7 @@
     <message>
         <location filename="../qml/AdvancedSettingsModule.qml" line="81"/>
         <source>Keyboard layout</source>
-        <translation>Disposició del teclat</translation>
+        <translation>Distribució del teclat</translation>
     </message>
 </context>
 <context>
@@ -99,7 +99,7 @@
     <message>
         <location filename="../qml/KeyboardLayout.qml" line="16"/>
         <source>Keyboard layout</source>
-        <translation>Disposició del teclat</translation>
+        <translation>Distribució del teclat</translation>
     </message>
     <message>
         <location filename="../qml/KeyboardLayout.qml" line="34"/>
@@ -109,17 +109,17 @@
     <message>
         <location filename="../qml/KeyboardLayout.qml" line="34"/>
         <source>edit</source>
-        <translation>edita</translation>
+        <translation>editar</translation>
     </message>
     <message>
         <location filename="../qml/KeyboardLayout.qml" line="57"/>
         <source>Add the corresponding input method in &lt;a style=&apos;text-decoration: none;&apos; href=&apos;Manage Input Methods&apos;&gt;Input Method Management&lt;/a&gt; to ensure the keyboard layout works when added or switched.</source>
-        <translation>Afegiu el mètode d&apos;entrada corresponent a la &lt;a style=&apos;text-decoration: none;&apos; href=&apos;Manage Input Methods&apos;&gt;Gestió del mètode d&apos;entrada&lt;/a&gt; per garantir que la disposició del teclat funcioni quan s&apos;afegeixi o es canviï.</translation>
+        <translation>Afegeix el mètode d&apos;entrada corresponent en &lt;a style=&apos;text-decoration: none;&apos; href=&apos;Manage Input Methods&apos;&gt;Input Method Management&lt;/a&gt; per assegurar que la distribució del teclat funciona quan s&apos;afegeix o es canvia.</translation>
     </message>
     <message>
         <location filename="../qml/KeyboardLayout.qml" line="142"/>
         <source>Add new keyboard layout...</source>
-        <translation>Afegiu una disposició de teclat nova...</translation>
+        <translation>Afegeix una nova distribució del teclat...</translation>
     </message>
 </context>
 <context>
@@ -127,7 +127,7 @@
     <message>
         <location filename="../qml/KeyboardLayoutModule.qml" line="16"/>
         <source>Keyboard layout</source>
-        <translation>Disposició del teclat</translation>
+        <translation>Distribució del teclat</translation>
     </message>
     <message>
         <location filename="../qml/KeyboardLayoutModule.qml" line="34"/>
@@ -137,17 +137,17 @@
     <message>
         <location filename="../qml/KeyboardLayoutModule.qml" line="34"/>
         <source>edit</source>
-        <translation>edita</translation>
+        <translation>editar</translation>
     </message>
     <message>
         <location filename="../qml/KeyboardLayoutModule.qml" line="57"/>
         <source>Add the corresponding input method in &lt;a style=&apos;text-decoration: none;&apos; href=&apos;Manage Input Methods&apos;&gt;Input Method Management&lt;/a&gt; to ensure the keyboard layout works when added or switched.</source>
-        <translation>Afegiu el mètode d&apos;entrada corresponent a la &lt;a style=&apos;text-decoration: none;&apos; href=&apos;Manage Input Methods&apos;&gt;Gestió del mètode d&apos;entrada&lt;/a&gt; per garantir que la disposició del teclat funcioni quan s&apos;afegeixi o es canviï.</translation>
+        <translation>Afegeix el mètode d&apos;entrada corresponent en &lt;a style=&apos;text-decoration: none;&apos; href=&apos;Manage Input Methods&apos;&gt;Input Method Management&lt;/a&gt; per assegurar que la distribució del teclat funciona quan s&apos;afegeix o es canvia.</translation>
     </message>
     <message>
         <location filename="../qml/KeyboardLayoutModule.qml" line="140"/>
         <source>Add new keyboard layout...</source>
-        <translation>Afegiu una disposició de teclat nova...</translation>
+        <translation>Afegeix una nova distribució del teclat...</translation>
     </message>
 </context>
 <context>
@@ -155,7 +155,7 @@
     <message>
         <location filename="../qml/LayoutsChooser.qml" line="30"/>
         <source>Add new keyboard layout</source>
-        <translation>Afegeix una disposició de teclat nova</translation>
+        <translation>Afegeix una nova distribució del teclat</translation>
     </message>
     <message>
         <location filename="../qml/LayoutsChooser.qml" line="38"/>
@@ -165,7 +165,7 @@
     <message>
         <location filename="../qml/LayoutsChooser.qml" line="67"/>
         <source>Current language keyboard layouts</source>
-        <translation>Disposicions de teclat actuals</translation>
+        <translation>Distribució del teclat de la llengua actual</translation>
     </message>
     <message>
         <location filename="../qml/LayoutsChooser.qml" line="90"/>
@@ -232,12 +232,12 @@
     <message>
         <location filename="../keyboard-layout/operation/dcclocale.cpp" line="62"/>
         <source>Traditional Chinese (Chinese Hong Kong)</source>
-        <translation>Xinès tradicional (xinès de Hong Kong)</translation>
+        <translation>Chino tradicional (Hong Kong)</translation>
     </message>
     <message>
         <location filename="../keyboard-layout/operation/dcclocale.cpp" line="65"/>
         <source>Traditional Chinese (Chinese Taiwan)</source>
-        <translation>Xinès tradicional (xinès taiwanès)</translation>
+        <translation>Chino tradicional (Taiwan)</translation>
     </message>
 </context>
 <context>
@@ -245,7 +245,7 @@
     <message>
         <location filename="../keyboard-layout/operation/dcclocale.cpp" line="86"/>
         <source>Taiwan China</source>
-        <translation>Taiwan Xina</translation>
+        <translation>Taiwan</translation>
     </message>
 </context>
 <context>
@@ -253,7 +253,7 @@
     <message>
         <location filename="../keyboard-layout/operation/keyboardcontroller.cpp" line="55"/>
         <source>This shortcut conflicts with [%1]</source>
-            <translation>Aquesta drecera té conflicte amb [%1]</translation>
+            <translation>Aquesta drecera conflueix amb [%1]</translation>
     </message>
 </context>
 <context>
@@ -276,7 +276,7 @@
     <message>
         <location filename="../keyboard-layout/operation/shortcutmodel.cpp" line="263"/>
         <source>AssistiveTools</source>
-        <translation>Eines d&apos;assistència</translation>
+        <translation>Herramientes asistenciales</translation>
     </message>
     <message>
         <location filename="../keyboard-layout/operation/shortcutmodel.cpp" line="268"/>
