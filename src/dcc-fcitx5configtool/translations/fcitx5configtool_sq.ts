@@ -114,7 +114,7 @@
     <message>
         <location filename="../qml/KeyboardLayout.qml" line="57"/>
         <source>Add the corresponding input method in &lt;a style=&apos;text-decoration: none;&apos; href=&apos;Manage Input Methods&apos;&gt;Input Method Management&lt;/a&gt; to ensure the keyboard layout works when added or switched.</source>
-        <translation type="unfinished"/>
+        <translation>Që të garantoni se skema e tastierës funksionon, kur shtohet, ose kur kalohet në të, shtoni metodën korresponduese të dhënieve te &lt;a style=&apos;text-decoration: none;&apos; href=&apos;Manage Input Methods&apos;&gt;Administroni Metoda Dhënieje&lt;/a&gt;.</translation>
     </message>
     <message>
         <location filename="../qml/KeyboardLayout.qml" line="142"/>
@@ -142,7 +142,7 @@
     <message>
         <location filename="../qml/KeyboardLayoutModule.qml" line="57"/>
         <source>Add the corresponding input method in &lt;a style=&apos;text-decoration: none;&apos; href=&apos;Manage Input Methods&apos;&gt;Input Method Management&lt;/a&gt; to ensure the keyboard layout works when added or switched.</source>
-        <translation type="unfinished"/>
+        <translation>Që të garantoni se skema e tastierës funksionon, kur shtohet, ose kur kalohet në të, shtoni metodën korresponduese të dhënieve te &lt;a style=&apos;text-decoration: none;&apos; href=&apos;Manage Input Methods&apos;&gt;Administroni Metoda Dhënieje&lt;/a&gt;.</translation>
     </message>
     <message>
         <location filename="../qml/KeyboardLayoutModule.qml" line="140"/>
@@ -300,7 +300,7 @@
     <message>
         <location filename="../qml/fcitx5configtool.qml" line="9"/>
         <source>Input method management, input method shortcuts, advanced settings</source>
-        <translation type="unfinished"/>
+        <translation>Administrim metodash dhënieje, shkurtore metodash dhënieje, rregullime të mëtejshme</translation>
     </message>
 </context>
 </TS>
