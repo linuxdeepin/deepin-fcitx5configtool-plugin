@@ -1,6 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE TS>
-<TS version="2.1" language="sk">
+<?xml version="1.0" ?><!DOCTYPE TS><TS version="2.1" language="sk">
 <context>
     <name>AddonsPage</name>
     <message>
@@ -19,7 +17,7 @@
     <message>
         <location filename="../qml/AdvancedSettingsModule.qml" line="41"/>
         <source>&quot;Advanced Settings&quot; is only valid for the input method that uses the system settings, if the input method has its own settings, its own settings shall prevail.</source>
-        <translation>"Pokročilé nastavenia" sú platné len pre metódu vstupu, ktorá používa systémové nastavenia. Ak má metóda vstupu vlastné nastavenia, tie budú mať prednosť.</translation>
+        <translation>&quot;Pokročilé nastavenia&quot; sú platné len pre metódu vstupu, ktorá používa systémové nastavenia. Ak má metóda vstupu vlastné nastavenia, tie budú mať prednosť.</translation>
     </message>
     <message>
         <location filename="../qml/AdvancedSettingsModule.qml" line="54"/>
@@ -172,7 +170,7 @@
     <message>
         <location filename="../qml/LayoutsChooser.qml" line="90"/>
         <source>Cancel</source>
-        <translation>Zrušiť</translation>
+            <translation>Zrušiť</translation>
     </message>
     <message>
         <location filename="../qml/LayoutsChooser.qml" line="97"/>
@@ -255,7 +253,7 @@
     <message>
         <location filename="../keyboard-layout/operation/keyboardcontroller.cpp" line="55"/>
         <source>This shortcut conflicts with [%1]</source>
-        <translation>Táto skratka je v konflikte s [%1]</translation>
+            <translation>Táto skratka je v konflikte s [%1]</translation>
     </message>
 </context>
 <context>

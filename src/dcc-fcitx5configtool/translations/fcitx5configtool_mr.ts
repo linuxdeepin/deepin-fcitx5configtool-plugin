@@ -1,6 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE TS>
-<TS version="2.1" language="mr">
+<?xml version="1.0" ?><!DOCTYPE TS><TS version="2.1" language="mr">
 <context>
     <name>AddonsPage</name>
     <message>
@@ -19,7 +17,7 @@
     <message>
         <location filename="../qml/AdvancedSettingsModule.qml" line="41"/>
         <source>&quot;Advanced Settings&quot; is only valid for the input method that uses the system settings, if the input method has its own settings, its own settings shall prevail.</source>
-        <translation>"प्रगत सेटिंग्ज" फक्त त्या इनपुट पद्धतीसाठी वैध आहे जी सिस्टम सेटिंग्ज वापरते. जर इनपुट पद्धतीची स्वतःची सेटिंग्ज असतील तर त्याची स्वतःची सेटिंग्ज प्राधान्य घेतील.</translation>
+        <translation>&quot;प्रगत सेटिंग्ज&quot; फक्त त्या इनपुट पद्धतीसाठी वैध आहे जी सिस्टम सेटिंग्ज वापरते. जर इनपुट पद्धतीची स्वतःची सेटिंग्ज असतील तर त्याची स्वतःची सेटिंग्ज प्राधान्य घेतील.</translation>
     </message>
     <message>
         <location filename="../qml/AdvancedSettingsModule.qml" line="54"/>
@@ -172,7 +170,7 @@
     <message>
         <location filename="../qml/LayoutsChooser.qml" line="90"/>
         <source>Cancel</source>
-        <translation>रद्द करा</translation>
+            <translation>रद्द करा</translation>
     </message>
     <message>
         <location filename="../qml/LayoutsChooser.qml" line="97"/>
@@ -255,7 +253,7 @@
     <message>
         <location filename="../keyboard-layout/operation/keyboardcontroller.cpp" line="55"/>
         <source>This shortcut conflicts with [%1]</source>
-        <translation>हा शॉर्टकट [%1] शी संघर्ष करतो</translation>
+            <translation>हा शॉर्टकट [%1] शी संघर्ष करतो</translation>
     </message>
 </context>
 <context>

@@ -1,6 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE TS>
-<TS version="2.1" language="ur">
+<?xml version="1.0" ?><!DOCTYPE TS><TS version="2.1" language="ur">
 <context>
     <name>AddonsPage</name>
     <message>
@@ -19,7 +17,7 @@
     <message>
         <location filename="../qml/AdvancedSettingsModule.qml" line="41"/>
         <source>&quot;Advanced Settings&quot; is only valid for the input method that uses the system settings, if the input method has its own settings, its own settings shall prevail.</source>
-        <translation>"اعلیٰ ترتیبات" صرف اس input method کے لیے درست ہیں جو سسٹم کی ترتیبات استعمال کرتا ہے۔ اگر input method کی اپنی ترتیبات ہیں تو اس کی اپنی ترتیبات کو فوقیت حاصل ہوگی۔</translation>
+        <translation>&quot;اعلیٰ ترتیبات&quot; صرف اس input method کے لیے درست ہیں جو سسٹم کی ترتیبات استعمال کرتا ہے۔ اگر input method کی اپنی ترتیبات ہیں تو اس کی اپنی ترتیبات کو فوقیت حاصل ہوگی۔</translation>
     </message>
     <message>
         <location filename="../qml/AdvancedSettingsModule.qml" line="54"/>
@@ -172,7 +170,7 @@
     <message>
         <location filename="../qml/LayoutsChooser.qml" line="90"/>
         <source>Cancel</source>
-        <translation>منسوخ کریں</translation>
+            <translation>منسوخ کریں</translation>
     </message>
     <message>
         <location filename="../qml/LayoutsChooser.qml" line="97"/>
@@ -255,7 +253,7 @@
     <message>
         <location filename="../keyboard-layout/operation/keyboardcontroller.cpp" line="55"/>
         <source>This shortcut conflicts with [%1]</source>
-        <translation>یہ شارٹ کٹ [%1] سے ٹکراتا ہے</translation>
+            <translation>یہ شارٹ کٹ [%1] سے ٹکراتا ہے</translation>
     </message>
 </context>
 <context>

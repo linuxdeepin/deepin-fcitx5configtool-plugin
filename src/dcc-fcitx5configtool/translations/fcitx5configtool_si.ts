@@ -1,6 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE TS>
-<TS version="2.1" language="si">
+<?xml version="1.0" ?><!DOCTYPE TS><TS version="2.1" language="si">
 <context>
     <name>AddonsPage</name>
     <message>
@@ -19,7 +17,7 @@
     <message>
         <location filename="../qml/AdvancedSettingsModule.qml" line="41"/>
         <source>&quot;Advanced Settings&quot; is only valid for the input method that uses the system settings, if the input method has its own settings, its own settings shall prevail.</source>
-        <translation>"උසස් සැකසුම්" පද්ධති සැකසුම් භාවිතා කරන ආදාන ක්‍රමය සඳහා පමණයි වලංගු වේ. ආදාන ක්‍රමයට තමන්ගේම සැකසුම් තිබේ නම්, ඒවා ප්‍රමුඛ වේ.</translation>
+        <translation>&quot;උසස් සැකසුම්&quot; පද්ධති සැකසුම් භාවිතා කරන ආදාන ක්‍රමය සඳහා පමණයි වලංගු වේ. ආදාන ක්‍රමයට තමන්ගේම සැකසුම් තිබේ නම්, ඒවා ප්‍රමුඛ වේ.</translation>
     </message>
     <message>
         <location filename="../qml/AdvancedSettingsModule.qml" line="54"/>
@@ -172,7 +170,7 @@
     <message>
         <location filename="../qml/LayoutsChooser.qml" line="90"/>
         <source>Cancel</source>
-        <translation>අවලංගු කරන්න</translation>
+            <translation>අවලංගු කරන්න</translation>
     </message>
     <message>
         <location filename="../qml/LayoutsChooser.qml" line="97"/>
@@ -255,7 +253,7 @@
     <message>
         <location filename="../keyboard-layout/operation/keyboardcontroller.cpp" line="55"/>
         <source>This shortcut conflicts with [%1]</source>
-        <translation>මෙම කෙටිමග [%1] සමඟ ගැටේ</translation>
+            <translation>මෙම කෙටිමග [%1] සමඟ ගැටේ</translation>
     </message>
 </context>
 <context>

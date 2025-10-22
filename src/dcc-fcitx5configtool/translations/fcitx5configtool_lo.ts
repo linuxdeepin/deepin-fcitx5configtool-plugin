@@ -1,6 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE TS>
-<TS version="2.1" language="lo">
+<?xml version="1.0" ?><!DOCTYPE TS><TS version="2.1" language="lo">
 <context>
     <name>AddonsPage</name>
     <message>
@@ -172,7 +170,7 @@
     <message>
         <location filename="../qml/LayoutsChooser.qml" line="90"/>
         <source>Cancel</source>
-        <translation>ຢກເລີກ</translation>
+            <translation>ຢກເລີກ</translation>
     </message>
     <message>
         <location filename="../qml/LayoutsChooser.qml" line="97"/>
@@ -196,35 +194,35 @@
 <context>
     <name>ShortcutsModule</name>
     <message>
-        <location filename="../qml/ShortcutsModule.qml" line="13"/>
-        <location filename="../qml/ShortcutsModule.qml" line="15"/>
-        <location filename="../qml/ShortcutsModule.qml" line="150"/>
+        <location filename="../qml/ShortcutsModule.qml" line="12"/>
+        <location filename="../qml/ShortcutsModule.qml" line="14"/>
         <location filename="../qml/ShortcutsModule.qml" line="151"/>
+        <location filename="../qml/ShortcutsModule.qml" line="152"/>
         <source>None</source>
         <translation>ບໍ່ມີ</translation>
     </message>
     <message>
-        <location filename="../qml/ShortcutsModule.qml" line="118"/>
+        <location filename="../qml/ShortcutsModule.qml" line="119"/>
         <source>Shortcuts</source>
         <translation>ສັງລວມ</translation>
     </message>
     <message>
-        <location filename="../qml/ShortcutsModule.qml" line="133"/>
+        <location filename="../qml/ShortcutsModule.qml" line="134"/>
         <source>Restore Defaults</source>
         <translation>ກັ່ນຕອງຄ່າເລີ່ມຕົ້ນ</translation>
     </message>
     <message>
-        <location filename="../qml/ShortcutsModule.qml" line="225"/>
+        <location filename="../qml/ShortcutsModule.qml" line="200"/>
         <source>Scroll between input methods</source>
         <translation>ເຄື່ອນໄຫວລະຫວ່າງວິທີການປ້ອນຂໍ້ມູນ</translation>
     </message>
     <message>
-        <location filename="../qml/ShortcutsModule.qml" line="273"/>
+        <location filename="../qml/ShortcutsModule.qml" line="230"/>
         <source>Turn on or off input methods</source>
         <translation>ເປີດ ຫຼື ອອກວິທີການປ້ອນຂໍ້ມູນ</translation>
     </message>
     <message>
-        <location filename="../qml/ShortcutsModule.qml" line="336"/>
+        <location filename="../qml/ShortcutsModule.qml" line="273"/>
         <source>It turns on or off the currently used input method.If no input method is being used or the first input method is not the keyboard, it switches between the first input method and the currently used keyboard/input method.</source>
         <translation>ມັນຈະເປີດ ຫຼື ປິດວິທີການປ້ອນຂໍ້ມູນທີ່ກຳລັງໃຊ້ຢູ່. ຖ້າບໍ່ມີວິທີການປ້ອນຂໍ້ມູນຖືກໃຊ້ ຫຼື ວິທີການປ້ອນຂໍ້ມູນອັນດັບທຳອິດບໍ່ແມ່ນແປ້ນພິມ, ມັນຈະສະຫຼັບລະຫວ່າງວິທີການປ້ອນຂໍ້ມູນອັນດັບທຳອິດ ແລະ ແປ້ນພິມ/ວິທີການປ້ອນຂໍ້ມູນທີ່ກຳລັງໃຊ້ຢູ່.</translation>
     </message>
@@ -255,7 +253,7 @@
     <message>
         <location filename="../keyboard-layout/operation/keyboardcontroller.cpp" line="55"/>
         <source>This shortcut conflicts with [%1]</source>
-        <translation>ປຸ່ມລັດນີ້ຂັດແຍ້ງກັບ [%1]</translation>
+            <translation>ປຸ່ມລັດນີ້ຂັດແຍ້ງກັບ [%1]</translation>
     </message>
 </context>
 <context>

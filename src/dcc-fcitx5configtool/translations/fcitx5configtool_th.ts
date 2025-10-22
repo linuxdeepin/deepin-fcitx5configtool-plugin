@@ -1,6 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE TS>
-<TS version="2.1" language="th">
+<?xml version="1.0" ?><!DOCTYPE TS><TS version="2.1" language="th">
 <context>
     <name>AddonsPage</name>
     <message>
@@ -19,7 +17,7 @@
     <message>
         <location filename="../qml/AdvancedSettingsModule.qml" line="41"/>
         <source>&quot;Advanced Settings&quot; is only valid for the input method that uses the system settings, if the input method has its own settings, its own settings shall prevail.</source>
-        <translation>"การตั้งค่าขั้นสูง" จะใช้ได้เฉพาะกับระบบป้อนข้อมูลที่ใช้การตั้งค่าระบบ หากระบบป้อนข้อมูลมีการตั้งค่าของตัวเอง การตั้งค่าของตัวเองจะมีความสำคัญกว่า</translation>
+        <translation>&quot;การตั้งค่าขั้นสูง&quot; จะใช้ได้เฉพาะกับระบบป้อนข้อมูลที่ใช้การตั้งค่าระบบ หากระบบป้อนข้อมูลมีการตั้งค่าของตัวเอง การตั้งค่าของตัวเองจะมีความสำคัญกว่า</translation>
     </message>
     <message>
         <location filename="../qml/AdvancedSettingsModule.qml" line="54"/>
@@ -172,7 +170,7 @@
     <message>
         <location filename="../qml/LayoutsChooser.qml" line="90"/>
         <source>Cancel</source>
-        <translation>ยกเลิก</translation>
+            <translation>ยกเลิก</translation>
     </message>
     <message>
         <location filename="../qml/LayoutsChooser.qml" line="97"/>
@@ -255,7 +253,7 @@
     <message>
         <location filename="../keyboard-layout/operation/keyboardcontroller.cpp" line="55"/>
         <source>This shortcut conflicts with [%1]</source>
-        <translation>ทางลัดนี้ขัดแย้งกับ [%1]</translation>
+            <translation>ทางลัดนี้ขัดแย้งกับ [%1]</translation>
     </message>
 </context>
 <context>

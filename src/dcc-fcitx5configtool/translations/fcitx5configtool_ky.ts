@@ -1,6 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE TS>
-<TS version="2.1" language="ky">
+<?xml version="1.0" ?><!DOCTYPE TS><TS version="2.1" language="ky">
 <context>
     <name>AddonsPage</name>
     <message>
@@ -19,7 +17,7 @@
     <message>
         <location filename="../qml/AdvancedSettingsModule.qml" line="41"/>
         <source>&quot;Advanced Settings&quot; is only valid for the input method that uses the system settings, if the input method has its own settings, its own settings shall prevail.</source>
-        <translation>"Өркүндөтүлгөн жөндөөлөр" системалык жөндөөлөрдү колдонгон киргизүү ыкмасы үчүн гана жарактуу. Эгер киргизүү ыкмасынын өзүнүн жөндөөлөрү болсо, алардын өзүнүн жөндөөлөрү басымдуулукка ээ болот.</translation>
+        <translation>&quot;Өркүндөтүлгөн жөндөөлөр&quot; системалык жөндөөлөрдү колдонгон киргизүү ыкмасы үчүн гана жарактуу. Эгер киргизүү ыкмасынын өзүнүн жөндөөлөрү болсо, алардын өзүнүн жөндөөлөрү басымдуулукка ээ болот.</translation>
     </message>
     <message>
         <location filename="../qml/AdvancedSettingsModule.qml" line="54"/>
@@ -83,7 +81,7 @@
     <message>
         <location filename="../qml/InputMethodsChooser.qml" line="109"/>
         <source>Find more in App Store</source>
-        <translation>App Store'дан көбүрөөк табуу</translation>
+        <translation>App Store&apos;дан көбүрөөк табуу</translation>
     </message>
     <message>
         <location filename="../qml/InputMethodsChooser.qml" line="129"/>
@@ -172,7 +170,7 @@
     <message>
         <location filename="../qml/LayoutsChooser.qml" line="90"/>
         <source>Cancel</source>
-        <translation>Жокко чыгаруу</translation>
+            <translation>Жокко чыгаруу</translation>
     </message>
     <message>
         <location filename="../qml/LayoutsChooser.qml" line="97"/>
@@ -255,7 +253,7 @@
     <message>
         <location filename="../keyboard-layout/operation/keyboardcontroller.cpp" line="55"/>
         <source>This shortcut conflicts with [%1]</source>
-        <translation>Бул кыска жол [%1] менен кайшылашат</translation>
+            <translation>Бул кыска жол [%1] менен кайшылашат</translation>
     </message>
 </context>
 <context>

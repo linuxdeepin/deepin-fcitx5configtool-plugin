@@ -1,6 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE TS>
-<TS version="2.1" language="ta">
+<?xml version="1.0" ?><!DOCTYPE TS><TS version="2.1" language="ta">
 <context>
     <name>AddonsPage</name>
     <message>
@@ -19,7 +17,7 @@
     <message>
         <location filename="../qml/AdvancedSettingsModule.qml" line="41"/>
         <source>&quot;Advanced Settings&quot; is only valid for the input method that uses the system settings, if the input method has its own settings, its own settings shall prevail.</source>
-        <translation>"மேம்பட்ட அமைப்புகள்" சிஸ்டம் அமைப்புகளைப் பயன்படுத்தும் உள்ளீட்டு முறைக்கு மட்டுமே செல்லுபடியாகும். உள்ளீட்டு முறைக்கு அதன் சொந்த அமைப்புகள் இருந்தால், அதன் சொந்த அமைப்புகள் முன்னுரிமை பெறும்.</translation>
+        <translation>&quot;மேம்பட்ட அமைப்புகள்&quot; சிஸ்டம் அமைப்புகளைப் பயன்படுத்தும் உள்ளீட்டு முறைக்கு மட்டுமே செல்லுபடியாகும். உள்ளீட்டு முறைக்கு அதன் சொந்த அமைப்புகள் இருந்தால், அதன் சொந்த அமைப்புகள் முன்னுரிமை பெறும்.</translation>
     </message>
     <message>
         <location filename="../qml/AdvancedSettingsModule.qml" line="54"/>
@@ -172,7 +170,7 @@
     <message>
         <location filename="../qml/LayoutsChooser.qml" line="90"/>
         <source>Cancel</source>
-        <translation>ரத்துசெய்</translation>
+            <translation>ரத்துசெய்</translation>
     </message>
     <message>
         <location filename="../qml/LayoutsChooser.qml" line="97"/>
@@ -255,7 +253,7 @@
     <message>
         <location filename="../keyboard-layout/operation/keyboardcontroller.cpp" line="55"/>
         <source>This shortcut conflicts with [%1]</source>
-        <translation>இந்த குறுக்குவழி [%1] உடன் முரண்படுகிறது</translation>
+            <translation>இந்த குறுக்குவழி [%1] உடன் முரண்படுகிறது</translation>
     </message>
 </context>
 <context>

@@ -1,6 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE TS>
-<TS version="2.1" language="ml">
+<?xml version="1.0" ?><!DOCTYPE TS><TS version="2.1" language="ml">
 <context>
     <name>AddonsPage</name>
     <message>
@@ -172,7 +170,7 @@
     <message>
         <location filename="../qml/LayoutsChooser.qml" line="90"/>
         <source>Cancel</source>
-        <translation>റദ്ദാക്കുക</translation>
+            <translation>റദ്ദാക്കുക</translation>
     </message>
     <message>
         <location filename="../qml/LayoutsChooser.qml" line="97"/>
@@ -255,7 +253,7 @@
     <message>
         <location filename="../keyboard-layout/operation/keyboardcontroller.cpp" line="55"/>
         <source>This shortcut conflicts with [%1]</source>
-        <translation>ഈ കുറുക്കുവഴി [%1] ൽ പൊരുത്തക്കേടുണ്ട്</translation>
+            <translation>ഈ കുറുക്കുവഴി [%1] ൽ പൊരുത്തക്കേടുണ്ട്</translation>
     </message>
 </context>
 <context>

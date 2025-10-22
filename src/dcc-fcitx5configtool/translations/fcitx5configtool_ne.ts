@@ -1,6 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE TS>
-<TS version="2.1" language="ne">
+<?xml version="1.0" ?><!DOCTYPE TS><TS version="2.1" language="ne">
 <context>
     <name>AddonsPage</name>
     <message>
@@ -19,7 +17,7 @@
     <message>
         <location filename="../qml/AdvancedSettingsModule.qml" line="41"/>
         <source>&quot;Advanced Settings&quot; is only valid for the input method that uses the system settings, if the input method has its own settings, its own settings shall prevail.</source>
-        <translation>"उन्नत सेटिङहरू" सिस्टम सेटिङहरू प्रयोग गर्ने इनपुट विधिका लागि मात्र लागू हुन्छ। यदि इनपुट विधिको आफ्नै सेटिङहरू छन् भने, त्यसको आफ्नै सेटिङहरूले प्राथमिकता पाउँछ।</translation>
+        <translation>&quot;उन्नत सेटिङहरू&quot; सिस्टम सेटिङहरू प्रयोग गर्ने इनपुट विधिका लागि मात्र लागू हुन्छ। यदि इनपुट विधिको आफ्नै सेटिङहरू छन् भने, त्यसको आफ्नै सेटिङहरूले प्राथमिकता पाउँछ।</translation>
     </message>
     <message>
         <location filename="../qml/AdvancedSettingsModule.qml" line="54"/>
@@ -172,7 +170,7 @@
     <message>
         <location filename="../qml/LayoutsChooser.qml" line="90"/>
         <source>Cancel</source>
-        <translation>रद्द गर्नुहोस्</translation>
+            <translation>रद्द गर्नुहोस्</translation>
     </message>
     <message>
         <location filename="../qml/LayoutsChooser.qml" line="97"/>
@@ -255,7 +253,7 @@
     <message>
         <location filename="../keyboard-layout/operation/keyboardcontroller.cpp" line="55"/>
         <source>This shortcut conflicts with [%1]</source>
-        <translation>यो सर्टकट [%1] सँग बाझिन्छ</translation>
+            <translation>यो सर्टकट [%1] सँग बाझिन्छ</translation>
     </message>
 </context>
 <context>

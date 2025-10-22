@@ -1,6 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE TS>
-<TS version="2.1" language="ku">
+<?xml version="1.0" ?><!DOCTYPE TS><TS version="2.1" language="ku">
 <context>
     <name>AddonsPage</name>
     <message>
@@ -19,7 +17,7 @@
     <message>
         <location filename="../qml/AdvancedSettingsModule.qml" line="41"/>
         <source>&quot;Advanced Settings&quot; is only valid for the input method that uses the system settings, if the input method has its own settings, its own settings shall prevail.</source>
-        <translation>"Mîhengên Pêşkeftî" tenê ji bo awayê têketinê ya ku mîhengên pergalê bi kar tîne derbasdar e, heke awayê têketinê mîhengên xwe hebe, mîhengên wê xwe dê serdest bin.</translation>
+        <translation>&quot;Mîhengên Pêşkeftî&quot; tenê ji bo awayê têketinê ya ku mîhengên pergalê bi kar tîne derbasdar e, heke awayê têketinê mîhengên xwe hebe, mîhengên wê xwe dê serdest bin.</translation>
     </message>
     <message>
         <location filename="../qml/AdvancedSettingsModule.qml" line="54"/>
@@ -172,7 +170,7 @@
     <message>
         <location filename="../qml/LayoutsChooser.qml" line="90"/>
         <source>Cancel</source>
-        <translation>Betal bike</translation>
+            <translation>Betal bike</translation>
     </message>
     <message>
         <location filename="../qml/LayoutsChooser.qml" line="97"/>
@@ -237,7 +235,7 @@
         <translation>Çînî ya Kevneşopî (Çînî Hong Kong)</translation>
     </message>
     <message>
-        <location filename="../qml/AdvancedSettingsModule.qml" line="65"/>
+        <location filename="../keyboard-layout/operation/dcclocale.cpp" line="65"/>
         <source>Traditional Chinese (Chinese Taiwan)</source>
         <translation>Çînî ya Kevneşopî (Çînî Taiwan)</translation>
     </message>
@@ -255,7 +253,7 @@
     <message>
         <location filename="../keyboard-layout/operation/keyboardcontroller.cpp" line="55"/>
         <source>This shortcut conflicts with [%1]</source>
-        <translation>Ev kurterê bi [%1] re nakokî dike</translation>
+            <translation>Ev kurterê bi [%1] re nakokî dike</translation>
     </message>
 </context>
 <context>

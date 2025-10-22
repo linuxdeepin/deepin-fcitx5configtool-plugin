@@ -1,6 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE TS>
-<TS version="2.1" language="tr">
+<?xml version="1.0" ?><!DOCTYPE TS><TS version="2.1" language="tr">
 <context>
     <name>AddonsPage</name>
     <message>
@@ -19,7 +17,7 @@
     <message>
         <location filename="../qml/AdvancedSettingsModule.qml" line="41"/>
         <source>&quot;Advanced Settings&quot; is only valid for the input method that uses the system settings, if the input method has its own settings, its own settings shall prevail.</source>
-        <translation>"Gelişmiş Ayarlar" yalnızca sistem ayarlarını kullanan giriş yöntemi için geçerlidir. Giriş yöntemi kendi ayarlarına sahipse, kendi ayarları geçerli olacaktır.</translation>
+        <translation>&quot;Gelişmiş Ayarlar&quot; yalnızca sistem ayarlarını kullanan giriş yöntemi için geçerlidir. Giriş yöntemi kendi ayarlarına sahipse, kendi ayarları geçerli olacaktır.</translation>
     </message>
     <message>
         <location filename="../qml/AdvancedSettingsModule.qml" line="54"/>
@@ -83,7 +81,7 @@
     <message>
         <location filename="../qml/InputMethodsChooser.qml" line="109"/>
         <source>Find more in App Store</source>
-        <translation>App Store'da daha fazlasını bul</translation>
+        <translation>App Store&apos;da daha fazlasını bul</translation>
     </message>
     <message>
         <location filename="../qml/InputMethodsChooser.qml" line="129"/>
@@ -172,7 +170,7 @@
     <message>
         <location filename="../qml/LayoutsChooser.qml" line="90"/>
         <source>Cancel</source>
-        <translation>İptal</translation>
+            <translation>İptal</translation>
     </message>
     <message>
         <location filename="../qml/LayoutsChooser.qml" line="97"/>
@@ -255,7 +253,7 @@
     <message>
         <location filename="../keyboard-layout/operation/keyboardcontroller.cpp" line="55"/>
         <source>This shortcut conflicts with [%1]</source>
-        <translation>Bu kısayol [%1] ile çakışıyor</translation>
+            <translation>Bu kısayol [%1] ile çakışıyor</translation>
     </message>
 </context>
 <context>

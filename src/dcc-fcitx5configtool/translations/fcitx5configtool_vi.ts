@@ -1,6 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE TS>
-<TS version="2.1" language="vi">
+<?xml version="1.0" ?><!DOCTYPE TS><TS version="2.1" language="vi">
 <context>
     <name>AddonsPage</name>
     <message>
@@ -19,7 +17,7 @@
     <message>
         <location filename="../qml/AdvancedSettingsModule.qml" line="41"/>
         <source>&quot;Advanced Settings&quot; is only valid for the input method that uses the system settings, if the input method has its own settings, its own settings shall prevail.</source>
-        <translation>"Cài đặt nâng cao" chỉ có hiệu lực cho phương pháp nhập sử dụng cài đặt hệ thống. Nếu phương pháp nhập có cài đặt riêng, cài đặt riêng sẽ có ưu tiên.</translation>
+        <translation>&quot;Cài đặt nâng cao&quot; chỉ có hiệu lực cho phương pháp nhập sử dụng cài đặt hệ thống. Nếu phương pháp nhập có cài đặt riêng, cài đặt riêng sẽ có ưu tiên.</translation>
     </message>
     <message>
         <location filename="../qml/AdvancedSettingsModule.qml" line="54"/>
@@ -172,7 +170,7 @@
     <message>
         <location filename="../qml/LayoutsChooser.qml" line="90"/>
         <source>Cancel</source>
-        <translation>Hủy</translation>
+            <translation>Hủy</translation>
     </message>
     <message>
         <location filename="../qml/LayoutsChooser.qml" line="97"/>
@@ -255,7 +253,7 @@
     <message>
         <location filename="../keyboard-layout/operation/keyboardcontroller.cpp" line="55"/>
         <source>This shortcut conflicts with [%1]</source>
-        <translation>Phím tắt này xung đột với [%1]</translation>
+            <translation>Phím tắt này xung đột với [%1]</translation>
     </message>
 </context>
 <context>

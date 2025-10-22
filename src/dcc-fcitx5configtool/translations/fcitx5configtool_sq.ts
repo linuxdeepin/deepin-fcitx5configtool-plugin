@@ -1,6 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE TS>
-<TS version="2.1" language="sq">
+<?xml version="1.0" ?><!DOCTYPE TS><TS version="2.1" language="sq">
 <context>
     <name>AddonsPage</name>
     <message>
@@ -19,7 +17,7 @@
     <message>
         <location filename="../qml/AdvancedSettingsModule.qml" line="41"/>
         <source>&quot;Advanced Settings&quot; is only valid for the input method that uses the system settings, if the input method has its own settings, its own settings shall prevail.</source>
-        <translation>"Cilësimet e Përparuara" janë të vlefshme vetëm për metodën e hyrjes që përdor cilësimet e sistemit. Nëse metoda e hyrjes ka cilësimet e veta, cilësimet e veta do të zënë vendin.</translation>
+        <translation>&quot;Cilësimet e Përparuara&quot; janë të vlefshme vetëm për metodën e hyrjes që përdor cilësimet e sistemit. Nëse metoda e hyrjes ka cilësimet e veta, cilësimet e veta do të zënë vendin.</translation>
     </message>
     <message>
         <location filename="../qml/AdvancedSettingsModule.qml" line="54"/>
@@ -172,7 +170,7 @@
     <message>
         <location filename="../qml/LayoutsChooser.qml" line="90"/>
         <source>Cancel</source>
-        <translation>Anulo</translation>
+            <translation>Anulo</translation>
     </message>
     <message>
         <location filename="../qml/LayoutsChooser.qml" line="97"/>
@@ -255,7 +253,7 @@
     <message>
         <location filename="../keyboard-layout/operation/keyboardcontroller.cpp" line="55"/>
         <source>This shortcut conflicts with [%1]</source>
-        <translation>Kjo shkurtore konflikton me [%1]</translation>
+            <translation>Kjo shkurtore konflikton me [%1]</translation>
     </message>
 </context>
 <context>

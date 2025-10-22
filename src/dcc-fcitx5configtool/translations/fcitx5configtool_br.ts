@@ -1,6 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE TS>
-<TS version="2.1" language="br">
+<?xml version="1.0" ?><!DOCTYPE TS><TS version="2.1" language="br">
 <context>
     <name>AddonsPage</name>
     <message>
@@ -14,12 +12,12 @@
     <message>
         <location filename="../qml/AdvancedSettingsModule.qml" line="15"/>
         <source>Advanced Settings</source>
-        <translation>Arventennoù kempleshoc'h</translation>
+        <translation>Arventennoù kempleshoc&apos;h</translation>
     </message>
     <message>
         <location filename="../qml/AdvancedSettingsModule.qml" line="41"/>
         <source>&quot;Advanced Settings&quot; is only valid for the input method that uses the system settings, if the input method has its own settings, its own settings shall prevail.</source>
-        <translation>&quot;Arventennoù kempleshoc'h&quot; a zo gwir evit an hentenn enmont a implij arventennoù ar reizhiad, ma'z eus arventennoù dibar gant an hentenn enmont, he harventennoù a vo lakaet da dalvezout.</translation>
+        <translation>&quot;Arventennoù kempleshoc&apos;h&quot; a zo gwir evit an hentenn enmont a implij arventennoù ar reizhiad, ma&apos;z eus arventennoù dibar gant an hentenn enmont, he harventennoù a vo lakaet da dalvezout.</translation>
     </message>
     <message>
         <location filename="../qml/AdvancedSettingsModule.qml" line="54"/>
@@ -34,7 +32,7 @@
     <message>
         <location filename="../qml/AdvancedSettingsModule.qml" line="81"/>
         <source>Keyboard layout</source>
-        <translation>Aozadur ar c'hlavier</translation>
+        <translation>Aozadur ar c&apos;hlavier</translation>
     </message>
 </context>
 <context>
@@ -83,7 +81,7 @@
     <message>
         <location filename="../qml/InputMethodsChooser.qml" line="109"/>
         <source>Find more in App Store</source>
-        <translation>Kavout muioc'h er stal arloadoù</translation>
+        <translation>Kavout muioc&apos;h er stal arloadoù</translation>
     </message>
     <message>
         <location filename="../qml/InputMethodsChooser.qml" line="129"/>
@@ -101,7 +99,7 @@
     <message>
         <location filename="../qml/KeyboardLayout.qml" line="16"/>
         <source>Keyboard layout</source>
-        <translation>Aozadur ar c'hlavier</translation>
+        <translation>Aozadur ar c&apos;hlavier</translation>
     </message>
     <message>
         <location filename="../qml/KeyboardLayout.qml" line="34"/>
@@ -116,7 +114,7 @@
     <message>
         <location filename="../qml/KeyboardLayout.qml" line="57"/>
         <source>Add the corresponding input method in &lt;a style=&apos;text-decoration: none;&apos; href=&apos;Manage Input Methods&apos;&gt;Input Method Management&lt;/a&gt; to ensure the keyboard layout works when added or switched.</source>
-        <translation>Ouzhpennit an hentenn enmont a zere e &lt;a style=&apos;text-decoration: none;&apos; href=&apos;Manage Input Methods&apos;&gt;Merañ an hentennoù enmont&lt;/a&gt; evit bezañ sur ez a en-dro aozadur ar c'hlavier pa vez ouzhpennet pe kemmet.</translation>
+        <translation>Ouzhpennit an hentenn enmont a zere e &lt;a style=&apos;text-decoration: none;&apos; href=&apos;Manage Input Methods&apos;&gt;Merañ an hentennoù enmont&lt;/a&gt; evit bezañ sur ez a en-dro aozadur ar c&apos;hlavier pa vez ouzhpennet pe kemmet.</translation>
     </message>
     <message>
         <location filename="../qml/KeyboardLayout.qml" line="142"/>
@@ -129,7 +127,7 @@
     <message>
         <location filename="../qml/KeyboardLayoutModule.qml" line="16"/>
         <source>Keyboard layout</source>
-        <translation>Aozadur ar c'hlavier</translation>
+        <translation>Aozadur ar c&apos;hlavier</translation>
     </message>
     <message>
         <location filename="../qml/KeyboardLayoutModule.qml" line="34"/>
@@ -144,7 +142,7 @@
     <message>
         <location filename="../qml/KeyboardLayoutModule.qml" line="57"/>
         <source>Add the corresponding input method in &lt;a style=&apos;text-decoration: none;&apos; href=&apos;Manage Input Methods&apos;&gt;Input Method Management&lt;/a&gt; to ensure the keyboard layout works when added or switched.</source>
-        <translation>Ouzhpennit an hentenn enmont a zere e &lt;a style=&apos;text-decoration: none;&apos; href=&apos;Manage Input Methods&apos;&gt;Merañ an hentennoù enmont&lt;/a&gt; evit bezañ sur ez a en-dro aozadur ar c'hlavier pa vez ouzhpennet pe kemmet.</translation>
+        <translation>Ouzhpennit an hentenn enmont a zere e &lt;a style=&apos;text-decoration: none;&apos; href=&apos;Manage Input Methods&apos;&gt;Merañ an hentennoù enmont&lt;/a&gt; evit bezañ sur ez a en-dro aozadur ar c&apos;hlavier pa vez ouzhpennet pe kemmet.</translation>
     </message>
     <message>
         <location filename="../qml/KeyboardLayoutModule.qml" line="140"/>
@@ -172,7 +170,7 @@
     <message>
         <location filename="../qml/LayoutsChooser.qml" line="90"/>
         <source>Cancel</source>
-        <translation>Nullañ</translation>
+            <translation>Nullañ</translation>
     </message>
     <message>
         <location filename="../qml/LayoutsChooser.qml" line="97"/>
@@ -226,7 +224,7 @@
     <message>
         <location filename="../qml/ShortcutsModule.qml" line="273"/>
         <source>It turns on or off the currently used input method.If no input method is being used or the first input method is not the keyboard, it switches between the first input method and the currently used keyboard/input method.</source>
-        <translation>Enaou pe denaou a ra an hentenn enmont implijet bremañ. Ma n'eus hentenn enmont ebet o vezañ implijet pe ma n'eo ket ar c'hlavier an hentenn enmont gentañ, e kemm etre an hentenn enmont gentañ hag ar c'hlavier/hentenn enmont implijet bremañ.</translation>
+        <translation>Enaou pe denaou a ra an hentenn enmont implijet bremañ. Ma n&apos;eus hentenn enmont ebet o vezañ implijet pe ma n&apos;eo ket ar c&apos;hlavier an hentenn enmont gentañ, e kemm etre an hentenn enmont gentañ hag ar c&apos;hlavier/hentenn enmont implijet bremañ.</translation>
     </message>
 </context>
 <context>
@@ -255,7 +253,7 @@
     <message>
         <location filename="../keyboard-layout/operation/keyboardcontroller.cpp" line="55"/>
         <source>This shortcut conflicts with [%1]</source>
-        <translation>Ar berradur-mañ a stourm gant [%1]</translation>
+            <translation>Ar berradur-mañ a stourm gant [%1]</translation>
     </message>
 </context>
 <context>
@@ -302,7 +300,7 @@
     <message>
         <location filename="../qml/fcitx5configtool.qml" line="9"/>
         <source>Input method management, input method shortcuts, advanced settings</source>
-        <translation>Merañ an hentennoù enmont, berradurioù an hentennoù enmont, arventennoù kempleshoc'h</translation>
+        <translation>Merañ an hentennoù enmont, berradurioù an hentennoù enmont, arventennoù kempleshoc&apos;h</translation>
     </message>
 </context>
 </TS>

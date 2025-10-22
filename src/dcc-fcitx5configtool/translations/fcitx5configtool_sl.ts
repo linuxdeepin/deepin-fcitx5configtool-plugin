@@ -1,6 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE TS>
-<TS version="2.1" language="sl">
+<?xml version="1.0" ?><!DOCTYPE TS><TS version="2.1" language="sl">
 <context>
     <name>AddonsPage</name>
     <message>
@@ -19,7 +17,7 @@
     <message>
         <location filename="../qml/AdvancedSettingsModule.qml" line="41"/>
         <source>&quot;Advanced Settings&quot; is only valid for the input method that uses the system settings, if the input method has its own settings, its own settings shall prevail.</source>
-        <translation>"Napredne nastavitve" veljajo le za vhodno metodo, ki uporablja sistemske nastavitve. Če ima vhodna metoda lastne nastavitve, bodo te imele prednost.</translation>
+        <translation>&quot;Napredne nastavitve&quot; veljajo le za vhodno metodo, ki uporablja sistemske nastavitve. Če ima vhodna metoda lastne nastavitve, bodo te imele prednost.</translation>
     </message>
     <message>
         <location filename="../qml/AdvancedSettingsModule.qml" line="54"/>
@@ -172,7 +170,7 @@
     <message>
         <location filename="../qml/LayoutsChooser.qml" line="90"/>
         <source>Cancel</source>
-        <translation>Prekliči</translation>
+            <translation>Prekliči</translation>
     </message>
     <message>
         <location filename="../qml/LayoutsChooser.qml" line="97"/>
@@ -255,7 +253,7 @@
     <message>
         <location filename="../keyboard-layout/operation/keyboardcontroller.cpp" line="55"/>
         <source>This shortcut conflicts with [%1]</source>
-        <translation>Ta bližnjica je v sporu z [%1]</translation>
+            <translation>Ta bližnjica je v sporu z [%1]</translation>
     </message>
 </context>
 <context>
