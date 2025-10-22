@@ -232,12 +232,12 @@
     <message>
         <location filename="../keyboard-layout/operation/dcclocale.cpp" line="62"/>
         <source>Traditional Chinese (Chinese Hong Kong)</source>
-        <translation>繁体中文（香港）</translation>
+        <translation>繁体中文（中国香港）</translation>
     </message>
     <message>
         <location filename="../keyboard-layout/operation/dcclocale.cpp" line="65"/>
         <source>Traditional Chinese (Chinese Taiwan)</source>
-        <translation>繁体中文（台湾）</translation>
+        <translation>繁体中文（中国台湾）</translation>
     </message>
 </context>
 <context>
