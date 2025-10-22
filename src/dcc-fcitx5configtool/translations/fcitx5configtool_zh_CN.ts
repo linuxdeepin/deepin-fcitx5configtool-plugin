@@ -245,7 +245,7 @@
     <message>
         <location filename="../keyboard-layout/operation/dcclocale.cpp" line="86"/>
         <source>Taiwan China</source>
-        <translation>台湾中国</translation>
+        <translation>中国台湾</translation>
     </message>
 </context>
 <context>
