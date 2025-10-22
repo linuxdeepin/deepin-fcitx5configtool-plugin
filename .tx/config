@@ -3,9 +3,9 @@ host = https://www.transifex.com
 minimum_perc = 80
 mode = developer
 
-[o:linuxdeepin:p:deepin-desktop-environment:r:deepin-fcitx5configtool-plugin]
-file_filter = src/dcc-module/translations/deepin-fcitx5configtool-plugin_<lang>.ts
-source_file = src/dcc-module/translations/deepin-fcitx5configtool-plugin.ts
+[o:linuxdeepin:p:deepin-desktop-environment:r:b754c52dd1ae0cba257ec8207b40e718]
+file_filter = src/dcc-fcitx5configtool/translations/fcitx5configtool_<lang>.ts
+source_file = src/dcc-fcitx5configtool/translations/fcitx5configtool_en.ts
 source_lang = en
 type = QT
 
