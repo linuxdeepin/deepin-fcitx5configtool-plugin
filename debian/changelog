@@ -1,3 +1,9 @@
+deepin-fcitx5configtool-plugin (6.0.20) unstable; urgency=medium
+
+  * fix: Update translation files.
+
+ -- dengzhongyuan <dengzhongyuan@uniontech.com>  Thu, 23 Oct 2025 19:11:45 +0800
+
 deepin-fcitx5configtool-plugin (6.0.19) unstable; urgency=medium
 
   * fix: add Lao translation file & font alignment issue
