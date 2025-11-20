@@ -1,3 +1,9 @@
+deepin-fcitx5configtool-plugin (6.0.21) unstable; urgency=medium
+
+  * chore: comment out debug logs in ProcessMonitor
+
+ -- dengzhongyuan <dengzhongyuan@uniontech.com>  Thu, 20 Nov 2025 20:00:59 +0800
+
 deepin-fcitx5configtool-plugin (6.0.20) unstable; urgency=medium
 
   * fix: Update translation files.
