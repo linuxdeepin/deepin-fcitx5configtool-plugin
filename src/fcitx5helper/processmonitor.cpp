@@ -42,7 +42,7 @@ bool ProcessMonitor::exeCommand(const QString &cmd, const QStringList &args, QSt
 
 
 void ProcessMonitor::checkFcitx5Process() {
-    qCDebug(procMon) << "Entering checkFcitx5Process";
+    // qCDebug(procMon) << "Entering checkFcitx5Process";
     // Check if the fcitx5 process is already running
     if (!m_previousProcessID.isEmpty() && QFile::exists("/proc/" + m_previousProcessID)) {
         QString commandLine;
@@ -55,7 +55,7 @@ void ProcessMonitor::checkFcitx5Process() {
         if (!arguments.isEmpty()) {
             QString executableName = QFileInfo(arguments.first()).fileName();
             if (executableName == "fcitx5" || arguments.first() == "fcitx5") {
-                qCDebug(procMon) << "fcitx5 is already running with PID:" << m_previousProcessID;
+                // qCDebug(procMon) << "fcitx5 is already running with PID:" << m_previousProcessID;
                 return;
             }
         }
