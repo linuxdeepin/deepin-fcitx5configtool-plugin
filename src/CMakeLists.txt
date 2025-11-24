@@ -7,7 +7,7 @@ set(CMAKE_AUTORCC ON)
 set(CMAKE_CXX_FLAGS "-g -Wall")
 
 # 增加安全编译参数
-ADD_DEFINITIONS("-fstack-protector-strong -D_FORTITY_SOURCE=1 -z noexecstack -pie -fPIC -z lazy")
+ADD_DEFINITIONS("-fstack-protector-strong -D_FORTIFY_SOURCE=2 -z noexecstack -pie -fPIC -z lazy")
 
 find_package(Qt${QT_DESIRED_VERSION} COMPONENTS Core Gui DBus LinguistTools REQUIRED)
 find_package(Dtk${DTK_VERSION_MAJOR} COMPONENTS Core Widget REQUIRED)
