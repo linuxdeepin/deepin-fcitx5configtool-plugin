@@ -1,3 +1,9 @@
+deepin-fcitx5configtool-plugin (6.0.22) unstable; urgency=medium
+
+  * chore: Update compiler flags for security enhancements
+
+ -- wangrong <wangrong@uniontech.com>  Thu, 27 Nov 2025 10:37:25 +0800
+
 deepin-fcitx5configtool-plugin (6.0.21) unstable; urgency=medium
 
   * chore: comment out debug logs in ProcessMonitor
