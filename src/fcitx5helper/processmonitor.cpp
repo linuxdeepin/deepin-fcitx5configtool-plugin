@@ -86,7 +86,24 @@ ProcessMonitor::ProcessMonitor(QObject *parent) : QObject(parent)
 {
     // qCDebug(procMon) << "Entering ProcessMonitor constructor";
     connect(&m_timer, &QTimer::timeout, this, &ProcessMonitor::checkFcitx5Process);
-    // qCDebug(procMon) << "Exiting ProcessMonitor constructor";
+
+    QString output, error;
+    exeCommand("pgrep", QStringList() << "-u" << getCurrentUserName() << "-x" << "fcitx5", output, error);
+    if (!output.isEmpty()) {
+        QStringList pids = output.trimmed().split('\n', Qt::SkipEmptyParts);
+        for (const QString &pid : pids) {
+            qCDebug(procMon) << "Killing existing fcitx5 process with PID:" << pid;
+            QString killOutput, killError;
+            exeCommand("kill", QStringList() << pid.trimmed(), killOutput, killError);
+        }
+    }
+    QProcess process;
+    bool started = process.startDetached(PROCESS_NAME, QStringList() << "-d");
+    if (started) {
+        qCDebug(procMon) << "Successfully started fcitx5 process in constructor";
+    } else {
+        qCWarning(procMon) << "Failed to start fcitx5 process in constructor";
+    }
 }
 
 void ProcessMonitor::startMonitoring() {
