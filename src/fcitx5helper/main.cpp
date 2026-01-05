@@ -100,9 +100,6 @@ int main(int argc, char *argv[])
         }
     });
 
-    qCDebug(fcitx5Helper) << "Setting up signal handlers";
-    setupSignalHandler();
-
     qCDebug(fcitx5Helper) << "Initializing process monitor";
     ProcessMonitor monitor;
     monitor.startMonitoring();
