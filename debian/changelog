@@ -1,3 +1,9 @@
+deepin-fcitx5configtool-plugin (6.0.24) unstable; urgency=medium
+
+  * fix: remove redundant signal handler setup in fcitx5helper.
+
+ -- wangyu <wangyu@uniontech.com>  Mon, 05 Jan 2026 14:00:16 +0800
+
 deepin-fcitx5configtool-plugin (6.0.23) unstable; urgency=medium
 
   * Non-maintainer upload.
