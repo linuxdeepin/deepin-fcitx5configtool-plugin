@@ -1,3 +1,9 @@
+deepin-fcitx5configtool-plugin (6.0.25) unstable; urgency=medium
+
+  * refactor: update QML structure in DetailConfigItem.qml
+
+ -- dengzhongyuan <dengzhongyuan@uniontech.com>  Thu, 05 Feb 2026 17:45:10 +0800
+
 deepin-fcitx5configtool-plugin (6.0.24) unstable; urgency=medium
 
   * fix: remove redundant signal handler setup in fcitx5helper.
