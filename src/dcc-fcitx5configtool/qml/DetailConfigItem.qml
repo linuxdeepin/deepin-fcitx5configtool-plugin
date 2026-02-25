@@ -42,23 +42,24 @@ DccObject {
             page: RowLayout {
                 id: headerRow
                 height: 40
-
-                MouseArea {
-                    anchors.fill: parent
-                    onClicked: headerItem.expanded = !headerItem.expanded
-                }
+                spacing: 0
 
                 Label {
                     Layout.leftMargin: 10
-                    Layout.alignment: Qt.AlignVCenter
+                    Layout.alignment: Qt.AlignLeft | Qt.AlignVCenter
                     font: D.DTK.fontManager.t6
                     text: dccObj.displayName
+                }
+                MouseArea {
+                    anchors.fill: parent
+                    onClicked: headerItem.expanded = !headerItem.expanded
                 }
                 D.ToolButton {
                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                     icon.width: 12
                     icon.height: 12
                     icon.name: headerItem.expanded ? "arrow_ordinary_down" : "arrow_ordinary_right"
+                    background: Item {}
                     onClicked: headerItem.expanded = !headerItem.expanded
                 }
             }
