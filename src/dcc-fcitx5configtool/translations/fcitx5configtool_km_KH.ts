@@ -291,14 +291,14 @@
     </message>
 </context>
 <context>
-    <name>fcitx5configtool</name>
+    <name>Fcitx5configtool</name>
     <message>
-        <location filename="../qml/fcitx5configtool.qml" line="8"/>
+        <location filename="../qml/Fcitx5configtool.qml" line="8"/>
         <source>Input Methods</source>
         <translation>កម្មវិធីបញ្ចូល</translation>
     </message>
     <message>
-        <location filename="../qml/fcitx5configtool.qml" line="9"/>
+        <location filename="../qml/Fcitx5configtool.qml" line="9"/>
         <source>Input method management, input method shortcuts, advanced settings</source>
         <translation>ការគ្រប់គ្រងកម្មវិធីបញ្ចូល ការបញ្ជូលច្បាប់ និងការកំណត់ត្រាមូលដ្ឋាន</translation>
     </message>
