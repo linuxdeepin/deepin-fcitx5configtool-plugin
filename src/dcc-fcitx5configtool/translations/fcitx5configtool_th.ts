@@ -295,12 +295,12 @@
     <message>
         <location filename="../qml/Fcitx5configtool.qml" line="8"/>
         <source>Input Methods</source>
-        <translation>ระบบป้อนข้อมูล</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../qml/Fcitx5configtool.qml" line="9"/>
         <source>Input method management, input method shortcuts, advanced settings</source>
-        <translation>การจัดการระบบป้อนข้อมูล, ทางลัดระบบป้อนข้อมูล, การตั้งค่าขั้นสูง</translation>
+        <translation type="unfinished"/>
     </message>
 </context>
 </TS>
