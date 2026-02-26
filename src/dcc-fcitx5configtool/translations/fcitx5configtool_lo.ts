@@ -295,12 +295,12 @@
     <message>
         <location filename="../qml/Fcitx5configtool.qml" line="8"/>
         <source>Input Methods</source>
-        <translation>ວິທີການປ້ອນຂໍ້ມູນ</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../qml/Fcitx5configtool.qml" line="9"/>
         <source>Input method management, input method shortcuts, advanced settings</source>
-        <translation>ການຈັດການວິທີການປ້ອນຂໍ້ມູນ, ວິທີການປ້ອນຂໍ້ມູນເວົ້າສັ້ນ, ວາລະສານຂັ້ນສູງ</translation>
+        <translation type="unfinished"/>
     </message>
 </context>
 </TS>
