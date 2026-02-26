@@ -291,14 +291,14 @@
     </message>
 </context>
 <context>
-    <name>fcitx5configtool</name>
+    <name>Fcitx5configtool</name>
     <message>
-        <location filename="../qml/fcitx5configtool.qml" line="8"/>
+        <location filename="../qml/Fcitx5configtool.qml" line="8"/>
         <source>Input Methods</source>
         <translation>Metodi unosa</translation>
     </message>
     <message>
-        <location filename="../qml/fcitx5configtool.qml" line="9"/>
+        <location filename="../qml/Fcitx5configtool.qml" line="9"/>
         <source>Input method management, input method shortcuts, advanced settings</source>
         <translation>Upravljanje metodama unosa, skraćenice metoda unosa, napredne postavke</translation>
     </message>

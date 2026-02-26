@@ -291,14 +291,14 @@
     </message>
 </context>
 <context>
-    <name>fcitx5configtool</name>
+    <name>Fcitx5configtool</name>
     <message>
-        <location filename="../qml/fcitx5configtool.qml" line="8"/>
+        <location filename="../qml/Fcitx5configtool.qml" line="8"/>
         <source>Input Methods</source>
         <translation>इनपुट पद्धती</translation>
     </message>
     <message>
-        <location filename="../qml/fcitx5configtool.qml" line="9"/>
+        <location filename="../qml/Fcitx5configtool.qml" line="9"/>
         <source>Input method management, input method shortcuts, advanced settings</source>
         <translation>इनपुट पद्धत व्यवस्थापन, इनपुट पद्धत शॉर्टकट्स, प्रगत सेटिंग्ज</translation>
     </message>
