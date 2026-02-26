@@ -295,12 +295,12 @@
     <message>
         <location filename="../qml/Fcitx5configtool.qml" line="8"/>
         <source>Input Methods</source>
-        <translation>Método de entrada</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../qml/Fcitx5configtool.qml" line="9"/>
         <source>Input method management, input method shortcuts, advanced settings</source>
-        <translation>Gestión del método de entrada, atajos del método de entrada, configuraciones avanzadas</translation>
+        <translation type="unfinished"/>
     </message>
 </context>
 </TS>
