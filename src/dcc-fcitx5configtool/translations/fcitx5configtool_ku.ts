@@ -295,12 +295,12 @@
     <message>
         <location filename="../qml/Fcitx5configtool.qml" line="8"/>
         <source>Input Methods</source>
-        <translation>Awayên Têketinê</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../qml/Fcitx5configtool.qml" line="9"/>
         <source>Input method management, input method shortcuts, advanced settings</source>
-        <translation>Rêveberiya awayên têketinê, kurterêyên awayên têketinê, mîhengên pêşkeftî</translation>
+        <translation type="unfinished"/>
     </message>
 </context>
 </TS>

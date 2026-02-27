@@ -295,12 +295,12 @@
     <message>
         <location filename="../qml/Fcitx5configtool.qml" line="8"/>
         <source>Input Methods</source>
-        <translation>Njia za Uingizaji</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../qml/Fcitx5configtool.qml" line="9"/>
         <source>Input method management, input method shortcuts, advanced settings</source>
-        <translation>Usimamizi wa njia za uingizaji, njia za haraka za uingizaji, mipangilio ya kina</translation>
+        <translation type="unfinished"/>
     </message>
 </context>
 </TS>

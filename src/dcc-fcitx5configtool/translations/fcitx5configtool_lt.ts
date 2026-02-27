@@ -295,12 +295,12 @@
     <message>
         <location filename="../qml/Fcitx5configtool.qml" line="8"/>
         <source>Input Methods</source>
-        <translation>Įvesties metodai</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../qml/Fcitx5configtool.qml" line="9"/>
         <source>Input method management, input method shortcuts, advanced settings</source>
-        <translation>Įvesties metodų valdymas, įvesties metodų trumpiniai, išplėstiniai nustatymai</translation>
+        <translation type="unfinished"/>
     </message>
 </context>
 </TS>

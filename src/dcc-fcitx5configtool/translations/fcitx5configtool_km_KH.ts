@@ -295,12 +295,12 @@
     <message>
         <location filename="../qml/Fcitx5configtool.qml" line="8"/>
         <source>Input Methods</source>
-        <translation>កម្មវិធីបញ្ចូល</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../qml/Fcitx5configtool.qml" line="9"/>
         <source>Input method management, input method shortcuts, advanced settings</source>
-        <translation>ការគ្រប់គ្រងកម្មវិធីបញ្ចូល ការបញ្ជូលច្បាប់ និងការកំណត់ត្រាមូលដ្ឋាន</translation>
+        <translation type="unfinished"/>
     </message>
 </context>
 </TS>

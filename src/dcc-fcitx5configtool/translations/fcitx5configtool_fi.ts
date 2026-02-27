@@ -295,12 +295,12 @@
     <message>
         <location filename="../qml/Fcitx5configtool.qml" line="8"/>
         <source>Input Methods</source>
-        <translation>Syöttömenetelmät</translation>
+        <translation>Kirjoitustavat</translation>
     </message>
     <message>
         <location filename="../qml/Fcitx5configtool.qml" line="9"/>
         <source>Input method management, input method shortcuts, advanced settings</source>
-        <translation>Syöttömenetelmähallinta, syöttömenetelmäpikakäkset, lisäasetukset</translation>
+        <translation>Kirjoitustavan hallinta, pikavalinnat ja lisäasetukset</translation>
     </message>
 </context>
 </TS>

@@ -295,12 +295,12 @@
     <message>
         <location filename="../qml/Fcitx5configtool.qml" line="8"/>
         <source>Input Methods</source>
-        <translation>ආදාන ක්‍රම</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../qml/Fcitx5configtool.qml" line="9"/>
         <source>Input method management, input method shortcuts, advanced settings</source>
-        <translation>ආදාන ක්‍රම කළමනාකරණය, ආදාන ක්‍රම කෙටිමග, උසස් සැකසුම්</translation>
+        <translation type="unfinished"/>
     </message>
 </context>
 </TS>
