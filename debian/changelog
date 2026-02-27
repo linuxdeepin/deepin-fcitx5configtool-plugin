@@ -1,3 +1,10 @@
+deepin-fcitx5configtool-plugin (6.0.26) unstable; urgency=medium
+
+  * chore: rename qml plugin files to match naming convention
+  * fix: resolve layout issues in global config header
+
+ -- dengzhongyuan <dengzhongyuan@uniontech.com>  Fri, 27 Feb 2026 20:21:00 +0800
+
 deepin-fcitx5configtool-plugin (6.0.25) unstable; urgency=medium
 
   * refactor: update QML structure in DetailConfigItem.qml
