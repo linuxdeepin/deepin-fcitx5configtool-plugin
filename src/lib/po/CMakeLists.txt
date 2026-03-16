@@ -1,0 +1,1 @@
+fcitx5_install_translation(deepin-fcitx5-configtool)

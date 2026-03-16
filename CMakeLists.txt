@@ -20,7 +20,7 @@ include(GenerateExportHeader)
 option(ENABLE_CONFIG_QT "Enable fcitx5-config-qt" On)
 option(ENABLE_TEST "Enable test" Off)
 add_definitions(-DTRANSLATION_DOMAIN=\"org.fcitx.fcitx5.kcm\")
-add_definitions(-DFCITX_GETTEXT_DOMAIN=\"fcitx5-configtool\")
+add_definitions(-DFCITX_GETTEXT_DOMAIN=\"deepin-fcitx5-configtool\")
 add_definitions(-DQT_NO_KEYWORDS)
 
 # Find Qt version
