@@ -1,3 +1,10 @@
+deepin-fcitx5configtool-plugin (6.0.27) unstable; urgency=medium
+
+  * fix: add gettext translation support for fcitx5 config
+  * chore(CI): add debian check workflow
+
+ -- Wang Yu <wangyu@uniontech.com>  Tue, 18 Mar 2026 10:30:00 +0800
+
 deepin-fcitx5configtool-plugin (6.0.26) unstable; urgency=medium
 
   * chore: rename qml plugin files to match naming convention
