@@ -1,4 +1,4 @@
-// SPDX-FileCopyrightText: 2024 - 2027 UnionTech Software Technology Co., Ltd.
+// SPDX-FileCopyrightText: 2024 - 2026 UnionTech Software Technology Co., Ltd.
 // SPDX-License-Identifier: GPL-3.0-or-later
 import QtQuick 2.15
 import QtQuick.Controls 2.3
@@ -17,11 +17,9 @@ DccObject {
         weight: 10
         pageType: DccObject.Item
         page: RowLayout {
-            Label {
+            DccTitle {
                 Layout.alignment: Qt.AlignLeft | Qt.AlignVCenter
                 Layout.leftMargin: 10
-                font.bold: true
-                font.pointSize: 14
                 text: dccObj.displayName
             }
             D.Button {
@@ -154,6 +152,7 @@ DccObject {
                             crystal: D.DTK.makeColor(D.Color.Highlight)
                         }
                     }
+                    font.pixelSize: D.DTK.fontManager.t8.pixelSize
                     LayoutsChooser {
                         id: layoutsChooser
                         viewModel: dccData.keyboardController.layoutSearchModel()

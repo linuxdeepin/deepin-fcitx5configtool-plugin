@@ -1,4 +1,4 @@
-// SPDX-FileCopyrightText: 2024 - 2027 UnionTech Software Technology Co., Ltd.
+// SPDX-FileCopyrightText: 2024 - 2026 UnionTech Software Technology Co., Ltd.
 // SPDX-License-Identifier: GPL-3.0-or-later
 import QtQuick 2.15
 import QtQuick.Layouts 1.15
@@ -36,9 +36,11 @@ DccObject {
                 onParentItemChanged: {
                     if (parentItem) {
                         parentItem.leftPadding = 4
+                        parentItem.rightPadding = 4
                     }
                 }
                 page: RowLayout {
+                    width: parent.parentItem.width
                     height: 50
                     spacing: 0
                     CheckBox {
