@@ -36,9 +36,11 @@ DccObject {
                 onParentItemChanged: {
                     if (parentItem) {
                         parentItem.leftPadding = 4
+                        parentItem.rightPadding = 4
                     }
                 }
                 page: RowLayout {
+                    width: parent.parentItem.width
                     height: 50
                     spacing: 0
                     CheckBox {

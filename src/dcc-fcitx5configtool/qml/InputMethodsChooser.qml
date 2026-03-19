@@ -113,7 +113,7 @@ Loader {
                 textColor: D.Palette {
                     normal: D.DTK.makeColor(D.Color.Highlight)
                 }
-
+                font.pixelSize: D.DTK.fontManager.t8.pixelSize
                 onClicked: {
                     console.log("Find more in App Store button clicked")
                     dccData.openDeepinAppStore()

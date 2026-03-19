@@ -119,13 +119,8 @@ DccObject {
         weight: 210
         pageType: DccObject.Item
         page: RowLayout {
-            Label {
+            DccTitle {
                 Layout.leftMargin: 10
-                font {
-                    family: D.DTK.fontManager.t4.family
-                    pixelSize: D.DTK.fontManager.t4.pixelSize
-                    weight: Font.Medium
-                }
                 text: dccObj.displayName
             }
             D.Button {
@@ -137,6 +132,7 @@ DccObject {
                 textColor: D.Palette {
                     normal: D.DTK.makeColor(D.Color.Highlight)
                 }
+                font.pixelSize: D.DTK.fontManager.t8.pixelSize
                 onClicked: {
                     dccData.fcitx5ConfigProxy.restoreDefault("Hotkey")
                     console.log("Restore Defaults button clicked")

@@ -22,14 +22,9 @@ DccObject {
         }
         page: ColumnLayout {
             spacing: 0
-            Label {
+            DccTitle {
                 Layout.leftMargin: 10
                 Layout.bottomMargin: 0
-                font {
-                    family: D.DTK.fontManager.t4.family
-                    pixelSize: D.DTK.fontManager.t4.pixelSize
-                    weight: Font.Medium
-                }
                 text: dccObj.displayName
             }
             Label {
