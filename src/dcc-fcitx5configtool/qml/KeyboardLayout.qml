@@ -30,7 +30,7 @@ DccObject {
                 Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                 Layout.rightMargin: 10
                 text: keyboardLayoutTitle.isEditing ? qsTr("done") : qsTr("edit")
-                font.pointSize: 12
+                font: D.DTK.fontManager.t8
                 background: null
                 textColor: D.Palette {
                     normal {
@@ -100,10 +100,10 @@ DccObject {
                         id: removeButton
                         visible: itemDelegate.isCurrentLang || keyboardLayoutTitle.isEditing
                         icon.name: itemDelegate.isCurrentLang ? "item_checked" : "list_delete"
-                        icon.width: 24
-                        icon.height: 24
-                        implicitWidth: 36
-                        implicitHeight: 36
+                        icon.width: 16
+                        icon.height: 16
+                        implicitWidth: 16
+                        implicitHeight: 16
                         anchors {
                             right: itemDelegate.right
                             rightMargin: 10
