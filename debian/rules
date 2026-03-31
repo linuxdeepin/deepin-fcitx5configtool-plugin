@@ -20,11 +20,14 @@ $(eval $(call detect_qt_version))
 %:
 	dh $@ --parallel
 
+UOS_SYSTEM := $(shell lsb_release -i -s 2>/dev/null | grep -i uos | wc -l | tr -d ' ')
+
 override_dh_auto_configure:
 	dh_auto_configure -- \
 	-DENABLE_KCM=Off \
 	-DCMAKE_BUILD_TYPE=Release \
-	-DQT_DIR=$(QT_DIR)
+	-DQT_DIR=$(QT_DIR) \
+	$(if $(filter 1,$(UOS_SYSTEM)),-DBUILD_UOS=ON,)
 
 override_dh_auto_install:
 	dh_auto_install --destdir=debian/tmp

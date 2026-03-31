@@ -36,8 +36,13 @@
 
 DWIDGET_USE_NAMESPACE
 
+#ifdef BUILD_UOS
+const QString SOGOU_IM_UNIQUE_NAME = "com.sogou.ime.ng.fcitx5.uos";
+const QString SOGOU_CONFIGURE_APP_ID = "com.sogou.ime.ng.fcitx5.uos.configurer";
+#else
 const QString SOGOU_IM_UNIQUE_NAME = "com.sogou.ime.ng.fcitx5.deepin";
 const QString SOGOU_CONFIGURE_APP_ID = "com.sogou.ime.ng.fcitx5.deepin.configurer";
+#endif
 
 using namespace dcc_fcitx_configtool::widgets;
 

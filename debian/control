@@ -27,6 +27,7 @@ Build-Depends:
  libpolkit-qt6-1-dev,
  pkg-config,
  xkb-data,
+ lsb-release,
 Standards-Version: 4.6.2
 Rules-Requires-Root: no
 Homepage: https://github.com/fcitx/fcitx5-configtool
