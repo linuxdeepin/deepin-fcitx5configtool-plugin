@@ -1,4 +1,4 @@
-// Copyright (C) 2021 ~ 2021 Deepin Technology Co., Ltd.
+// Copyright (C) 2021 ~ 2026 Deepin Technology Co., Ltd.
 // SPDX-FileCopyrightText: 2023 Deepin Technology Co., Ltd.
 //
 // SPDX-License-Identifier: GPL-3.0-or-later

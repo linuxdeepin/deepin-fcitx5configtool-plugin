@@ -1,3 +1,11 @@
+deepin-fcitx5configtool-plugin (6.0.28) unstable; urgency=medium
+
+  * fix: add UOS build support and update dependencies
+  * style(ui): adjust font and icon size for keyboard layout
+  * style(ui): unify title styles and fix addon button alignment
+
+ -- dengzhongyuan <dengzhongyuan@uniontech.com>  Tue, 31 Mar 2026 22:27:45 +0800
+
 deepin-fcitx5configtool-plugin (6.0.27) unstable; urgency=medium
 
   * fix: add gettext translation support for fcitx5 config
