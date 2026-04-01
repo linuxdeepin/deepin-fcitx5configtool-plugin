@@ -21,10 +21,7 @@ DccObject {
         loading = false
     }
 
-    Loader {
-        active: !loading
-        asynchronous: true
-        sourceComponent: DccRepeater {
+    DccRepeater {
             model: globalAddons
             delegate: DccObject {
                 property bool expanded: true
@@ -92,5 +89,4 @@ DccObject {
                 }
             }
         }
-    }
 }
