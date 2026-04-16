@@ -9,13 +9,23 @@ import org.deepin.dcc 1.0
 
 DccObject {
     id: root
+
+    // Config path constants
+    readonly property string cfgGroup: "Hotkey"
+    readonly property string cfgEnumKey: "EnumerateForwardKeys"
+    readonly property string cfgTriggerKey: "TriggerKeys"
+    readonly property string cfgEnum0: cfgGroup + "/" + cfgEnumKey + "/0"
+    readonly property string cfgEnum1: cfgGroup + "/" + cfgEnumKey + "/1"
+    readonly property string cfgTrigger0: cfgGroup + "/" + cfgTriggerKey + "/0"
+    readonly property string cfgTrigger1: cfgGroup + "/" + cfgTriggerKey + "/1"
+
     readonly property var enumKeys: ["Ctrl+Shift", "Alt+Shift", "None"]
     readonly property var enumKeysI18n: ["Ctrl+Shift", "Alt+Shift", qsTr("None")]
     readonly property var triggerEnumKeys: ["Shift", "Ctrl+Space", "None"]
     readonly property var triggerEnumKeysI18n: ["Shift", "Ctrl+Space", qsTr("None")]
     
     property var triggerKeys: dccData.fcitx5ConfigProxy.globalConfigOption(
-                                  "Hotkey", "TriggerKeys")
+                                  cfgGroup, cfgTriggerKey)
     // 改为受控属性，避免等值赋值不触发刷新
     property int enumerateForwardKeys: -1
     property int currentTriggerKeys: -1
@@ -39,11 +49,11 @@ DccObject {
 
     function calculateTriggerKeys(value) {
         // 获取完整的TriggerKeys配置
-        let triggerKeys0 = dccData.fcitx5ConfigProxy.globalConfigOption("Hotkey", "TriggerKeys").value
+        let triggerKeys0 = dccData.fcitx5ConfigProxy.globalConfigOption(cfgGroup, cfgTriggerKey).value
         let triggerKeys1 = []
         try {
             // 尝试获取第二个TriggerKey
-            let triggerKeysObj = dccData.fcitx5ConfigProxy.globalConfigOption("Hotkey", "TriggerKeys")
+            let triggerKeysObj = dccData.fcitx5ConfigProxy.globalConfigOption(cfgGroup, cfgTriggerKey)
             if (triggerKeysObj && triggerKeysObj.hasOwnProperty("1")) {
                 triggerKeys1 = triggerKeysObj["1"] || []
             }
@@ -134,7 +144,7 @@ DccObject {
                 }
                 font.pixelSize: D.DTK.fontManager.t8.pixelSize
                 onClicked: {
-                    dccData.fcitx5ConfigProxy.restoreDefault("Hotkey")
+                    dccData.fcitx5ConfigProxy.restoreDefault(cfgGroup)
                     console.log("Restore Defaults button clicked")
                 }
             }
@@ -146,10 +156,10 @@ DccObject {
         enumKeysDisplay = ["Ctrl+Shift", "Alt+Shift", qsTr("None")]
         triggerEnumKeysDisplay = ["Shift", "Ctrl+Space", qsTr("None")]
 
-        let enumInitOpt = dccData.fcitx5ConfigProxy.globalConfigOption("Hotkey", "EnumerateForwardKeys")
+        let enumInitOpt = dccData.fcitx5ConfigProxy.globalConfigOption(cfgGroup, cfgEnumKey)
         let enumInitVal = enumInitOpt && enumInitOpt.value ? enumInitOpt.value : []
         let enumInitIdx = calculateEnumerateForwardKeys(enumInitVal)
-        let triggerInitOpt = dccData.fcitx5ConfigProxy.globalConfigOption("Hotkey", "TriggerKeys")
+        let triggerInitOpt = dccData.fcitx5ConfigProxy.globalConfigOption(cfgGroup, cfgTriggerKey)
         let triggerInitVal = triggerInitOpt && triggerInitOpt.value ? triggerInitOpt.value : []
         let triggerInitIdx = calculateTriggerKeys(triggerInitVal)
         currentTriggerKeys = triggerInitIdx
@@ -159,8 +169,8 @@ DccObject {
     Connections {
         target: dccData.fcitx5ConfigProxy
         function onRequestConfigFinished() {
-            let fullTriggerKeys = dccData.fcitx5ConfigProxy.globalConfigOption("Hotkey", "TriggerKeys")
-            let enumValue = dccData.fcitx5ConfigProxy.globalConfigOption("Hotkey", "EnumerateForwardKeys").value
+            let fullTriggerKeys = dccData.fcitx5ConfigProxy.globalConfigOption(cfgGroup, cfgTriggerKey)
+            let enumValue = dccData.fcitx5ConfigProxy.globalConfigOption(cfgGroup, cfgEnumKey).value
 
 
             let newTriggerIdx = calculateTriggerKeys(fullTriggerKeys.value)
@@ -186,31 +196,30 @@ DccObject {
         }
     }
 
+    // Always returns [binding0, binding1] where each binding is an array.
+    // binding1 is [""] when no second binding is needed.
     function reverseEnumerateForwardKeys(index) {
         if (index < 0 || index >= enumKeys.length) {
-            return ""
+            return [[""], [""]]
         }
         let value = enumKeys[index]
-        
-        if (value === "Ctrl+Shift") value = "CTRL_SHIFT"
-        if (value === "Alt+Shift") value = "ALT_SHIFT"
-        
+
+        // Ctrl+Shift needs two key bindings to cover both press orders:
+        // Binding 0: press Ctrl then Shift_L triggers forward switch
+        // Binding 1: press Ctrl+Shift then Ctrl_L triggers forward switch
+        // Without both bindings, only one press order works.
+        if (value === "Ctrl+Shift") {
+            return [["Control", "Shift_L"], ["Control", "Shift", "Control_L"]]
+        }
+        if (value === "Alt+Shift") {
+            return [["Alt", "Shift_L"], [""]]
+        }
+
         if (value === "None") {
-            return ""
+            return [[""], [""]]
         }
-        let parts = value.split("_")
-        for (var i = 0; i < parts.length; i++) {
-            if (parts.length > 0) {
-                parts[i] = parts[i].charAt(0).toUpperCase() + parts[i].slice(
-                            1).toLowerCase()
-            }
-            if (parts[i] === "Super") {
-                parts[i] = "Meta"
-            } else if (parts[i] === "Shift") {
-                parts[i] = "Shift_L"
-            }
-        }
-        return parts
+        // Fallback for unknown enum values
+        return [[value], [""]]
     }
 
     // Shortcut of scroll IM
@@ -236,7 +245,7 @@ DccObject {
             Component.onCompleted: {
                 if (root.enumerateForwardKeys === -1) {
                     try {
-                        let ev = dccData.fcitx5ConfigProxy.globalConfigOption("Hotkey", "EnumerateForwardKeys").value || []
+                        let ev = dccData.fcitx5ConfigProxy.globalConfigOption(cfgGroup, cfgEnumKey).value || []
                         let eidx = calculateEnumerateForwardKeys(ev)
                         console.warn("[QML][page] init enum from backend idx=", eidx)
                         root.enumerateForwardKeys = eidx
@@ -248,9 +257,13 @@ DccObject {
 
             // 只在用户激活选择时写回，避免程序化更新触发写回
             onActivated: {
+                let reversed = reverseEnumerateForwardKeys(currentIndex)
                 dccData.fcitx5ConfigProxy.setValue(
-                            "Hotkey/EnumerateForwardKeys/0",
-                            reverseEnumerateForwardKeys(currentIndex), true)
+                            cfgEnum0,
+                            reversed[0], true)
+                dccData.fcitx5ConfigProxy.setValue(
+                            cfgEnum1,
+                            reversed[1], true)
             }
         }
     }
@@ -287,7 +300,7 @@ DccObject {
                                  " root.trigger=", root.currentTriggerKeys)
                     if (root.currentTriggerKeys === -1) {
                         try {
-                            let tv = dccData.fcitx5ConfigProxy.globalConfigOption("Hotkey", "TriggerKeys").value || []
+                            let tv = dccData.fcitx5ConfigProxy.globalConfigOption(cfgGroup, cfgTriggerKey).value || []
                             let tidx = calculateTriggerKeys(tv)
                             console.warn("[QML][page] init trigger from backend idx=", tidx)
                             root.currentTriggerKeys = tidx
@@ -302,13 +315,13 @@ DccObject {
                     isUserChanging = true
                     if (currentIndex === 0) {
                         console.warn("[QML] write TriggerKeys -> Shift_L + Shift_R")
-                        dccData.fcitx5ConfigProxy.setValue("Hotkey/TriggerKeys/0", ["Shift_L"], true)
-                        dccData.fcitx5ConfigProxy.setValue("Hotkey/TriggerKeys/1", ["Shift_R"], true)
+                        dccData.fcitx5ConfigProxy.setValue(cfgTrigger0, ["Shift_L"], true)
+                        dccData.fcitx5ConfigProxy.setValue(cfgTrigger1, ["Shift_R"], true)
                     } else {
                         let newKeys = reverseTriggerKeys(currentIndex)
                         console.warn("[QML] write TriggerKeys ->", JSON.stringify(newKeys))
-                        dccData.fcitx5ConfigProxy.setValue("Hotkey/TriggerKeys/0", newKeys, true)
-                        dccData.fcitx5ConfigProxy.setValue("Hotkey/TriggerKeys/1", [""], true)
+                        dccData.fcitx5ConfigProxy.setValue(cfgTrigger0, newKeys, true)
+                        dccData.fcitx5ConfigProxy.setValue(cfgTrigger1, [""], true)
                     }
                     Qt.callLater(() => { isUserChanging = false })
                 }
