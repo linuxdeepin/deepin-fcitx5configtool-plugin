@@ -1,4 +1,4 @@
-// SPDX-FileCopyrightText: 2024 - 2027 UnionTech Software Technology Co., Ltd.
+// SPDX-FileCopyrightText: 2024 - 2026 UnionTech Software Technology Co., Ltd.
 //
 // SPDX-License-Identifier: GPL-3.0-or-later
 
@@ -218,6 +218,13 @@ QVariantList Fcitx5ConfigProxy::globalConfigOptions(const QString &type, bool al
                         break;
                     }
                     ++iterator;
+                }
+                if (option.type() == "Integer") {
+                    bool ok = false;
+                    int maxVal = properties.contains("IntMax") ? properties["IntMax"].toInt(&ok) : 9999;
+                    item["intMax"] = ok ? maxVal : 9999;
+                    int minVal = properties.contains("IntMin") ? properties["IntMin"].toInt(&ok) : 0;
+                    item["intMin"] = ok ? minVal : 0;
                 }
             }
             list.append(item);
