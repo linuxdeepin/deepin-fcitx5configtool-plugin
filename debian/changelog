@@ -1,3 +1,9 @@
+deepin-fcitx5configtool-plugin (6.0.31) unstable; urgency=medium
+
+  * fix: use dynamic integer range from fcitx5 config properties
+
+ -- Wang Yu <wangyu@uniontech.com>  Thu, 17 Apr 2026 10:30:00 +0800
+
 deepin-fcitx5configtool-plugin (6.0.30) unstable; urgency=medium
 
   * fix: support dual key bindings for Ctrl+Shift layout switching
