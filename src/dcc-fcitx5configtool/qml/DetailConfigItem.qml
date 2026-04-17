@@ -112,8 +112,11 @@ DccObject {
                         Component {
                             id: integerComponent
                             D.SpinBox {
-                                width: 55
-                                implicitWidth: 55
+                                editable: true
+                                width: 75
+                                implicitWidth: 75
+                                from: modelData.intMin !== undefined ? modelData.intMin : 0
+                                to: modelData.intMax !== undefined ? modelData.intMax : 9999
                                 value: parseInt(modelData.value)
                                 onValueChanged: {
                                     dccData.fcitx5ConfigProxy.setValue(
