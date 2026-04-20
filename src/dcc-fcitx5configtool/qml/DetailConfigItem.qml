@@ -190,14 +190,16 @@ DccObject {
             }
         }
     }
+    Connections {
+        target: dccData.fcitx5ConfigProxy
+        function onRequestConfigFinished() {
+            configOptions = []
+            configOptions = dccData.fcitx5ConfigProxy.globalConfigOptions(root.name)
+            keyName = ""
+        }
+    }
 
     Component.onCompleted: {
-        dccData.fcitx5ConfigProxy.onRequestConfigFinished.connect(() => {
-                                                                      configOptions = []
-                                                                      configOptions = dccData.fcitx5ConfigProxy.globalConfigOptions(
-                                                                          root.name)
-                                                                      keyName = ""
-                                                                  })
         configOptions = dccData.fcitx5ConfigProxy.globalConfigOptions(root.name)
         loading = false
     }
