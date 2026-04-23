@@ -30,6 +30,39 @@ Q_LOGGING_CATEGORY(configTool, "fcitx5.configtool.main")
 namespace deepin {
 namespace fcitx5configtool {
 
+static QString dccLayoutToFcitxIMKey(const QString &key) {
+    // DCC: "fr;" or "fr;bepo" -> fcitx5: "keyboard-fr" or "keyboard-fr-bepo"
+    QString stripped = key;
+    stripped.replace(';', '-');
+    while (stripped.endsWith('-')) stripped.chop(1);
+    return QStringLiteral("keyboard-") + stripped;
+}
+static QString fcitxIMKeyToDccLayout(const QString &imKey) {
+    const QString prefix = QStringLiteral("keyboard-");
+    if (!imKey.startsWith(prefix)) return QString();
+    // fcitx5: "keyboard-fr-bepo" -> DCC: "fr;bepo"
+    QString stripped = imKey.mid(prefix.length());
+    int dashPos = stripped.indexOf('-');
+    if (dashPos < 0) {
+        return stripped + ';';
+    }
+    return stripped.left(dashPos) + ';' + stripped.mid(dashPos + 1);
+}
+
+static int indexOfEntry(const fcitx::FcitxQtStringKeyValueList &entries, const QString &key) {
+    for (int i = 0; i < entries.size(); ++i)
+        if (entries[i].key() == key) return i;
+    return -1;
+}
+
+struct SyncGuard {
+    bool &flag;
+    SyncGuard(bool &f) : flag(f) { flag = true; }
+    ~SyncGuard() { flag = false; }
+    SyncGuard(const SyncGuard &) = delete;
+    SyncGuard &operator=(const SyncGuard &) = delete;
+};
+
 static QString kFcitxConfigGlobalPath = "fcitx://config/global";
 #ifdef BUILD_UOS
 static const QString kSogouAddonUniqueName = "com.sogou.ime.ng.fcitx5.uos-addon";
@@ -70,6 +103,10 @@ void Fcitx5ConfigToolWorkerPrivate::initConnect()
         if (avail) {
             configProxy->requestConfig(false);
             addonsProxy->load();
+            connect(dbusProvider->controller(), &fcitx::FcitxQtControllerProxy::InputMethodGroupsChanged,
+                    this, [this]() {
+                if (!m_syncInProgress) imConfig->load();
+            }, Qt::UniqueConnection);
         } else {
             configProxy->clear();
             addonsProxy->clear();
@@ -94,6 +131,25 @@ void Fcitx5ConfigToolWorkerPrivate::initConnect()
 
     connect(configProxy, &Fcitx5ConfigProxy::requestConfigFinished, q, &Fcitx5ConfigToolWorker::requestConfigFinished);
     connect(addonsProxy, &Fcitx5AddonsProxy::requestAddonsFinished, q, &Fcitx5ConfigToolWorker::requestAddonsFinished);
+
+    connect(keyboardController, &dccV25::KeyboardController::currentLayoutSet, this,
+            [this](const QString &key) {
+        if (!m_syncInProgress) syncCurrentLayoutToFcitx5(key);
+    });
+
+    connect(keyboardController, &dccV25::KeyboardController::layoutDeleted, this,
+            [this](const QString &key, bool isCurrent) {
+        if (!m_syncInProgress && isCurrent) syncLayoutDeletedFromFcitx5(key);
+    });
+
+    connect(imConfig, &fcitx::kcm::IMConfig::imListChanged, this, [this]() {
+        if (!m_syncInProgress) syncFcitx5FirstKeyboardToDCC();
+        if (!m_pendingLayoutKey.isEmpty()) {
+            QString key = m_pendingLayoutKey;
+            syncCurrentLayoutToFcitx5(key);
+        }
+    });
+
     configProxy->requestConfig(false);
     addonsProxy->load();
     qCDebug(configTool) << "Exiting Fcitx5ConfigToolWorkerPrivate::initConnect";
@@ -242,6 +298,94 @@ fcitx::kcm::IMProxyModel *Fcitx5ConfigToolWorker::imProxyModel() const
 {
     qCDebug(configTool) << "Accessing imProxyModel";
     return d->imConfig->availIMModel();
+}
+
+void Fcitx5ConfigToolWorkerPrivate::syncCurrentLayoutToFcitx5(const QString &layoutKey)
+{
+    if (!dbusProvider || !dbusProvider->controller()) {
+        qCDebug(configTool) << "syncCurrentLayoutToFcitx5: controller not available, pending:" << layoutKey;
+        m_pendingLayoutKey = layoutKey;
+        return;
+    }
+
+    QString fcitxKey = dccLayoutToFcitxIMKey(layoutKey);
+
+    const auto &entries = imConfig->imEntries();
+    int existIndex = indexOfEntry(entries, fcitxKey);
+
+    SyncGuard guard(m_syncInProgress);
+    m_pendingLayoutKey.clear();
+
+    if (existIndex > 0) {
+        qCDebug(configTool) << "syncCurrentLayoutToFcitx5: move to front:" << fcitxKey;
+        auto updatedEntries = entries;
+        updatedEntries.move(existIndex, 0);
+        imConfig->setIMEntries(updatedEntries);
+        imConfig->emitChanged();
+        imConfig->save();
+    } else if (existIndex < 0) {
+        qCDebug(configTool) << "syncCurrentLayoutToFcitx5: prepend:" << fcitxKey;
+        auto updatedEntries = entries;
+        fcitx::FcitxQtStringKeyValue newEntry;
+        newEntry.setKey(fcitxKey);
+        updatedEntries.prepend(newEntry);
+        imConfig->setIMEntries(updatedEntries);
+        imConfig->emitChanged();
+        imConfig->save();
+    }
+
+    dbusProvider->controller()->SetCurrentIM(fcitxKey);
+}
+
+void Fcitx5ConfigToolWorkerPrivate::syncLayoutDeletedFromFcitx5(const QString &layoutKey)
+{
+    if (!dbusProvider || !dbusProvider->controller()) return;
+
+    QString fcitxKey = dccLayoutToFcitxIMKey(layoutKey);
+    const auto &entries = imConfig->imEntries();
+    int removedIndex = indexOfEntry(entries, fcitxKey);
+    if (removedIndex < 0) return;
+
+    qCDebug(configTool) << "syncLayoutDeletedFromFcitx5:" << fcitxKey;
+    SyncGuard guard(m_syncInProgress);
+    auto updatedEntries = entries;
+    updatedEntries.removeAt(removedIndex);
+    imConfig->setIMEntries(updatedEntries);
+    imConfig->emitChanged();
+    imConfig->save();
+
+    if (!updatedEntries.isEmpty()) {
+        dbusProvider->controller()->SetCurrentIM(updatedEntries.first().key());
+    }
+}
+
+void Fcitx5ConfigToolWorkerPrivate::syncFcitx5FirstKeyboardToDCC()
+{
+    if (!keyboardController || !imConfig) return;
+
+    const auto &entries = imConfig->imEntries();
+    QString firstKeyboardLayout;
+    for (const auto &entry : entries) {
+        QString dccKey = fcitxIMKeyToDccLayout(entry.key());
+        if (!dccKey.isEmpty()) {
+            firstKeyboardLayout = dccKey;
+            break;
+        }
+    }
+
+    if (firstKeyboardLayout.isEmpty()) return;
+
+    if (!keyboardController->allLayoutsContains(firstKeyboardLayout)) {
+        qCDebug(configTool) << "syncFcitx5FirstKeyboardToDCC: layout not in DCC:" << firstKeyboardLayout;
+        return;
+    }
+
+    qCDebug(configTool) << "syncFcitx5FirstKeyboardToDCC:" << firstKeyboardLayout;
+    SyncGuard guard(m_syncInProgress);
+    if (!keyboardController->userLayoutsContains(firstKeyboardLayout)) {
+        keyboardController->addUserLayout(firstKeyboardLayout);
+    }
+    keyboardController->setCurrentLayout(firstKeyboardLayout);
 }
 
 DCC_FACTORY_CLASS(Fcitx5ConfigToolWorker)

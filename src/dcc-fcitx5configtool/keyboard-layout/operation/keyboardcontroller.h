@@ -1,4 +1,4 @@
-//SPDX-FileCopyrightText: 2024 UnionTech Software Technology Co., Ltd.
+//SPDX-FileCopyrightText: 2024 - 2026 UnionTech Software Technology Co., Ltd.
 //
 //SPDX-License-Identifier: GPL-3.0-or-later
 
@@ -58,6 +58,7 @@ public Q_SLOTS:
     QMap<QString, QString> userLayouts() const;
     QString userLayoutAt(int index, bool isValue = true) const;
     bool userLayoutsContains(const QString &key);
+    bool allLayoutsContains(const QString &key) const;
     QSortFilterProxyModel *layoutSearchModel();
     QSortFilterProxyModel *shortcutSearchModel();
 
@@ -94,6 +95,9 @@ Q_SIGNALS:
     void keyConflicted(const QString &oldAccels, const QString &newAccels);
     void keyDone(const QString &accels);
     void keyEvent(const QString &accels);
+
+    void layoutDeleted(const QString &key, bool isCurrentLayout);
+    void currentLayoutSet(const QString &key);
 
     void conflictTextChanged();
     void keyboardEnabledChanged();

@@ -1,4 +1,4 @@
-// SPDX-FileCopyrightText: 2024 - 2027 UnionTech Software Technology Co., Ltd.
+// SPDX-FileCopyrightText: 2024 - 2026 UnionTech Software Technology Co., Ltd.
 //
 // SPDX-License-Identifier: GPL-3.0-or-later
 #ifndef FCITX5CONFIGTOOL_P_H
@@ -36,7 +36,13 @@ class Fcitx5ConfigToolWorkerPrivate : public QObject
     IMListModel *imListModel { nullptr };
     dccV25::KeyboardController *keyboardController { nullptr };
 
+    bool m_syncInProgress { false };
+    QString m_pendingLayoutKey;
+
 private:
+    void syncCurrentLayoutToFcitx5(const QString &layoutKey);
+    void syncLayoutDeletedFromFcitx5(const QString &layoutKey);
+    void syncFcitx5FirstKeyboardToDCC();
     void init();
     void initConnect();
 
