@@ -1,4 +1,4 @@
-//SPDX-FileCopyrightText: 2024 UnionTech Software Technology Co., Ltd.
+//SPDX-FileCopyrightText: 2024 - 2026 UnionTech Software Technology Co., Ltd.
 //
 //SPDX-License-Identifier: GPL-3.0-or-later
 
@@ -161,6 +161,11 @@ bool KeyboardController::userLayoutsContains(const QString &key)
     return userLayouts().contains(key);
 }
 
+bool KeyboardController::allLayoutsContains(const QString &key) const
+{
+    return m_model->allLayout().contains(key);
+}
+
 QSortFilterProxyModel *KeyboardController::layoutSearchModel()
 {
     if (m_layoutSearchModel)
@@ -311,7 +316,11 @@ void KeyboardController::addUserLayout(const QString &layout)
 
 void KeyboardController::deleteUserLayout(const QString &layout)
 {
+    const auto &userLayout = m_model->userLayout();
+    QString key = userLayout.key(layout, layout);
+    bool isCur = (key == currentLayout());
     m_worker->delUserLayout(layout);
+    Q_EMIT layoutDeleted(key, isCur);
 }
 
 int KeyboardController::layoutCount() const
@@ -330,6 +339,7 @@ void KeyboardController::setCurrentLayout(const QString &key)
         return;
 
     m_worker->setLayout(key);
+    Q_EMIT currentLayoutSet(key);
 }
 
 QString KeyboardController::conflictText() const

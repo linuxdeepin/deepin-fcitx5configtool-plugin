@@ -1,4 +1,4 @@
-//SPDX-FileCopyrightText: 2018 - 2023 UnionTech Software Technology Co., Ltd.
+//SPDX-FileCopyrightText: 2018 - 2026 UnionTech Software Technology Co., Ltd.
 //
 //SPDX-License-Identifier: GPL-3.0-or-later
 
@@ -32,9 +32,9 @@ public:
 
     QString curLayout() const;
     QString curLang() const;
-    QMap<QString, QString> userLayout() const;
+    const QMap<QString, QString> &userLayout() const;
     QMap<QString, QString> kbLayout() const;
-    QMap<QString, QString> allLayout() const { return m_allLayouts; }
+    const QMap<QString, QString> &allLayout() const { return m_allLayouts; }
     QStringList localLang() const;
     QList<MetaData> langLists() const;
     bool capsLock() const;
