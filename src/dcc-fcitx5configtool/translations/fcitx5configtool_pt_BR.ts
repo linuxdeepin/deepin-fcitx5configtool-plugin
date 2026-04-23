@@ -300,7 +300,7 @@
     <message>
         <location filename="../qml/Fcitx5configtool.qml" line="9"/>
         <source>Input method management, input method shortcuts, advanced settings</source>
-        <translation>Gerenciar métodos de entrada, atalhos dos métodos de entrada, configurações avançadas</translation>
+        <translation>Gerenciamento de métodos de entrada, atalhos de métodos de entrada, configurações avançadas</translation>
     </message>
 </context>
 </TS>
