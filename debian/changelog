@@ -1,3 +1,10 @@
+deepin-fcitx5configtool-plugin (6.0.32) unstable; urgency=medium
+
+  * fix: sync keyboard layout between DCC and fcitx5
+  * fix: prevent crash from RequestConfigFinished signal connection
+
+ -- Wang Yu <wangyu@uniontech.com>  Thu, 23 Apr 2026 19:41:45 +0800
+
 deepin-fcitx5configtool-plugin (6.0.31) unstable; urgency=medium
 
   * fix: use dynamic integer range from fcitx5 config properties
