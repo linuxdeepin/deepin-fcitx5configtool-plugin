@@ -25,7 +25,7 @@ DccObject {
             D.Button {
                 id: button
                 checkable: true
-                visible: dccData.keyboardController.layoutCount > 1
+                visible: dccData.keyboardController.layoutCount > 1 || keyboardLayoutTitle.isEditing
                 checked: keyboardLayoutTitle.isEditing
                 Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                 Layout.rightMargin: 10
