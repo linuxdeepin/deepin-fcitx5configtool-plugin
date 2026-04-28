@@ -1,4 +1,4 @@
-//SPDX-FileCopyrightText: 2018 - 2023 UnionTech Software Technology Co., Ltd.
+//SPDX-FileCopyrightText: 2018 - 2026 UnionTech Software Technology Co., Ltd.
 //
 //SPDX-License-Identifier: GPL-3.0-or-later
 
@@ -492,23 +492,47 @@ void KeyboardWorker::onLocalListsFinished(QDBusPendingCallWatcher *watch)
 
 void KeyboardWorker::onUserLayout(const QStringList &list)
 {
-    m_model->cleanUserLayout();
     m_model->getUserLayoutList() = list;
+    m_pendingLayouts.clear();
+    m_pendingLayoutCount = list.size();
+    m_batchId++;
+
+    if (list.isEmpty()) {
+        m_model->cleanUserLayout();
+        return;
+    }
 
     for (const QString &data : list) {
         QDBusPendingCallWatcher *layoutResult = new QDBusPendingCallWatcher(m_keyboardDBusProxy->GetLayoutDesc(data), this);
         layoutResult->setProperty("id", data);
+        layoutResult->setProperty("batchId", m_batchId);
         connect(layoutResult, &QDBusPendingCallWatcher::finished, this, &KeyboardWorker::onUserLayoutFinished);
     }
 }
 
 void KeyboardWorker::onUserLayoutFinished(QDBusPendingCallWatcher *watch)
 {
-    QDBusPendingReply<QString> reply = *watch;
+    if (watch->property("batchId").toULongLong() != m_batchId) {
+        watch->deleteLater();
+        return;
+    }
 
-    m_model->addUserLayout(watch->property("id").toString(), reply.value());
+    QDBusPendingReply<QString> reply = *watch;
+    if (!reply.isError()) {
+        m_pendingLayouts.insert(watch->property("id").toString(), reply.value());
+    } else {
+        qWarning() << "GetLayoutDesc failed for" << watch->property("id").toString()
+                   << ":" << reply.error().message();
+    }
 
     watch->deleteLater();
+
+    if (--m_pendingLayoutCount == 0) {
+        m_model->cleanUserLayout();
+        for (auto it = m_pendingLayouts.constBegin(); it != m_pendingLayouts.constEnd(); ++it) {
+            m_model->addUserLayout(it.key(), it.value());
+        }
+    }
 }
 
 void KeyboardWorker::onCurrentLayout(const QString &value)

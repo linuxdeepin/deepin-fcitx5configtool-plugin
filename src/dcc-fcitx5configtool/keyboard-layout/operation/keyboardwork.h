@@ -1,4 +1,4 @@
-//SPDX-FileCopyrightText: 2018 - 2023 UnionTech Software Technology Co., Ltd.
+//SPDX-FileCopyrightText: 2018 - 2026 UnionTech Software Technology Co., Ltd.
 //
 //SPDX-License-Identifier: GPL-3.0-or-later
 
@@ -121,6 +121,9 @@ private:
     KeyboardDBusProxy *m_keyboardDBusProxy;
     ShortcutModel *m_shortcutModel = nullptr;
     QTranslator *m_translatorLanguage;
+    QMap<QString, QString> m_pendingLayouts;
+    int m_pendingLayoutCount = 0;
+    quint64 m_batchId = 0;
     Dtk::Core::DConfig *m_inputDevCfg;
 };
 }
