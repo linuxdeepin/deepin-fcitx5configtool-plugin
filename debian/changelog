@@ -1,3 +1,9 @@
+deepin-fcitx5configtool-plugin (6.0.33) unstable; urgency=medium
+
+  * fix(keyboard): resolve layout name disappearing after deletion
+
+ -- Wang Yu <wangyu@uniontech.com>  Wed, 29 Apr 2026 16:32:15 +0800
+
 deepin-fcitx5configtool-plugin (6.0.32) unstable; urgency=medium
 
   * fix: sync keyboard layout between DCC and fcitx5
