@@ -44,8 +44,6 @@ KeyboardWorker::KeyboardWorker(KeyboardModel *model, QObject *parent)
     connect(m_keyboardDBusProxy, &KeyboardDBusProxy::Deleted, this, &KeyboardWorker::removed);
     connect(m_keyboardDBusProxy, &KeyboardDBusProxy::UserLayoutListChanged, this, &KeyboardWorker::onUserLayout);
     connect(m_keyboardDBusProxy, &KeyboardDBusProxy::CurrentLayoutChanged, this, &KeyboardWorker::onCurrentLayout);
-    connect(m_keyboardDBusProxy, &KeyboardDBusProxy::CapslockToggleChanged, m_model, &KeyboardModel::setCapsLock);
-    connect(m_keyboardDBusProxy, &KeyboardDBusProxy::NumLockStateChanged, m_model, &KeyboardModel::setNumLock);
     connect(m_keyboardDBusProxy, &KeyboardDBusProxy::langSelectorServiceStartFinished, this, [=] {
         QTimer::singleShot(100, this, &KeyboardWorker::onLangSelectorServiceFinished);
     });
@@ -128,9 +126,6 @@ void KeyboardWorker::active()
 
     Q_EMIT onDatasChanged(m_metaDatas);
     Q_EMIT onLettersChanged(m_letters);
-
-    m_model->setCapsLock(m_keyboardDBusProxy->capslockToggle());
-    m_model->setNumLock(m_keyboardDBusProxy->numLockState());
 
     onRefreshKBLayout();
     refreshLang();

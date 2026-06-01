@@ -222,7 +222,7 @@ void Fcitx5ConfigToolWorker::openDeepinAppStore() const
     qCInfo(configTool) << "Request to open Deepin App Store.";
     DDBusSender()
             .service("org.desktopspec.ApplicationManager1")
-            .path(QStringLiteral("/org/desktopspec/ApplicationManager1/") + DUtil::escapeToObjectPath("deepin-app-store"))
+            .path(QStringLiteral("/org/desktopspec/ApplicationManager1/") + DUtil::escapeToObjectPath(QStringLiteral("deepin-app-store")))
             .interface("org.desktopspec.ApplicationManager1.Application")
             .method("Launch")
             .arg(QString(""))
