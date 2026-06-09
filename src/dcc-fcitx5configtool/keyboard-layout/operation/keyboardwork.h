@@ -35,7 +35,6 @@ public:
     void setShortcutModel(ShortcutModel * model);
     void refreshShortcut();
     void refreshLang();
-    void windowSwitch();
 
     inline QList<MetaData> getDatas() {return m_metaDatas;}
     inline QList<QString> getLetters() {return m_letters;}
@@ -84,7 +83,6 @@ public Q_SLOTS:
     void onDisableShortcut(ShortcutInfo* info);
     void onAddedFinished(QDBusPendingCallWatcher *watch);
     void onLocalListsFinished(QDBusPendingCallWatcher *watch);
-    void onGetWindowWM(bool value);
     void onLayoutListsFinished(QDBusPendingCallWatcher *watch);
     void onAllLayoutListsFinished(QDBusPendingCallWatcher *watch);
     void onUserLayout(const QStringList &list);
