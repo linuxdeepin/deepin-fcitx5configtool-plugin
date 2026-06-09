@@ -39,7 +39,6 @@ KeyboardWorker::KeyboardWorker(KeyboardModel *model, QObject *parent)
     , m_translatorLanguage(nullptr)
     , m_inputDevCfg(DConfig::create("org.deepin.dde.daemon", "org.deepin.dde.daemon.inputdevices", QString(), this))
 {
-    connect(m_keyboardDBusProxy, &KeyboardDBusProxy::compositingEnabledChanged, this, &KeyboardWorker::onGetWindowWM);
     connect(m_keyboardDBusProxy, &KeyboardDBusProxy::Added, this, &KeyboardWorker::onAdded);
     connect(m_keyboardDBusProxy, &KeyboardDBusProxy::Deleted, this, &KeyboardWorker::removed);
     connect(m_keyboardDBusProxy, &KeyboardDBusProxy::UserLayoutListChanged, this, &KeyboardWorker::onUserLayout);
@@ -71,10 +70,6 @@ void KeyboardWorker::resetAll() {
     });
 }
 
-void KeyboardWorker::onGetWindowWM(bool)
-{
-    windowSwitch();
-}
 
 void KeyboardWorker::setShortcutModel(ShortcutModel *model)
 {
@@ -99,21 +94,6 @@ void KeyboardWorker::refreshLang()
         onLangSelectorServiceFinished();
 }
 
-void KeyboardWorker::windowSwitch()
-{
-    QDBusInterface licenseInfo("com.deepin.wm",
-                               "/com/deepin/wm",
-                               "com.deepin.wm",
-                               QDBusConnection::sessionBus());
-    if (!licenseInfo.isValid()) {
-        qDebug() << "com.deepin.license error ," << licenseInfo.lastError().name();
-        return;
-    }
-
-    if (m_shortcutModel)
-        m_shortcutModel->onWindowSwitchChanged(licenseInfo.property("compositingEnabled").toBool());
-}
-
 void KeyboardWorker::active()
 {
     m_keyboardDBusProxy->blockSignals(false);
@@ -129,7 +109,6 @@ void KeyboardWorker::active()
 
     onRefreshKBLayout();
     refreshLang();
-    windowSwitch();
     refreshShortcut();
     if (m_inputDevCfg->isValid()) {
         QMetaObject::invokeMethod(m_model, "setKeyboardEnabled", Qt::DirectConnection, Q_ARG(bool, m_inputDevCfg->value("keyboardEnabled", true).toBool()));
