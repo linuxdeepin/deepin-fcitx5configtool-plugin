@@ -11,8 +11,17 @@ import org.deepin.dcc 1.0
 DccObject {
     id: root
     property var configOptions: []
+    property var configValues: ({})
     property var keyName: ""
     property bool loading: true
+
+    function buildValuesMap(options) {
+        var vals = {}
+        for (var i = 0; i < options.length; i++) {
+            vals[options[i].name] = options[i].value
+        }
+        return vals
+    }
 
     DccObject {
         id: containerItem
@@ -72,16 +81,24 @@ DccObject {
             model: root.configOptions
             delegate: Component {
                 DccObject {
+                    id: optionDelegate
                     parentName: containerItem.name
                     displayName: modelData.description
                     weight: root.weight + index + 1
                     pageType: DccObject.Editor
                     visible: headerItem.expanded
                     backgroundType: DccObject.Normal | DccObject.Hover
+
+                    property string optName: modelData.name
+                    property string optType: modelData.type
+                    property var optValue: root.configValues[optName] !== undefined
+                                           ? root.configValues[optName]
+                                           : modelData.value
+
                     page: Loader {
                         height: 40
                         sourceComponent: {
-                            switch (modelData.type) {
+                            switch (optionDelegate.optType) {
                             case "Boolean":
                                 return booleanComponent
                             case "Integer":
@@ -100,10 +117,10 @@ DccObject {
                         Component {
                             id: booleanComponent
                             D.Switch {
-                                checked: modelData.value === "True"
+                                checked: optionDelegate.optValue === "True"
                                 onCheckedChanged: {
                                     dccData.fcitx5ConfigProxy.setValue(
-                                                root.name + "/" + modelData.name,
+                                                root.name + "/" + optionDelegate.optName,
                                                 checked ? "True" : "False")
                                 }
                             }
@@ -117,10 +134,10 @@ DccObject {
                                 implicitWidth: 75
                                 from: modelData.intMin !== undefined ? modelData.intMin : 0
                                 to: modelData.intMax !== undefined ? modelData.intMax : 9999
-                                value: parseInt(modelData.value)
+                                value: parseInt(optionDelegate.optValue)
                                 onValueChanged: {
                                     dccData.fcitx5ConfigProxy.setValue(
-                                                root.name + "/" + modelData.name,
+                                                root.name + "/" + optionDelegate.optName,
                                                 value.toString())
                                 }
                             }
@@ -129,10 +146,10 @@ DccObject {
                         Component {
                             id: stringComponent
                             D.TextField {
-                                text: modelData.value
+                                text: optionDelegate.optValue
                                 onTextChanged: {
                                     dccData.fcitx5ConfigProxy.setValue(
-                                                root.name + "/" + modelData.name,
+                                                root.name + "/" + optionDelegate.optName,
                                                 text)
                                 }
                             }
@@ -142,27 +159,27 @@ DccObject {
                             id: keyComponent
                             KeySequenceDisplay {
                                 placeholderText: qsTr("Please enter a new shortcut")
-                                keys: modelData.value
+                                keys: optionDelegate.optValue
                                 background.visible: false
                                 onFocusChanged: {
                                     if (!focus) {
                                         if (keys.length > 0) {
                                             dccData.fcitx5ConfigProxy.setValue(
-                                                        root.name + "/" + modelData.name + "/0",
+                                                        root.name + "/" + optionDelegate.optName + "/0",
                                                         keys, true)
-                                        } else if (root.keyName != modelData.name) {
-                                            keys = modelData.value
+                                        } else if (root.keyName != optionDelegate.optName) {
+                                            keys = optionDelegate.optValue
                                         }
                                     }
                                 }
                                 onKeysChanged: {
-                                    root.keyName = modelData.name
+                                    root.keyName = optionDelegate.optName
                                 }
 
                                 Connections {
                                     target: root
                                     function onKeyNameChanged() {
-                                        if (root.keyName != modelData.name) {
+                                        if (root.keyName != optionDelegate.optName) {
                                             focus = false
                                         }
                                     }
@@ -176,11 +193,11 @@ DccObject {
                                 model: modelData.propertiesI18n
                                 flat: true
                                 currentIndex: modelData.properties.indexOf(
-                                                  modelData.value) ? modelData.properties.indexOf(
-                                                                         modelData.value) : 0
+                                                  optionDelegate.optValue) ? modelData.properties.indexOf(
+                                                                                 optionDelegate.optValue) : 0
                                 onCurrentIndexChanged: {
                                     dccData.fcitx5ConfigProxy.setValue(
-                                                root.name + "/" + modelData.name,
+                                                root.name + "/" + optionDelegate.optName,
                                                 modelData.properties[currentIndex])
                                 }
                             }
@@ -193,14 +210,20 @@ DccObject {
     Connections {
         target: dccData.fcitx5ConfigProxy
         function onRequestConfigFinished() {
-            configOptions = []
-            configOptions = dccData.fcitx5ConfigProxy.globalConfigOptions(root.name)
-            keyName = ""
+            var newOptions = dccData.fcitx5ConfigProxy.globalConfigOptions(root.name)
+            configValues = buildValuesMap(newOptions)
+
+            if (!dccData.fcitx5ConfigProxy.saveTriggered) {
+                configOptions = newOptions
+                keyName = ""
+            }
         }
     }
 
     Component.onCompleted: {
-        configOptions = dccData.fcitx5ConfigProxy.globalConfigOptions(root.name)
+        var opts = dccData.fcitx5ConfigProxy.globalConfigOptions(root.name)
+        configValues = buildValuesMap(opts)
+        configOptions = opts
         loading = false
     }
 }

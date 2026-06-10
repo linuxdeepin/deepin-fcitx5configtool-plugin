@@ -1,4 +1,4 @@
-// SPDX-FileCopyrightText: 2024 - 2027 UnionTech Software Technology Co., Ltd.
+// SPDX-FileCopyrightText: 2024 - 2026 UnionTech Software Technology Co., Ltd.
 //
 // SPDX-License-Identifier: GPL-3.0-or-later
 
@@ -21,6 +21,7 @@ class Fcitx5ConfigProxyPrivate;
 class Fcitx5ConfigProxy : public QObject
 {
     Q_OBJECT
+    Q_PROPERTY(bool saveTriggered READ saveTriggered NOTIFY saveTriggeredChanged)
 
 public:
     explicit Fcitx5ConfigProxy(fcitx::kcm::DBusProvider *dbus,
@@ -30,8 +31,11 @@ public:
 
     void clear();
 
+    bool saveTriggered() const;
+
 Q_SIGNALS:
     void requestConfigFinished();
+    void saveTriggeredChanged();
 
 public Q_SLOTS:
     QVariant value(const QString &path) const;
@@ -41,7 +45,7 @@ public Q_SLOTS:
     QVariantList globalConfigOptions(const QString &type, bool all = false) const;
     QVariant globalConfigOption(const QString &type, const QString &option) const;
     void restoreDefault(const QString &type);
-    void requestConfig(bool sync);
+    void requestConfig(bool sync, bool fromSave = false);
 
 private Q_SLOTS:
     void onRequestConfigFinished(QDBusPendingCallWatcher *watcher);
@@ -49,8 +53,9 @@ private Q_SLOTS:
 private:
     friend class Fcitx5ConfigProxyPrivate;
     Fcitx5ConfigProxyPrivate *const d;
+    bool m_saveTriggered = false;
 };
 }   // namespace fcitx5configtool
-}   // namespace deepin 
+}   // namespace deepin
 
 #endif // !FCITX5CONFIGPROXY_H
