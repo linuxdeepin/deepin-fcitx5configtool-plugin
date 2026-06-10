@@ -68,7 +68,7 @@ QStringList Fcitx5ConfigProxyPrivate::formatKey(const QString &shortcut) {
 
 QString Fcitx5ConfigProxyPrivate::formatKeys(const QStringList &keys) {
     qCDebug(proxy) << "Formatting keys from list:" << keys;
-    QStringList list;   
+    QStringList list;
     for (const auto &key : keys) {
         if (key.trimmed().toLower() == "ctrl")
             list << "Control";
@@ -97,14 +97,14 @@ QVariant Fcitx5ConfigProxyPrivate::readDBusValue(const QVariant &value) {
         auto argument = qvariant_cast<QDBusArgument>(value);
         QVariantMap map;
         argument >> map;
-        
+
         QVariantMap resultMap;
         for (auto iter = map.begin(); iter != map.end(); ++iter) {
             resultMap[iter.key()] = readDBusValue(iter.value());
         }
         return resultMap;
     }
-    
+
 #if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
     if (value.typeId() == QMetaType::QVariantMap) {
 #else
@@ -117,8 +117,13 @@ QVariant Fcitx5ConfigProxyPrivate::readDBusValue(const QVariant &value) {
         }
         return resultMap;
     }
-    
+
     return value;
+}
+
+bool Fcitx5ConfigProxy::saveTriggered() const
+{
+    return m_saveTriggered;
 }
 
 Fcitx5ConfigProxy::Fcitx5ConfigProxy(fcitx::kcm::DBusProvider *dbus, const QString &path, QObject *parent)
@@ -321,15 +326,18 @@ void Fcitx5ConfigProxy::restoreDefault(const QString &type)
     qCDebug(proxy) << "Exiting restoreDefault";
 }
 
-void Fcitx5ConfigProxy::requestConfig(bool sync)
+void Fcitx5ConfigProxy::requestConfig(bool sync, bool fromSave)
 {
-    qCDebug(proxy) << "Entering requestConfig for path" << d->path << "with sync" << sync;
+    qCDebug(proxy) << "Entering requestConfig for path" << d->path << "with sync" << sync << "fromSave" << fromSave;
     if (!d->dbusprovider->controller()) {
         qCWarning(proxy) << "DBus controller not available for requestConfig";
         return;
     }
     auto call = d->dbusprovider->controller()->GetConfig(d->path);
     auto watcher = new QDBusPendingCallWatcher(call, this);
+    if (fromSave) {
+        watcher->setProperty("saveTriggered", true);
+    }
     connect(watcher,
             &QDBusPendingCallWatcher::finished,
             this,
@@ -340,7 +348,7 @@ void Fcitx5ConfigProxy::requestConfig(bool sync)
     }
     qCDebug(proxy) << "Exiting requestConfig";
 }
- 
+
 void Fcitx5ConfigProxy::onRequestConfigFinished(QDBusPendingCallWatcher *watcher)
 {
     qCDebug(proxy) << "Entering onRequestConfigFinished for path" << d->path;
@@ -351,14 +359,23 @@ void Fcitx5ConfigProxy::onRequestConfigFinished(QDBusPendingCallWatcher *watcher
         return;
     }
     qCInfo(proxy) << "Successfully received config for path:" << d->path;
-    d->configTypes = reply.argumentAt<1>(); 
+    d->configTypes = reply.argumentAt<1>();
 
     auto value = reply.argumentAt<0>().variant();
     QVariantMap allMap;
     allMap = d->readDBusValue(value).toMap();
     std::swap(d->configValue, allMap);
 
+    bool wasSaveTriggered = watcher->property("saveTriggered").toBool();
+    if (wasSaveTriggered) {
+        m_saveTriggered = true;
+        Q_EMIT saveTriggeredChanged();
+    }
     Q_EMIT requestConfigFinished();
+    if (wasSaveTriggered) {
+        m_saveTriggered = false;
+        Q_EMIT saveTriggeredChanged();
+    }
     qCDebug(proxy) << "Exiting onRequestConfigFinished";
 }
 
@@ -397,6 +414,6 @@ void Fcitx5ConfigProxy::save()
 
     QDBusVariant var(d->configValue);
     d->dbusprovider->controller()->SetConfig(d->path, var);
-    requestConfig(false);
+    requestConfig(false, true);
     qCDebug(proxy) << "Exiting save";
 }
