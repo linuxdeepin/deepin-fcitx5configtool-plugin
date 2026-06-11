@@ -1,4 +1,4 @@
-//SPDX-FileCopyrightText: 2018 - 2023 UnionTech Software Technology Co., Ltd.
+//SPDX-FileCopyrightText: 2018 - 2026 UnionTech Software Technology Co., Ltd.
 //
 //SPDX-License-Identifier: GPL-3.0-or-later
 
@@ -153,9 +153,6 @@ Q_SIGNALS:
     void Deleted(const QString &in0, int in1);
     void KeyEvent(bool in0, const QString &in1);
 
-    //wm
-    void compositingEnabledChanged(bool enabled);
-
     void langSelectorServiceStartFinished(const quint32 ret) const;
 
 public Q_SLOTS:
@@ -196,7 +193,6 @@ private:
     DDBusInterface *m_dBusLangSelectorInter;
     DDBusInterface *m_dBusKeyboardInter;
     DDBusInterface *m_dBusKeybingdingInter;
-    DDBusInterface *m_dBusWMInter;
 };
 
 Q_DECLARE_METATYPE(KeyboardLayoutList)
