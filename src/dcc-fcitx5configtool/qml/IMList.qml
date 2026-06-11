@@ -1,4 +1,4 @@
-// SPDX-FileCopyrightText: 2024 - 2027 UnionTech Software Technology Co., Ltd.
+// SPDX-FileCopyrightText: 2024 - 2026 UnionTech Software Technology Co., Ltd.
 // SPDX-License-Identifier: GPL-3.0-or-later
 import QtQuick 2.15
 import QtQuick.Controls 2.3
@@ -26,7 +26,7 @@ Rectangle {
         D.ItemDelegate {
             id: delegateItem
             width: listView.width
-            height: content.height
+            height: 40
             cascadeSelected: true
             checkable: false
             contentFlow: true
@@ -35,6 +35,7 @@ Rectangle {
                                              dccData.imlistModel().count())
 
             background: DccItemBackground {
+                implicitHeight: delegateItem.height
                 separatorVisible: true
                 backgroundType: DccObject.Normal | DccObject.Hover
             }
@@ -191,7 +192,7 @@ Rectangle {
         width: parent.width
         height: contentHeight
         model: visualModel
-        spacing: 4
+        spacing: 0
         interactive: true
         clip: true
         cacheBuffer: 50
