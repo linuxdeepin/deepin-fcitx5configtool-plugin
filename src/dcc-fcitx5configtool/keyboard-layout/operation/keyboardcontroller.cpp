@@ -203,7 +203,6 @@ QSortFilterProxyModel *KeyboardController::shortcutSearchModel()
     connect(m_shortcutModel, &ShortcutModel::delCustomInfo, sourceModel, &ShortcutListModel::reset);
     connect(m_shortcutModel, &ShortcutModel::addCustomInfo, sourceModel, &ShortcutListModel::reset);
     connect(m_shortcutModel, &ShortcutModel::shortcutChanged, sourceModel, &ShortcutListModel::reset);
-    connect(m_shortcutModel, &ShortcutModel::windowSwitchChanged, sourceModel, &ShortcutListModel::reset);
 
     m_shortcutSearchModel->setSourceModel(sourceModel);
     m_shortcutSearchModel->setFilterRole(ShortcutListModel::SearchedTextRole);

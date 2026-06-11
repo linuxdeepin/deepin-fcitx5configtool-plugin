@@ -1,4 +1,4 @@
-// SPDX-FileCopyrightText: 2018 - 2024 UnionTech Software Technology Co., Ltd.
+// SPDX-FileCopyrightText: 2018 - 2026 UnionTech Software Technology Co., Ltd.
 //
 // SPDX-License-Identifier: GPL-3.0-or-later
 
@@ -85,8 +85,6 @@ public:
 
     void setSearchResult(const QString &searchResult);
     bool searchResultContains(const QString &id);
-    bool getWindowSwitch();
-
     // 新增：获取所有系统快捷键名称列表
     QStringList getSystemShortcutNames() const;
 
@@ -101,13 +99,10 @@ Q_SIGNALS:
     void shortcutChanged(ShortcutInfo *info);
     void keyEvent(bool press, const QString &shortcut);
     void searchFinished(const QList<ShortcutInfo *> searchResult);
-    void windowSwitchChanged(bool value);
-
 public Q_SLOTS:
     void onParseInfo(const QString &info);
     void onCustomInfo(const QString &json);
     void onKeyBindingChanged(const QString &value);
-    void onWindowSwitchChanged(bool value);
 
 private:
     // 清理系统快捷键名称缓存
@@ -120,9 +115,7 @@ private:
     QList<ShortcutInfo *> m_assistiveToolsInfos;
     QList<ShortcutInfo *> m_customInfos;
     QList<ShortcutInfo *> m_searchList;
-    QList<ShortcutInfo *> m_windowSwitchStateInfos;
     ShortcutInfo *m_currentInfo = nullptr;
-    bool m_windowSwitchState;
 
     // 系统快捷键名称缓存
     mutable QSet<QString> m_systemNamesCache;
