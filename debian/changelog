@@ -1,3 +1,12 @@
+deepin-fcitx5configtool-plugin (6.0.35) unstable; urgency=medium
+
+  * chore(keyboard): remove unused windowSwitch dead code in ShortcutModel
+  * chore(keyboard): remove unused WM DBus proxy and compositing signal
+  * fix(global-config): resolve page jump after save button click
+  * chore(keyboard): remove unused windowSwitch and onGetWindowWM dead code
+
+ -- Wang Yu <wangyu@uniontech.com>  Thu, 11 Jun 2026 15:41:52 +0800
+
 deepin-fcitx5configtool-plugin (6.0.34) unstable; urgency=medium
 
   * chore: remove unused capsLock/numLock code and fix DTK6 build error
