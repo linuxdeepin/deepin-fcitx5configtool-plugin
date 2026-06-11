@@ -1,4 +1,4 @@
-//SPDX-FileCopyrightText: 2018 - 2023 UnionTech Software Technology Co., Ltd.
+//SPDX-FileCopyrightText: 2018 - 2026 UnionTech Software Technology Co., Ltd.
 //
 //SPDX-License-Identifier: GPL-3.0-or-later
 
@@ -23,9 +23,6 @@ const static QString KeybingdingService = "org.deepin.dde.Keybinding1";
 const static QString KeybingdingPath = "/org/deepin/dde/Keybinding1";
 const static QString KeybingdingInterface = "org.deepin.dde.Keybinding1";
 
-const static QString WMService = "com.deepin.wm";
-const static QString WMPath = "/com/deepin/wm";
-const static QString WMInterface = "com.deepin.wm";
 
 KeyboardDBusProxy::KeyboardDBusProxy(QObject *parent)
     : QObject(parent)
@@ -47,9 +44,7 @@ void KeyboardDBusProxy::init()
     m_dBusLangSelectorInter = new DDBusInterface(LangSelectorService, LangSelectorPath, LangSelectorInterface, QDBusConnection::sessionBus(), this);
     m_dBusKeyboardInter = new DDBusInterface(KeyboardService, KeyboardPath, KeyboardInterface, QDBusConnection::sessionBus(), this);
     m_dBusKeybingdingInter = new DDBusInterface(KeybingdingService, KeybingdingPath, KeybingdingInterface, QDBusConnection::sessionBus(), this);
-    m_dBusWMInter = new DDBusInterface(WMService, WMPath, WMInterface, QDBusConnection::sessionBus(), this);
 
-    QDBusConnection::sessionBus().connect(WMService, WMPath, WMInterface, "wmCompositingEnabledChanged", this, SIGNAL(compositingEnabledChanged(bool)));
 }
 
 void KeyboardDBusProxy::langSelectorStartServiceProcess()
