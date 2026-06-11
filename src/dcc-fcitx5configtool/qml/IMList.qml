@@ -35,7 +35,6 @@ Rectangle {
                                              dccData.imlistModel().count())
 
             background: DccItemBackground {
-                implicitHeight: delegateItem.height
                 separatorVisible: true
                 backgroundType: DccObject.Normal | DccObject.Hover
             }
