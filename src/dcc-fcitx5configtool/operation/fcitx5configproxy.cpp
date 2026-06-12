@@ -59,7 +59,25 @@ QStringList Fcitx5ConfigProxyPrivate::formatKey(const QString &shortcut) {
         if (list.contains("Alt_L")) {
             list.removeAll("Alt_L");
         } else {
+            list.removeAll("Alt_R");
+        }
+    } else if (list.size() == 2 && list.contains("Ctrl")) {
+        if (list.contains("Control_L")) {
+            list.removeAll("Control_L");
+        } else if (list.contains("Control_R")) {
+            list.removeAll("Control_R");
+        }
+    } else if (list.size() == 2 && list.contains("Shift")) {
+        if (list.contains("Shift_L")) {
+            list.removeAll("Shift_L");
+        } else if (list.contains("Shift_R")) {
             list.removeAll("Shift_R");
+        }
+    } else if (list.size() == 2 && list.contains("Alt")) {
+        if (list.contains("Alt_L")) {
+            list.removeAll("Alt_L");
+        } else if (list.contains("Alt_R")) {
+            list.removeAll("Alt_R");
         }
     }
     qCDebug(proxy) << "Formatted key list:" << list;
@@ -86,6 +104,12 @@ QString Fcitx5ConfigProxyPrivate::formatKeys(const QStringList &keys) {
     } else if (list.size() == 2 && list.contains("Control") && list.contains("Super")) {
         list.append("Control_L");
     } else if (list.size() == 2 && list.contains("Alt") && list.contains("Super")) {
+        list.append("Alt_L");
+    } else if (list.size() == 1 && list.contains("Shift")) {
+        list.append("Shift_L");
+    } else if (list.size() == 1 && list.contains("Control")) {
+        list.append("Control_L");
+    } else if (list.size() == 1 && list.contains("Alt")) {
         list.append("Alt_L");
     }
 
