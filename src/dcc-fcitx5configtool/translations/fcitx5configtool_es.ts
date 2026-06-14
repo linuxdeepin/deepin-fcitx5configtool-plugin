@@ -276,7 +276,7 @@
     <message>
         <location filename="../keyboard-layout/operation/shortcutmodel.cpp" line="263"/>
         <source>AssistiveTools</source>
-        <translation>Herramientas asistenciales</translation>
+        <translation>Accesibilidad</translation>
     </message>
     <message>
         <location filename="../keyboard-layout/operation/shortcutmodel.cpp" line="268"/>
@@ -295,7 +295,7 @@
     <message>
         <location filename="../qml/Fcitx5configtool.qml" line="8"/>
         <source>Input Methods</source>
-        <translation>Método de entrada</translation>
+        <translation>Métodos de entrada</translation>
     </message>
     <message>
         <location filename="../qml/Fcitx5configtool.qml" line="9"/>
