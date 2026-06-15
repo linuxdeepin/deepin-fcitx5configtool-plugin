@@ -1,5 +1,5 @@
 
-// SPDX-FileCopyrightText: 2024 - 2027 UnionTech Software Technology Co., Ltd.
+// SPDX-FileCopyrightText: 2024 - 2026 UnionTech Software Technology Co., Ltd.
 // SPDX-License-Identifier: GPL-3.0-or-later
 import QtQuick 2.11
 import QtQuick.Controls
@@ -53,7 +53,9 @@ Control {
                     model: control.keys
                     P.KeySequenceLabel {
                         Layout.alignment: Qt.AlignRight
-                        text: modelData
+                        // fcitx stores the Win key as "Super"; Qt/DTK calls it
+                        // "Meta". Show the user-facing "Super" label.
+                        text: modelData === "Meta" ? "Super" : modelData
                     }
                 }
             }

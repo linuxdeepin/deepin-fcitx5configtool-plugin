@@ -45,7 +45,7 @@ QStringList Fcitx5ConfigProxyPrivate::formatKey(const QString &shortcut) {
     }
     // Remove the present side variant (left takes priority). When the shortcut
     // also carries Meta, surface Meta at the front so it reads "Meta+...+key".
-    auto removeSide = [&list](const QString &base, bool frontMeta) {
+    auto removeSide = [&list](const QString &base) {
         const QString left = base + "_L";
         const QString right = base + "_R";
         if (list.contains(left)) {
@@ -55,23 +55,23 @@ QStringList Fcitx5ConfigProxyPrivate::formatKey(const QString &shortcut) {
         } else {
             return;
         }
-        if (frontMeta) {
+        if (list.contains("Meta")) {
             list.removeAll("Meta");
             list.prepend("Meta");
         }
     };
     if (list.size() == 3 && list.contains("Ctrl") && list.contains("Meta")) {
-        removeSide("Control", true);
+        removeSide("Control");
     } else if (list.size() == 3 && list.contains("Shift") && list.contains("Meta")) {
-        removeSide("Shift", true);
+        removeSide("Shift");
     } else if (list.size() == 3 && list.contains("Alt") && list.contains("Meta")) {
-        removeSide("Alt", true);
+        removeSide("Alt");
     } else if (list.size() == 2 && list.contains("Ctrl")) {
-        removeSide("Control", false);
+        removeSide("Control");
     } else if (list.size() == 2 && list.contains("Shift")) {
-        removeSide("Shift", false);
+        removeSide("Shift");
     } else if (list.size() == 2 && list.contains("Alt")) {
-        removeSide("Alt", false);
+        removeSide("Alt");
     }
     qCDebug(proxy) << "Formatted key list:" << list;
     return list;
@@ -95,25 +95,25 @@ QString Fcitx5ConfigProxyPrivate::formatKeys(const QStringList &keys) {
     // size==2 with Super: normalize to "<Modifier>+Super+<_L>" order regardless
     // of input order, then append the left side variant. size==1 has no Super,
     // just append the left side variant.
-    auto appendLeftSide = [&list](const QString &base, bool withSuper) {
-        if (withSuper) {
+    auto appendLeftSide = [&list](const QString &base) {
+        if (list.contains("Super")) {
             list.clear();
             list << base << "Super";
         }
         list.append(base + "_L");
     };
     if (list.size() == 2 && list.contains("Shift") && list.contains("Super")) {
-        appendLeftSide("Shift", true);
+        appendLeftSide("Shift");
     } else if (list.size() == 2 && list.contains("Control") && list.contains("Super")) {
-        appendLeftSide("Control", true);
+        appendLeftSide("Control");
     } else if (list.size() == 2 && list.contains("Alt") && list.contains("Super")) {
-        appendLeftSide("Alt", true);
+        appendLeftSide("Alt");
     } else if (list.size() == 1 && list.contains("Shift")) {
-        appendLeftSide("Shift", false);
+        appendLeftSide("Shift");
     } else if (list.size() == 1 && list.contains("Control")) {
-        appendLeftSide("Control", false);
+        appendLeftSide("Control");
     } else if (list.size() == 1 && list.contains("Alt")) {
-        appendLeftSide("Alt", false);
+        appendLeftSide("Alt");
     }
 
     return list.join("+");
