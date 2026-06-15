@@ -43,42 +43,35 @@ QStringList Fcitx5ConfigProxyPrivate::formatKey(const QString &shortcut) {
         else
             list << key.trimmed();
     }
+    // Remove the present side variant (left takes priority). When the shortcut
+    // also carries Meta, surface Meta at the front so it reads "Meta+...+key".
+    auto removeSide = [&list](const QString &base, bool frontMeta) {
+        const QString left = base + "_L";
+        const QString right = base + "_R";
+        if (list.contains(left)) {
+            list.removeAll(left);
+        } else if (list.contains(right)) {
+            list.removeAll(right);
+        } else {
+            return;
+        }
+        if (frontMeta) {
+            list.removeAll("Meta");
+            list.prepend("Meta");
+        }
+    };
     if (list.size() == 3 && list.contains("Ctrl") && list.contains("Meta")) {
-        if (list.contains("Control_L")) {
-            list.removeAll("Control_L");
-        } else if (list.contains("Control_R")) {
-            list.removeAll("Control_R");
-        }
+        removeSide("Control", true);
     } else if (list.size() == 3 && list.contains("Shift") && list.contains("Meta")) {
-        if (list.contains("Shift_L")) {
-            list.removeAll("Shift_L");
-        } else if (list.contains("Shift_R")) {
-            list.removeAll("Shift_R");
-        }
+        removeSide("Shift", true);
     } else if (list.size() == 3 && list.contains("Alt") && list.contains("Meta")) {
-        if (list.contains("Alt_L")) {
-            list.removeAll("Alt_L");
-        } else if (list.contains("Alt_R")) {
-            list.removeAll("Alt_R");
-        }
+        removeSide("Alt", true);
     } else if (list.size() == 2 && list.contains("Ctrl")) {
-        if (list.contains("Control_L")) {
-            list.removeAll("Control_L");
-        } else if (list.contains("Control_R")) {
-            list.removeAll("Control_R");
-        }
+        removeSide("Control", false);
     } else if (list.size() == 2 && list.contains("Shift")) {
-        if (list.contains("Shift_L")) {
-            list.removeAll("Shift_L");
-        } else if (list.contains("Shift_R")) {
-            list.removeAll("Shift_R");
-        }
+        removeSide("Shift", false);
     } else if (list.size() == 2 && list.contains("Alt")) {
-        if (list.contains("Alt_L")) {
-            list.removeAll("Alt_L");
-        } else if (list.contains("Alt_R")) {
-            list.removeAll("Alt_R");
-        }
+        removeSide("Alt", false);
     }
     qCDebug(proxy) << "Formatted key list:" << list;
     return list;
@@ -99,18 +92,28 @@ QString Fcitx5ConfigProxyPrivate::formatKeys(const QStringList &keys) {
         else
             list << key.trimmed();
     }
+    // size==2 with Super: normalize to "<Modifier>+Super+<_L>" order regardless
+    // of input order, then append the left side variant. size==1 has no Super,
+    // just append the left side variant.
+    auto appendLeftSide = [&list](const QString &base, bool withSuper) {
+        if (withSuper) {
+            list.clear();
+            list << base << "Super";
+        }
+        list.append(base + "_L");
+    };
     if (list.size() == 2 && list.contains("Shift") && list.contains("Super")) {
-        list.append("Shift_L");
+        appendLeftSide("Shift", true);
     } else if (list.size() == 2 && list.contains("Control") && list.contains("Super")) {
-        list.append("Control_L");
+        appendLeftSide("Control", true);
     } else if (list.size() == 2 && list.contains("Alt") && list.contains("Super")) {
-        list.append("Alt_L");
+        appendLeftSide("Alt", true);
     } else if (list.size() == 1 && list.contains("Shift")) {
-        list.append("Shift_L");
+        appendLeftSide("Shift", false);
     } else if (list.size() == 1 && list.contains("Control")) {
-        list.append("Control_L");
+        appendLeftSide("Control", false);
     } else if (list.size() == 1 && list.contains("Alt")) {
-        list.append("Alt_L");
+        appendLeftSide("Alt", false);
     }
 
     return list.join("+");
