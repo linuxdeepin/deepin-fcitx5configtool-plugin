@@ -46,19 +46,19 @@ QStringList Fcitx5ConfigProxyPrivate::formatKey(const QString &shortcut) {
     if (list.size() == 3 && list.contains("Ctrl") && list.contains("Meta")) {
         if (list.contains("Control_L")) {
             list.removeAll("Control_L");
-        } else {
+        } else if (list.contains("Control_R")) {
             list.removeAll("Control_R");
         }
     } else if (list.size() == 3 && list.contains("Shift") && list.contains("Meta")) {
         if (list.contains("Shift_L")) {
             list.removeAll("Shift_L");
-        } else {
+        } else if (list.contains("Shift_R")) {
             list.removeAll("Shift_R");
         }
     } else if (list.size() == 3 && list.contains("Alt") && list.contains("Meta")) {
         if (list.contains("Alt_L")) {
             list.removeAll("Alt_L");
-        } else {
+        } else if (list.contains("Alt_R")) {
             list.removeAll("Alt_R");
         }
     } else if (list.size() == 2 && list.contains("Ctrl")) {
