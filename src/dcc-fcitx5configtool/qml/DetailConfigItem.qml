@@ -15,12 +15,26 @@ DccObject {
     property var keyName: ""
     property bool loading: true
 
+    // Hidden config items (fcitx5 core shortcuts)
+    readonly property var hiddenConfigNames: [
+        "EnumerateGroupForwardKeys",
+        "EnumerateGroupBackwardKeys",
+        "ActivateKeys",
+        "DeactivateKeys"
+    ]
+
     function buildValuesMap(options) {
         var vals = {}
         for (var i = 0; i < options.length; i++) {
             vals[options[i].name] = options[i].value
         }
         return vals
+    }
+
+    function filterConfigOptions(options) {
+        return options.filter(function(opt) {
+            return opt.name && !hiddenConfigNames.includes(opt.name)
+        })
     }
 
     DccObject {
@@ -78,7 +92,7 @@ DccObject {
         DccRepeater {
             id: optionRepeater
             visible: !root.loading
-            model: root.configOptions
+            model: filterConfigOptions(root.configOptions)
             delegate: Component {
                 DccObject {
                     id: optionDelegate
