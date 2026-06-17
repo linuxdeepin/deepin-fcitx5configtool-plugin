@@ -1,3 +1,18 @@
+deepin-fcitx5configtool-plugin (6.0.36) unstable; urgency=medium
+
+  * fix(ui): adjust add-ons page item spacing and layout
+  * fix(ui): adjust Add-ons page spacing for better layout
+  * feat(config): hide fcitx5 core shortcut config items
+  * [skip CI] Translate fcitx5configtool_en.ts in es
+  * fix(shortcut): show Super label and simplify modifier lambdas
+  * refactor(shortcut): dedupe modifier side-variant handling in formatKey/formatKeys
+  * fix(keyboard): guard side-variant removal in size==3 modifier branches
+  * fix: normalize modifier keys in shortcut formatting
+  * chore(im-list): remove redundant implicitHeight on DccItemBackground
+  * fix(im-list): resolve item height inconsistency
+
+ -- Wang Yu <wangyu@uniontech.com>  Wed, 17 Jun 2026 15:16:28 +0800
+
 deepin-fcitx5configtool-plugin (6.0.35) unstable; urgency=medium
 
   * chore(keyboard): remove unused windowSwitch dead code in ShortcutModel
