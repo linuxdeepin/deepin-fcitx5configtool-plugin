@@ -32,13 +32,14 @@ DccObject {
                 property bool isHovered: false
                 onParentItemChanged: {
                     if (parentItem) {
+                        parentItem.topPadding = 8
+                        parentItem.bottomPadding = 8
                         parentItem.leftPadding = 4
                         parentItem.rightPadding = 4
                     }
                 }
                 page: RowLayout {
                     width: parent.parentItem.width
-                    height: 50
                     spacing: 0
                     CheckBox {
                         Layout.alignment: Qt.AlignLeft
@@ -67,16 +68,21 @@ DccObject {
                     Item {
                         Layout.fillWidth: true
                     }
-                    D.ToolButton {
-                        id: imManageButton
+                    Item {
                         Layout.alignment: Qt.AlignRight
-                        icon.name: "dcc_input_method_settings"
-                        visible: modelData.configurable && isHovered
-                        enabled: modelData.enabled
-                        onClicked: {
-                            dccData.showAddonSettingsDialog(
-                                        modelData.uniqueName,
-                                        modelData.name)
+                        implicitWidth: imManageButton.implicitWidth
+                        implicitHeight: imManageButton.implicitHeight
+                        D.ToolButton {
+                            id: imManageButton
+                            anchors.fill: parent
+                            icon.name: "dcc_input_method_settings"
+                            visible: modelData.configurable && isHovered
+                            enabled: modelData.enabled
+                            onClicked: {
+                                dccData.showAddonSettingsDialog(
+                                            modelData.uniqueName,
+                                            modelData.name)
+                            }
                         }
                     }
                     MouseArea {

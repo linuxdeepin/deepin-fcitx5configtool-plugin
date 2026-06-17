@@ -65,7 +65,7 @@ DccObject {
         displayName: qsTr("Add-ons")
         weight: 330
         page: DccRightView {
-            spacing: 4
+            spacing: 0
         }
         AddonsPage {}
     }
