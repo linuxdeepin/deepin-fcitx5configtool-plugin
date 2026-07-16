@@ -119,7 +119,7 @@
     <message>
         <location filename="../qml/KeyboardLayout.qml" line="142"/>
         <source>Add new keyboard layout...</source>
-        <translation>Adicionar novo layout de teclado...</translation>
+        <translation>Adicionar layout de teclado...</translation>
     </message>
 </context>
 <context>
@@ -147,7 +147,7 @@
     <message>
         <location filename="../qml/KeyboardLayoutModule.qml" line="140"/>
         <source>Add new keyboard layout...</source>
-        <translation>Adicionar novo layout de teclado...</translation>
+        <translation>Adicionar layout de teclado...</translation>
     </message>
 </context>
 <context>
@@ -155,7 +155,7 @@
     <message>
         <location filename="../qml/LayoutsChooser.qml" line="30"/>
         <source>Add new keyboard layout</source>
-        <translation>Adicionar novo layout de teclado</translation>
+        <translation>Adicionar layout de teclado</translation>
     </message>
     <message>
         <location filename="../qml/LayoutsChooser.qml" line="38"/>
