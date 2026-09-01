@@ -253,7 +253,7 @@
     <message>
         <location filename="../keyboard-layout/operation/keyboardcontroller.cpp" line="55"/>
         <source>This shortcut conflicts with [%1]</source>
-            <translation>Ten skrót konfliktuje z [%1]</translation>
+            <translation>Ten skrót jest w konflikcie z [%1]</translation>
     </message>
 </context>
 <context>
@@ -300,7 +300,7 @@
     <message>
         <location filename="../qml/Fcitx5configtool.qml" line="9"/>
         <source>Input method management, input method shortcuts, advanced settings</source>
-        <translation>Zarządzanie metodą wprowadzania, skróty metod wprowadzania, zaawansowane ustawienia</translation>
+        <translation>Zarządzanie metodą wprowadzania, skróty metod wprowadzania, ustawienia zaawansowane</translation>
     </message>
 </context>
 </TS>
