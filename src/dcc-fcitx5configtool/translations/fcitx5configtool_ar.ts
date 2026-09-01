@@ -1,6 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE TS>
-<TS version="2.1" language="ar">
+<?xml version="1.0" ?><!DOCTYPE TS><TS version="2.1" language="ar">
 <context>
     <name>AddonsPage</name>
     <message>
@@ -43,19 +41,6 @@
         <location filename="../qml/DetailConfigItem.qml" line="151"/>
         <source>Please enter a new shortcut</source>
         <translation>الرجاء إدخال قصاصة مفتاحية جديدة</translation>
-    </message>
-</context>
-<context>
-    <name>Fcitx5configtool</name>
-    <message>
-        <location filename="../qml/Fcitx5configtool.qml" line="8"/>
-        <source>Input Methods</source>
-        <translation>طرق المدخلة</translation>
-    </message>
-    <message>
-        <location filename="../qml/Fcitx5configtool.qml" line="9"/>
-        <source>Input method management, input method shortcuts, advanced settings</source>
-        <translation>إدارة طريقة المدخلة، قصاصات طريقة المدخلة، إعدادات متقدمة</translation>
     </message>
 </context>
 <context>
@@ -185,7 +170,7 @@
     <message>
         <location filename="../qml/LayoutsChooser.qml" line="90"/>
         <source>Cancel</source>
-        <translation>إلغاء</translation>
+            <translation>إلغاء</translation>
     </message>
     <message>
         <location filename="../qml/LayoutsChooser.qml" line="97"/>
@@ -268,7 +253,7 @@
     <message>
         <location filename="../keyboard-layout/operation/keyboardcontroller.cpp" line="55"/>
         <source>This shortcut conflicts with [%1]</source>
-        <translation>هذه القصاصة متعارضة مع [%1]</translation>
+            <translation>هذه القصاصة متعارضة مع [%1]</translation>
     </message>
 </context>
 <context>
@@ -303,6 +288,19 @@
         <location filename="../keyboard-layout/operation/shortcutmodel.cpp" line="394"/>
         <source>None</source>
         <translation>لا شيء</translation>
+    </message>
+</context>
+<context>
+    <name>Fcitx5configtool</name>
+    <message>
+        <location filename="../qml/Fcitx5configtool.qml" line="8"/>
+        <source>Input Methods</source>
+        <translation>طرق المدخلة</translation>
+    </message>
+    <message>
+        <location filename="../qml/Fcitx5configtool.qml" line="9"/>
+        <source>Input method management, input method shortcuts, advanced settings</source>
+        <translation>إدارة طريقة المدخلة، قصاصات طريقة المدخلة، إعدادات متقدمة</translation>
     </message>
 </context>
 </TS>
