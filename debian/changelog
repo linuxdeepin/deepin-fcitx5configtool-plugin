@@ -1,3 +1,15 @@
+deepin-fcitx5configtool-plugin (6.0.37) unstable; urgency=medium
+
+  * [skip CI] Translate fcitx5configtool_en.ts in pt_BR
+  * [skip CI] Translate fcitx5configtool_en.ts in ca
+  * [skip CI] Translate fcitx5configtool_en.ts in pt
+  * chore: Sync by https://github.com/linuxdeepin/.github/commit/a300f8523d4876677112edab6a0772f7ad112976
+  * fix: update Arabic (ar) translations
+  * [skip CI] Translate fcitx5configtool_en.ts in ar
+  * [skip CI] Translate fcitx5configtool_en.ts in pl
+
+ -- Liu Zhangjian <liuzhangjian@uniontech.com>  Mon, 07 Sep 2026 13:31:41 +0800
+
 deepin-fcitx5configtool-plugin (6.0.36) unstable; urgency=medium
 
   * fix(ui): adjust add-ons page item spacing and layout
