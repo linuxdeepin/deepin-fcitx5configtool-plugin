@@ -25,6 +25,7 @@ Build-Depends:
  libxkbfile-dev,
  libicu-dev,
  libpolkit-qt6-1-dev,
+ libudev-dev,
  pkg-config,
  xkb-data,
  lsb-release,
