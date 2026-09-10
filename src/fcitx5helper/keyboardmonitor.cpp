@@ -271,10 +271,6 @@ void KeyboardMonitor::processUdevEvents() {
     while (auto *device = udev_monitor_receive_device(m_monitor)) {
         const char *isKeyboard =
             udev_device_get_property_value(device, "ID_INPUT_KEYBOARD");
-        qCInfo(keyboardMon)
-            << "Received udev input event:" << udev_device_get_action(device)
-            << udev_device_get_sysname(device)
-            << "ID_INPUT_KEYBOARD=" << (isKeyboard ? isKeyboard : "(null)");
         if (isKeyboard && isKeyboard[0] == '1') {
             inputChanged = true;
             ++eventCount;
@@ -283,9 +279,6 @@ void KeyboardMonitor::processUdevEvents() {
     }
 
     if (inputChanged) {
-        qCInfo(keyboardMon) << "Processed" << eventCount
-                            << "udev input event(s); debouncing device"
-                            << "enumeration";
         m_debounceTimer->start();
     }
 }
@@ -300,8 +293,6 @@ void KeyboardMonitor::performKeyboardCheck() {
             << m_hasKeyboard;
         return;
     }
-    qCInfo(keyboardMon) << "Debounce timer elapsed; keyboard present:"
-                        << *hasKeyboard;
     updateKeyboardState(*hasKeyboard);
 }
 
@@ -312,8 +303,6 @@ void KeyboardMonitor::updateKeyboardState(bool hasKeyboard, bool force) {
         return;
     }
 
-    qCInfo(keyboardMon) << "Keyboard state changed from" << m_hasKeyboard
-                        << "to" << hasKeyboard;
     m_hasKeyboard = hasKeyboard;
     requestVirtualKeyboard(!m_hasKeyboard);
 }
@@ -342,10 +331,6 @@ void KeyboardMonitor::applyVirtualKeyboardOption() {
         // Already in the desired state. Skip the SetConfig write so a normal
         // login does not rewrite persistent config (which would clobber a
         // value the user changed manually elsewhere).
-        qCInfo(keyboardMon)
-            << "Virtual keyboard addon already"
-            << (m_pendingEnable ? "enabled" : "disabled")
-            << "; skipping SetConfig";
         m_retryCount = 0;
         m_retryTimer->stop();
         return;
@@ -415,10 +400,6 @@ void KeyboardMonitor::handleSetConfigReply(QDBusPendingCallWatcher *watcher,
 
     m_retryCount = 0;
     m_retryTimer->stop();
-    qCInfo(keyboardMon)
-        << "Virtual keyboard addon configuration set to"
-        << enableVirtualKeyboard
-        << (enableVirtualKeyboard ? "(enabled)" : "(disabled)");
 }
 
 void KeyboardMonitor::hideVirtualKeyboard() {
