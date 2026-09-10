@@ -24,15 +24,19 @@ set(CMAKE_INCLUDE_CURRENT_DIR ON)
 set(CMAKE_CXX_STANDARD 17)
 
 find_package(PkgConfig REQUIRED)
-find_package(Qt${QT_DESIRED_VERSION} COMPONENTS Core REQUIRED)
+find_package(Qt${QT_DESIRED_VERSION} COMPONENTS Core DBus REQUIRED)
+pkg_check_modules(UDEV REQUIRED IMPORTED_TARGET libudev)
 
 add_executable(${BIN_NAME}
         ${CMAKE_CURRENT_SOURCE_DIR}/processmonitor.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/keyboardmonitor.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/main.cpp
         )
 
 target_link_libraries(${BIN_NAME}
         Qt${QT_DESIRED_VERSION}::Core
+        Qt${QT_DESIRED_VERSION}::DBus
+        PkgConfig::UDEV
         )
 
 # Install settings

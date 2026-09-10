@@ -1,7 +1,8 @@
-// SPDX-FileCopyrightText: 2024 - 2027 UnionTech Software Technology Co., Ltd.
+// SPDX-FileCopyrightText: 2024-2026 UnionTech Software Technology Co., Ltd.
 //
 // SPDX-License-Identifier: GPL-3.0-or-later
 #include "processmonitor.h"
+#include "keyboardmonitor.h"
 #include <QLoggingCategory>
 
 Q_LOGGING_CATEGORY(fcitx5Helper, "fcitx5.helper")
@@ -104,6 +105,14 @@ int main(int argc, char *argv[])
     ProcessMonitor monitor;
     monitor.startMonitoring();
     qCInfo(fcitx5Helper) << "Process monitoring started";
+
+    qCDebug(fcitx5Helper) << "Initializing keyboard monitor";
+    KeyboardMonitor keyboardMonitor;
+    if (keyboardMonitor.start()) {
+        qCInfo(fcitx5Helper) << "Keyboard monitoring started";
+    } else {
+        qCWarning(fcitx5Helper) << "Keyboard monitoring failed to start";
+    }
 
     int ret = app.exec();
     qCDebug(fcitx5Helper) << "Application exiting with code:" << ret;
