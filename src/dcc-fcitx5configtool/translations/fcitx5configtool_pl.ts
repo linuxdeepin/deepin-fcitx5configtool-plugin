@@ -232,12 +232,12 @@
     <message>
         <location filename="../keyboard-layout/operation/dcclocale.cpp" line="62"/>
         <source>Traditional Chinese (Chinese Hong Kong)</source>
-        <translation>Chinęskie tradycyjne (Hong Kong)</translation>
+        <translation>Chiński tradycyjny (Chiński Hong Kong)</translation>
     </message>
     <message>
         <location filename="../keyboard-layout/operation/dcclocale.cpp" line="65"/>
         <source>Traditional Chinese (Chinese Taiwan)</source>
-        <translation>Chinęskie tradycyjne (Tajwan)</translation>
+        <translation>Chiński tradycyjny (Chiński Tajwański)</translation>
     </message>
 </context>
 <context>
@@ -245,7 +245,7 @@
     <message>
         <location filename="../keyboard-layout/operation/dcclocale.cpp" line="86"/>
         <source>Taiwan China</source>
-        <translation>Tajwan China</translation>
+        <translation>Tajwan Chiny</translation>
     </message>
 </context>
 <context>
