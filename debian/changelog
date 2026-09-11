@@ -1,3 +1,9 @@
+deepin-fcitx5configtool-plugin (6.0.38) unstable; urgency=medium
+
+  * feat(fcitx5helper): add physical keyboard hotplug monitoring
+
+ -- Wang Yu <wangyu@uniontech.com>  Fri, 11 Sep 2026 13:26:26 +0800
+
 deepin-fcitx5configtool-plugin (6.0.37) unstable; urgency=medium
 
   * [skip CI] Translate fcitx5configtool_en.ts in pt_BR
