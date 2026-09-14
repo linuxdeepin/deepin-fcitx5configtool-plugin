@@ -13,7 +13,9 @@
 #include <QDBusPendingReply>
 #include <QDBusServiceWatcher>
 #include <QDBusVariant>
+#include <QFile>
 #include <QLoggingCategory>
+#include <QStringList>
 #include <QSocketNotifier>
 #include <QTimer>
 
@@ -26,7 +28,7 @@ constexpr char ControllerInterface[] = "org.fcitx.Fcitx.Controller1";
 constexpr char VirtualKeyboardConfigUri[] =
     "fcitx://config/addon/virtualkeyboard";
 constexpr int RetryIntervalMs = 1000;
-constexpr int DebounceIntervalMs = 100;
+constexpr int DebounceIntervalMs = 1000;
 constexpr int DBusTimeoutMs = 3000;
 constexpr int MaxRetryCount = 30;
 constexpr char VirtualKeyboardService[] = "org.fcitx.Fcitx5.VirtualKeyboard";
@@ -135,13 +137,18 @@ bool KeyboardMonitor::start() {
             [this](QSocketDescriptor) { processUdevEvents(); });
 
     m_started = true;
-    // Enumeration failure defaults to "no keyboard" deliberately: enabling
-    // the virtual keyboard is the safe failure direction (a physical
-    // keyboard keeps working with the addon enabled, whereas a touch-only
-    // device that lost the virtual keyboard would have no input at all).
-    updateKeyboardState(enumerateKeyboard().value_or(false), true);
-    qCInfo(keyboardMon) << "Keyboard monitoring started; keyboard present:"
-                        << m_hasKeyboard;
+    const std::optional<bool> hasKeyboard = enumerateKeyboard();
+    if (hasKeyboard) {
+        updateKeyboardState(*hasKeyboard, true);
+        qCInfo(keyboardMon)
+            << "Keyboard monitoring started; keyboard present:"
+            << m_hasKeyboard;
+    } else {
+        qCWarning(keyboardMon)
+            << "Initial keyboard enumeration failed; keeping the current"
+               " virtual keyboard configuration";
+        qCInfo(keyboardMon) << "Keyboard monitoring started";
+    }
     return true;
 }
 
@@ -226,31 +233,143 @@ void KeyboardMonitor::handleOptionReply(QDBusPendingCallWatcher *watcher) {
     applyVirtualKeyboardOption();
 }
 
+namespace {
+constexpr char ProcBusInputDevices[] = "/proc/bus/input/devices";
+constexpr char KeyboardEventCapabilities[] = "EV=120013";
+constexpr int DeviceLinePrefixLength = 3;
+
+bool hasKeyboardEventCapabilities(const QString &eventCapabilities) {
+    return eventCapabilities
+        .split(QLatin1Char(' '), Qt::SkipEmptyParts)
+        .contains(QString::fromLatin1(KeyboardEventCapabilities));
+}
+} // namespace
+
 std::optional<bool> KeyboardMonitor::enumerateKeyboard() const {
-    udev_enumerate *enumerate = udev_enumerate_new(m_udev);
-    if (!enumerate) {
-        qCWarning(keyboardMon) << "Failed to create udev enumerator";
+    // Input devices are separated by blank lines. Parse each block, group
+    // interfaces by device ID, and inspect the EV capability bitmap to
+    // determine whether a hardware keyboard is present.
+    QFile file(QString::fromLatin1(ProcBusInputDevices));
+    if (!file.open(QIODevice::ReadOnly)) {
+        qCWarning(keyboardMon)
+            << "Failed to open" << ProcBusInputDevices;
         return std::nullopt;
     }
 
-    udev_enumerate_add_match_subsystem(enumerate, "input");
-    udev_enumerate_add_match_property(enumerate, "ID_INPUT_KEYBOARD", "1");
-    udev_enumerate_scan_devices(enumerate);
-
-    bool hasKeyboard = false;
-    udev_list_entry *devices = udev_enumerate_get_list_entry(enumerate);
-    udev_list_entry *entry = nullptr;
-    udev_list_entry_foreach(entry, devices) {
-        hasKeyboard = true;
-        break;
+    const QByteArray data = file.readAll();
+    if (file.error() != QFile::NoError) {
+        qCWarning(keyboardMon)
+            << "Failed to read" << ProcBusInputDevices
+            << file.errorString();
+        return std::nullopt;
     }
 
-    udev_enumerate_unref(enumerate);
-    return hasKeyboard;
+    const QString content = QString::fromLocal8Bit(data);
+    DeviceInfoMap deviceInfoMap;
+    if (!content.isEmpty()) {
+        parseAllDeviceBlocks(splitIntoDeviceBlocks(content), deviceInfoMap);
+    }
+
+    return hasKeyboard(deviceInfoMap);
+}
+
+void KeyboardMonitor::addDeviceToMap(DeviceInfoMap &deviceInfoMap,
+                                      const QString &id,
+                                      const DeviceInfo &info) {
+    if (id.isEmpty()) {
+        return;
+    }
+
+    deviceInfoMap[id].append(info);
+}
+
+void KeyboardMonitor::parseAllDeviceBlocks(
+    const QList<QStringList> &blocks, DeviceInfoMap &deviceInfoMap) {
+    for (const QStringList &block : blocks) {
+        const auto [id, info] = parseSingleDeviceBlock(block);
+        addDeviceToMap(deviceInfoMap, id, info);
+    }
+}
+
+QList<QStringList>
+KeyboardMonitor::splitIntoDeviceBlocks(const QString &content) {
+    QList<QStringList> blocks;
+    QStringList currentBlock;
+
+    for (const QString &line : content.split(QLatin1Char('\n'))) {
+        if (line.trimmed().isEmpty()) {
+            if (!currentBlock.isEmpty()) {
+                blocks.append(currentBlock);
+                currentBlock.clear();
+            }
+        } else {
+            currentBlock.append(line);
+        }
+    }
+
+    if (!currentBlock.isEmpty()) {
+        blocks.append(currentBlock);
+    }
+
+    return blocks;
+}
+
+std::pair<QString, KeyboardMonitor::DeviceInfo>
+KeyboardMonitor::parseSingleDeviceBlock(const QStringList &block) {
+    QString id;
+    DeviceInfo info;
+
+    for (const QString &line : block) {
+        parseDeviceLine(line, id, info);
+    }
+
+    return {id, info};
+}
+
+void KeyboardMonitor::parseDeviceLine(const QString &line, QString &id,
+                                      DeviceInfo &info) {
+    if (line.startsWith(QStringLiteral("I: "))) {
+        id = line.mid(DeviceLinePrefixLength).trimmed();
+    } else if (line.startsWith(QStringLiteral("N: "))) {
+        info.name = line.mid(DeviceLinePrefixLength).trimmed();
+    } else if (line.startsWith(QStringLiteral("H: "))) {
+        info.handlers = line.mid(DeviceLinePrefixLength).trimmed();
+    } else if (line.startsWith(QStringLiteral("P: "))) {
+        info.physPath = line.mid(DeviceLinePrefixLength).trimmed();
+    } else if (line.startsWith(QStringLiteral("S: "))) {
+        info.sysfsPath = line.mid(DeviceLinePrefixLength).trimmed();
+    } else if (line.startsWith(QStringLiteral("B: ")) &&
+               line.contains(QStringLiteral("EV="))) {
+        info.eventCapabilities = line.mid(DeviceLinePrefixLength).trimmed();
+    }
+}
+
+bool KeyboardMonitor::hasKeyboard(const DeviceInfoMap &deviceInfoMap) {
+    bool found = false;
+    for (const QList<DeviceInfo> &deviceInfoList : deviceInfoMap) {
+        for (const DeviceInfo &info : deviceInfoList) {
+            if (!hasKeyboardEventCapabilities(info.eventCapabilities)) {
+                continue;
+            }
+
+            qCDebug(keyboardMon).noquote()
+                << "Keyboard device:" << info.name
+                << "handlers:" << info.handlers;
+            found = true;
+        }
+    }
+
+    return found;
 }
 
 void KeyboardMonitor::onFcitxServiceRegistered() {
     if (!m_started) {
+        return;
+    }
+    if (!m_keyboardStateKnown) {
+        qCInfo(keyboardMon)
+            << "Fcitx5 service registered; scheduling keyboard state check";
+        m_debounceTimer->start();
         return;
     }
     qCInfo(keyboardMon)
@@ -261,24 +380,23 @@ void KeyboardMonitor::onFcitxServiceRegistered() {
     m_optionAvailable = false;
     m_currentEnableState = -1;
     m_retryCount = 0;
+    ++m_configRequestId;
     m_retryTimer->stop();
     requestVirtualKeyboard(m_pendingEnable);
 }
 
 void KeyboardMonitor::processUdevEvents() {
-    bool inputChanged = false;
-    int eventCount = 0;
+    bool keyboardChanged = false;
     while (auto *device = udev_monitor_receive_device(m_monitor)) {
         const char *isKeyboard =
             udev_device_get_property_value(device, "ID_INPUT_KEYBOARD");
         if (isKeyboard && isKeyboard[0] == '1') {
-            inputChanged = true;
-            ++eventCount;
+            keyboardChanged = true;
         }
         udev_device_unref(device);
     }
 
-    if (inputChanged) {
+    if (keyboardChanged) {
         m_debounceTimer->start();
     }
 }
@@ -297,6 +415,7 @@ void KeyboardMonitor::performKeyboardCheck() {
 }
 
 void KeyboardMonitor::updateKeyboardState(bool hasKeyboard, bool force) {
+    m_keyboardStateKnown = true;
     if (!force && m_hasKeyboard == hasKeyboard) {
         qCInfo(keyboardMon)
             << "Keyboard state unchanged; keyboard present:" << hasKeyboard;
@@ -304,6 +423,8 @@ void KeyboardMonitor::updateKeyboardState(bool hasKeyboard, bool force) {
     }
 
     m_hasKeyboard = hasKeyboard;
+    qCDebug(keyboardMon)
+        << "Keyboard state changed; keyboard present:" << m_hasKeyboard;
     requestVirtualKeyboard(!m_hasKeyboard);
 }
 
@@ -346,6 +467,8 @@ void KeyboardMonitor::applyVirtualKeyboardOption() {
     // Record the target optimistically so a state flip arriving while the
     // call is in flight is still detected as a change; reverted on error.
     m_currentEnableState = targetState;
+    const bool enable = m_pendingEnable;
+    const int requestId = ++m_configRequestId;
 
     // Change the virtualkeyboard addon configuration through Fcitx5's
     // standard controller API. The outer QDBusVariant is the `v` argument of
@@ -360,20 +483,27 @@ void KeyboardMonitor::applyVirtualKeyboardOption() {
         QString::fromLatin1(ControllerInterface), QStringLiteral("SetConfig"));
     msg << QString::fromLatin1(VirtualKeyboardConfigUri)
         << QVariant::fromValue(value);
-    const bool enable = m_pendingEnable;
     auto *watcher = new QDBusPendingCallWatcher(
         QDBusConnection::sessionBus().asyncCall(msg, DBusTimeoutMs), this);
     connect(watcher, &QDBusPendingCallWatcher::finished, this,
-            [this, watcher, enable]() {
+            [this, watcher, enable, requestId]() {
                 watcher->deleteLater();
-                handleSetConfigReply(watcher, enable);
+                handleSetConfigReply(watcher, enable, requestId);
             });
 }
 
 void KeyboardMonitor::handleSetConfigReply(QDBusPendingCallWatcher *watcher,
-                                            bool enableVirtualKeyboard) {
+                                            bool enableVirtualKeyboard,
+                                            int requestId) {
     const QDBusPendingReply<> reply = *watcher;
     if (reply.isError()) {
+        if (requestId != m_configRequestId) {
+            qCWarning(keyboardMon)
+                << "Ignoring stale virtual keyboard configuration reply for"
+                << enableVirtualKeyboard;
+            return;
+        }
+
         // Revert the optimistic state so the next attempt re-issues the
         // write, unless a newer SetConfig already superseded this one and
         // its optimistic value must survive.
@@ -398,8 +528,11 @@ void KeyboardMonitor::handleSetConfigReply(QDBusPendingCallWatcher *watcher,
         return;
     }
 
-    m_retryCount = 0;
-    m_retryTimer->stop();
+    if (requestId == m_configRequestId &&
+        enableVirtualKeyboard == m_pendingEnable) {
+        m_retryCount = 0;
+        m_retryTimer->stop();
+    }
 }
 
 void KeyboardMonitor::hideVirtualKeyboard() {
