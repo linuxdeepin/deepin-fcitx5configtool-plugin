@@ -51,7 +51,8 @@ private:
     parseSingleDeviceBlock(const QStringList &block);
     static void parseDeviceLine(const QString &line, QString &id,
                                 DeviceInfo &info);
-    static bool hasKeyboard(const DeviceInfoMap &deviceInfoMap);
+    bool hasKeyboard(const DeviceInfoMap &deviceInfoMap) const;
+    bool isPhysicalKeyboard(const DeviceInfo &info) const;
     void queryVirtualKeyboardOption();
     void handleOptionReply(QDBusPendingCallWatcher *watcher);
     void applyVirtualKeyboardOption();
