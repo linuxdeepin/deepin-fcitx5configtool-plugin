@@ -3,7 +3,11 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 #include "keyboardmonitor.h"
 
+#include <cstring>
+#include <memory>
+
 #include <libudev.h>
+#include <linux/input-event-codes.h>
 
 #include <QDBusArgument>
 #include <QDBusConnection>
@@ -28,7 +32,7 @@ constexpr char ControllerInterface[] = "org.fcitx.Fcitx.Controller1";
 constexpr char VirtualKeyboardConfigUri[] =
     "fcitx://config/addon/virtualkeyboard";
 constexpr int RetryIntervalMs = 1000;
-constexpr int DebounceIntervalMs = 1000;
+constexpr int DebounceIntervalMs = 500;
 constexpr int DBusTimeoutMs = 3000;
 constexpr int MaxRetryCount = 30;
 constexpr char VirtualKeyboardService[] = "org.fcitx.Fcitx5.VirtualKeyboard";
@@ -235,20 +239,62 @@ void KeyboardMonitor::handleOptionReply(QDBusPendingCallWatcher *watcher) {
 
 namespace {
 constexpr char ProcBusInputDevices[] = "/proc/bus/input/devices";
-constexpr char KeyboardEventCapabilities[] = "EV=120013";
+constexpr char EventCapabilityPrefix[] = "EV=";
+// Exclude the trailing null terminator from the prefix length.
+constexpr int EventCapabilityPrefixLength =
+    sizeof(EventCapabilityPrefix) - 1;
+constexpr char SysfsPathPrefix[] = "Sysfs=";
+constexpr char UsbBus[] = "usb";
+constexpr char UsbInterfacesProperty[] = "ID_USB_INTERFACES";
+// USB HID class 03, Boot Interface subclass 01, keyboard protocol 01.
+constexpr char HidBootKeyboardInterface[] = "030101";
+// USB HID class 03, Boot Interface subclass 01, mouse protocol 02.
+constexpr char HidBootMouseInterface[] = "030102";
 constexpr int DeviceLinePrefixLength = 3;
 
 bool hasKeyboardEventCapabilities(const QString &eventCapabilities) {
-    return eventCapabilities
-        .split(QLatin1Char(' '), Qt::SkipEmptyParts)
-        .contains(QString::fromLatin1(KeyboardEventCapabilities));
+    constexpr quint64 requiredEventTypes =
+        (quint64{1} << EV_KEY) | (quint64{1} << EV_REP);
+
+    for (const QString &capability :
+         eventCapabilities.split(QLatin1Char(' '), Qt::SkipEmptyParts)) {
+        if (!capability.startsWith(
+                QString::fromLatin1(EventCapabilityPrefix))) {
+            continue;
+        }
+
+        bool ok = false;
+        const quint64 eventTypes =
+            capability.mid(EventCapabilityPrefixLength).toULongLong(&ok, 16);
+        if (!ok) {
+            continue;
+        }
+        if ((eventTypes & requiredEventTypes) == requiredEventTypes) {
+            return true;
+        }
+    }
+    return false;
+}
+
+bool hasPhysicalUsbKeyboardInterfaces(const char *interfaces) {
+    const QStringList interfaceList =
+        QString::fromLatin1(interfaces).split(QLatin1Char(':'),
+                                              Qt::SkipEmptyParts);
+    const bool hasKeyboardInterface = interfaceList.contains(
+        QString::fromLatin1(HidBootKeyboardInterface));
+    const bool hasMouseInterface = interfaceList.contains(
+        QString::fromLatin1(HidBootMouseInterface));
+
+    // Allow generic, vendor-specific, and auxiliary interfaces used by real
+    // keyboards, but reject keyboard-capable composite mouse devices.
+    return hasKeyboardInterface && !hasMouseInterface;
 }
 } // namespace
 
 std::optional<bool> KeyboardMonitor::enumerateKeyboard() const {
     // Input devices are separated by blank lines. Parse each block, group
-    // interfaces by device ID, and inspect the EV capability bitmap to
-    // determine whether a hardware keyboard is present.
+    // interfaces by device ID, then use the EV_KEY/EV_REP bits and udev
+    // bus/interface properties to determine whether a physical keyboard exists.
     QFile file(QString::fromLatin1(ProcBusInputDevices));
     if (!file.open(QIODevice::ReadOnly)) {
         qCWarning(keyboardMon)
@@ -344,22 +390,59 @@ void KeyboardMonitor::parseDeviceLine(const QString &line, QString &id,
     }
 }
 
-bool KeyboardMonitor::hasKeyboard(const DeviceInfoMap &deviceInfoMap) {
+bool KeyboardMonitor::hasKeyboard(const DeviceInfoMap &deviceInfoMap) const {
     bool found = false;
     for (const QList<DeviceInfo> &deviceInfoList : deviceInfoMap) {
         for (const DeviceInfo &info : deviceInfoList) {
-            if (!hasKeyboardEventCapabilities(info.eventCapabilities)) {
+            if (!hasKeyboardEventCapabilities(info.eventCapabilities) ||
+                !isPhysicalKeyboard(info)) {
                 continue;
             }
 
             qCDebug(keyboardMon).noquote()
-                << "Keyboard device:" << info.name
+                << "Physical keyboard device:" << info.name
                 << "handlers:" << info.handlers;
             found = true;
         }
     }
 
     return found;
+}
+
+bool KeyboardMonitor::isPhysicalKeyboard(const DeviceInfo &info) const {
+    // Only USB keyboard-capable devices need special handling: a USB mouse can
+    // expose a keyboard interface. Keep all non-USB devices as keyboards.
+    if (!m_udev || !info.sysfsPath.startsWith(
+                       QString::fromLatin1(SysfsPathPrefix))) {
+        return true;
+    }
+
+    const QString sysfsPath = QStringLiteral("/sys") +
+                              info.sysfsPath.mid(
+                                  sizeof(SysfsPathPrefix) - 1);
+    const QByteArray syspath = sysfsPath.toLocal8Bit();
+    std::unique_ptr<udev_device, decltype(&udev_device_unref)> device(
+        udev_device_new_from_syspath(m_udev, syspath.constData()),
+        &udev_device_unref);
+    if (!device) {
+        return true;
+    }
+
+    const char *bus =
+        udev_device_get_property_value(device.get(), "ID_BUS");
+    if (!bus || std::strcmp(bus, UsbBus) != 0) {
+        return true;
+    }
+
+    const char *interfaces = udev_device_get_property_value(
+        device.get(), UsbInterfacesProperty);
+    const bool physicalKeyboard =
+        !interfaces || hasPhysicalUsbKeyboardInterfaces(interfaces);
+    qCDebug(keyboardMon).noquote()
+        << "USB keyboard device classification:" << info.name
+        << "interfaces:" << (interfaces ? interfaces : "unknown")
+        << "physical:" << physicalKeyboard;
+    return physicalKeyboard;
 }
 
 void KeyboardMonitor::onFcitxServiceRegistered() {
@@ -388,9 +471,13 @@ void KeyboardMonitor::onFcitxServiceRegistered() {
 void KeyboardMonitor::processUdevEvents() {
     bool keyboardChanged = false;
     while (auto *device = udev_monitor_receive_device(m_monitor)) {
+        const char *action = udev_device_get_action(device);
         const char *isKeyboard =
             udev_device_get_property_value(device, "ID_INPUT_KEYBOARD");
-        if (isKeyboard && isKeyboard[0] == '1') {
+        // input_id does not set ID_INPUT_KEYBOARD for remove events. Recheck
+        // all input removals so unplugging a keyboard is never missed.
+        if ((action && std::strcmp(action, "remove") == 0) ||
+            (isKeyboard && isKeyboard[0] == '1')) {
             keyboardChanged = true;
         }
         udev_device_unref(device);
