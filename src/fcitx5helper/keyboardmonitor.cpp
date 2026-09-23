@@ -239,6 +239,7 @@ void KeyboardMonitor::handleOptionReply(QDBusPendingCallWatcher *watcher) {
 
 namespace {
 constexpr char ProcBusInputDevices[] = "/proc/bus/input/devices";
+constexpr char HostBus[] = "0019";
 constexpr char EventCapabilityPrefix[] = "EV=";
 // Exclude the trailing null terminator from the prefix length.
 constexpr int EventCapabilityPrefixLength =
@@ -376,6 +377,13 @@ void KeyboardMonitor::parseDeviceLine(const QString &line, QString &id,
                                       DeviceInfo &info) {
     if (line.startsWith(QStringLiteral("I: "))) {
         id = line.mid(DeviceLinePrefixLength).trimmed();
+        for (const QString &field :
+             id.split(QLatin1Char(' '), Qt::SkipEmptyParts)) {
+            if (field.startsWith(QStringLiteral("Bus="))) {
+                info.bus = field.mid(4);
+                break;
+            }
+        }
     } else if (line.startsWith(QStringLiteral("N: "))) {
         info.name = line.mid(DeviceLinePrefixLength).trimmed();
     } else if (line.startsWith(QStringLiteral("H: "))) {
@@ -394,7 +402,8 @@ bool KeyboardMonitor::hasKeyboard(const DeviceInfoMap &deviceInfoMap) const {
     bool found = false;
     for (const QList<DeviceInfo> &deviceInfoList : deviceInfoMap) {
         for (const DeviceInfo &info : deviceInfoList) {
-            if (!hasKeyboardEventCapabilities(info.eventCapabilities) ||
+            if (info.bus == QString::fromLatin1(HostBus) ||
+                !hasKeyboardEventCapabilities(info.eventCapabilities) ||
                 !isPhysicalKeyboard(info)) {
                 continue;
             }

@@ -25,6 +25,7 @@ class KeyboardMonitor : public QObject
 
 public:
     struct DeviceInfo {
+        QString bus;
         QString name;
         QString handlers;
         QString physPath;
