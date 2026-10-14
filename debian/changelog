@@ -1,3 +1,11 @@
+deepin-fcitx5configtool-plugin (6.0.40) unstable; urgency=medium
+
+  * refactor(fcitx5helper): simplify physical keyboard detection
+  * feat(fcitx5helper): skip host bus devices in physical keyboard detection
+  * [skip CI] Translate fcitx5configtool_en.ts in pl
+
+ -- Wang Yu <wangyu@uniontech.com>  Wed, 14 Oct 2026 13:42:05 +0800
+
 deepin-fcitx5configtool-plugin (6.0.39) unstable; urgency=medium
 
   * feat(fcitx5helper): filter virtual USB keyboards from physical keyboard detection
