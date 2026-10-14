@@ -25,7 +25,6 @@ class KeyboardMonitor : public QObject
 
 public:
     struct DeviceInfo {
-        QString bus;
         QString name;
         QString handlers;
         QString physPath;
@@ -53,7 +52,6 @@ private:
     static void parseDeviceLine(const QString &line, QString &id,
                                 DeviceInfo &info);
     bool hasKeyboard(const DeviceInfoMap &deviceInfoMap) const;
-    bool isPhysicalKeyboard(const DeviceInfo &info) const;
     void queryVirtualKeyboardOption();
     void handleOptionReply(QDBusPendingCallWatcher *watcher);
     void applyVirtualKeyboardOption();
