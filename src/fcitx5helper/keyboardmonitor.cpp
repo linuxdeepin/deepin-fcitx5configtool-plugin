@@ -235,12 +235,20 @@ void KeyboardMonitor::handleOptionReply(QDBusPendingCallWatcher *watcher) {
 
 namespace {
 constexpr char ProcBusInputDevices[] = "/proc/bus/input/devices";
-constexpr char KeyboardEventCapabilities[] = "EV=120013";
+constexpr qulonglong RequiredKeyboardEventCapabilities = 0x120013;
 constexpr int DeviceLinePrefixLength = 3;
 
 bool hasKeyboardEventCapabilities(const QString &eventCapabilities) {
-    return eventCapabilities.contains(
-        QString::fromLatin1(KeyboardEventCapabilities));
+    if (!eventCapabilities.startsWith(QStringLiteral("EV="))) {
+        return false;
+    }
+
+    bool ok = false;
+    const qulonglong capabilities =
+        eventCapabilities.mid(DeviceLinePrefixLength).toULongLong(&ok, 16);
+    return ok &&
+           (capabilities & RequiredKeyboardEventCapabilities) ==
+               RequiredKeyboardEventCapabilities;
 }
 } // namespace
 
