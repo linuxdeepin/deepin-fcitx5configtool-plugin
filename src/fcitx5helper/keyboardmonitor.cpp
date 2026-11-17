@@ -352,19 +352,17 @@ void KeyboardMonitor::parseDeviceLine(const QString &line, QString &id,
 
 bool KeyboardMonitor::hasKeyboard(const DeviceInfoMap &deviceInfoMap) const {
     for (const QList<DeviceInfo> &deviceInfoList : deviceInfoMap) {
-        if (deviceInfoList.isEmpty()) {
-            continue;
-        }
+        // A shared device ID may group mouse and keyboard input interfaces.
+        for (const DeviceInfo &info : deviceInfoList) {
+            if (!hasKeyboardEventCapabilities(info.eventCapabilities)) {
+                continue;
+            }
 
-        const DeviceInfo &info = deviceInfoList.first();
-        if (!hasKeyboardEventCapabilities(info.eventCapabilities)) {
-            continue;
+            qCDebug(keyboardMon).noquote()
+                << "Keyboard device:" << info.name
+                << "handlers:" << info.handlers;
+            return true;
         }
-
-        qCDebug(keyboardMon).noquote()
-            << "Keyboard device:" << info.name
-            << "handlers:" << info.handlers;
-        return true;
     }
 
     return false;
